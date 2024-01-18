@@ -1,3 +1,42 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e34d1b83fd4016b861f31e1248cf1e4484d665107bc4a6e8800378d36e11619b
-size 469
+back/.gradle
+back/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+Anudar/.idea
+.idea
+back/.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+
+### Front ###
+front/node_modules/

@@ -7,11 +7,15 @@ import org.springframework.http.HttpStatus;
 public enum ExceptionStatus implements ExceptionInfo {
 
     // NOT FOUND
-    USER_NOT_FOUND(1, HttpStatus.NOT_FOUND.value(), "유저가 존재하지 않습니다."),
-    EXHIBIT_NOT_FOUND(2, HttpStatus.NOT_FOUND.value(), "전시가 존재하지 않습니다."),
+    USER_NOT_FOUND(1000, HttpStatus.NOT_FOUND.value(), "사용자가 존재하지 않습니다."),
+    EXHIBIT_NOT_FOUND(1001, HttpStatus.NOT_FOUND.value(), "전시가 존재하지 않습니다."),
+
+    // BAD_REQUEST
+    DUPLICATE_USERNAME(2000, HttpStatus.BAD_REQUEST.value(), "사용자가 이미 존재합니다."),
 
     // UNAUTHORIZED
-    UNAUTHORIZED(101, HttpStatus.UNAUTHORIZED.value(), "유저가 인증되지 않았습니다.")
+    UNAUTHORIZED(3000, HttpStatus.UNAUTHORIZED.value(), "사용자가 인증되지 않았습니다.")
+
     ,;
 
     private final int code;

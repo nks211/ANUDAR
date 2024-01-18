@@ -1,13 +1,3 @@
-package com.ssafy.anudar;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class AnudarApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(AnudarApplication.class, args);
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:763e4edb23763d7ac138d2aa3219505009d33c8c68809f3df3335837493e57eb
+size 413

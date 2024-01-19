@@ -12,6 +12,7 @@ public enum ExceptionStatus implements ExceptionInfo {
 
     // BAD_REQUEST
     DUPLICATE_USERNAME(2000, HttpStatus.BAD_REQUEST.value(), "사용자가 이미 존재합니다."),
+    PASSWORD_MISMATCH(2001, HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다."),
 
     // UNAUTHORIZED
     UNAUTHORIZED(3000, HttpStatus.UNAUTHORIZED.value(), "사용자가 인증되지 않았습니다.")

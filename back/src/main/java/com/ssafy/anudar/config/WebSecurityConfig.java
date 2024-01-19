@@ -1,6 +1,7 @@
 package com.ssafy.anudar.config;
 
 import com.ssafy.anudar.config.filter.JwtTokenFilter;
+import com.ssafy.anudar.config.filter.CustomAuthenticationEntryPoint;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +52,9 @@ public class WebSecurityConfig {
                 );
 
         http
-                .addFilterBefore(new JwtTokenFilter(key, userService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtTokenFilter(key, userService), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 
         return http.build();
     }

@@ -16,3 +16,8 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+
+jwt:
+  secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
+  access-token:
+    expiretime: 3600000

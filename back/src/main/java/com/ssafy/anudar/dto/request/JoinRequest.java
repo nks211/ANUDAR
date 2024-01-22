@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:25e7cbc2c407d852d44e8676971c59fb6c95248fa70b699c641a42e9c0b412a3
-size 341
+package com.ssafy.anudar.dto.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class JoinRequest {
+
+    String username;
+    String password;
+    String name;
+    String nickname;
+    String email;
+    String image;
+    String phone;
+
+}

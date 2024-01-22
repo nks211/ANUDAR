@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6468d6614b8e3709aaae36f444191365db53c00c8662d237b6fc285219a9286c
-size 397
+package com.ssafy.anudar.exception;
+
+import com.ssafy.anudar.exception.response.ExceptionInfo;
+import lombok.Getter;
+
+@Getter
+public class UnAuthorizedException extends RuntimeException {
+
+    private final ExceptionInfo exceptionInfo;
+
+    public UnAuthorizedException(ExceptionInfo exceptionInfo) {
+        super(exceptionInfo.getMessage());
+        this.exceptionInfo = exceptionInfo;
+    }
+
+}

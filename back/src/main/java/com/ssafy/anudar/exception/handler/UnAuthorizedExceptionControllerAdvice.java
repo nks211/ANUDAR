@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b3a45fa8d77f40c036bd50ab9a2553d1c3b3cf568e65ddc9502f5a4a624f9eac
-size 816
+package com.ssafy.anudar.exception.handler;
+
+import com.ssafy.anudar.exception.UnAuthorizedException;
+import com.ssafy.anudar.exception.response.ErrorResponse;
+import com.ssafy.anudar.exception.response.ExceptionStatus;
+import jakarta.annotation.Priority;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@Priority(0)
+@RestControllerAdvice
+public class UnAuthorizedExceptionControllerAdvice {
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnAuthorizedException.class)
+    public ErrorResponse handlerException(UnAuthorizedException e) {
+        return new ErrorResponse(e.getExceptionInfo());
+    }
+
+}

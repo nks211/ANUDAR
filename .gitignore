@@ -40,3 +40,7 @@ out/
 
 ### Front ###
 front/node_modules/
+
+### config file ####
+back/src/main/resources/application.yml
+front/.env

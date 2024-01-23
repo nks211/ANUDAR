@@ -42,4 +42,15 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
     }
 
+    // 회원 정보 수정
+    @PatchMapping("/patch")
+    public ResponseEntity<UserDto> patch(Authentication authentication, @RequestBody JoinRequest req) {
+        System.out.println(req.getPhone());
+//        회원가입 로직
+//        UserDto userDto = userService.join(req.getUsername(), req.getPassword(), req.getName(), req.getNickname(), req.getEmail(), req.getImage(), req.getPhone());
+//        return new ResponseEntity<>(userDto, HttpStatus.OK);
+
+        return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
+    }
+
 }

@@ -61,4 +61,19 @@ public class UserService {
                 .map(UserDto::fromEntity)
                 .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
+    // 회원 정보 수정 : 들어와도 안들어와도 되도록 체크..
+    public UserDto patch(String username, String password, String name, String nickname, String email, String image, String phone) {
+        // join 하려는 username 으로 회원가입된 user가 있는지 체크
+        // 수정하려는 username으로 데이터 끌어오기 => 애초에  aythentication이 있어야 접근 가능하기 때문에 username 존재
+        System.out.println("hi");
+        userRepository.findByUsername(username)
+                .ifPresent(it -> {
+                    throw new BadRequestException(ExceptionStatus.DUPLICATE_USERNAME);
+                });
+
+//        return userRepository.findByUsername(username)
+//                .map(UserDto::fromEntity)
+//                .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return UserDto.fromEntity(userRepository.save(new User(username, bCryptPasswordEncoder.encode(password), name, nickname, email, image, phone)));
+    }
 }

@@ -2,6 +2,7 @@ package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
 import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
@@ -61,19 +62,35 @@ public class UserService {
                 .map(UserDto::fromEntity)
                 .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
-    // 회원 정보 수정 : 들어와도 안들어와도 되도록 체크..
-    public UserDto patch(String username, String password, String name, String nickname, String email, String image, String phone) {
+    // 회원 정보 수정 : 들어왔다면, 값을 변경해주는 것으로
+    public UserDto patch(String username, JoinRequest req) {
+        System.out.println(username);
+        System.out.println(req.getPhone());
         // join 하려는 username 으로 회원가입된 user가 있는지 체크
         // 수정하려는 username으로 데이터 끌어오기 => 애초에  aythentication이 있어야 접근 가능하기 때문에 username 존재
-        System.out.println("hi");
-        userRepository.findByUsername(username)
-                .ifPresent(it -> {
-                    throw new BadRequestException(ExceptionStatus.DUPLICATE_USERNAME);
-                });
+        // username으로 데이터를 불러와서 값을 변경하기
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        // username 수정은 하면 안될 것 같아서 일단 안 만들었습니다 => 막을 방법 찾기
+        // 비밀번호는 어떻게 할까..?
+        if (req.getName() != null){
+            user.setName(req.getName());
+        }
+        if (req.getNickname() != null){
+            user.setNickname(req.getNickname());
+        }
+        if (req.getEmail() != null){
+            user.setEmail(req.getEmail());
+        }
+        if (req.getImage() != null){
+            user.setImage(req.getImage());
+        }
+        if (req.getPhone() != null){
+            user.setPhone(req.getPhone());
+        }
 
-//        return userRepository.findByUsername(username)
-//                .map(UserDto::fromEntity)
-//                .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        return UserDto.fromEntity(userRepository.save(new User(username, bCryptPasswordEncoder.encode(password), name, nickname, email, image, phone)));
+        // 수정된 사용자 정보를 저장
+        userRepository.save(user);
+        return null;
     }
 }

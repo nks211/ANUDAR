@@ -44,13 +44,16 @@ public class UserController {
 
     // 회원 정보 수정
     @PatchMapping("/patch")
+    // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
     public ResponseEntity<UserDto> patch(Authentication authentication, @RequestBody JoinRequest req) {
-        System.out.println(req.getPhone());
-//        회원가입 로직
-//        UserDto userDto = userService.join(req.getUsername(), req.getPassword(), req.getName(), req.getNickname(), req.getEmail(), req.getImage(), req.getPhone());
-//        return new ResponseEntity<>(userDto, HttpStatus.OK);
 
-        return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
+        return new ResponseEntity<>(userService.patch(authentication.getName(), req),HttpStatus.OK);
+    }
+
+    // 회원 탈퇴 : 토큰으로 대체해 볼 예정
+    @DeleteMapping("/signout")
+    public String signout(@PathVariable String userId){
+        return "안녕히 가십시오.";
     }
 
 }

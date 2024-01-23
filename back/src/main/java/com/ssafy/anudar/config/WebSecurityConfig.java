@@ -46,6 +46,7 @@ public class WebSecurityConfig {
         return web -> web.ignoring()
                 .requestMatchers("/user/login")
                 .requestMatchers("/user/join")
+                .requestMatchers("/user/img")
                 ;
     }
 
@@ -64,6 +65,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/user/join").permitAll()
                         .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/img").permitAll()
                         .anyRequest().authenticated()
                 );
 

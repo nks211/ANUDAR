@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import com.ssafy.anudar.S3.FileFolder;
+import com.ssafy.anudar.S3.S3Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,6 +19,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final S3Service s3Service;
+
+    @PostMapping("/img")
+    public ResponseEntity<String> img(@RequestParam(value="image")MultipartFile image) {
+        return new ResponseEntity<>(s3Service.uploadFile(image, FileFolder.USER_IMG), HttpStatus.OK);
+    }
 
     @PostMapping("/join")
     public ResponseEntity<UserDto> join(@RequestBody JoinRequest req) {

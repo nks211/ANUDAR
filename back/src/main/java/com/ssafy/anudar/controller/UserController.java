@@ -3,6 +3,7 @@ package com.ssafy.anudar.controller;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.dto.response.InfoResponse;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,7 +56,15 @@ public class UserController {
     // 회원 탈퇴 : 토큰으로 대체해 볼 예정
     @DeleteMapping("/signout")
     public String signout(@PathVariable String userId){
-        return "안녕히 가십시오.";
+        userService.delete();
+        return "안녕히 가세요";
+    }
+
+    // 전체 회원 조회
+    @GetMapping("/infos")
+    public List<InfoResponse> infoAll() {
+        System.out.println("hi");
+        return null;
     }
 
 }

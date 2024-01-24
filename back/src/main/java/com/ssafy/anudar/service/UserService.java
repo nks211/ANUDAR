@@ -93,4 +93,8 @@ public class UserService {
         userRepository.save(user);
         return null;
     }
+
+    public void delete() {
+        System.out.println("으악");
+    }
 }

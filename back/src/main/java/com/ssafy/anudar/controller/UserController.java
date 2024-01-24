@@ -42,4 +42,18 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
     }
 
+    // 회원 정보 수정
+    @PatchMapping("/patch")
+    // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
+    public ResponseEntity<UserDto> patch(Authentication authentication, @RequestBody JoinRequest req) {
+
+        return new ResponseEntity<>(userService.patch(authentication.getName(), req),HttpStatus.OK);
+    }
+
+    // 회원 탈퇴 : 토큰으로 대체해 볼 예정
+    @DeleteMapping("/signout")
+    public String signout(@PathVariable String userId){
+        return "안녕히 가십시오.";
+    }
+
 }

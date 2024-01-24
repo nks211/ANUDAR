@@ -1,7 +1,13 @@
 server:
   servlet:
     context-path: /api
-  port: 8000
+  port: 8080
+  ssl:
+    enabled: false
+
+OPENVIDU_URL: http://43.200.169.6:8080/
+OPENVIDU_SECRET: MY_SECRET
+
 
 spring:
   datasource:
@@ -37,3 +43,4 @@ cloud:
       auto: false
     stack:
       auto: false
+

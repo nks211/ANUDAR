@@ -35,15 +35,10 @@ public class Exhibition {
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 
-//    @ManyToOne
-//    @JoinColumn(name = "exhibition_review_id")
-//    private ExhibitionReview exhibition_review;
-
-
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
     private List<ExhibitionReview> exhibitionReviews;
 
-    @OneToOne(mappedBy = "exhibition")
+    @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
     private Docent docent;
 
     @ManyToOne

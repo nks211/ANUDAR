@@ -10,8 +10,6 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 public class User extends BaseTimeEntity{
 
     @Id
@@ -54,20 +52,6 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "fromUser")
     private List<Follow> followingList;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Follow> following;
-//
-//    @OneToMany(mappedBy = "user")
-//    private List<Follow> follows;
-//    @ManyToMany(mappedBy = "user")
-//    @JoinTable(
-//            name = "user_follows",
-//            joinColumns = @JoinColumn(name = "follower_id"),
-//            inverseJoinColumns = @JoinColumn(name = "following_id"))
-//    private Set<User> following = new HashSet<>();
-//
-//    @ManyToMany(mappedBy = "user")
-//    private Set<User> followers = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;

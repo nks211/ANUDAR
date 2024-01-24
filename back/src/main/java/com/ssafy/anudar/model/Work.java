@@ -37,15 +37,12 @@ public class Work {
     @Column(name="bid")
     private int bid;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="auction_id")
     private Auction auction;
 
-//    @ManyToOne
-//    @JoinColumn(name="buyer_id")
-//    private Buyer buyer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -54,7 +51,7 @@ public class Work {
     private List<LikeWork> likeWorks;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
 

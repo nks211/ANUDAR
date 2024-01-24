@@ -1,13 +1,9 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -20,16 +16,20 @@ public class Follow {
     private long id;
 
 
-    @ManyToOne  // default EAGER
+    @ManyToOne(fetch = FetchType.LAZY)  // default EAGER
     @JoinColumn(name = "to_user")
     private User toUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user")
     private User fromUser;
 
     public Follow(User toUser, User fromUser){
         this.toUser = toUser;
         this.fromUser = fromUser;
+    }
+
+    public Follow() {
+
     }
 }

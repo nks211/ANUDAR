@@ -17,7 +17,7 @@ public class ExhibitionReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exhibition_review_id")
-    private Long exhibitionReviewId;
+    private Long id;
 
     @Column(name= "content")
     private String content;
@@ -26,19 +26,18 @@ public class ExhibitionReview {
     private LocalDateTime created_time;
 
     @Column(name = "modified_time")
-    private LocalDateTime start_time;
+    private LocalDateTime modified_time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
-//    @OneToMany(mappedBy = "exhibition_review", cascade = CascadeType.ALL)
-//    private List<Exhibition> exhibitionReviews;
-    @ManyToOne
-    @JoinColumn(name = "parent_review_id")
-    private ExhibitionReview exhibition_review;
+//    대댓글인듯 :)
+//    @ManyToOne
+//    @JoinColumn(name = "exhibition_review")
+//    private Exhibition exhibition_review;
 }

@@ -34,7 +34,7 @@ public class Notify {
     @Column(name="start_time")
     private LocalDateTime start_time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 }

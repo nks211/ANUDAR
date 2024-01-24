@@ -27,9 +27,8 @@ public class Docent {
     @Column(name = "video")
     private String video;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exhibition_id")
     private Exhibition exhibition;
-
 
 }

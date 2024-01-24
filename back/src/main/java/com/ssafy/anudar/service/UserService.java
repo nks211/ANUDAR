@@ -16,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -96,5 +99,16 @@ public class UserService {
 
     public void delete() {
         System.out.println("으악");
+    }
+
+    public List<UserDto> getUserAll() {
+        System.out.println("전체 사용자 조회");
+        List<User> userList = (List<User>) userRepository.findAll();
+//        for (int i = 0; i<userList.size();i++){
+//            System.out.println(userList.get(i));
+//        }
+        System.out.println(userList);
+        System.out.println(userList.stream().map(UserDto::fromEntity).collect(Collectors.toList()));
+        return userList.stream().map(UserDto::fromEntity).collect(Collectors.toList());
     }
 }

@@ -62,8 +62,8 @@ public class UserController {
 
     // 전체 회원 조회
     @GetMapping("/infos")
-    public List<InfoResponse> infoAll() {
-        System.out.println("hi");
+    public ResponseEntity<UserDto> infoAll() {
+        userService.getUserAll();
         return null;
     }
 

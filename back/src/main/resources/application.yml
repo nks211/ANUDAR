@@ -12,8 +12,11 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
-    username: ssafy
+    username: ssafygit
     password: ssafy
+  output:
+    ansi:
+      enabled: always
 
   jpa:
     hibernate:

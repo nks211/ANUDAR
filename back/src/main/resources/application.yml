@@ -8,10 +8,11 @@ server:
 OPENVIDU_URL: http://43.200.169.6:8080/
 OPENVIDU_SECRET: MY_SECRET
 
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
+    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
 
@@ -47,3 +48,4 @@ cloud:
       auto: false
     stack:
       auto: false
+

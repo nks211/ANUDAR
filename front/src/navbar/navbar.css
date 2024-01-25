@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.selected, .menu {
+    cursor: pointer;
+}
+
 .nav {
     background-color: #d7c0ae;
     width: 100%;

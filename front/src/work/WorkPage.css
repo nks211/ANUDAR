@@ -1,0 +1,82 @@
+.workArea {
+  width: 1020px;
+  height: 450px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.workInfo {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.workHeader {
+  height: 46px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workTitle {
+  font-size: 32px;
+}
+
+.workArtist {
+  margin: 20px 0;
+  font-size: 28px;
+  text-align: left;
+  color: #967E76;
+  padding-left: 10;
+}
+
+.workDescriptionArea {
+  height: 170px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-right: 5px;
+}
+
+.workDescriptionArea:hover {
+  overflow-y: auto;
+}
+
+.workDescriptionArea::-webkit-scrollbar {
+    width: 5px;
+}
+
+.workDescriptionArea::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #967E76;
+    
+    border-radius: 10px;
+}
+
+.workDescriptionArea::-webkit-scrollbar-track {
+    background: white;
+}
+
+.workDescription {
+  font-size: 20px;
+  text-align: left;
+  color: #787878;
+}
+
+.workLine {
+  width: 100%;
+  background: #D7C0AE;
+  height: 1px;
+  border: 0;
+  margin: 20px 0;
+}
+
+.workPrice, .workDate {
+  display: flex;
+  font-size: 24px;
+  justify-content: space-between;
+  padding: 0 20px;
+}

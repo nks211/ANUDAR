@@ -3,7 +3,6 @@ package com.ssafy.anudar.controller;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
-import com.ssafy.anudar.dto.response.InfoResponse;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,25 +45,24 @@ public class UserController {
     }
 
     // 회원 정보 수정
-    @PatchMapping("/patch")
+    @PutMapping("/update")
     // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
-    public ResponseEntity<UserDto> patch(Authentication authentication, @RequestBody JoinRequest req) {
+    public ResponseEntity<UserDto> update(Authentication authentication, @RequestBody JoinRequest req) {
 
-        return new ResponseEntity<>(userService.patch(authentication.getName(), req),HttpStatus.OK);
+        return new ResponseEntity<>(userService.update(authentication.getName(), req),HttpStatus.OK);
     }
 
     // 회원 탈퇴 : 토큰으로 대체해 볼 예정
-    @DeleteMapping("/signout")
-    public String signout(@PathVariable String userId){
-        userService.delete();
+    @PatchMapping("/signout")
+    public String signout(Authentication authentication){
+        userService.signout(authentication.getName());
         return "안녕히 가세요";
     }
 
     // 전체 회원 조회
     @GetMapping("/infos")
-    public ResponseEntity<UserDto> infoAll() {
-        userService.getUserAll();
-        return null;
+    public List<UserDto> infoAll() {
+        return userService.getUserAll();
     }
 
 }

@@ -66,49 +66,26 @@ public class UserService {
                 .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
     // 회원 정보 수정 : 들어왔다면, 값을 변경해주는 것으로
-    public UserDto patch(String username, JoinRequest req) {
-        System.out.println(username);
-        System.out.println(req.getPhone());
-        // join 하려는 username 으로 회원가입된 user가 있는지 체크
-        // 수정하려는 username으로 데이터 끌어오기 => 애초에  aythentication이 있어야 접근 가능하기 때문에 username 존재
+    public UserDto update(String username, JoinRequest req) {
         // username으로 데이터를 불러와서 값을 변경하기
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // username 수정은 하면 안될 것 같아서 일단 안 만들었습니다 => 막을 방법 찾기
-        // 비밀번호는 어떻게 할까..?
-        if (req.getName() != null){
-            user.setName(req.getName());
-        }
-        if (req.getNickname() != null){
-            user.setNickname(req.getNickname());
-        }
-        if (req.getEmail() != null){
-            user.setEmail(req.getEmail());
-        }
-        if (req.getImage() != null){
-            user.setImage(req.getImage());
-        }
-        if (req.getPhone() != null){
-            user.setPhone(req.getPhone());
-        }
-
+        // username과 name은 수정은 X / 비밀번호 수정 따로 추가 예정
+        // null 값 들어오면 null로 수정해주기 필요
+        user.setNickname(req.getNickname());
+        user.setEmail(req.getEmail());
+        user.setImage(req.getImage());
         // 수정된 사용자 정보를 저장
-        userRepository.save(user);
-        return null;
+        return UserDto.fromEntity(userRepository.save(user));
+
     }
 
-    public void delete() {
-        System.out.println("으악");
+    // enabled 필요행
+    public void signout(String username) {
+        System.out.println("Good Bye");
     }
 
     public List<UserDto> getUserAll() {
-        System.out.println("전체 사용자 조회");
-        List<User> userList = (List<User>) userRepository.findAll();
-//        for (int i = 0; i<userList.size();i++){
-//            System.out.println(userList.get(i));
-//        }
-        System.out.println(userList);
-        System.out.println(userList.stream().map(UserDto::fromEntity).collect(Collectors.toList()));
-        return userList.stream().map(UserDto::fromEntity).collect(Collectors.toList());
+        return userRepository.findAll().stream().map(UserDto::fromEntity).collect(Collectors.toList());
     }
 }

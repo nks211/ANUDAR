@@ -5,9 +5,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @Setter
@@ -19,22 +21,38 @@ public class Notify {
     @Column(name="notify_id")
     private Long id;
 
-    @Column(name="type")
-    private String type;
+    @Column(name="link")
+    private String link;
 
     @Column(name="content")
     private String content;
 
-    @Column(name="is_read")
-    private boolean is_read;
+    @Column(name="checked")
+    private boolean checked;
 
-    @Column(name="created_time")
-    private LocalDateTime created_time = LocalDateTime.now();
-
-    @Column(name="start_time")
-    private LocalDateTime start_time;
+    @Column(name="created")
+    private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private Notifytype notifytype;
+
+    public static Notify from(String link, String content, LocalDateTime created, boolean checked,  User user){
+        Notify notify = new Notify();
+        notify.link = link;
+        notify.content = content;
+        notify.checked = checked;
+        notify.created = created;
+        notify.user = user;
+        return notify;
+    }
+
+    // 알람 읽음
+    public void read() {
+        this.checked = true;
+    }
+
 }

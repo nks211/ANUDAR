@@ -1,8 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
+import { LoginContext } from "../navbar/navbar.jsx";
 import "./login.css";
 
-function Login(ispopup) {
+function Login() {
 
+    const { popup, setPopup } = useContext(LoginContext);
     const [id, setId] = useState("");
     const [pass, setPass] = useState("");
 
@@ -15,7 +17,7 @@ function Login(ispopup) {
             <div className="loginsector">
                 <input type="password" className="input" placeholder="비밀번호" />
             </div>
-            <div className="logincheck">로그인</div>
+            <div onClick={() => { setPopup(false); }} className="logincheck">로그인</div>
         </div>
     );
 

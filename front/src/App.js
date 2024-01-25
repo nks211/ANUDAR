@@ -5,6 +5,7 @@ import Work from './work/work'
 import Artist from './artist/artist'
 import Auction from './auction/auction'
 import Signup from './signup/signup'
+import Mypage from './mypage/mypage';
 import { createContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <>
-      <AppContext.Provider value={{ login, notice }}>
+      <AppContext.Provider value={{ login, setLogin, notice, setNotice }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center" }} className="App">
           <Routes>
@@ -27,6 +28,7 @@ function App() {
             <Route exact path="/work" element={<Work />}></Route>
             <Route exact path="/artist" element={<Artist />}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
+            <Route exact path="/user/info" element={<Mypage/>}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
           </Routes>
         </div>

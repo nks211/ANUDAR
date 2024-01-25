@@ -25,6 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .nav .selected {
@@ -38,6 +39,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .area .logo {
@@ -48,6 +50,7 @@
     left: 120px;
     top: 38px;
     position: absolute;
+    cursor: pointer;
 }
 
 .area .sector {
@@ -62,12 +65,14 @@
     left: -30px;
     top: 0px;
     position: absolute;
+    cursor: pointer;
 }
 
 .mypage {
     left: 20px;
     top: 2px;
     position: absolute;
+    cursor: pointer;
 }
 
 .sector .login {
@@ -96,7 +101,7 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    
+    cursor: pointer;
 }
 
 .line {
@@ -106,7 +111,6 @@
     font-size: 16px;
     font-weight: 300;
     text-align: center;
-
 }
 
 .signbutton {
@@ -116,5 +120,5 @@
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    
+    cursor: pointer;
 }

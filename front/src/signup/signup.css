@@ -36,6 +36,7 @@
     top: 10px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .column {
@@ -127,4 +128,5 @@ span {
     justify-content: center;
     align-items: center;
     text-align: center;
+    cursor: pointer;
 }

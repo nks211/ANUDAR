@@ -4,7 +4,7 @@ import "./login.css";
 
 function Login() {
 
-    const { popup, setPopup } = useContext(LoginContext);
+    const { login, setLogin, popup, setPopup } = useContext(LoginContext);
     const [id, setId] = useState("");
     const [pass, setPass] = useState("");
 
@@ -17,7 +17,7 @@ function Login() {
             <div className="loginsector">
                 <input type="password" className="input" placeholder="비밀번호" />
             </div>
-            <div onClick={() => { setPopup(false); }} className="logincheck">로그인</div>
+            <div onClick={() => { setLogin(true); setPopup(false); }} className="logincheck">로그인</div>
         </div>
     );
 

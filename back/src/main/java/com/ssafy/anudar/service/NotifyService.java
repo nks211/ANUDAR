@@ -46,7 +46,7 @@ public class NotifyService {
     // 알람 생성(넘겨 오는 Notify의 타입에 따라 다르게 생성해줌..)
     private String generateContent(Notifytype notifytype, String link){
         switch(notifytype){
-            case AUCTION_CREATED:
+            case AUTION_CREATED:
                 return "경매가 시작되었습니다. 확인해보세요" + link;
             case DOCENT_CREATED:
                 return "도습트가 시작되었습니다. 확인해보세요" + link;

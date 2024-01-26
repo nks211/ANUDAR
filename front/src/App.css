@@ -1,5 +1,11 @@
 .App {
+  font-family: 'SUIT-Regular';
   text-align: center;
+  padding-top: 60px;
+}
+
+.cursorPointer {
+  cursor: pointer;
 }
 
 .App-logo {
@@ -35,4 +41,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@font-face {
+  font-family: 'SUIT-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.WorkList {
+  justify-content: center;
+  display: flex;
+  justify-content: flex-start;
+  /* justify-self: space-between; */
+  flex-wrap: wrap;
+
+  /* width: 1030px; */
+  width: 960px;
+}
+
+.artistList {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 960px;
 }

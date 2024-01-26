@@ -5,8 +5,8 @@
     width: 420px;
     height: 210px;
     top: 40%;
-    left: 35%;
-    position: absolute;
+    left: 40%;
+    position: fixed;
     overflow: hidden;
 }
 

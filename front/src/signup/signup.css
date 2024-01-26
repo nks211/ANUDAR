@@ -1,10 +1,10 @@
-.signuparea {
+.signupArea {
     width: 800px;
     height: 1200px;
     position: absolute;
 }
 
-.title {
+.signupTitle {
     color: #967E76;
     font-family: "Inter-SemiBold", Helvetica;
     font-size: 36px;
@@ -13,14 +13,15 @@
     text-align: start;
 }
 
-.image {
+.signupImage {
     width: 200px;
     height: 200px;
     left: 45%;
     top: 20px;
+    object-fit: cover;
 }
 
-.profile {
+.signupProfile {
     background-color: #eee3cb;
     color: #000000;
     border-radius: 10px;
@@ -39,7 +40,7 @@
     cursor: pointer;
 }
 
-.column {
+.signupColumn {
     width: 100%;
     height: 600px;
     top: 40px;
@@ -48,29 +49,29 @@
     flex-direction: row;
 }
 
-.column .name {
+.signupColumn .name {
     flex: 1.5;
     text-align: start;
     padding: 30px 40px;
 }
 
-.column .name .item {
+.signupColumn .name .item {
     color: #000000;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 60px;
 }
 
-.column .inputarea {
+.signupColumn .inputarea {
     flex: 5;
     padding: 20px;
 }
 
-span {
+.item span {
     color: #ff0000;
 }
 
-.column .inputarea .line {
+.signupColumn .inputarea .line {
     border: 2.5px solid;
     border-color: #cbcbcb;
     border-radius: 10px;
@@ -85,19 +86,19 @@ span {
     text-align: start;
 }
 
-.column .check {
+.signupColumn .check {
     flex: 2;
 }
 
-.same {
+.pwSame {
     color: #9DBC98;
 }
 
-.different {
+.pwDifferent {
     color: #ff0000;
 }
 
-.column .check .button {
+.signupColumn .check .button {
     background-color: #cbcbcb;
     color: #000000;
     border-radius: 15px;

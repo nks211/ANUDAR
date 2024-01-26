@@ -5,6 +5,10 @@
     width: 100%;
 }
 
+.selected, .menu {
+    cursor: pointer;
+}
+
 .nav {
     background-color: #d7c0ae;
     width: 100%;
@@ -56,7 +60,7 @@
 .area .sector {
     width: 400px;
     height: 50px;
-    left: 1150px;
+    left: 75%;
     top: 35px;
     position: absolute;
 }

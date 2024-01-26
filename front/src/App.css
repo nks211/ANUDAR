@@ -60,3 +60,11 @@
   /* width: 1030px; */
   width: 960px;
 }
+
+.artistList {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 960px;
+}

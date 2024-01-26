@@ -2,7 +2,7 @@
     "exhibitions" : [
         {
             "id": 0,
-            "image": "asset/pic9.jpg",
+            "image": "asset/exhibit0.jpg",
             "title": "이중섭 「새」",
             "artist": "이중섭",
             "period": "2024.03.01 - 03.31",
@@ -10,7 +10,7 @@
         },
         {
             "id": 1,
-            "image": "asset/pic1.jpg",
+            "image": "asset/exhibit1.jpg",
             "title": "2024 칸딘스키",
             "artist": "바실리 칸딘스키",
             "period": "2024.01.01 - 01.31",
@@ -18,7 +18,7 @@
         },
         {
             "id": 2,
-            "image": "asset/pic2.jpg",
+            "image": "asset/exhibit2.jpg",
             "title": "클로드 모네 「수련」",
             "artist": "클로드 모네",
             "period": "2024.01.01 - 01.31",
@@ -26,7 +26,7 @@
         },
         {
             "id": 3,
-            "image": "asset/pic3.jpg",
+            "image": "asset/exhibit3.jpg",
             "title": "Mice Schick - Color",
             "artist": "마이크 쉬크",
             "period": "2024.01.01 - 01.31",
@@ -34,7 +34,7 @@
         },
         {
             "id": 4,
-            "image": "asset/pic4.jpg",
+            "image": "asset/exhibit4.jpg",
             "title": "폴록 「선」",
             "artist": "잭슨 폴록",
             "period": "2024.02.01 - 02.29",
@@ -42,7 +42,7 @@
         },
         {
             "id": 5,
-            "image": "asset/pic5.jpg",
+            "image": "asset/exhibit5.jpg",
             "title": "2024 이중섭",
             "artist": "이중섭",
             "period": "2024.02.01 - 02.29",
@@ -50,7 +50,7 @@
         },
         {
             "id": 6,
-            "image": "asset/pic6.jpg",
+            "image": "asset/exhibit6.jpg",
             "title": "아르누보",
             "artist": "알폰스 무하",
             "period": "2024.02.01 - 02.29",
@@ -58,7 +58,7 @@
         },
         {
             "id": 7,
-            "image": "asset/pic7.jpg",
+            "image": "asset/exhibit7.jpg",
             "title": "쉬크 - 무제",
             "artist": "마이크 쉬크",
             "period": "2024.03.01 - 03.31",
@@ -66,7 +66,7 @@
         },
         {
             "id": 8,
-            "image": "asset/pic8.jpg",
+            "image": "asset/exhibit8.jpg",
             "title": "모네 네모",
             "artist": "클로드 모네",
             "period": "2024.03.01 - 03.31",
@@ -79,7 +79,7 @@
             "title": "봄",
             "artist": "장 프랑수아 밀레",
             "description": "봄봄봄 🌞🌸🌺",
-            "image": "asset/work9.jpg",
+            "image": "asset/work0.jpg",
             "bid": 0,
             "startDate": "24/03/01",
             "price": 3000000
@@ -169,7 +169,7 @@
         {
             "id": 0,
             "name": "장 프랑수아 밀레",
-            "image": "asset/artist6.png",
+            "image": "asset/artist0",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."
@@ -177,7 +177,7 @@
         {
             "id": 1,
             "name": "클로드 모네",
-            "image": "asset/artist1.png",
+            "image": "asset/artist1",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."
@@ -185,7 +185,7 @@
         {
             "id": 2,
             "name": "잭슨 폴록",
-            "image": "asset/artist2.png",
+            "image": "asset/artist2",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."
@@ -193,7 +193,7 @@
         {
             "id": 3,
             "name": "프리다 칼로",
-            "image": "asset/artist3.png",
+            "image": "asset/artist3",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."
@@ -201,7 +201,7 @@
         {
             "id": 4,
             "name": "바실리 칸딘스키",
-            "image": "asset/artist4.png",
+            "image": "asset/artist4",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."
@@ -209,7 +209,7 @@
         {
             "id": 5,
             "name": "이중섭",
-            "image": "asset/artist5.png",
+            "image": "asset/artist5",
             "description": "소개글",
             "exhibitions": "...",
             "works" : "..."

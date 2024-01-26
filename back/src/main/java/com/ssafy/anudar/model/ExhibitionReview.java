@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ExhibitionReview {
+public class ExhibitionReview extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exhibition_review_id")
@@ -21,12 +21,6 @@ public class ExhibitionReview {
 
     @Column(name= "content")
     private String content;
-
-    @Column(name = "created_time")
-    private LocalDateTime created_time;
-
-    @Column(name = "modified_time")
-    private LocalDateTime modified_time;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")

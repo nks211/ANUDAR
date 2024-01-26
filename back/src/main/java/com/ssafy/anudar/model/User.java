@@ -3,9 +3,7 @@ package com.ssafy.anudar.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -17,6 +15,11 @@ public class User extends BaseTimeEntity{
     @Column(name="user_id")
     private Long id;
 
+    @Column(name="enable")
+    private boolean enable = true;
+
+    @Column(name="is_author")
+    private boolean isAuthor = false;
 
     @Column(name="username")
     private String username;
@@ -52,12 +55,14 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "fromUser")
     private List<Follow> followingList;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
 
     @OneToMany(mappedBy = "user")
     private List<Work> works;
+
+    @OneToMany(mappedBy = "user")
+    private List<AuctionWork> acutionWorks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;

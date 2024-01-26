@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Notify {
+public class Notify extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +30,18 @@ public class Notify {
     @Column(name="checked")
     private boolean checked;
 
-    @Column(name="created")
-    private LocalDateTime created;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private Notifytype notifytype;
+    private NotifyType notifytype;
 
     public static Notify from(String link, String content, LocalDateTime created, boolean checked,  User user){
         Notify notify = new Notify();
         notify.link = link;
         notify.content = content;
         notify.checked = checked;
-        notify.created = created;
         notify.user = user;
         return notify;
     }

@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -64,6 +62,9 @@ public class User extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "user")
     private List<Work> works;
+
+    @OneToMany(mappedBy = "user")
+    private List<AuctionWork> acutionWorks;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;

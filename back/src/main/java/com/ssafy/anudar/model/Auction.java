@@ -24,5 +24,5 @@ public class Auction {
     private LocalDateTime start_time;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    private List<Work> works;
+    private List<AuctionWork> auctionWorks;
 }

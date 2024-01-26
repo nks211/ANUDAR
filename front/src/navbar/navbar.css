@@ -1,0 +1,120 @@
+.area {
+    background-color: #ffffff;
+    height: 90px;
+    position: relative;
+    width: 100%;
+}
+
+.nav {
+    background-color: #d7c0ae;
+    width: 100%;
+    height: 60px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.nav .menu {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    height: 100%;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav .selected {
+    background-color: #ffffff;
+    color: #d7c0ae;
+    font-size: 20px;
+    font-weight: 600;
+    width: 25%;
+    height: 60px;
+    margin: 0px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.area .logo {
+    color: #967e76;
+    font-family: "Josefin Sans-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 700;
+    left: 120px;
+    top: 38px;
+    position: absolute;
+}
+
+.area .sector {
+    width: 400px;
+    height: 50px;
+    left: 1150px;
+    top: 35px;
+    position: absolute;
+}
+
+.noti {
+    left: -30px;
+    top: 0px;
+    position: absolute;
+}
+
+.mypage {
+    left: 20px;
+    top: 2px;
+    position: absolute;
+}
+
+.sector .login {
+    display: flex;
+    flex-direction: row;
+    width: 250px;
+    left: 80px;
+    top: 10px;
+    position: relative;
+}
+
+.sector .logout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 250px;
+    left: 40px;
+    top: 10px;
+    position: relative;
+}
+
+.loginbutton {
+    flex: 15;
+    color: #967e76;
+    font-family: "Inter-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    
+}
+
+.line {
+    flex: 1;
+    color: #967e76;
+    font-family: "Inter-Light", Helvetica;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+
+}
+
+.signbutton {
+    flex: 15;
+    color: #967e76;
+    font-family: "Inter-Medium", Helvertica;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    
+}

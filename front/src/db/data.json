@@ -1,0 +1,218 @@
+{
+    "exhibitions" : [
+        {
+            "id": 0,
+            "image": "asset/pic9.jpg",
+            "title": "이중섭 「새」",
+            "artist": "이중섭",
+            "period": "2024.03.01 - 03.31",
+            "docent": ""
+        },
+        {
+            "id": 1,
+            "image": "asset/pic1.jpg",
+            "title": "2024 칸딘스키",
+            "artist": "바실리 칸딘스키",
+            "period": "2024.01.01 - 01.31",
+            "docent": ""
+        },
+        {
+            "id": 2,
+            "image": "asset/pic2.jpg",
+            "title": "클로드 모네 「수련」",
+            "artist": "클로드 모네",
+            "period": "2024.01.01 - 01.31",
+            "docent": ""
+        },
+        {
+            "id": 3,
+            "image": "asset/pic3.jpg",
+            "title": "Mice Schick - Color",
+            "artist": "마이크 쉬크",
+            "period": "2024.01.01 - 01.31",
+            "docent": ""
+        },
+        {
+            "id": 4,
+            "image": "asset/pic4.jpg",
+            "title": "폴록 「선」",
+            "artist": "잭슨 폴록",
+            "period": "2024.02.01 - 02.29",
+            "docent": ""
+        },
+        {
+            "id": 5,
+            "image": "asset/pic5.jpg",
+            "title": "2024 이중섭",
+            "artist": "이중섭",
+            "period": "2024.02.01 - 02.29",
+            "docent": ""
+        },
+        {
+            "id": 6,
+            "image": "asset/pic6.jpg",
+            "title": "아르누보",
+            "artist": "알폰스 무하",
+            "period": "2024.02.01 - 02.29",
+            "docent": ""
+        },
+        {
+            "id": 7,
+            "image": "asset/pic7.jpg",
+            "title": "쉬크 - 무제",
+            "artist": "마이크 쉬크",
+            "period": "2024.03.01 - 03.31",
+            "docent": ""
+        },
+        {
+            "id": 8,
+            "image": "asset/pic8.jpg",
+            "title": "모네 네모",
+            "artist": "클로드 모네",
+            "period": "2024.03.01 - 03.31",
+            "docent": ""
+        }
+    ],
+    "works" : [
+        {
+            "id": 0,
+            "title": "봄",
+            "artist": "장 프랑수아 밀레",
+            "description": "봄봄봄 🌞🌸🌺",
+            "image": "asset/work9.jpg",
+            "bid": 0,
+            "startDate": "24/03/01",
+            "price": 3000000
+        },
+        {
+            "id": 1,
+            "title": "채소 밭",
+            "artist": "카미유 피사로",
+            "description": "카미유 피사로의 채소 밭 작품입니다.",
+            "image": "asset/work1.jpg",
+            "bid": 0,
+            "startDate": "24/01/01",
+            "price": 100000
+        },
+        {
+            "id": 2,
+            "title": "벚꽃 위의 새",
+            "artist": "이중섭",
+            "description": "이중섭의 벚꽃 위의 새 🕊🌸",
+            "image": "asset/work2.jpg",
+            "bid": 0,
+            "startDate": "24/01/01",
+            "price": 1000000
+        },
+        {
+            "id": 3,
+            "title": "가족 초상화",
+            "artist": "프리다 칼로",
+            "description": "프리다 칼로의 가족 초상화 작품입니다.",
+            "image": "asset/work3.jpg",
+            "bid": 0,
+            "startDate": "24/01/01",
+            "price": 300000
+        },
+        {
+            "id": 4,
+            "title": "구성",
+            "artist": "바실리 칸딘스키",
+            "description": "구 성",
+            "image": "asset/work4.jpg",
+            "bid": 0,
+            "startDate": "24/02/01",
+            "price": 700000
+        },
+        {
+            "id": 5,
+            "title": "수련",
+            "artist": "클로드 모네",
+            "description": "🌸🏵🌹🌺🌻🌼🌷🥀💐",
+            "image": "asset/work5.jpg",
+            "bid": 0,
+            "startDate": "24/02/01",
+            "price": 500000
+        },
+        {
+            "id": 6,
+            "title": "셍또노헤 거리",
+            "artist": "카미유 피사로",
+            "description": "셍 또 노 헤 - 피 사 로",
+            "image": "asset/work6.jpg",
+            "bid": 0,
+            "startDate": "24/02/01",
+            "price": 2000000
+        },
+        {
+            "id": 7,
+            "title": "수렴",
+            "artist": "잭슨 폴록",
+            "description": "🖌🖊🖍🖍🖋🖋",
+            "image": "asset/work7.jpg",
+            "bid": 0,
+            "startDate": "24/03/01",
+            "price": 900000
+        },
+        {
+            "id": 8,
+            "title": "해와 소년들",
+            "artist": "이중섭",
+            "description": "☀🌞 & 👦🧒👶🧑👧👦🧒🤸‍♀️🤸‍♂️",
+            "image": "asset/work8.jpg",
+            "bid": 0,
+            "startDate": "24/03/01",
+            "price": 850000
+        }
+    ],
+    "artists" : [
+        {
+            "id": 0,
+            "name": "장 프랑수아 밀레",
+            "image": "asset/artist6.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        },
+        {
+            "id": 1,
+            "name": "클로드 모네",
+            "image": "asset/artist1.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        },
+        {
+            "id": 2,
+            "name": "잭슨 폴록",
+            "image": "asset/artist2.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        },
+        {
+            "id": 3,
+            "name": "프리다 칼로",
+            "image": "asset/artist3.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        },
+        {
+            "id": 4,
+            "name": "바실리 칸딘스키",
+            "image": "asset/artist4.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        },
+        {
+            "id": 5,
+            "name": "이중섭",
+            "image": "asset/artist5.png",
+            "description": "소개글",
+            "exhibitions": "...",
+            "works" : "..."
+        }
+    ]
+}

@@ -23,7 +23,7 @@ const LoginPanel = (islogin, notice) => {
       </div>
       <div>{islogin === true ?
         <img onClick={() => { navigate("/user/info") }} className="mypage" src="../../asset/avatar.png" /> : ""}</div>
-      <div style={{ zIndex: 1, position: "absolute", left: "10px", top: "50px", display: click === true ? "block" : "none" }}>
+      <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: click === true ? "block" : "none" }}>
         { notice? <div onClick={() => { setNotice(false); }}><Notice title="알림 제목" date="2024/01/24 09:00" details="여기에 알림 내용이 이어집니다." /></div> : UptoDate() }
       </div>
     </div>
@@ -31,7 +31,7 @@ const LoginPanel = (islogin, notice) => {
 }
 
 const menu = ["전시회", "작가", "작품", "경매"];
-const modalback = {
+export const modalback = {
   backgroundColor: "#00000040",
   width: "100%",
   height: "100vh",

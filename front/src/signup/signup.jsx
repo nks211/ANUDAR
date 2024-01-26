@@ -30,7 +30,7 @@ function Signup() {
         password === Password? setPasswordCheck(true) : setPasswordCheck(false);
     }
 
-    useEffect(() => passcheck() )
+    useEffect(() => passcheck())
     
     return (
         <div className="signuparea">

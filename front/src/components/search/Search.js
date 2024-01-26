@@ -3,6 +3,7 @@ import './Search.css'
 
 export default function Search(props) {
   const [searchValue, setSearchValue] = useState("");
+<<<<<<< .merge_file_xkV6IX
   return (
     <div className="search">
       {/* <div className="searchArea"> */}
@@ -27,5 +28,22 @@ export default function Search(props) {
     //   <label>Name</label>
     //   <span></span>
     // </div>
+=======
+
+  return (
+    <div className="search">
+      <input id="searchValue" type="text" onChange={event=>{
+        setSearchValue(event.target.value)
+        }}
+        onKeyDown={(event)=>{
+          if (event.keyCode === 13) {
+            props.updateValues(searchValue)
+          }}}
+        />
+      <button 
+      onClick={()=>{props.updateValues(searchValue)}}
+      >검색</button>
+    </div>
+>>>>>>> .merge_file_44bTUI
   )
 }

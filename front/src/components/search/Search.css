@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_SqD8V7
 /* .search input {
     border: none;
     border-color: #cbcbcb;
@@ -29,6 +30,8 @@
   width: 210px;
 } */
 
+=======
+>>>>>>> .merge_file_TxWCxP
 .search {
   display: flex;
   align-items: flex-end;
@@ -96,4 +99,8 @@
  border-radius: 4px;
  font-size: 16px;
  color: white;
+<<<<<<< .merge_file_SqD8V7
+=======
+ cursor: pointer;
+>>>>>>> .merge_file_TxWCxP
 }

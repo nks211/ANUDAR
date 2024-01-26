@@ -28,8 +28,18 @@ export default function WorkDetailPage() {
 
   for (let i=0; i<dummy.works.length; i++) {
     if (i !== Number(workId) && artist === dummy.works[i].artist) {
-      works.push(dummy.works[i])
+      works.push(JSON.stringify(dummy.works[i]))
     }
+  }
+  
+  let content = <div></div>
+  if (works.length > 0) {
+    const workList = JSON.parse(`[${works}]`);
+    content = <div className="WorkList">
+                {workList.map(work=>(
+                  <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
+                ))}
+              </div>
   }
 
   return (
@@ -54,14 +64,15 @@ export default function WorkDetailPage() {
           </div>
         </div>
       </div>
-
+      
       <div className="otherWorks fontWeightStrong">작가의 다른 작품</div>
       <div className="otherWorkList">
-        <div className="WorkList">
-          {works.map(work=>(
+        {content}
+        {/* <div className="WorkList">
+          {workList.map(work=>(
             <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   )

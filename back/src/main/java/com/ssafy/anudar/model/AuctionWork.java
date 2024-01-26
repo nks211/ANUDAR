@@ -6,22 +6,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LikeWork {
+public class AuctionWork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="like_work_id")
+    @Column(name="auction_work_id")
     private Long id;
 
+    @Column(name="final_price")
+    private int finalPrice;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="work_id")
+    private Work work;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="work_id")
-    private Work work;
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
+
 }

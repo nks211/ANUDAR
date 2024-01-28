@@ -12,7 +12,8 @@ OPENVIDU_SECRET: MY_SECRET
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
+#    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/anudar?serverTimezone=Asia/Seoul
     username: ssafy
     password: ssafy
 
@@ -22,6 +23,10 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    # 개인 노트북 실행시 추가하는 코드
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey

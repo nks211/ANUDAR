@@ -1,10 +1,7 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -26,13 +23,13 @@ public class Work {
     private String detail;
 
     @Column(name="price")
-    private int price;
+    private Integer price;
 
     @Column(name="image")
     private String image;
 
     @Column(name="bid")
-    private int bid;
+    private Integer bid;
 
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AuctionWork auctionWork;

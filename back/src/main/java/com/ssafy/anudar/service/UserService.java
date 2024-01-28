@@ -80,12 +80,35 @@ public class UserService {
 
     }
 
-    // enabled 필요행
-    public void signout(String username) {
-        System.out.println("Good Bye");
+    // 회원 탈퇴 : enable 변경
+    public UserDto signout(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        user.setEnable(false);
+        // false로 변경된 회원의 정보 저장
+        return UserDto.fromEntity(userRepository.save(user));
     }
 
+    // 전체 회원 조회
     public List<UserDto> getUserAll() {
-        return userRepository.findAll().stream().map(UserDto::fromEntity).collect(Collectors.toList());
+        return userRepository.findByEnable(true).stream().map(UserDto::fromEntity).collect(Collectors.toList());
+    }
+
+    // 전체 작가 조회 : 탈퇴하지 않은 사람 중에 작가인 경우 조회 => 다른 테이블과 조인 필요
+    public List<UserDto> getAuthorAll() {
+        return userRepository.findByIsAuthorAndEnable(true, true).stream().map(UserDto::fromEntity).collect(Collectors.toList());
+    }
+
+    // 작가 상세 조회
+    public UserDto getAuthor(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        if (user.isAuthor() && user.isEnable()) {
+            return userRepository.findByUsername(username)
+                    .map(UserDto::fromEntity)
+                    .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        } else {
+            throw new BadRequestException(ExceptionStatus.USER_NOT_FOUND);
+        }
     }
 }

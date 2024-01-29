@@ -13,17 +13,18 @@ export default function WorkPage() {
 
   const [works, setWorks] = useState(workList);
 
-  let content = <div className="WorkList">
+  let content = <div className="workList">
                   {works.map(work=>(
-                    <Work className="Work" workType={1} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
+                    // <Work className="Work" workType={1} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
+                    <Work className="Work" workType={1} 
+                    work={work}
+                    workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
                   ))}
                 </div>
 
 
   return (
-    <>
     <div>
-    {/*   <div className="workSearch"> */}
       <Search updateValues={(searchWork) => {
         const newWorks = []
         for (let i=0; i<dummy.works.length; i++) {
@@ -36,6 +37,5 @@ export default function WorkPage() {
       }}/>
       {content}
     </div>
-    </>
   );
 };

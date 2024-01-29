@@ -1,6 +1,8 @@
 import './App.css';
 import Home from './home/home'
-import Exhibit from './exhibit/exhibit'
+import ExhibitPage from './exhibit/ExhibitPage'
+import ExhibitDetailPage from './exhibit/ExhibitDetailPage'
+import ExhibitRegistPage from './exhibit/ExhibitRegistPage'
 import WorkPage from './work/WorkPage'
 import WorkDetailPage from './work/WorkDetailPage'
 import ArtistPage from './artist/ArtistPage'
@@ -25,7 +27,9 @@ export default function App() {
         <div style={{ display: "flex", justifyContent: "center" }} className="App">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/exhibit" element={<Exhibit />}></Route>
+            <Route exact path="/exhibit" element={<ExhibitPage />}></Route>
+            <Route exact path="/exhibit/:id" element={<ExhibitDetailPage />}></Route>
+            <Route exact path="/exhibit/regist" element={<ExhibitRegistPage />}></Route>
             <Route exact path="/work" element={<WorkPage />}></Route>
             <Route exact path="/work/:id" element={<WorkDetailPage/>}></Route>
             <Route exact path="/artist" element={<ArtistPage />}></Route>

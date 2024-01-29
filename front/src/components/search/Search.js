@@ -14,7 +14,7 @@ export default function Search(props) {
             props.updateValues(searchValue)
           }}}
         />
-      <button 
+      <button style={{fontFamily: "SUIT-Regular", borderRadius: "0.7rem"}}
       onClick={()=>{props.updateValues(searchValue)}}
       >검색</button>
     </div>

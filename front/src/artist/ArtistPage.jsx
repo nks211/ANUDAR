@@ -12,11 +12,11 @@ export default function ArtistPage() {
 
   const [artists, setArtists] = useState(artistList);
 
-  console.log(artists)
+  // console.log(artists)
 
   let content = <div className="artistList">
                   {artists.map(artist=>(
-                  <Artist artistId={artist.id} artistName={artist.name} image={"../"+artist.image+".png"} artistExhibition={artist.exhibitions} artistWork={artist.works} />
+                  <Artist artistId={artist.id} artistName={artist.name} image={"../"+artist.image+".png"} artistExhibit={artist.exhibits} artistWork={artist.works} />
                   ))}
                 </div>
 

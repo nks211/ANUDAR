@@ -9,14 +9,14 @@ export default function Artist(props) {
       <div className="artistImage cursorPointer" onClick={()=>
         navigate(`/artist/${props.artistId}`)
         }>
-        <img style={{width:300, height:300}} src={props.image}></img>
+        <img style={{width:300, height:300, "object-fit": "cover"}} src={props.image}></img>
       </div>
       <div className="artistInfo">
-        <div className="artistName fontWeightStrong cursorPointer" onClick={()=>
+        <div className="artistName boldFont cursorPointer" onClick={()=>
         navigate(`/artist/${props.artistId}`)
         }>{props.artistName}</div>
-        <div className="artistExhibition"><span className="fontWeightStrong">대표전시</span> | {props.artistExhibition}</div>
-        <div className="artistWork"><span className="fontWeightStrong">대표작품</span> | {props.artistWork}</div>
+        <div className="artistExhibit"><span className="boldFont">대표전시</span> | {props.artistExhibit.join(", ")}</div>
+        <div className="artistWork"><span className="boldFont">대표작품</span> | {props.artistWork.join(", ")}</div>
       </div>
     </div>
   )

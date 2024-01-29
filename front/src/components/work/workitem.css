@@ -1,0 +1,22 @@
+.likeworkarea {
+    width: 250px;
+    height: 300px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.likeworkname {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: start;
+}
+
+.likeworkartist {
+    color: #848484;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 10px;
+    font-weight: 400;
+    text-align: end;
+}

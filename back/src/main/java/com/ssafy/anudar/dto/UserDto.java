@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3b2297987c248f729ebca1bfd03867ea2971ddb8a44e345cc7a075cf8e577313
-size 813
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class UserDto {
+    private String username;
+    private String password;
+    private String name;
+    private String nickname;
+    private String email;
+    private String image;
+    private String phone;
+
+    public static UserDto fromEntity (User user) {
+        return new UserDto(
+                user.getUsername(),
+                user.getPassword(),
+                user.getName(),
+                user.getNickname(),
+                user.getEmail(),
+                user.getImage(),
+                user.getPhone()
+        );
+    }
+}

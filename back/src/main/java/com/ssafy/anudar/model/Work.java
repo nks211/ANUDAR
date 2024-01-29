@@ -1,3 +1,51 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5d698377ebb7e54c101bf96ff0ea84aadcde12f44dc1d65b751f242c41773699
-size 1093
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Work {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="work_id")
+    private Long id;
+
+    @Column(name="title")
+    private String title;
+
+    @Column(name="detail")
+    private String detail;
+
+    @Column(name="price")
+    private int price;
+
+    @Column(name="image")
+    private String image;
+
+    @Column(name="bid")
+    private int bid;
+
+    @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AuctionWork auctionWork;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
+    private List<LikeWork> likeWorks;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="exhibition_id")
+    private Exhibition exhibition;
+
+}

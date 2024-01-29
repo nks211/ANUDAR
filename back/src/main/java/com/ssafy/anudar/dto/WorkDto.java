@@ -13,15 +13,17 @@ import lombok.NoArgsConstructor;
 public class WorkDto {
     private String title;
     private String detail;
-    private int price;
+    private Integer price;
     private String image;
+    private User user;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
                 work.getTitle(),
                 work.getDetail(),
                 work.getPrice(),
-                work.getTitle()
+                work.getTitle(),
+                work.getUser()
         );
     }
 }

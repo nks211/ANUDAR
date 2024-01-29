@@ -28,28 +28,21 @@ public class Work {
     @Column(name="price")
     private int price;
 
-    @Column(name="final_price")
-    private int final_price;
-
     @Column(name="image")
     private String image;
 
     @Column(name="bid")
     private int bid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="auction_id")
-    private Auction auction;
-
+    @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AuctionWork auctionWork;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
     @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")

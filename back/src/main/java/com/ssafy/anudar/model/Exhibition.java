@@ -1,10 +1,8 @@
 package com.ssafy.anudar.model;
 
+import com.ssafy.anudar.service.UserService;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -44,5 +42,14 @@ public class Exhibition {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+
+    @Builder
+    public Exhibition(String name, String detail, LocalDateTime start_time, LocalDateTime end_time, User user) {
+        this.name = name;
+        this.detail = detail;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.user = user;
+    }
 
 }

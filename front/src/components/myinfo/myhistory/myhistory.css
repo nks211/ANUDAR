@@ -1,0 +1,55 @@
+.myfavorites, .myauction, .myartist {
+    color: #967E76;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: start;
+    left: 30px;
+    top: 30px;
+    position: relative;
+}
+
+.historytitle {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: start;
+    left: 60px;
+    top: 70px;
+    margin-bottom: 70px;
+    position: relative;
+}
+
+.dataarea {
+    width: 890px;
+    column-count: 3;
+    column-gap: 38px;
+    left: 40px;
+    top: 40px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.historytitle > div > table {
+    width: 950px;
+    margin: 50px 0px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.auctionimage {
+    width: 10%;
+}
+
+.auctionname {
+    width: 40%;
+}
+
+.auctionartist {
+    width: 25%;
+}
+
+.auctionmoney {
+    width: 25%;
+}

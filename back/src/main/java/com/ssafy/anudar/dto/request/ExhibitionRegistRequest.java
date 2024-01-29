@@ -1,20 +1,3 @@
-package com.ssafy.anudar.dto.request;
-
-import com.ssafy.anudar.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ExhibitionRegistRequest {
-
-    String name;
-    String detail;
-    String start_time;
-    String end_time;
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:32e4afd30f385792af67f5e830a2d501c2df14aea26b73aa4e9057049e8034b1
+size 367

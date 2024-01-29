@@ -17,10 +17,10 @@ public class Docent {
     private Long id;
 
     @Column(name="start_time")
-    private LocalDateTime startTime;
+    private LocalDateTime start_time;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalDateTime end_time;
 
     @Column(name = "video")
     private String video;
@@ -30,9 +30,9 @@ public class Docent {
     private Exhibition exhibition;
 
     @Builder
-    public Docent(LocalDateTime startTime, LocalDateTime endTime,String video) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.video = video;
+    public Docent(LocalDateTime start_time, LocalDateTime end_time, Exhibition exhibition) {
+        this.exhibition = exhibition;
+        this.start_time = start_time;
+        this.end_time = end_time;
     }
 }

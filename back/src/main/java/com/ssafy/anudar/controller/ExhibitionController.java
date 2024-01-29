@@ -29,6 +29,6 @@ public class ExhibitionController {
     @GetMapping("")
     public ResponseEntity<List<Exhibition>> list() {
         List<Exhibition> exhibitions = exhibitionService.getAllExhibitions();
-        return ResponseEntity.ok(exhibitions);
+        return new ResponseEntity<>(exhibitions, HttpStatus.OK);
     }
 }

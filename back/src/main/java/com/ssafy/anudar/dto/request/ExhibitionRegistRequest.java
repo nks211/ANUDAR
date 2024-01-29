@@ -16,5 +16,4 @@ public class ExhibitionRegistRequest {
     String detail;
     String start_time;
     String end_time;
-
 }

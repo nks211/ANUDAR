@@ -22,13 +22,26 @@ public class ExhibitionService {
 
     private final ExhibitionRepository exhibitionRepository;
     private final UserRepository userRepository;
-
     @Transactional
     public ExhibitionDto saveExhibition (String name, String detail, String start_time, String end_time, String username) {
-        // 사용자 ID로 사용자 정보를 조회
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        // 사용자 ID로 사용자 정보를 조회
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        // 전시회 저장
         Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), user);
+
+        // 저장
+        exhibitionRepository.save(exhibition);
+
+        // 전시회에 도슨트 URL 설정
+        String docent_url = exhibition.setDocentUrl(exhibition.getId());
+
+        // 재저장..
+        exhibitionRepository.save(exhibition);
+
+
         return ExhibitionDto.fromEntity(exhibitionRepository.save(exhibition));
     }
 

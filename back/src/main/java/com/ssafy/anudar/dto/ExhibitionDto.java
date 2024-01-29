@@ -14,9 +14,14 @@ import java.time.LocalDateTime;
 public class ExhibitionDto {
     private String name;
     private String detail;
+
+
+
+
     private LocalDateTime start_time;
     private LocalDateTime end_time;
     private Long user_id;
+    private String docent_url;
 
     public static ExhibitionDto fromEntity (Exhibition exhibition) {
         return new ExhibitionDto(
@@ -24,7 +29,8 @@ public class ExhibitionDto {
                 exhibition.getDetail(),
                 exhibition.getStart_time(),
                 exhibition.getEnd_time(),
-                exhibition.getUser().getId()
+                exhibition.getUser().getId(),
+                exhibition.getDocent_url()
         );
     }
 }

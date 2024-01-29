@@ -48,6 +48,9 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/join")
                 .requestMatchers("/user/img")
                 .requestMatchers("/sessions/**")
+                .requestMatchers("/user/authors")
+                .requestMatchers("/user/info/author/**")
+                .requestMatchers("/work/infos")
                 ;
     }
 

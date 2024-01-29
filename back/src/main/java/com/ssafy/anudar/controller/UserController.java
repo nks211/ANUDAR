@@ -59,12 +59,6 @@ public class UserController {
         return "안녕히 가세요.";
     }
 
-    // 전체 회원 조회 : 탈퇴하지 않은 회원만 조회
-    @GetMapping("/infos")
-    public List<UserDto> infoAll() {
-        return userService.getUserAll();
-    }
-
     // 전체 작가 조회
     @GetMapping("/authors")
     public List<UserDto> infoAuthorsAll() {
@@ -72,8 +66,9 @@ public class UserController {
     }
 
     // 작가 상세 조회
-    @GetMapping("/info/author")
-    public ResponseEntity<UserDto> getAuthor(Authentication authentication) {
-        return new ResponseEntity<>(userService.getAuthor(authentication.getName()),HttpStatus.OK);
+    @GetMapping("/info/author/{username}")
+    public ResponseEntity<UserDto> getAuthor(@PathVariable("username") String username) {
+        return new ResponseEntity<>(userService.getAuthor(username),HttpStatus.OK);
     }
+
 }

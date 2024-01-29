@@ -17,12 +17,6 @@ public class User extends BaseTimeEntity{
     @Column(name="user_id")
     private Long id;
 
-    @Column(name="enable")
-    private boolean enable = true;
-
-    @Column(name="is_author")
-    private boolean isAuthor = false;
-
     @Column(name="username")
     private String username;
 

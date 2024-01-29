@@ -2,11 +2,13 @@ package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
 @Entity
 @Getter @Setter
+@Validated
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity{
 
@@ -36,7 +38,7 @@ public class User extends BaseTimeEntity{
 
     @Column(name="nickname")
     private String nickname;
-
+    
     @Column(name = "email")
     private String email;
 

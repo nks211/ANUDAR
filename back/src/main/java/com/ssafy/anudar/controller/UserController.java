@@ -13,6 +13,8 @@ import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -42,4 +44,36 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
     }
 
+    // 회원 정보 수정
+    @PutMapping("/update")
+    // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
+    public ResponseEntity<UserDto> update(Authentication authentication, @RequestBody JoinRequest req) {
+
+        return new ResponseEntity<>(userService.update(authentication.getName(), req),HttpStatus.OK);
+    }
+
+    // 회원 탈퇴 : 토큰으로 대체해 볼 예정
+    @PatchMapping("/signout")
+    public String signout(Authentication authentication){
+        userService.signout(authentication.getName());
+        return "안녕히 가세요.";
+    }
+
+    // 전체 회원 조회 : 탈퇴하지 않은 회원만 조회
+    @GetMapping("/infos")
+    public List<UserDto> infoAll() {
+        return userService.getUserAll();
+    }
+
+    // 전체 작가 조회
+    @GetMapping("/authors")
+    public List<UserDto> infoAuthorsAll() {
+        return userService.getAuthorAll();
+    }
+
+    // 작가 상세 조회
+    @GetMapping("/info/author")
+    public ResponseEntity<UserDto> getAuthor(Authentication authentication) {
+        return new ResponseEntity<>(userService.getAuthor(authentication.getName()),HttpStatus.OK);
+    }
 }

@@ -1,0 +1,33 @@
+.likeexhibitionarea {
+    width: 271px;
+    height: 431px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.likeexhibitiontitle {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: start;
+}
+
+.likeexhibitionartist {
+    color: #000000;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 5px;
+    text-align: start;
+}
+
+.likeexhibitionperiod {
+    color: #848484;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 5px;
+    text-align: start;
+}

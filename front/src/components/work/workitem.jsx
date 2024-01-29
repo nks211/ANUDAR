@@ -1,11 +1,11 @@
 import { React } from "react";
-import "./Work.css";
+import "./workitem.css";
 
-function WorkItem() {
+function WorkItem(props) {
     return (
-        <div>
-            <img src="../../asset/pic1.png" />
-            <div>Work Item!!!</div>
+        <div className="likeworkarea">
+            <img width="250px" height="250px" src={props.work.url} />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", }}><div className="likeworkname">{ props.work.title }</div><div className="likeworkartist">{ props.work.artist }</div></div>
         </div>
     );
 }

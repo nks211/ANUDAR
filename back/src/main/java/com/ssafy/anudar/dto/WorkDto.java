@@ -15,15 +15,13 @@ public class WorkDto {
     private String detail;
     private Integer price;
     private String image;
-    private User user;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
                 work.getTitle(),
                 work.getDetail(),
                 work.getPrice(),
-                work.getTitle(),
-                work.getUser()
+                work.getTitle()
         );
     }
 }

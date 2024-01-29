@@ -52,6 +52,7 @@ public class ExhibitionService {
         return  exhibitionRepository.findAll();
     }
 
+
     // 전시회 찜하기
 
 

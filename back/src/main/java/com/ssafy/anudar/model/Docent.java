@@ -33,8 +33,8 @@ public class Docent {
 
     @Builder
     public Docent(LocalDateTime start_time, LocalDateTime end_time, Exhibition exhibition) {
-        this.exhibition = exhibition;
         this.start_time = start_time;
         this.end_time = end_time;
+        this.exhibition = exhibition;
     }
 }

@@ -43,18 +43,22 @@ export default function ExhibitDetailPage() {
         {/* 방명록 */}
         <div style={{fontSize:"20px", textAlign:"Left", width:"100%"}}>방명록 남기기</div>
         <div className="reviewArea">
-          <form onSubmit={(event)=>{
+          {/* <form onSubmit={(event)=>{
               event.preventDefault()
               createReview(comment)
               setComment("")
-            }}>
+            }}> */}
             <textarea value={comment} placeholder="여기에 전시회에 대한 후기나 소감을 남길 수 있습니다. 최대 1000자 이내로 작성 가능합니다."
               onChange={(event)=> {
                 setComment(event.target.value)
               }}>
             </textarea>
-            <button>등록하기</button>
-          </form>
+            <button onClick={(event)=>{
+              event.preventDefault()
+              createReview(comment)
+              setComment("")
+            }}>등록하기</button>
+          {/* </form> */}
         </div>
         {comments}
         <Review userName="작성자명" todayDate="2024-01-01" content="작성자가 적은 방명록 댓글"/>

@@ -30,12 +30,27 @@ export default function WorkPage() {
         for (let i=0; i<dummy.works.length; i++) {
           // *수정* : title (API 연결 후) 변경
           if (dummy.works[i].title.includes(searchWork)) {
+            // 뒤에서부터 넣기 !!!!!!!
             newWorks.push(dummy.works[i])
+            console.log(newWorks)
           }
         }
         setWorks(newWorks)
+        // content = <div className="WorkList">
+        //             {works.map(work=>(
+        //               <Work className="Work" workType={1} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
+        //             ))}
+        //           </div>
+
       }}/>
+      {/* // </div> */}
+      {/* <div>{searchWork}</div> */}
       {content}
+      {/* <div className="WorkList">
+        {works.map(work=>(
+          <Work className="Work" workType={1} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
+        ))}
+      </div> */}
     </div>
   );
 };

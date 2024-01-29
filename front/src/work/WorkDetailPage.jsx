@@ -39,7 +39,7 @@ export default function WorkDetailPage() {
 
   for (let i=0; i<dummy.works.length; i++) {
     if (i !== Number(workId) && artist === dummy.works[i].artist) {
-      works.push(JSON.stringify(dummy.works[i]))
+      works.push(dummy.works[i])
     }
   }
   
@@ -84,6 +84,7 @@ export default function WorkDetailPage() {
             <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
           ))}
         </div> */}
+
       </div>
     </div>
   )

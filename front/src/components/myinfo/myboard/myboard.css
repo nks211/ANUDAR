@@ -15,12 +15,13 @@
 }
 
 .myboardarea table {
+    margin: 0px 20px;
     width: 100%;
     border-top: 2px solid #eee3cb;
     border-collapse: collapse;
 }
 
-td {
+.myboardarea > table > tbody > tr {
     border-bottom: 2px solid #eee3cb;
     padding: 10px 20px;
     height: 60px;

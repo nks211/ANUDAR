@@ -1,3 +1,82 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2d4caa6260c5bcb26981fa112bc58a940b2003b7e6926c476907fea7407be7da
-size 1932
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends BaseTimeEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="user_id")
+    private Long id;
+
+    @Column(name="enable")
+    private boolean enable = true;
+
+    @Column(name="is_author")
+    private boolean isAuthor = false;
+
+    @Column(name="username")
+    private String username;
+
+    @Column(name="password")
+    private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.USER;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="nickname")
+    private String nickname;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "image")
+    private String image;
+
+    @Column(name="phone")
+    private String phone;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Notify> notifies;
+
+    @OneToMany(mappedBy = "toUser")
+    private List<Follow> followerList;
+
+    @OneToMany(mappedBy = "fromUser")
+    private List<Follow> followingList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<LikeWork> likeWorks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Work> works;
+
+    @OneToMany(mappedBy = "user")
+    private List<AuctionWork> acutionWorks;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<LikeExhibition> likeExhibitions;
+
+    @Builder
+    public User(String username, String password, String name, String nickname,
+                String email, String image, String phone) {
+        this.username=username;
+        this.password=password;
+        this.name=name;
+        this.nickname=nickname;
+        this.email=email;
+        this.image=image;
+        this.phone=phone;
+    }
+
+}

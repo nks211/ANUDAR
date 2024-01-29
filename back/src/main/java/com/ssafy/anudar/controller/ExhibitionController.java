@@ -22,7 +22,7 @@ public class ExhibitionController {
     @PostMapping("/regist")
     public ResponseEntity<ExhibitionDto> regist(Authentication authentication, @RequestBody ExhibitionRegistRequest req) {
         ExhibitionDto exhibitionDto = exhibitionService
-                .saveExhibition(req.getName(), req.getDetail(), req.getStart_time(), req.getEnd_time(), authentication.getName());
+                .saveExhibition(req.getName(), req.getDetail(), req.getStart_time(), req.getEnd_time(), authentication.getName(), req.getDocent_start(), req.getDocent_end());
         return new ResponseEntity<>(exhibitionDto, HttpStatus.OK);
     }
 

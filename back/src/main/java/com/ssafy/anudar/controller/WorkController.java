@@ -28,13 +28,19 @@ public class WorkController {
 
     // 작품 찜하기
     @PostMapping("/like/{work_id}")
-    public ResponseEntity<LikeWorkDto> like(Authentication authentication, @PathVariable("work_id") Long work_id) {
+    public ResponseEntity<String> like(Authentication authentication, @PathVariable("work_id") Long work_id) {
         return new ResponseEntity<>(workService.likeWork(authentication.getName(), work_id), HttpStatus.OK);
     }
 
-//    // 작품 찜하기 취소
-//    @DeleteMapping
-//    public String unlike(@RequestBody) {
-//        return "좋아요 취소";
-//    }
+    // 작품 찜하기 취소
+    @PostMapping("/unlike/{work_id}")
+    public ResponseEntity<String> unlike(Authentication authentication, @PathVariable("work_id") Long work_id) {
+        return new ResponseEntity<>(workService.unlikeWork(authentication.getName(), work_id), HttpStatus.OK);
+    }
+
+    // 작품 찜 수 조회
+    @GetMapping("/like/count/{work_id}")
+    public ResponseEntity<Long> likecount(@PathVariable("work_id") Long work_id) {
+        return new ResponseEntity<>(workService.likeCount(work_id), HttpStatus.OK);
+    }
 }

@@ -3,7 +3,10 @@ package com.ssafy.anudar.service;
 
 
 import com.ssafy.anudar.dto.LikeWorkDto;
+import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.exception.BadRequestException;
+import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.LikeWork;
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.Work;
@@ -28,8 +31,8 @@ public class WorkService {
         return workRepository.findAll().stream().map(WorkDto::fromEntity).collect(Collectors.toList());
     }
 
-    public LikeWorkDto likeWork(String username, Long work_id) {
-        System.out.println(username);
+    // 작품 찜하기
+    public String likeWork(String username, Long work_id) {
         // 작품의 작가인지 체크 후 => 작가, work_id로 검색시 존재하는지 체크
         // 작가 본인인지 체크 work.getUser().getUsername().equals(username)
         // 아니라면 LikeWork에 존재하는지 체크
@@ -42,9 +45,32 @@ public class WorkService {
                     .orElseGet(() -> {
                         LikeWork likeWork = new LikeWork(user, work);
                         likeWorkRepository.save(likeWork);
-                        return likeWork;
+                        return null;
                     });
+
         }
-        return null;
+        return "좋아요";
+    }
+
+    // 작품 찜하기 취소
+    public String unlikeWork(String username, Long work_id) {
+        // 작품의 작가인지 체크 후 => 작가, work_id로 검색시 존재하는지 체크
+        // 작가 본인인지 체크 work.getUser().getUsername().equals(username)
+        // 아니라면 LikeWork에 존재하는지 체크
+        Work work = workRepository.findById(work_id).orElse(null);
+        User user = repository.findByUsername(username).orElse(null);
+        if (work != null && user != null && !work.getUser().getUsername().equals(username)) {
+            // 존재한다면 삭제해주기
+            likeWorkRepository.findByUserAndWork(user, work)
+                    .ifPresent(it -> likeWorkRepository.delete(it));
+
+        }
+        return "좋아요 취소";
+    }
+
+    // 작품 찜 수 조회
+    public Long likeCount(Long work_id) {
+        Work work = workRepository.findById(work_id).orElse(null);
+        return likeWorkRepository.countByWork(work);
     }
 }

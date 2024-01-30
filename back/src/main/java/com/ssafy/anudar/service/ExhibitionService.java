@@ -72,8 +72,8 @@ public class ExhibitionService {
     }
 
     // 전시회 상세 조회
-    public Optional<Exhibition> getExhibitionById(Long exhibitionId) {
-        return exhibitionRepository.findById(exhibitionId);
+    public Optional<Exhibition> getExhibitionById(Long exhibition_id) {
+        return exhibitionRepository.findById(exhibition_id);
     }
 
     // 전시회 찜하기

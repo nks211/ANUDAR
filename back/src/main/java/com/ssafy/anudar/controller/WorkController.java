@@ -1,12 +1,16 @@
 package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.model.Work;
 import com.ssafy.anudar.service.WorkService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +22,16 @@ public class WorkController {
     @GetMapping("/infos")
     public List<WorkDto> infos() {
         return workService.getWorksAll();
+    }
+
+    // 작품 상세 조회
+    @GetMapping("/infos/{work_id}")
+    public ResponseEntity<Work> workDetail(@PathVariable Long work_id) {
+        Optional<Work> workOptional = workService.getWorkById(work_id);
+
+        return workOptional
+                .map(workDto -> new ResponseEntity<>(workDto, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 //    // 작품 찜하기

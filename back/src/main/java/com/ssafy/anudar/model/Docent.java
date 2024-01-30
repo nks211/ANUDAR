@@ -1,34 +1,3 @@
-package com.ssafy.anudar.model;
-
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
-
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Docent {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="docent_id")
-    private Long id;
-
-    @Column(name="start_time")
-    private LocalDateTime startTime;
-
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
-
-    @Column(name = "video")
-    private String video;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exhibition_id")
-    private Exhibition exhibition;
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7950f9e5ca978a06e6e031e78ea85cde94ee75fa496f1e62b55e396aec23d822
+size 926

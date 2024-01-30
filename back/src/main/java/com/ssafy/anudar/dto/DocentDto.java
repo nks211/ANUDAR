@@ -1,14 +1,23 @@
 package com.ssafy.anudar.dto;
 
+import com.ssafy.anudar.model.Docent;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class DocentDto {
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String video;  // 도슨트 주소
-    private long exhibitionId;
+    private LocalDateTime start_time;
+    private LocalDateTime end_time;
+    private long exhibition_id;
+
+    public static DocentDto fromEntity (Docent docent) {
+        return new DocentDto(
+                docent.getStart_time(),
+                docent.getEnd_time(),
+                docent.getExhibition().getId()
+        );
+    }
 }

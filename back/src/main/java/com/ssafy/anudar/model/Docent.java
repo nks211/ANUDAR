@@ -1,5 +1,6 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.internal.CoreMessageLogger;
@@ -17,22 +18,23 @@ public class Docent {
     private Long id;
 
     @Column(name="start_time")
-    private LocalDateTime startTime;
+    private LocalDateTime start_time;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalDateTime end_time;
 
     @Column(name = "video")
     private String video;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exhibition_id")
     private Exhibition exhibition;
 
     @Builder
-    public Docent(LocalDateTime startTime, LocalDateTime endTime,String video) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.video = video;
+    public Docent(LocalDateTime start_time, LocalDateTime end_time, Exhibition exhibition) {
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.exhibition = exhibition;
     }
 }

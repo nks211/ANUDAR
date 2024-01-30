@@ -26,25 +26,6 @@ function Signup() {
         });
     }
 
-<<<<<<< HEAD
-  useEffect(() => passcheck() )
-  
-  return (
-    <div className="signupArea">
-      <div className="signupTitle">회원가입</div>
-      <img id="profile" className="signupImage" src={preview} />
-      <label className="signupProfile" for="imagefile" >프로필 파일 등록...</label>
-      <input type="file" id="imagefile" accept="image/*" onChange={e => upload(e)} style={{ display: "none" }}/>
-      <div className="signupColumn">
-        <div className="name">
-          <div className="item"><span>* </span>ID</div>
-          <div className="item"><span>* </span>비밀번호</div>
-          <div className="item"><span>* </span>비밀번호 확인</div>
-          <div className="item"><span>* </span>이름</div>
-          <div className="item"><span>* </span>전화번호</div>
-          <div className="item"><span>* </span>닉네임</div>
-          <div className="item"><span>* </span>이메일</div>
-=======
     const passcheck = () => {
         password === Password? setPasswordCheck(true) : setPasswordCheck(false);
     }
@@ -92,7 +73,6 @@ function Signup() {
                 </div>
             </div>
             <button style={{ textDecoration: "none" }} className="signupcheck" onClick={() => { navigate("/"); }}>가입</button>
->>>>>>> bfd35c47c90d9bc47c2862f72097a7fdf15000db
         </div>
     );
 }

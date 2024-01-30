@@ -1,0 +1,61 @@
+.container {
+    width: 1380px;
+    height: 500px;
+    margin: 0px 30px;
+}
+
+.slidedots {
+    bottom: -25px;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+}
+
+.slidedots li {
+    list-style: none;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0px 10px;
+}
+
+.slidedots li button {
+    border: none;
+    background-color: #848484;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+}
+
+.slidedots li.slick-active button {
+    background-color: #967e76;
+}
+
+.nowadays {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    left: 50px;
+    top: 5px;
+    position: relative;
+}
+
+.nowdetails {
+    color: #967e76;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: end;
+    top: -25px;
+    position: relative;
+    cursor: pointer;
+}

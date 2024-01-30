@@ -1,23 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import './Artist.css'
-
-export default function Artist(props) {
-  const navigate = useNavigate();
-  
-  return (
-    <div className="artistCard">
-      <div className="artistImage cursorPointer" onClick={()=>
-        navigate(`/artist/${props.artistId}`)
-        }>
-        <img style={{width:300, height:300}} src={props.image}></img>
-      </div>
-      <div className="artistInfo">
-        <div className="artistName fontWeightStrong cursorPointer" onClick={()=>
-        navigate(`/artist/${props.artistId}`)
-        }>{props.artistName}</div>
-        <div className="artistExhibition"><span className="fontWeightStrong">대표전시</span> | {props.artistExhibition}</div>
-        <div className="artistWork"><span className="fontWeightStrong">대표작품</span> | {props.artistWork}</div>
-      </div>
-    </div>
-  )
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:9c4cf860f343ac635b6012c3272d460d65c360e6f89bcd1f4f41e2cc847f968e
+size 884

@@ -22,11 +22,13 @@ public class ExhibitionController {
     @PostMapping("/regist")
     public ResponseEntity<ExhibitionDto> regist(Authentication authentication, @RequestBody ExhibitionRegistRequest req) {
         ExhibitionDto exhibitionDto = exhibitionService
-                .saveExhibition(req.getName(), req.getDetail(), req.getStart_time(), req.getEnd_time(), authentication.getName(), req.getDocent_start(), req.getDocent_end());
+                .saveExhibition(req.getName(), req.getDetail(), req.getStart_time(), req.getEnd_time(), authentication.getName(),
+                        req.getDocent_start(), req.getDocent_end(),
+                        req.getWorks_title(), req.getWorks_detail(), req.getWorks_price(), req.getWorks_image());
         return new ResponseEntity<>(exhibitionDto, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseEntity<List<Exhibition>> list() {
         List<Exhibition> exhibitions = exhibitionService.getAllExhibitions();
         return new ResponseEntity<>(exhibitions, HttpStatus.OK);

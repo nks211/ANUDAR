@@ -3,7 +3,6 @@ package com.ssafy.anudar.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.internal.CoreMessageLogger;
 
 import java.time.LocalDateTime;
 

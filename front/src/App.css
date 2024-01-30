@@ -3,12 +3,13 @@
 } */
 
 .App {
+  font-family: 'SUIT-Regular' !important; 
   text-align: center;
-  padding-top: 60px;
+  padding-top: 40px;
   padding-bottom: 100px;
 }
 
-.App button, .App div, .App textarea {
+.App button, .App div, .App textarea, .App select, .App input {
   font-family: 'SUIT-Regular'; 
 }
 

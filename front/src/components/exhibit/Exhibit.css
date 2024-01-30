@@ -26,6 +26,10 @@
   margin-bottom: 0;
   font-weight: 900;
   font-size: 18px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .exhibitArtist1 {
@@ -90,6 +94,10 @@
   margin-bottom: 0;
   font-weight: 900;
   font-size: 28px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .exhibitArtist2 {
@@ -100,5 +108,50 @@
 .exhibitPeriod2 {
   margin: 0;
   font-size: 18px;
+  color: #848484;
+}
+
+
+.exhibitCard3 {
+  width: 300px;
+  /* height: 800px; */
+  /* margin: 10px; */
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+
+
+.exhibitImageCard3 {
+  width: 300px;
+  height: 400px;
+}
+
+.exhibitImage3 {
+  width: 300px;
+  height: 400px;
+}
+
+.exhibitName3 {
+  width: 300px;
+  margin-top: 25px;
+  margin-bottom: 0;
+  font-weight: 900;
+  font-size: 22.5px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  
+}
+
+.exhibitArtist3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.exhibitPeriod3 {
+  margin: 0;
+  font-size: 16px;
   color: #848484;
 }

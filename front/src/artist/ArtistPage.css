@@ -52,16 +52,14 @@
 .artistIntroArea::-webkit-scrollbar-thumb {
   width: 5px;
   height: 30%;
-  /* background: rgba(150, 126, 118, 0); */
-  background: red;
+  background: rgba(150, 126, 118, 0);
   border-radius: 10px;
 }
 
 .artistIntroArea:hover::-webkit-scrollbar-thumb {
   width: 5px;
   height: 30%;
-  background: red;
-  /* background: #967E76; */
+  background: #967E76;
   border-radius: 10px;
 }
 

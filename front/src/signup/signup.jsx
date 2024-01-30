@@ -33,12 +33,12 @@ function Signup() {
     useEffect(() => passcheck())
     
     return (
-        <div className="signuparea">
-            <div className="title">회원가입</div>
-            <img id="profile" className="image" src={preview} />
-            <label className="profile" for="imagefile" >프로필 파일 등록...</label>
+        <div className="signupArea">
+            <div className="signupTitle">회원가입</div>
+            <img id="profile" className="signupImage" src={preview} />
+            <label className="signupProfile" for="imagefile" >프로필 파일 등록...</label>
             <input type="file" id="imagefile" accept="image/*" onChange={e => upload(e)} style={{ display: "none" }}/>
-            <div className="column">
+            <div className="signupColumn">
                 <div className="name">
                     <div className="item"><span>* </span>ID</div>
                     <div className="item"><span>* </span>비밀번호</div>
@@ -61,7 +61,7 @@ function Signup() {
                     <div onClick={() => {  }} style={{ position: "relative", left: "25px", top: "20px" }} className="button">
                         중복 ID 확인
                     </div>
-                    <div style={{ position: "relative", top: "155px", fontSize: "11px", fontWeight: 600, }} className={ passwordcheck? "same" : "different" }>
+                    <div style={{ position: "relative", top: "155px", fontSize: "11px", fontWeight: 600, }} className={ passwordcheck? "pwSame" : "pwDifferent" }>
                         { password.length > 0? ( passwordcheck? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다") : "" }
                     </div>
                     <div onClick={() => {  }} style={{ position: "relative", left: "25px", top: "305px" }} className="button">
@@ -72,7 +72,7 @@ function Signup() {
                     </div>
                 </div>
             </div>
-            <button style={{ textDecoration: "none" }} className="signupcheck" onClick={() => { navigate("/"); }}>가입</button>
+            <button style={{ textDecoration: "none" }} className="signupCheck" onClick={() => { navigate("/"); }}>가입</button>
         </div>
     );
 }

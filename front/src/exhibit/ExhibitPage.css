@@ -52,6 +52,25 @@
 	font-weight: 900;
 }
 
+
+/* 디테일 */
+
+.exhibitInfo {
+  display: flex;
+}
+
+.exhibitButtons button {
+  width: 200px;
+  height: 70px;
+  border: None;
+  border-radius: 3rem;
+  margin: 0 5px 30px 5px;
+  background-color: #EEE3CB;
+  font-size: 20px;
+  /* color: white; */
+  cursor: pointer;
+}
+
 .reviewArea {
   width: 750px;
   /* height: 180px; */
@@ -112,4 +131,113 @@
   color: white;
   cursor: pointer;
   margin: 0 20px 20px 0;
+}
+
+.selectReviews {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+
+/* 전시회 등록 페이지 */
+.exhibitRegist {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  /* justify-content: left; */
+}
+
+.registColumn {
+  width: 100%;
+  display: flex;
+}
+
+.registPoster {
+  flex: 4;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registInfo {
+  flex: 6;
+  padding: 0 10px;
+}
+
+.registTitle {
+  width: 100%;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+
+.registDescription {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 15px;
+}
+
+.registInput {
+  width: 100%;
+  display: flex;
+  font-size: 18px;
+  /* align-items: center; */
+  margin-bottom: 10px;
+}
+
+.registDescription span, .registInput span {
+  color: rgb(237, 70, 70);
+}
+
+.registInput .item1 {
+  flex: 1;
+}
+
+.registInput .item2 {
+  flex: 2;
+}
+
+.item2 {
+  display: flex;
+}
+
+.registInput input {
+  flex: 2;
+  height: 25px;
+  border: solid #aeaeae 1px;
+  border-radius: 0.3rem;
+}
+
+.registInput input:focus { outline: none; border: 1px solid #D7C0AE; }
+
+.registInput textarea {
+  flex: 2;
+  height: 100px;
+  border: solid #aeaeae 1px;
+  border-radius: 0.3rem;
+  resize: None;
+}
+
+.registInput textarea:focus { outline: none; border: 1px solid #D7C0AE; }
+
+/* .registPeriod {
+  display: flex;
+}
+
+#startYear, #startMonth, #startDay {
+  flex: 1;
+  width: 10px;
+} */
+
+
+.registInput input {
+
 }

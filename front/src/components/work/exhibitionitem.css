@@ -7,7 +7,6 @@
 
 .likeexhibitiontitle {
     color: #000000;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 18px;
     font-weight: 600;
     margin-top: 5px;
@@ -16,7 +15,6 @@
 
 .likeexhibitionartist {
     color: #000000;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 12px;
     font-weight: 400;
     margin-top: 5px;
@@ -25,7 +23,6 @@
 
 .likeexhibitionperiod {
     color: #848484;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 10px;
     font-weight: 400;
     margin-top: 5px;

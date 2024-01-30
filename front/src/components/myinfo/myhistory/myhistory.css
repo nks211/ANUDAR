@@ -1,6 +1,5 @@
 .myfavorites, .myauction, .myartist {
     color: #967E76;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 28px;
     font-weight: 600;
     text-align: start;
@@ -11,7 +10,6 @@
 
 .historytitle {
     color: #000000;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 24px;
     font-weight: 600;
     text-align: start;

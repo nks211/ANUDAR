@@ -7,7 +7,6 @@
 
 .myinfoarea .title {
     color: #000000;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 24px;
     font-weight: 600;
     position: relative;
@@ -25,7 +24,6 @@
     align-items: center;
     background-color: #967E76;
     color: #ffffff;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 28px;
     font-weight: 600;
     cursor: pointer;

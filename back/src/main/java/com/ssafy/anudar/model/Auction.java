@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Auction {
 
     @Id
@@ -25,5 +25,14 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<AuctionWork> auctionWorks;
+
+    @OneToOne
+    @JoinColumn(name = "auction_id")
+    private AuctionVideo auctionVideo;
+
+    public void setAuctionVideo(AuctionVideo auctionVideo){
+        this.auctionVideo = auctionVideo;
+        auctionVideo.setAuction(this);
+    }
 
 }

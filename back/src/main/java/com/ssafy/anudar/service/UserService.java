@@ -1,14 +1,17 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
+import com.ssafy.anudar.dto.AuctionWorkDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
+import com.ssafy.anudar.model.AuctionWork;
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.UserPrincipalDetails;
 import com.ssafy.anudar.model.UserRole;
+import com.ssafy.anudar.repository.AuctionWorkRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +29,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuctionWorkRepository auctionWorkRepository;
 
     @Value("${jwt.secret}")
     private String key;
@@ -81,12 +85,12 @@ public class UserService {
 
     }
 
-    // 회원 탈퇴 : enable 변경
-    public UserDto signout(String username) {
+    // 회원 탈퇴 : 연관된 테이블 설정 필요
+    public void signout(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // false로 변경된 회원의 정보 저장
-        return UserDto.fromEntity(userRepository.save(user));
+
+        userRepository.deleteById(user.getId());
     }
 
     // 전체 작가 조회 : 탈퇴하지 않은 사람 중에 작가인 경우 조회 => 다른 테이블과 조인 필요
@@ -99,6 +103,14 @@ public class UserService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         return UserDto.fromEntity(user);
+    }
+
+    // 나의 결제 내역
+    public List<AuctionWorkDto> getpay(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
     }
 }
 

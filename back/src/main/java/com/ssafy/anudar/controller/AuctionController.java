@@ -14,9 +14,9 @@ public class AuctionController {
 
     private final AuctionService auctionService;
 
-    // 경매 영상 조회
-    @GetMapping("/current")
-    public AuctionDto getCurrentAuction() {
-        return auctionService.getCurrentAuction();
-    }
+//    // 경매 영상 조회
+//    @GetMapping("/current")
+//    public AuctionDto getCurrentAuction() {
+//        return auctionService.getCurrentAuction();
+//    }
 }

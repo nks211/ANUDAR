@@ -1,8 +1,10 @@
 package com.ssafy.anudar.controller;
 
+import com.ssafy.anudar.dto.AuctionWorkDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.model.AuctionWork;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,7 +55,7 @@ public class UserController {
     }
 
     // 회원 탈퇴 : 토큰으로 대체해 볼 예정
-    @PatchMapping("/signout")
+    @DeleteMapping("/signout")
     public String signout(Authentication authentication){
         userService.signout(authentication.getName());
         return "안녕히 가세요.";
@@ -69,6 +71,12 @@ public class UserController {
     @GetMapping("/info/author/{username}")
     public ResponseEntity<UserDto> getAuthor(@PathVariable("username") String username) {
         return new ResponseEntity<>(userService.getAuthor(username),HttpStatus.OK);
+    }
+
+    // 나의 결제 내역
+    @GetMapping("/pay/work")
+    public List<AuctionWorkDto> mypay(Authentication authentication) {
+        return userService.getpay(authentication.getName());
     }
 
 }

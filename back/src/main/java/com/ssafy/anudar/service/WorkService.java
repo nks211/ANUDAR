@@ -39,12 +39,13 @@ public class WorkService {
         Work work = workRepository.findById(work_id).orElse(null);
         User user = repository.findByUsername(username).orElse(null);
         if (work != null && user != null && !work.getUser().getUsername().equals(username)) {
-            System.out.println(work.getUser().getId());
             // 없다면 생성해주기
             likeWorkRepository.findByUserAndWork(user, work)
                     .orElseGet(() -> {
                         LikeWork likeWork = new LikeWork(user, work);
                         likeWorkRepository.save(likeWork);
+                        work.setBid(work.getBid() + 1);
+                        workRepository.save(work);
                         return null;
                     });
 
@@ -62,15 +63,18 @@ public class WorkService {
         if (work != null && user != null && !work.getUser().getUsername().equals(username)) {
             // 존재한다면 삭제해주기
             likeWorkRepository.findByUserAndWork(user, work)
-                    .ifPresent(it -> likeWorkRepository.delete(it));
+                    .ifPresent(it -> {
+                        likeWorkRepository.delete(it);
+                        work.setBid(work.getBid() - 1);
+                        workRepository.save(work);
+                    });
 
         }
         return "좋아요 취소";
     }
 
     // 작품 찜 수 조회
-    public Long likeCount(Long work_id) {
-        Work work = workRepository.findById(work_id).orElse(null);
-        return likeWorkRepository.countByWork(work);
+    public Integer likeCount(Long work_id) {
+        return workRepository.findById(work_id).get().getBid();
     }
 }

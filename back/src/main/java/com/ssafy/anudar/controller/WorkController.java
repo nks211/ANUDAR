@@ -40,7 +40,7 @@ public class WorkController {
 
     // 작품 찜 수 조회
     @GetMapping("/like/count/{work_id}")
-    public ResponseEntity<Long> likecount(@PathVariable("work_id") Long work_id) {
+    public ResponseEntity<Integer> likecount(@PathVariable("work_id") Long work_id) {
         return new ResponseEntity<>(workService.likeCount(work_id), HttpStatus.OK);
     }
 }

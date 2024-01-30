@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class WorkDto {
     private String title;
     private String detail;
-    private int price;
+    private Integer price;
     private String image;
 
     public static WorkDto fromEntity (Work work) {

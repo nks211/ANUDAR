@@ -50,9 +50,9 @@ public class WebSecurityConfig {
                 .requestMatchers("/sessions/**")
                 .requestMatchers("/user/authors")
                 .requestMatchers("/user/info/author/**")
-                .requestMatchers("/work/infos")
                 .requestMatchers("/exhibit/list/**")
-                ;
+                .requestMatchers("/work")
+                .requestMatchers("/work/like/count/**");
     }
 
     @Bean

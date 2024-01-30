@@ -1,33 +1,28 @@
+
 server:
   servlet:
     context-path: /api
   port: 8080
   ssl:
     enabled: false
-
 OPENVIDU_URL: http://43.200.169.6:8080/
 OPENVIDU_SECRET: MY_SECRET
-
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
     username: ssafy
     password: ssafy
-
   jpa:
     hibernate:
       ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
-
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
   access-token:
     expiretime: 3600000
-
 cloud:
   aws:
     s3:
@@ -43,4 +38,3 @@ cloud:
       auto: false
     stack:
       auto: false
-

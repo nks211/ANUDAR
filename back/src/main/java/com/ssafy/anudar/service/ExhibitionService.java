@@ -39,6 +39,8 @@ public class ExhibitionService {
         // 사용자 ID로 사용자 정보를 조회
         User user = userRepository.findByUsername(username).orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
+
+        
         // 전시회 저장
         Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), user);
         exhibitionRepository.save(exhibition);

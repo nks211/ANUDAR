@@ -25,4 +25,5 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
     private List<AuctionWork> auctionWorks;
+
 }

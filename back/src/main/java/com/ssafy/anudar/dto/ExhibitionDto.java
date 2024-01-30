@@ -8,10 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class ExhibitionDto {
     private Long id;
@@ -20,6 +21,7 @@ public class ExhibitionDto {
     private LocalDateTime start_time;
     private LocalDateTime end_time;
     private Long user_id;
+    private UserDto user;
 
 
     public static ExhibitionDto fromEntity (Exhibition exhibition) {
@@ -29,7 +31,9 @@ public class ExhibitionDto {
                 exhibition.getDetail(),
                 exhibition.getStart_time(),
                 exhibition.getEnd_time(),
-                exhibition.getUser().getId()
+                exhibition.getUser().getId(),
+                UserDto.fromEntity(exhibition.getUser())
         );
     }
+
 }

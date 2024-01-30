@@ -1,12 +1,16 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
+@Validated
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity{
 
@@ -14,12 +18,6 @@ public class User extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
     private Long id;
-
-    @Column(name="enable")
-    private boolean enable = true;
-
-    @Column(name="is_author")
-    private boolean isAuthor = false;
 
     @Column(name="username")
     private String username;
@@ -36,7 +34,7 @@ public class User extends BaseTimeEntity{
 
     @Column(name="nickname")
     private String nickname;
-
+    
     @Column(name = "email")
     private String email;
 
@@ -64,6 +62,7 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user")
     private List<AuctionWork> acutionWorks;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 

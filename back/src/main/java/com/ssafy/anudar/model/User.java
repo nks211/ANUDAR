@@ -1,10 +1,12 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -60,6 +62,7 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user")
     private List<AuctionWork> acutionWorks;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 

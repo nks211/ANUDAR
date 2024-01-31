@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExhibitionDto {
-    private Long id;
     private String name;
     private String detail;
     private LocalDateTime start_time;
@@ -26,7 +25,6 @@ public class ExhibitionDto {
 
     public static ExhibitionDto fromEntity (Exhibition exhibition) {
         return new ExhibitionDto(
-                exhibition.getId(),
                 exhibition.getName(),
                 exhibition.getDetail(),
                 exhibition.getStart_time(),

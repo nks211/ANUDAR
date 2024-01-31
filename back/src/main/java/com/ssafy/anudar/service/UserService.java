@@ -1,14 +1,17 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
+import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
+import com.ssafy.anudar.model.Follow;
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.UserPrincipalDetails;
 import com.ssafy.anudar.model.UserRole;
+import com.ssafy.anudar.repository.FollowRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${jwt.secret}")
@@ -100,5 +104,26 @@ public class UserService {
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         return UserDto.fromEntity(user);
     }
+
+    // 팔로우
+    public FollowDto follow(String toUsername, String fromUsername) {
+        // 팔로우 대상 및 본인
+        User toUser = userRepository.findByUsername(fromUsername)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        User fromUser = userRepository.findByUsername(toUsername)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return FollowDto.fromEntity(followRepository.save(new Follow(toUser, fromUser)));
+    }
+
+    // 언팔로우
+    public void unfollow(String toUsername, String fromUsername) {
+        // 팔로우 대상 및 본인
+        User toUser = userRepository.findByUsername(fromUsername)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        User fromUser = userRepository.findByUsername(toUsername)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        followRepository.deleteByToUserAndFromUser(toUser,fromUser);
+    }
+
 }
 

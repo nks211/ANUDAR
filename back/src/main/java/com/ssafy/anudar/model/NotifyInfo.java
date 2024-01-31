@@ -1,7 +1,7 @@
 package com.ssafy.anudar.model;
 
 public interface NotifyInfo {
-    User receicer();
+    User receiver();
     Long getGoUrlId();
     Notify.NotifyType getNotifyType();
 }

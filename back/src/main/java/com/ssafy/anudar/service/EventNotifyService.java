@@ -1,9 +1,13 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.model.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+
 public class EventNotifyService {
     private final NotifyService notifyService;
 
@@ -57,7 +61,7 @@ public class EventNotifyService {
         Notify notify = Notify.builder()
                 .receiver(author)
                 .notifytype(Notify.NotifyType.DOCENT)
-                .content("도슨트 시작 30분 전: " + docent.getExhibition())
+                .content("도슨트 시작 30분 전입니다")
                 .isRead(false)
                 .build();
 

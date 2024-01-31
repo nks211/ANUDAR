@@ -44,7 +44,7 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies;
 
     @OneToMany(mappedBy = "toUser")

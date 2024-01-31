@@ -1,9 +1,8 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -20,18 +19,15 @@ public class Notify extends BaseTimeEntity {
     @Column(name="notify_id")
     private Long id;
 
-    @Column(name="link")
-    private String link;
-
     @Column(name="content")
     private String content;
 
     @Column(name="isRead")
     private Boolean isRead;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name="user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User receiver;
 
     @Enumerated(EnumType.STRING)
@@ -39,11 +35,10 @@ public class Notify extends BaseTimeEntity {
     private NotifyType notifytype;
 
     @Builder
-    public  Notify (User receiver, NotifyType notifytype, String content, String link, Boolean isRead){
+    public  Notify (User receiver, NotifyType notifytype, String content, Boolean isRead){
         this.receiver = receiver;
         this.notifytype = notifytype;
         this.content = content;
-        this.link = link;
         this.isRead = isRead;
     }
 

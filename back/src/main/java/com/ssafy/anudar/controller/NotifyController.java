@@ -1,7 +1,6 @@
 package com.ssafy.anudar.controller;
 
-import com.ssafy.anudar.model.Notify;
-import com.ssafy.anudar.model.User;
+
 import com.ssafy.anudar.service.NotifyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

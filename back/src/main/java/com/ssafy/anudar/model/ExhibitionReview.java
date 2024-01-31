@@ -31,9 +31,6 @@ public class ExhibitionReview extends BaseTimeEntity {
     @JoinColumn(name="user_id")
     private User user;
 
-    public Post getPost(){
-        return post;
-    }
 
 //    대댓글인듯 :)
 //    @ManyToOne

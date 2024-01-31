@@ -82,7 +82,6 @@ export default function Exhibit(props) {
         <div className="exhibitCard3">
           <div className="exhibitImageCard3">
             {props.exhibit.image}
-            {/* <img className="exhibitImage3" style={{width:300, height:400}} src={"../../"+props.exhibit.image}></img> */}
           </div>
           <p className="exhibitName3">{props.exhibit.title}</p>
           <p className="exhibitArtist3">{props.exhibit.artist}</p>

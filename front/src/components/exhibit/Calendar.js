@@ -19,11 +19,15 @@ export default function Calendar() {
   var nextDate = endDay.getDate();
   var nextDay = endDay.getDay();
 
+  // console.log(today)
+  // console.log(endDay)
+
   // console.log(prevDate, prevDay, nextDate, nextDay);
 
   const [startExhibit, setStartExhibit] = useState();
   const [endExhibit, setEndExhibit] = useState();
   const [period, setPeriod] = useState([]);
+  const [dateClass, setDateClass] = useState("");
 
   function checkDate(day) {
     return(
@@ -46,6 +50,7 @@ export default function Calendar() {
       if(!startExhibit) {
         const newStart = `${year}-${String(month).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
         setStartExhibit(newStart)
+        setDateClass("startExhibit")
       } else {
         if (!endExhibit) {
           const newEnd = `${year}-${String(month).padStart(2, '0')}-${String(i).padStart(2, '0')}`;

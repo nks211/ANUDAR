@@ -79,11 +79,11 @@ public class UserService {
         // username으로 데이터를 불러와서 값을 변경하기
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // username과 name은 수정은 X / 비밀번호 수정 따로 추가 예정
-        // null 값 들어오면 null로 수정해주기 필요
+        // username과 name은 수정은 X
         user.setNickname(req.getNickname());
         user.setEmail(req.getEmail());
         user.setImage(req.getImage());
+        user.setPhone(req.getPhone());
         // 수정된 사용자 정보를 저장
         return UserDto.fromEntity(userRepository.save(user));
 

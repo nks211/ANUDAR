@@ -57,7 +57,7 @@ public class WorkController {
     }
 
     // 작품 찜하기 취소
-    @PostMapping("/unlike/{work_id}")
+    @DeleteMapping("/unlike/{work_id}")
     public ResponseEntity<String> unlike(Authentication authentication, @PathVariable("work_id") Long work_id) {
         return new ResponseEntity<>(workService.unlikeWork(authentication.getName(), work_id), HttpStatus.OK);
     }

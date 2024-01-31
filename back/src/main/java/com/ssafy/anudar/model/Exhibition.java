@@ -42,8 +42,9 @@ public class Exhibition {
     @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
     private Docent docent;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Builder

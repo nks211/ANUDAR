@@ -1,10 +1,12 @@
 package com.ssafy.anudar.controller;
 
+import com.ssafy.anudar.dto.AuctionWorkDto;
 import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
 import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,27 +52,40 @@ public class UserController {
     @PutMapping("/update")
     // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
     public ResponseEntity<UserDto> update(Authentication authentication, @RequestBody JoinRequest req) {
-
         return new ResponseEntity<>(userService.update(authentication.getName(), req),HttpStatus.OK);
     }
 
+    // 비밀번호 변경
+    @PutMapping("/update/password")
+    public ResponseEntity<UserDto> updatepassword(Authentication authentication, @RequestBody UpdatePasswordRequest req) {
+        return new ResponseEntity<>(userService.updatepassword(authentication.getName(), req.getOldpassword(), req.getNewpassword(), req.getCheckpassword()) ,HttpStatus.OK);
+    }
+
     // 회원 탈퇴 : 토큰으로 대체해 볼 예정
-    @PatchMapping("/signout")
-    public String signout(Authentication authentication){
+    @DeleteMapping("/signout")
+    public ResponseEntity<String> signout(Authentication authentication){
         userService.signout(authentication.getName());
-        return "안녕히 가세요.";
+        return new ResponseEntity<>("안녕히 가세요.", HttpStatus.OK);
     }
 
     // 전체 작가 조회
     @GetMapping("/authors")
-    public List<UserDto> infoAuthorsAll() {
-        return userService.getAuthorAll();
+    public ResponseEntity<List<UserDto>> infoAuthorsAll() {
+
+        return new ResponseEntity<>(userService.getAuthorAll(), HttpStatus.OK);
     }
 
     // 작가 상세 조회
     @GetMapping("/info/author/{username}")
     public ResponseEntity<UserDto> getAuthor(@PathVariable("username") String username) {
         return new ResponseEntity<>(userService.getAuthor(username),HttpStatus.OK);
+    }
+
+
+    // 나의 결제 내역
+    @GetMapping("/pay/work")
+    public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
+        return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
     }
 
     // 작가 팔로우
@@ -86,7 +101,7 @@ public class UserController {
         userService.unfollow(authentication.getName(), username);
     }
 
-    // 작가 팔로잉 리스트
+    // 작가 팔로잉 목록
     @GetMapping("/following")
     public ResponseEntity<List<User>> following (Authentication authentication) {
         List<User> followings = userService.following(authentication.getName());

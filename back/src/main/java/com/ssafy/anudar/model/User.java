@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -47,21 +46,22 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notify> notifies;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "toUser")
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
     private List<Follow> followerList;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "fromUser")
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
     private List<Follow> followingList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Work> works;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Exhibition> exhibitions;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AuctionWork> acutionWorks;
 
     @JsonIgnore

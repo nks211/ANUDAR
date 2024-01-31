@@ -1,21 +1,24 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
+import com.ssafy.anudar.dto.AuctionWorkDto;
 import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
-import com.ssafy.anudar.model.Follow;
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.UserPrincipalDetails;
 import com.ssafy.anudar.model.UserRole;
+import com.ssafy.anudar.repository.AuctionWorkRepository;
+import com.ssafy.anudar.model.Follow;
+
 import com.ssafy.anudar.repository.FollowRepository;
+
 import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AuctionWorkRepository auctionWorkRepository;
 
     @Value("${jwt.secret}")
     private String key;
@@ -85,12 +89,31 @@ public class UserService {
 
     }
 
-    // 회원 탈퇴 : enable 변경
-    public UserDto signout(String username) {
+    // 비밀번호 수정
+    public UserDto updatepassword(String username, String oldpassword, String newpassword, String checkpassword) {
+        // 로그인 로직
+        // 회원가입 여부 체크
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // false로 변경된 회원의 정보 저장
-        return UserDto.fromEntity(userRepository.save(user));
+        // 기본 비밀번호와 동일한지 체크
+        if(bCryptPasswordEncoder.matches(oldpassword, user.getPassword()) && newpassword.equals(checkpassword)) {
+            // 새로운 비밀번호와 비밀번호 확인이 동일한지 체크
+            user.setPassword(bCryptPasswordEncoder.encode(newpassword));
+            userRepository.save(user);
+
+        } else {
+            throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
+        }
+
+        return UserDto.fromEntity(user);
+    }
+
+    // 회원 탈퇴 : 연관된 테이블 설정 필요
+    public void signout(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        userRepository.deleteById(user.getId());
     }
 
     // 전체 작가 조회 : 탈퇴하지 않은 사람 중에 작가인 경우 조회 => 다른 테이블과 조인 필요
@@ -105,9 +128,16 @@ public class UserService {
         return UserDto.fromEntity(user);
     }
 
+    // 나의 결제 내역
+    public List<AuctionWorkDto> getpay(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
+    }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
@@ -117,7 +147,7 @@ public class UserService {
 
     // 언팔로우
     public void unfollow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
@@ -125,8 +155,9 @@ public class UserService {
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
     }
 
+    // 작가 팔로잉 목록
     public List<User> following(String username) {
-        // 본인 확인
+        // 본인 존재 여부 확인
         User fromUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         List<Follow> toUsers = followRepository.findAllByFromUser(fromUser);

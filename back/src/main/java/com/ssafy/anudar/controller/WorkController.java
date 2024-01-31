@@ -15,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/work")
 public class WorkController {
+
     private final WorkService workService;
 
     // 작품 전체 조회 : 작가 등 테이블 연결 필요
@@ -51,11 +52,12 @@ public class WorkController {
     // 작품 찜하기
     @PostMapping("/like/{work_id}")
     public ResponseEntity<String> like(Authentication authentication, @PathVariable("work_id") Long work_id) {
-        return new ResponseEntity<>(workService.likeWork(authentication.getName(), work_id), HttpStatus.OK);
+        System.out.println(authentication);
+        return new ResponseEntity<>(workService.likeWork(authentication.getName(),work_id),HttpStatus.OK);
     }
 
     // 작품 찜하기 취소
-    @PostMapping("/unlike/{work_id}")
+    @DeleteMapping("/unlike/{work_id}")
     public ResponseEntity<String> unlike(Authentication authentication, @PathVariable("work_id") Long work_id) {
         return new ResponseEntity<>(workService.unlikeWork(authentication.getName(), work_id), HttpStatus.OK);
     }

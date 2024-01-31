@@ -2,14 +2,8 @@ package com.ssafy.anudar.service;
 
 
 
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.Work;
-import com.ssafy.anudar.model.LikeWork;
-import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.repository.ExhibitionRepository;
-import com.ssafy.anudar.repository.LikeWorkRepository;
-import com.ssafy.anudar.repository.UserRepository;
-import com.ssafy.anudar.repository.WorkRepository;
+import com.ssafy.anudar.model.*;
+import com.ssafy.anudar.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +17,7 @@ public class WorkService {
     private final ExhibitionRepository exhibitionRepository;
     private final LikeWorkRepository likeWorkRepository;
     private final UserRepository repository;
+    private final AuctionWorkRepository auctionWorkRepository;
 
     // 전체 작품 조회
     public List<Work> getAllWorks() {
@@ -59,6 +54,7 @@ public class WorkService {
                     .orElseGet(() -> {
                         LikeWork likeWork = new LikeWork(user, work);
                         likeWorkRepository.save(likeWork);
+                        // 찜 수 증가
                         work.setBid(work.getBid() + 1);
                         workRepository.save(work);
                         return null;
@@ -80,10 +76,10 @@ public class WorkService {
             likeWorkRepository.findByUserAndWork(user, work)
                     .ifPresent(it -> {
                         likeWorkRepository.delete(it);
+                        // 찜 수 감소
                         work.setBid(work.getBid() - 1);
                         workRepository.save(work);
                     });
-
         }
         return "좋아요 취소";
     }

@@ -1,22 +1,14 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
-import com.ssafy.anudar.dto.AuctionWorkDto;
-import com.ssafy.anudar.dto.FollowDto;
-import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
-import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.model.UserPrincipalDetails;
-import com.ssafy.anudar.model.UserRole;
-import com.ssafy.anudar.repository.AuctionWorkRepository;
-import com.ssafy.anudar.model.Follow;
+import com.ssafy.anudar.model.*;
+import com.ssafy.anudar.repository.*;
 
-import com.ssafy.anudar.repository.FollowRepository;
-
-import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +26,8 @@ public class UserService {
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuctionWorkRepository auctionWorkRepository;
+    private final LikeExhibitionRepository likeExhibitionRepository;
+    private final LikeWorkRepository likeWorkRepository;
 
     @Value("${jwt.secret}")
     private String key;
@@ -180,6 +174,39 @@ public class UserService {
         List<Follow> follows = followRepository.findAllByToUser(toUser);
         return follows.stream()
                 .map(follow -> UserDto.fromEntity(follow.getFromUser()))
+                .collect(Collectors.toList());
+    }
+
+    // 찜한 전시 목록
+    public List<ExhibitionDto> likeExhibit(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeExhibition> likes = likeExhibitionRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeExhibition -> ExhibitionDto.fromEntity(likeExhibition.getExhibition()))
+                .collect(Collectors.toList());
+    }
+
+    // 찜한 작품 목록
+    public List<WorkDto> likeWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeWork> likes = likeWorkRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeWork -> WorkDto.fromEntity(likeWork.getWork()))
+                .collect(Collectors.toList());
+    }
+
+    // 낙찰 작품 목록
+    public List<WorkDto> bidWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<AuctionWork> bids = auctionWorkRepository.findAllByUser(user);
+        return bids.stream()
+                .map(auctionWork -> WorkDto.fromEntity(auctionWork.getWork()))
                 .collect(Collectors.toList());
     }
 }

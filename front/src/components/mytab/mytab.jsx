@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5a84e31de60e4ba21f4292e496c5a4b8afbd9cb1a2f8fe9f119c79239728c2a3
-size 2297
+import { React, useContext, useState } from "react";
+import "./mytab.css";
+import { MypageContext } from "../../mypage/mypage";
+
+function MyTab() {
+
+  const { mytab, myindex, setMyIndex, scrolltoref } = useContext(MypageContext);
+
+  return (
+    <div className="mytabarea">
+      <div className="mytabpage">마이페이지</div>
+      <div onClick={() => { setMyIndex(mytab[0]); scrolltoref(mytab[0]); }} style={{ position: "absolute", left: "62px", top: "144px" }} className={myindex === mytab[0] ? "tabselected" : "tab"}>내 정보</div>
+      <div>
+        <div className="favorites">
+          <div className="tabtitle">FAVORITES</div>
+          <div onClick={() => { setMyIndex(mytab[1]); scrolltoref(mytab[1]); }} style={myindex === mytab[1] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[1] ? "tabselected" : "tab"}>찜한 전시회</div>
+          <div onClick={() => { setMyIndex(mytab[2]); scrolltoref(mytab[2]); }} style={myindex === mytab[2] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[2] ? "tabselected" : "tab"}>찜한 작품</div>
+          <div onClick={() => { setMyIndex(mytab[3]); scrolltoref(mytab[3]); }} style={myindex === mytab[3] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[3] ? "tabselected" : "tab"}>팔로잉 목록</div>
+        </div>
+        <div className="auction">
+          <div className="tabtitle">AUCTION</div>
+          <div onClick={() => { setMyIndex(mytab[4]); scrolltoref(mytab[4]); }} style={myindex === mytab[4] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[4] ? "tabselected" : "tab"}>경매 내역</div>
+        </div>
+        <div className="artist">
+          <div className="tabtitle">ARTIST</div>
+          <div onClick={() => { setMyIndex(mytab[5]); scrolltoref(mytab[5]); }} style={myindex === mytab[5] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[5] ? "tabselected" : "tab"}>내 전시</div>
+          <div onClick={() => { setMyIndex(mytab[6]); scrolltoref(mytab[6]); }} style={myindex === mytab[6] ? { position: "relative", left: "62px" } : {}} className={myindex === mytab[6] ? "tabselected" : "tab"}>내 작품</div>
+        </div>
+      </div>
+    </div>
+  );
+
+}
+
+export default MyTab;

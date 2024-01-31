@@ -13,21 +13,24 @@ export default function Work(props) {
         <div className="workImageCard1"  
           onMouseOver={()=>{setInfoOpacity(1)}}
           onMouseOut={()=>{setInfoOpacity(0)}}>
-          <div className="workImage1" onClick={()=>
+          <div className="workImage1" onClick={()=> {
             navigate(`/work/${props.workId}`)
-            }>
+            window.scrollTo(0, 0)
+          }}>
             <img src={props.image} style={{width:300, height:300}}></img>
           </div>
-          <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}} onClick={()=>
+          <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}} onClick={()=> {
             navigate(`/work/${props.workId}`)
-            }>
+            window.scrollTo(0, 0)
+          }}>
             <div className="workThumbnail"><span>시작가</span> <div>KRW {props.workAuctionPrice.toLocaleString()}</div></div>
             <div className="workThumbnail"><span>경매일</span> <div>{props.workAuctionDate}</div></div>
           </div>
         </div>
-        <div className="workName1 cursorPointer" onClick={()=>
+        <div className="workName1 cursorPointer" onClick={()=> {
           navigate(`/work/${props.workId}`)
-          }>{props.workName}</div>
+          window.scrollTo(0, 0)
+        }}>{props.workName}</div>
         <div className="workArtist1">{props.workArtist}</div>
       </div>
     )
@@ -63,14 +66,16 @@ export default function Work(props) {
             onMouseOver={()=>{setInfoOpacity(1)}}
             onMouseOut={()=>{setInfoOpacity(0)}}
           >
-            <div className="workImage3" onClick={()=>
+            <div className="workImage3" onClick={()=> {
               navigate(`/work/${props.workId}`)
-              }>
+              window.scrollTo(0, 0)
+            }}>
               <img src={props.image}></img>
             </div>
-            <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}}  onClick={()=>
+            <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}}  onClick={()=> {
               navigate(`/work/${props.workId}`)
-              }>
+              window.scrollTo(0, 0)
+            }}>
               <p><span>{props.workName}</span></p>
             </div>
           </div>

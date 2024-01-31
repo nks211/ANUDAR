@@ -1,3 +1,104 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3931c04cc80961fbfef61e823e905b1a255cf6fe5766db8acf26f0078b60b47d
-size 1648
+.artistArea {
+  width: 1020px;
+  height: 450px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.artistInfoArea {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.artistHeader {
+  height: 46px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.artistTitle {
+  font-size: 32px;
+}
+
+.artistDescription {
+  margin: 20px 0;
+  font-size: 28px;
+  text-align: left;
+  color: #967E76;
+  padding-left: 10;
+}
+
+.artistIntroArea {
+  height: 140px;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-right: 5px;
+}
+
+.artistIntroArea:hover {
+  overflow-y: auto;
+}
+
+.artistIntroArea::-webkit-scrollbar {
+  width: 5px;
+}
+
+.artistIntroArea::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 30%;
+  background: rgba(150, 126, 118, 0);
+  border-radius: 10px;
+}
+
+.artistIntroArea:hover::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 30%;
+  background: #967E76;
+  border-radius: 10px;
+}
+
+.artistIntroArea::-webkit-scrollbar-track {
+  background: white;
+}
+
+.artistHistoryArea {
+  height: 80px;
+  padding-right: 5px;
+}
+
+.artistIntro {
+  font-size: 20px;
+  text-align: left;
+  color: #787878;
+}
+
+.artistHistory div{
+  font-size: 20px;
+  text-align: left;
+  color: #787878;
+
+  width: 435px;
+  display: block;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.artistWorks, .artistExhibits {
+  margin: 85px 0 40px 0;
+  text-align: left;
+  font-size: 24px;
+  color: #967E76;
+}
+
+.artistWorkList, .artistExhibitList {
+  display: flex;
+  justify-content: center;
+}

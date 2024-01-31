@@ -1,5 +1,6 @@
 package com.ssafy.anudar.model;
 
+import com.ssafy.anudar.service.UserService;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +30,10 @@ public class ExhibitionReview extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    public Post getPost(){
+        return post;
+    }
 
 //    대댓글인듯 :)
 //    @ManyToOne

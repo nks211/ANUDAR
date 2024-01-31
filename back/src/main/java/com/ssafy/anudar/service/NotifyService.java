@@ -1,59 +1,84 @@
 package com.ssafy.anudar.service;
 
-import com.ssafy.anudar.model.Notify;
-import com.ssafy.anudar.model.Notifytype;
-import com.ssafy.anudar.model.User;
+
+import com.ssafy.anudar.repository.EmitterRepository;
 import com.ssafy.anudar.repository.NotifyRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.io.IOException;
+import java.util.Map;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
+
 public class NotifyService {
-    private final NotifyRepository notifyRepository;
+    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
-    public void createdNotifications(User user, Notifytype notifytype, String link){
-        String content = generateContent(notifytype, link);
-        Notify notify = Notify.from(link, content, LocalDateTime.now(), false, user);
-            notify.setNotifytype(notifytype);
-            notifyRepository.save(notify);
+    private final EmitterRepository emitterRepository;
+
+    public NotifyService(EmitterRepository emitterRepository, NotifyRepository notifyRepository) {
+        this.emitterRepository = emitterRepository;
     }
 
-    // 읽지 않은 알람 조회
-    public List<Notify> getUnreadNotifications(User user){
-        return notifyRepository.findByUserAndChecked(user, false);
+    /**
+     * 클라이언트가 구독을 위해 호출하는 메서드.
+     *
+     * @param userId - 구독하는 클라이언트의 사용자 아이디.
+     * @return SseEmitter - 서버에서 보낸 이벤트 Emitter
+     */
+    public SseEmitter subscribe(Long userId) {
+        SseEmitter emitter = createEmitter(userId);
+
+        sendToClient(userId, "EventStream Created. [userId=" + userId + "]");
+        return emitter;
     }
 
-
-    // 알림 읽음 처리
-    public void markNotificationAsRead(Long notificationId) {
-        Notify notify = notifyRepository.findById(notificationId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 알림이 존재하지 않습니다."));
-
-        notify.read();
+    /**
+     * 서버의 이벤트를 클라이언트에게 보내는 메서드
+     * 다른 서비스 로직에서 이 메서드를 사용해 데이터를 Object event에 넣고 전송하면 된다.
+     *
+     * @param userId - 메세지를 전송할 사용자의 아이디.
+     * @param event  - 전송할 이벤트 객체.
+     */
+    public void notify(Long userId, Object event) {
+        sendToClient(userId, event);
     }
 
-    // 알람 삭제
-    public void deleteNotification(Long notificationsId){
-        notifyRepository.deleteById(notificationsId);
-    }
-
-    // 알람 생성(넘겨 오는 Notify의 타입에 따라 다르게 생성해줌..)
-    private String generateContent(Notifytype notifytype, String link){
-        switch(notifytype){
-            case AUTION_CREATED:
-                return "경매가 시작되었습니다. 확인해보세요" + link;
-            case DOCENT_CREATED:
-                return "도습트가 시작되었습니다. 확인해보세요" + link;
-            case FOLLOWER_CREATED:
-                return "새로운 팔로워가 생겼습니다. 확인해보세요" ;
-            default:
-                return "새로운 알림이 도착했습니다. 확인해보세요" + link;
+    /**
+     * 클라이언트에게 데이터를 전송
+     *
+     * @param id   - 데이터를 받을 사용자의 아이디.
+     * @param data - 전송할 데이터.
+     */
+    private void sendToClient(Long id, Object data) {
+        SseEmitter emitter = emitterRepository.get(id);
+        if (emitter != null) {
+            try {
+                emitter.send(SseEmitter.event().id(String.valueOf(id)).name("sse").data(data));
+            } catch (IOException exception) {
+                emitterRepository.deleteById(id);
+                emitter.completeWithError(exception);
+            }
         }
+    }
+
+    /**
+     * 사용자 아이디를 기반으로 이벤트 Emitter를 생성
+     *
+     * @param id - 사용자 아이디.
+     * @return SseEmitter - 생성된 이벤트 Emitter.
+     */
+    private SseEmitter createEmitter(Long id) {
+        SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
+        emitterRepository.save(id, emitter);
+
+        // Emitter가 완료될 때(모든 데이터가 성공적으로 전송된 상태) Emitter를 삭제한다.
+        emitter.onCompletion(() -> emitterRepository.deleteById(id));
+        // Emitter가 타임아웃 되었을 때(지정된 시간동안 어떠한 이벤트도 전송되지 않았을 때) Emitter를 삭제한다.
+        emitter.onTimeout(() -> emitterRepository.deleteById(id));
+
+        return emitter;
     }
 }

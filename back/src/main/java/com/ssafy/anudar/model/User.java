@@ -66,6 +66,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 
+    @OneToMany(mappedBy = "user")
+    private List<ExhibitionReview> exhibitionReviews;
+
     @Builder
     public User(String username, String password, String name, String nickname,
                 String email, String image, String phone) {

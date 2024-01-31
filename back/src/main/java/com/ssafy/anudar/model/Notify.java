@@ -1,10 +1,9 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -27,28 +26,32 @@ public class Notify extends BaseTimeEntity {
     @Column(name="content")
     private String content;
 
-    @Column(name="checked")
-    private boolean checked;
+    @Column(name="isRead")
+    private Boolean isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User receiver;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private NotifyType notifytype;
 
-    public static Notify from(String link, String content, LocalDateTime created, boolean checked,  User user){
-        Notify notify = new Notify();
-        notify.link = link;
-        notify.content = content;
-        notify.checked = checked;
-        notify.user = user;
-        return notify;
+    @Builder
+    public  Notify (User receiver, NotifyType notifytype, String content, String link, Boolean isRead){
+        this.receiver = receiver;
+        this.notifytype = notifytype;
+        this.content = content;
+        this.link = link;
+        this.isRead = isRead;
     }
 
-    // 알람 읽음
-    public void read() {
-        this.checked = true;
+    public enum NotifyType {
+        AUTION,   // 경매 시작 알림
+        DOCENT,   // 도슨트 시작 알림
+        FOLLOW,  // 팔로우 알림
+        REVIEW     // 댓글 작성
     }
 
 }

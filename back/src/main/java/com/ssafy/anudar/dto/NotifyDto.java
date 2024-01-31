@@ -1,30 +1,38 @@
 package com.ssafy.anudar.dto;
 
-import com.ssafy.anudar.model.Notifytype;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import com.ssafy.anudar.model.Notify;
+import com.ssafy.anudar.model.NotifyMessageType;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class NotifyDto {
-    private Long id;
-    private String link;
-    private String content;
-    private boolean checked;
-    private LocalDateTime created;
-    private Notifytype notifytype;
+    public static class Response{
+        private String id;
+        private String name;
+        private String content;
+        private String type;
+        private String createdAt;
+        private NotifyMessageType messageType;
 
-    public void NotifyDTO(Long id, String link, String content, boolean checked, LocalDateTime created, Notifytype notifytype) {
-        this.id = id;
-        this.link = link;
-        this.content = content;
-        this.checked = checked;
-        this.created = created;
-        this.notifytype = notifytype;
+        @Builder
+        public Response(String id, String name, String content, String type, String createdAt) {
+            this.id = id;
+            this.name = name;
+            this.content = content;
+            this.type = type;
+            this.createdAt = createdAt;
+        }
+
+        public static Response createResponse(Notify notify){
+            return Response.builder()
+                    .content(notify.getContent())
+                    .id(notify.getId().toString())
+                    .name(notify.getReceiver().getName())
+                    .createdAt(notify.getCreatedAt().toString())
+                    .build();
+        }
     }
 }

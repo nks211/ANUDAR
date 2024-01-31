@@ -1,46 +1,40 @@
 package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.model.Notify;
-import com.ssafy.anudar.model.Notifytype;
 import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.repository.NotifyRepository;
 import com.ssafy.anudar.service.NotifyService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/notifies")
+@RequestMapping("/notify")
 public class NotifyController {
-    private final NotifyRepository notifyRepository;
+
     private final NotifyService notifyService;
 
-    // 알림 전체 조회
-    @GetMapping("/list")
-    public String listNotifications(@AuthenticationPrincipal User user, Model model) {
-        List<Notify> notifies = notifyService.getUnreadNotifications(user);
-        model.addAttribute("notifications, notifications");
-        return "notification/list";
+    public NotifyController(NotifyService notifyService) {
+        this.notifyService = notifyService;
     }
 
-    // 알림 읽음 처리
-    @GetMapping("/read/{notificationId}")
-    public String markNotificationAsRead(@PathVariable Long notificationId) {
-        notifyService.markNotificationAsRead(notificationId);
-        return "redirect:/notifies/list";
+    // SSE를 통한 클라이언트 구독
+    @GetMapping(value = "/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter subscribeToNotifications(@PathVariable Long id) {
+        return notifyService.subscribe(id);
     }
 
-    // 알림 삭제
-    @GetMapping("/delete/{notificationId}")
-    public String deleteNotification(@PathVariable Long notificationId) {
-        notifyService.deleteNotification(notificationId);
-        return "redirect:/notifies/list";
+    // 특정 사용자에게 알림 데이터 전송
+    @PostMapping("/{id}/notifications")
+    public ResponseEntity<String> sendNotificationData(@PathVariable Long id) {
+        try {
+            // 특정 사용자에게 알림 데이터 전송
+            notifyService.notify(id, "data");
+            return ResponseEntity.ok("Notification data sent successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send notification data.");
+        }
     }
 }
-

@@ -1,5 +1,6 @@
 package com.ssafy.anudar.controller;
 
+import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
@@ -69,6 +70,19 @@ public class UserController {
     @GetMapping("/info/author/{username}")
     public ResponseEntity<UserDto> getAuthor(@PathVariable("username") String username) {
         return new ResponseEntity<>(userService.getAuthor(username),HttpStatus.OK);
+    }
+
+    // 작가 팔로우
+    @PostMapping("/follow/{username}")
+    public ResponseEntity<FollowDto> follow(Authentication authentication, @PathVariable("username") String username) {
+        FollowDto followDto = userService.follow(authentication.getName(), username);
+        return new ResponseEntity<>(followDto, HttpStatus.OK);
+    }
+
+    // 작가 언팔로우
+    @DeleteMapping("/follow/{username}")
+    public void unfollow(Authentication authentication, @PathVariable("username") String username) {
+        userService.unfollow(authentication.getName(), username);
     }
 
 }

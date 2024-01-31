@@ -85,6 +85,25 @@ public class UserService {
 
     }
 
+    // 비밀번호 수정
+    public UserDto updatepassword(String username, String oldpassword, String newpassword, String checkpassword) {
+        // 로그인 로직
+        // 회원가입 여부 체크
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        // 기본 비밀번호와 동일한지 체크
+        if(bCryptPasswordEncoder.matches(oldpassword, user.getPassword()) && newpassword.equals(checkpassword)) {
+            // 새로운 비밀번호와 비밀번호 확인이 동일한지 체크
+            user.setPassword(bCryptPasswordEncoder.encode(newpassword));
+            userRepository.save(user);
+
+        } else {
+            throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
+        }
+
+        return UserDto.fromEntity(user);
+    }
+
     // 회원 탈퇴 : 연관된 테이블 설정 필요
     public void signout(String username) {
         User user = userRepository.findByUsername(username)

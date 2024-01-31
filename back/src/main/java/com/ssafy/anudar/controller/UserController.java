@@ -4,6 +4,7 @@ import com.ssafy.anudar.dto.AuctionWorkDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
 import com.ssafy.anudar.model.AuctionWork;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -50,21 +51,27 @@ public class UserController {
     @PutMapping("/update")
     // 인증 토큰을 받고, JoinRequest으로 수정 데이터를 받음
     public ResponseEntity<UserDto> update(Authentication authentication, @RequestBody JoinRequest req) {
-
         return new ResponseEntity<>(userService.update(authentication.getName(), req),HttpStatus.OK);
+    }
+
+    // 비밀번호 변경
+    @PutMapping("/update/password")
+    public ResponseEntity<UserDto> updatepassword(Authentication authentication, @RequestBody UpdatePasswordRequest req) {
+        return new ResponseEntity<>(userService.updatepassword(authentication.getName(), req.getOldpassword(), req.getNewpassword(), req.getCheckpassword()) ,HttpStatus.OK);
     }
 
     // 회원 탈퇴 : 토큰으로 대체해 볼 예정
     @DeleteMapping("/signout")
-    public String signout(Authentication authentication){
+    public ResponseEntity<String> signout(Authentication authentication){
         userService.signout(authentication.getName());
-        return "안녕히 가세요.";
+        return new ResponseEntity<>("안녕히 가세요.", HttpStatus.OK);
     }
 
     // 전체 작가 조회
     @GetMapping("/authors")
-    public List<UserDto> infoAuthorsAll() {
-        return userService.getAuthorAll();
+    public ResponseEntity<List<UserDto>> infoAuthorsAll() {
+
+        return new ResponseEntity<>(userService.getAuthorAll(), HttpStatus.OK);
     }
 
     // 작가 상세 조회
@@ -75,8 +82,8 @@ public class UserController {
 
     // 나의 결제 내역
     @GetMapping("/pay/work")
-    public List<AuctionWorkDto> mypay(Authentication authentication) {
-        return userService.getpay(authentication.getName());
+    public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
+        return new ResponseEntity<>(userService.getpay(authentication.getName()),HttpStatus.OK);
     }
 
 }

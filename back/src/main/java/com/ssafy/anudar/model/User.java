@@ -47,9 +47,11 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notify> notifies;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "toUser")
     private List<Follow> followerList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "fromUser")
     private List<Follow> followingList;
 

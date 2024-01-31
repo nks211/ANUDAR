@@ -4,6 +4,7 @@ import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -85,4 +86,10 @@ public class UserController {
         userService.unfollow(authentication.getName(), username);
     }
 
+    // 작가 팔로잉 리스트
+    @GetMapping("/following")
+    public ResponseEntity<List<User>> following (Authentication authentication) {
+        List<User> followings = userService.following(authentication.getName());
+        return new ResponseEntity<>(followings, HttpStatus.OK);
+    }
 }

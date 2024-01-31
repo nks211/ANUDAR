@@ -125,5 +125,14 @@ public class UserService {
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
     }
 
+    public List<User> following(String username) {
+        // 본인 확인
+        User fromUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<Follow> toUsers = followRepository.findAllByFromUser(fromUser);
+        return toUsers.stream()
+                .map(Follow::getToUser)
+                .collect(Collectors.toList());
+    }
 }
 

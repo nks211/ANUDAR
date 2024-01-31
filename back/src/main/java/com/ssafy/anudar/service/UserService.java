@@ -137,17 +137,23 @@ public class UserService {
     }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 자신을 팔로우할 경우 예외 처리
+        if (toUsername.equals(fromUsername))
+            throw new BadRequestException(ExceptionStatus.FOLLOW_SELF);
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        // 이미 팔로우 할 경우 예외 처리
+        if(followRepository.findByToUserAndFromUser(toUser, fromUser)!=null)
+            throw new BadRequestException(ExceptionStatus.DUPLICATE_FOLLOW);
         return FollowDto.fromEntity(followRepository.save(new Follow(toUser, fromUser)));
     }
 
     // 언팔로우
     public void unfollow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
@@ -155,5 +161,26 @@ public class UserService {
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
     }
 
+    // 팔로잉 목록
+    public List<UserDto> following(String username) {
+        // 본인 존재 여부 확인
+        User fromUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<Follow> follows = followRepository.findAllByFromUser(fromUser);
+        return follows.stream()
+                .map(follow -> UserDto.fromEntity(follow.getToUser()))
+                .collect(Collectors.toList());
+    }
+
+    // 팔로워 목록
+    public List<UserDto> follower(String username) {
+        // 본인 존재 여부 확인
+        User toUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<Follow> follows = followRepository.findAllByToUser(toUser);
+        return follows.stream()
+                .map(follow -> UserDto.fromEntity(follow.getFromUser()))
+                .collect(Collectors.toList());
+    }
 }
 

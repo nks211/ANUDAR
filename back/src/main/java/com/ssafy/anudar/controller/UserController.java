@@ -5,6 +5,7 @@ import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -100,5 +101,18 @@ public class UserController {
         userService.unfollow(authentication.getName(), username);
     }
 
+    // 작가 팔로잉 목록
+    @GetMapping("/following")
+    public ResponseEntity<List<UserDto>> following (Authentication authentication) {
+        List<UserDto> followings = userService.following(authentication.getName());
+        return new ResponseEntity<>(followings, HttpStatus.OK);
+    }
+
+    // 작가 팔로워 목록
+    @GetMapping("/follower")
+    public ResponseEntity<List<UserDto>> follower (Authentication authentication) {
+        List<UserDto> followers = userService.follower(authentication.getName());
+        return  new ResponseEntity<>(followers, HttpStatus.OK);
+    }
 }
 

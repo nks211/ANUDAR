@@ -1,5 +1,6 @@
 package com.ssafy.anudar.repository;
 
+import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.model.Follow;
 import com.ssafy.anudar.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,11 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("DELETE FROM Follow f WHERE f.toUser = :to_user AND f.fromUser = :from_user")
     void deleteByToUserAndFromUser(@Param("to_user") User toUser, @Param("from_user") User fromUser);
 
+    // 팔로잉 리스트
     List<Follow> findAllByFromUser(User fromUser);
+
+    // 팔로워 리스트
+    List<Follow> findAllByToUser(User toUser);
+
+    Follow findByToUserAndFromUser(User toUser, User fromUser);
 }

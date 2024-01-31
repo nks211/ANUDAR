@@ -14,6 +14,8 @@ public enum ExceptionStatus implements ExceptionInfo {
     // BAD_REQUEST
     DUPLICATE_USERNAME(2000, HttpStatus.BAD_REQUEST.value(), "사용자가 이미 존재합니다."),
     PASSWORD_MISMATCH(2001, HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다."),
+    FOLLOW_SELF(2002, HttpStatus.BAD_REQUEST.value(), "스스로를 팔로우 할 수 없습니다."),
+    DUPLICATE_FOLLOW(2003, HttpStatus.BAD_REQUEST.value(), "이미 팔로우하고 있는 사용자입니다."),
 
     // UNAUTHORIZED
     UNAUTHORIZED(3000, HttpStatus.UNAUTHORIZED.value(), "사용자가 인증되지 않았습니다.")

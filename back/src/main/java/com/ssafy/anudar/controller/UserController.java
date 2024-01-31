@@ -1,6 +1,7 @@
 package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.dto.AuctionWorkDto;
+import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
@@ -80,10 +81,24 @@ public class UserController {
         return new ResponseEntity<>(userService.getAuthor(username),HttpStatus.OK);
     }
 
+
     // 나의 결제 내역
     @GetMapping("/pay/work")
     public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
-        return new ResponseEntity<>(userService.getpay(authentication.getName()),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
+    }
+
+    // 작가 팔로우
+    @PostMapping("/follow/{username}")
+    public ResponseEntity<FollowDto> follow(Authentication authentication, @PathVariable("username") String username) {
+        FollowDto followDto = userService.follow(authentication.getName(), username);
+        return new ResponseEntity<>(followDto, HttpStatus.OK);
+    }
+
+    // 작가 언팔로우
+    @DeleteMapping("/unfollow/{username}")
+    public void unfollow(Authentication authentication, @PathVariable("username") String username) {
+        userService.unfollow(authentication.getName(), username);
     }
 
 }

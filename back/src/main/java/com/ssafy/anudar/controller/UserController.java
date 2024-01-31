@@ -80,7 +80,7 @@ public class UserController {
     }
 
     // 작가 언팔로우
-    @DeleteMapping("/follow/{username}")
+    @DeleteMapping("/unfollow/{username}")
     public void unfollow(Authentication authentication, @PathVariable("username") String username) {
         userService.unfollow(authentication.getName(), username);
     }

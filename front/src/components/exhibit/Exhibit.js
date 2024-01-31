@@ -4,8 +4,8 @@ import './Exhibit.css';
 
 export default function Exhibit(props) {
   const [enterOpacity, setEnterOpacity] = useState(0);
-  const [sYear, sMonth, sDay] = props.exhibit.start.split(".");
-  const [eYear, eMonth, eDay] = props.exhibit.end.split(".");
+  const [sYear, sMonth, sDay] = props.exhibit.start.split(" ")[0].split("-");
+  const [eYear, eMonth, eDay] = props.exhibit.end.split(" ")[0].split("-");
 
   let period = "";
   if (sYear == eYear) {
@@ -42,6 +42,7 @@ export default function Exhibit(props) {
             <img className="exhibitImage1" style={{width:240, height:320}} src={"../../"+props.exhibit.image}></img>
             <div className="exhibitEnter1" style={{opacity : enterOpacity}} onClick={()=>{
               navigate(`/exhibit/${props.exhibit.id}`)
+              window.scrollTo(0, 0)
             }}>
               <div>입장하기</div>
             </div>
@@ -69,6 +70,23 @@ export default function Exhibit(props) {
           <p className="exhibitName2">{props.exhibit.title}</p>
           <p className="exhibitArtist2">{props.exhibit.artist}</p>
           <p className="exhibitPeriod2">기간 | {period}</p>
+          <div>
+          </div>
+        </div>
+      </div>
+    )
+
+  // 전시회 등록
+  } else if (props.exhibitType === 3) {
+    return (
+      <div>
+        <div className="exhibitCard3">
+          <div className="exhibitImageCard3">
+            {props.exhibit.image}
+          </div>
+          <p className="exhibitName3">{props.exhibit.title}</p>
+          <p className="exhibitArtist3">{props.exhibit.artist}</p>
+          <p className="exhibitPeriod3">기간 | {period}</p>
           <div>
           </div>
         </div>

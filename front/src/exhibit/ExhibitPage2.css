@@ -167,6 +167,9 @@
 .registInfo {
   flex: 6;
   padding: 0 10px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .registTitle {
@@ -246,11 +249,16 @@
 }
 
 .registInput {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   font-size: 18px;
   /* align-items: center; */
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.registInfo input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .registDescription span, .registInput span {
@@ -262,7 +270,7 @@
 }
 
 .registInput .item2 {
-  flex: 2.5;
+  flex: 2;
 }
 
 .item2 {
@@ -281,23 +289,12 @@
   align-items: center;
 }
 
-.periodSetting {
-  font-size: 16px;
-
-  input[type="number"] {
-    width: 35px;
-    height: 20px;
-  
-    &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-    }
-  }
-  
+.item4 input[type="number"] {
+  width: 35px;
+  height: 20px;
 }
 
-
-.registInfo input[type="checkbox"] {
+.item4 input[type="checkbox"] {
   width: 15px;
   height: 15px;
   cursor: pointer;
@@ -308,33 +305,30 @@
   margin-right: 5px;
 }
 
-.registInput input {
+#exhibitTitle {
   height: 25px;
   border: solid #aeaeae 1px;
   border-radius: 0.3rem;
+  margin-bottom: 10px;
+  /* margin: 0 10px 10px 10px; */
 }
 
-#exhibitTitle {
-  flex: 2.5;
-}
+#exhibitTitle:focus { outline: none; border: 1px solid #D7C0AE; }
 
-.registInput input:focus { outline: none; border: 1px solid #D7C0AE; }
-
-.registInput textarea {
-  flex: 2.5;
-  height: 100px;
+#exhibitDescription {
+  height: 110px;
   border: solid #aeaeae 1px;
   border-radius: 0.3rem;
   resize: None;
+  /* margin-bottom: 10px; */
+
+  &:focus {
+    outline: none;
+    border: 1px solid #D7C0AE; 
+  }
+
+  &::-webkit-scrollbar {
+    width: 0;
+    /* background-color: #D7C0AE; */
+  }
 }
-
-.registInput textarea:focus { outline: none; border: 1px solid #D7C0AE; }
-
-/* .registPeriod {
-  display: flex;
-}
-
-#startYear, #startMonth, #startDay {
-  flex: 1;
-  width: 10px;
-} */

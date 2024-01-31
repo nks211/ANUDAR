@@ -24,14 +24,12 @@ function Notice(props) {
 
     const title = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 16,
         fontWeight: 400,
     };
 
     const detail = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 12,
         fontWeight: 400,
     }

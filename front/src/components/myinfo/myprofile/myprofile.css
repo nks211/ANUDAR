@@ -18,7 +18,6 @@
     border-radius: 10px;
     width: 150px;
     height: 40px;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 12px;
     font-weight: 400;
     display: flex;
@@ -39,7 +38,6 @@
 }
 
 .right .nickname {
-    font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
     margin-bottom: 20px;
 }

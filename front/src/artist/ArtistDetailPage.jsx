@@ -58,7 +58,7 @@ export default function ArtistDetailPage() {
     const exhibitList = JSON.parse(`[${exhibits}]`);
     exhibitsContent = <div className="exhibitList">
                           {exhibitList.map(exhibit=>(
-                            <Exhibit exhibit={exhibit}/>
+                            <Exhibit exhibitType={1} exhibit={exhibit}/>
                             ))}
                         </div>
   }

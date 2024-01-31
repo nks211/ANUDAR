@@ -104,14 +104,14 @@ function Home() {
 
             <div style={{ margin: "40px 80px", }}>
                 <div className="nowadays">진행 중인 전시회</div>
-                <div onClick={() => { navigate("/exhibit") }} className="nowdetails">더보기 &gt;</div>
+                <div onClick={() => { navigate("/exhibit"); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", }}>
                     {Object.values(exhibitionNow).map((value) => { return <ExhibitionItem width="330px" height="450px" exhibition={value} /> })}
                 </div>
             </div>
             <div style={{ margin: "40px 80px", }}>
                 <div className="nowadays">금주의 작품</div>
-                <div onClick={() => { navigate("/work") }} className="nowdetails">더보기 &gt;</div>
+                <div onClick={() => { navigate("/work"); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
 
                     <div style={{ width: "1000px", }}>

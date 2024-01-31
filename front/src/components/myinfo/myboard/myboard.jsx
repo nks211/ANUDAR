@@ -9,7 +9,6 @@ const changedata = {
     borderRadius: "5px",
     width: "150px",
     height: "30px",
-    fontFamily: "Inter-Regular",
     fontSize: "14px",
     fontWeight: 400,
 };

@@ -6,7 +6,6 @@ import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
-import com.ssafy.anudar.model.AuctionWork;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

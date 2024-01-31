@@ -2,10 +2,11 @@ package com.ssafy.anudar.service;
 
 
 
-import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.model.Exhibition;
 import com.ssafy.anudar.model.Work;
 import com.ssafy.anudar.model.LikeWork;
 import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.repository.ExhibitionRepository;
 import com.ssafy.anudar.repository.LikeWorkRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import com.ssafy.anudar.repository.WorkRepository;
@@ -14,23 +15,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class WorkService {
     private final WorkRepository workRepository;
+    private final ExhibitionRepository exhibitionRepository;
     private final LikeWorkRepository likeWorkRepository;
     private final UserRepository repository;
 
     // 전체 작품 조회
-    public List<WorkDto> getWorksAll() {
-        return workRepository.findAll().stream().map(WorkDto::fromEntity).collect(Collectors.toList());
+    public List<Work> getAllWorks() {
+        return workRepository.findAll();
     }
 
+    // 작품 상세 조회
     public Optional<Work> getWorkById(Long work_id) {
         return workRepository.findById(work_id);
     }
+
+    // 작가 작품 조회
+    public List<Work> getWorkByUser(Long user_id) {
+        Optional<User> user = repository.findById(user_id);
+        return workRepository.findAllByUser(user);
+    }
+
+    // 전시 작품 조회
+    public List<Work> getWorkByExhibition(Long exhibition_id) {
+        Optional<Exhibition> exhibition = exhibitionRepository.findById(exhibition_id);
+        return workRepository.findAllByExhibition(exhibition);
+    }
+
     // 작품 찜하기
     public String likeWork(String username, Long work_id) {
         // 작품의 작가인지 체크 후 => 작가, work_id로 검색시 존재하는지 체크

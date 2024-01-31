@@ -55,7 +55,7 @@ function NavBar() {
         <div className="sector">
           {LoginPanel(login, notice)}
           <div className={login === true ? "login" : "logout"}>
-            <button onClick={login ? () => { } : () => { setPopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{login === true ? "닉네임 님" : "로그인"}</button>
+            <button onClick={login ? () => { navigate("/user/info"); } : () => { setPopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{login === true ? "닉네임 님" : "로그인"}</button>
             <div className="line"> |  </div>
             <button onClick={login ? () => { setLogin(false); setPopup(false); navigate("/"); } : () => { navigate("/user/join"); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{login === true ? "로그아웃" : "회원가입"}</button>
           </div>

@@ -24,7 +24,7 @@ export default function App() {
     <>
       <AppContext.Provider value={{ login, setLogin, notice, setNotice }}>
         <NavBar />
-        <div style={{ display: "flex", justifyContent: "center" }} className="App">
+        <div style={{ display: "flex", justifyContent: "center", }} className="App">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>

@@ -36,11 +36,10 @@ function Mypage() {
     return (
         <MypageContext.Provider value={{ passpopup, setPassPopup, mytab, myindex, setMyIndex, scrollref, scrollspot, scrolltoref, passwordcheck, setPasswordCheck }}>
             <div style={{ width: "100%" }}>
-                <div style={{ float: "left", width: "25%", zIndex: "-1", }}><MyTab /></div>
+                <div style={{ float: "left", width: "25%", zIndex: "1", }}><MyTab /></div>
                 <div style={{ float: "right", width: "70%", margin: "30px 0px", }} >{ passwordcheck? <div style={{ position: "absolute", left: "45%" }}><CheckPassword/></div> : (myindex === mytab[0]? <MyInfo /> : <MyHistory />)}</div>
             </div>
             { passpopup? <><div style={modalback} onClick={() => { setPassPopup(false); }}></div><ChangePassword/></> : null }
-            {  }
         </MypageContext.Provider>
     );
 }

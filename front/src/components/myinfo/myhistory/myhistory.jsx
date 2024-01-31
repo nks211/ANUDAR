@@ -43,7 +43,7 @@ const exhibitions = [
     },
 ];
 
-const works = [
+export const works = [
     {
         url: "../../asset/work3.jpg",
         title: "작품 1",

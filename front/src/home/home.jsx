@@ -86,7 +86,7 @@ function Home() {
 
     return (
         <div>
-            <div className="container">
+            <div style={{ transform: "translateX(2.5%)" }} className="container">
                 <Slider {...setting}>
                     <div><img src={homecarousel[0]} /></div>
                     <div><img src={homecarousel[1]} /></div>

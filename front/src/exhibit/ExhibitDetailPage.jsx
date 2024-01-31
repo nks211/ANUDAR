@@ -57,9 +57,9 @@ export default function ExhibitDetailPage() {
         {/* 전시회 입장, 도슨트 입장 버튼 */}
         <div className="exhibitButtons">
           {/* *수정* : 전시회 입장 주소 .. */}
-          <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`)}}>전시회 입장</button>
+          <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); window.scrollTo(0, 0)}}>전시회 입장</button>
           {/* *수정* : API 연결 -> 도슨트ID로 입장! */}
-          <button onClick={()=>{navigate(`/docent/${exhibitId}`)}}>도슨트 입장</button>
+          <button onClick={()=>{navigate(`/docent/${exhibitId}`); window.scrollTo(0, 0)}}>도슨트 입장</button>
         </div>
 
         {/* 방명록 */}

@@ -72,7 +72,7 @@ function Signup() {
                     </div>
                 </div>
             </div>
-            <button style={{ textDecoration: "none" }} className="signupCheck" onClick={() => { navigate("/"); }}>가입</button>
+            <button style={{ textDecoration: "none" }} className="signupCheck" onClick={() => { navigate("/"); window.scrollTo(0, 0); }}>가입</button>
         </div>
     );
 }

@@ -42,6 +42,7 @@ export default function Exhibit(props) {
             <img className="exhibitImage1" style={{width:240, height:320}} src={"../../"+props.exhibit.image}></img>
             <div className="exhibitEnter1" style={{opacity : enterOpacity}} onClick={()=>{
               navigate(`/exhibit/${props.exhibit.id}`)
+              window.scrollTo(0, 0)
             }}>
               <div>입장하기</div>
             </div>

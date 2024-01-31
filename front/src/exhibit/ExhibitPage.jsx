@@ -14,6 +14,7 @@ export default function ExhibitPage() {
   if (isArtist) {
     showRegistBtn = <div className="exhibitRegistBtn" onClick={()=>{
                       navigate(`/exhibit/regist`)
+                      window.scrollTo(0, 0)
                     }}>전시회 등록</div>
   }
 

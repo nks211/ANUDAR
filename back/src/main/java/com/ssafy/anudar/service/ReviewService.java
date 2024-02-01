@@ -6,23 +6,27 @@ import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.Exhibition;
 import com.ssafy.anudar.model.ExhibitionReview;
 import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.repository.ExhibitionRepository;
 import com.ssafy.anudar.repository.ExhibitionReviewRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
 
     private final UserRepository userRepository;
     private final ExhibitionReviewRepository reviewRepository;
+    private final ExhibitionRepository exhibitionRepository;
 
     @Autowired
-    public ReviewService(UserRepository userRepository, ExhibitionReviewRepository reviewRepository) {
+    public ReviewService(UserRepository userRepository, ExhibitionReviewRepository reviewRepository, ExhibitionRepository exhibitionRepository) {
         this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
+        this.exhibitionRepository = exhibitionRepository;
     }
 
     public ReviewRequest saveReview(String content, Exhibition exhibitionid, String userName) {
@@ -40,7 +44,8 @@ public class ReviewService {
     }
 
     // 전시회 리뷰 전체 조회
-    public List<ExhibitionReview> getAllExhibitionReviews() {
-        return reviewRepository.findAll();
+    public List<ExhibitionReview> getAllExhibitionReviews(Long exhibition_id) {
+        Optional<Exhibition> exhibition = exhibitionRepository.findById(exhibition_id);
+        return reviewRepository.findAllByExhibition(exhibition);
     }
 }

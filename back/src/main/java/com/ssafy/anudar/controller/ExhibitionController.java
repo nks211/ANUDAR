@@ -79,8 +79,8 @@ public class ExhibitionController {
 
     // 전시회 방명록 조회하기
     @GetMapping("/{exhibition_id}/comments-list")
-    public ResponseEntity<List<ExhibitionReview>> listComments(@PathVariable Exhibition exhibition_id) {
-        List<ExhibitionReview> exhibitionReviews = reviewService.getAllExhibitionReviews();
+    public ResponseEntity<List<ExhibitionReview>> listComments(@PathVariable Long exhibition_id) {
+        List<ExhibitionReview> exhibitionReviews = reviewService.getAllExhibitionReviews(exhibition_id);
         return new ResponseEntity<>(exhibitionReviews, HttpStatus.OK);
     }
 }

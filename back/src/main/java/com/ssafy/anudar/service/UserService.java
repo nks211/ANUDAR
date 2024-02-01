@@ -129,8 +129,8 @@ public class UserService {
         String notifyContent = fromUser.getName() + "님이 당신을 팔로우했습니다.";
         Notify notify = new Notify(toUser,FOLLOW, notifyContent, false);
         notifyRepository.save(notify);
-
-        // 알림을 유저 엔터티의 알림 리스트에 추가
+//
+//        // 알림을 유저 엔터티의 알림 리스트에 추가
         toUser.getNotifies().add(notify);
 
         return FollowDto.fromEntity(follow);

@@ -37,10 +37,13 @@ public class ExhibitionService {
     public ExhibitionDto saveExhibition (String name, String detail, String start_time, String end_time, String username,
                                          String docent_start, String docent_end,
                                          List<String> works_title, List<String> works_detail, List<Integer> works_price, List<String> works_image) {
-        // 사용자 ID로 사용자 정보를 조회
+        // 날짜 String 형태 포맷
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 사용자 ID로 사용자 정보를 조회
         User user = userRepository.findByUsername(username).orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        // 작가로 설정
+        user.setRole(UserRole.AUTHOR);
+        userRepository.save(user);
 
         // 전시회 저장
         Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), user);
@@ -63,9 +66,7 @@ public class ExhibitionService {
     }
 
     // 전시회 전체 조회
-    public List<Exhibition> getAllExhibitions() {
-        return exhibitionRepository.findAll();
-    }
+    public List<Exhibition> getAllExhibitions() { return exhibitionRepository.findAll(); }
 
     // 전시회 상세 조회
     public Optional<Exhibition> getExhibitionById(Long exhibition_id) {

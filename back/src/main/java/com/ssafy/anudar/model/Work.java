@@ -33,6 +33,7 @@ public class Work {
     @Column(name="bid")
     private Integer bid;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AuctionWork auctionWork;
 

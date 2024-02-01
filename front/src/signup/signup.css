@@ -74,7 +74,7 @@
   border-color: #cbcbcb;
   border-radius: 10px;
   background-color: #ffffff;
-  margin-bottom: 37px;
+  margin-bottom: 34px;
   padding: 0px 10px;
   width: 320px;
   height: 40px;
@@ -106,6 +106,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .signupCheck {

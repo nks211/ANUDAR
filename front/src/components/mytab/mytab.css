@@ -1,7 +1,14 @@
+.mytabareadefault {
+    width: 360px;
+    height: 1590px;
+    position: relative;
+    background-color: #ffffff;
+}
+
 .mytabarea {
     width: 360px;
     height: 1590px;
-    top: 150px;
+    top: -30px;
     position: fixed;
     background-color: #ffffff;
 }

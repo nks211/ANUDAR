@@ -8,6 +8,7 @@ import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
+
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.UserPrincipalDetails;
 import com.ssafy.anudar.model.UserRole;
@@ -15,6 +16,11 @@ import com.ssafy.anudar.repository.AuctionWorkRepository;
 import com.ssafy.anudar.model.Follow;
 
 import com.ssafy.anudar.repository.FollowRepository;
+
+
+import com.ssafy.anudar.model.*;
+import com.ssafy.anudar.repository.FollowRepository;
+import com.ssafy.anudar.repository.NotifyRepository;
 
 import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +30,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.ssafy.anudar.model.Notify.NotifyType.FOLLOW;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +43,10 @@ public class UserService {
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuctionWorkRepository auctionWorkRepository;
+
+    // 알림 보내기위해서 추가
+    private final EventNotifyService eventNotifyService;
+    private final NotifyRepository notifyRepository;
 
     @Value("${jwt.secret}")
     private String key;
@@ -74,8 +87,10 @@ public class UserService {
                 .map(UserDto::fromEntity)
                 .orElseThrow(()-> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
+
     // 회원 정보 수정 : 들어왔다면, 값을 변경해주는 것으로
     public UserDto update(String username, JoinRequest req) {
+
         // username으로 데이터를 불러와서 값을 변경하기
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
@@ -145,10 +160,25 @@ public class UserService {
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
         // 이미 팔로우 할 경우 예외 처리
         if(followRepository.findByToUserAndFromUser(toUser, fromUser)!=null)
             throw new BadRequestException(ExceptionStatus.DUPLICATE_FOLLOW);
+
+        // 알림 생성 및 보내기
+//        eventNotifyService.notifyFollow(toUser, fromUser);
+
+        // 알림 생성 및 보내기
+        String notifyContent = fromUser.getName() + "님이 당신을 팔로우했습니다.";
+        Notify notify = new Notify(toUser,FOLLOW, notifyContent, false);
+        notifyRepository.save(notify);
+
+        // 알림을 유저 엔터티의 알림 리스트에 추가
+        toUser.getNotifies().add(notify);
+
+        //팔로우 저장
         return FollowDto.fromEntity(followRepository.save(new Follow(toUser, fromUser)));
+
     }
 
     // 언팔로우

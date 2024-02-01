@@ -2,8 +2,11 @@ package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.request.ExhibitionRegistRequest;
+import com.ssafy.anudar.dto.request.ReviewRequest;
 import com.ssafy.anudar.model.Exhibition;
+import com.ssafy.anudar.model.ExhibitionReview;
 import com.ssafy.anudar.service.ExhibitionService;
+import com.ssafy.anudar.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,7 @@ import java.util.Optional;
 public class ExhibitionController {
 
     private final ExhibitionService exhibitionService;
+    private final ReviewService reviewService;
 
     // 전시회 등록
     @PostMapping("/regist")
@@ -59,5 +63,24 @@ public class ExhibitionController {
     public String unlike(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
         exhibitionService.unlikeExhibition(authentication.getName(), String.valueOf(exhibition_id));
         return "좋아요 취소";
+    }
+
+   // 전시회 방명록 작성하기
+    @PostMapping("/{exhibition_id}/regist-comment")
+    public ResponseEntity<ReviewRequest> createExhibitionReview(Authentication authentication, @PathVariable Exhibition exhibition_id, @RequestBody ReviewRequest req){
+
+        // 현재 로그인한 사용자의 정보를 가져와서 리뷰 작성자로 설정
+        String username = authentication.getName();
+
+        ReviewRequest reviewRequest = reviewService
+                .saveReview(req.getContent(), exhibition_id, username);
+        return new ResponseEntity<>(reviewRequest, HttpStatus.OK);
+    }
+
+    // 전시회 방명록 조회하기
+    @GetMapping("/{exhibition_id}/comments-list")
+    public ResponseEntity<List<ExhibitionReview>> listComments(@PathVariable Long exhibition_id) {
+        List<ExhibitionReview> exhibitionReviews = reviewService.getAllExhibitionReviews(exhibition_id);
+        return new ResponseEntity<>(exhibitionReviews, HttpStatus.OK);
     }
 }

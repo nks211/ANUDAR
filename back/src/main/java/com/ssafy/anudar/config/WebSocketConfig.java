@@ -1,4 +1,9 @@
 package com.ssafy.anudar.config;
 
-public class WebSocketConfig {
+
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+
 }

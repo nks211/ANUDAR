@@ -43,7 +43,7 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies;
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
@@ -67,6 +67,9 @@ public class User extends BaseTimeEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
+
+    @OneToMany(mappedBy = "user")
+    private List<ExhibitionReview> exhibitionReviews;
 
     @Builder
     public User(String username, String password, String name, String nickname,

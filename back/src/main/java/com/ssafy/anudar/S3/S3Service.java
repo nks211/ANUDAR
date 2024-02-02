@@ -4,7 +4,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ssafy.anudar.exception.BadRequestException;
+import com.ssafy.anudar.exception.response.ExceptionStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -61,7 +64,7 @@ public class S3Service {
         String extractDirPath = File.separator + "mnt" + File.separator + "recordings" + File.separator + sesssionId;
         String desiredFileName = filename + ".webm";
 
-        if(amazonS3.getUrl(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName)!=null) { // 이미 영상이 있음
+        if(amazonS3.doesObjectExist(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName)) { // 이미 영상이 있음
             return amazonS3.getUrl(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName).toString();
         }
 
@@ -107,6 +110,8 @@ public class S3Service {
                 }
                 zipEntry = zis.getNextEntry();
             }
+        } catch ( Exception e) {
+            throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);
         }
     }
 
@@ -147,6 +152,8 @@ public class S3Service {
 
         }else if(fileFolder ==FileFolder.EXHIBIT_IMG){
             folder = exhibitFolder;
+        } else if(fileFolder == FileFolder.VIDEO) {
+            folder = videoFolder;
         }
         return folder;
     }

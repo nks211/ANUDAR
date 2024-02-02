@@ -11,6 +11,7 @@ public enum ExceptionStatus implements ExceptionInfo {
     EXHIBIT_NOT_FOUND(1001, HttpStatus.NOT_FOUND.value(), "전시가 존재하지 않습니다."),
     LIKE_NOT_FOUND(1002, HttpStatus.NOT_FOUND.value(), "좋아요가 존재하지 않습니다."),
     REVIEW_NOT_FOUND(1003, HttpStatus.NOT_FOUND.value(), "방명록이 존재하지 않습니다."),
+    RECORD_NOT_FOUND(1004, HttpStatus.NO_CONTENT.value(), "동영상이 존재하지 않습니다."),
 
     // BAD_REQUEST
     DUPLICATE_USERNAME(2000, HttpStatus.BAD_REQUEST.value(), "사용자가 이미 존재합니다."),

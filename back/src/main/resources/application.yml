@@ -25,7 +25,6 @@ spring:
     redis:
       host: i10d105.p.ssafy.io
       port: 6379
-      password: anudar
 
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey

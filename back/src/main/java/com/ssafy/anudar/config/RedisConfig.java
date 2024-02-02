@@ -1,5 +1,6 @@
 package com.ssafy.anudar.config;
 
+import com.ssafy.anudar.model.UserPrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,24 +25,21 @@ public class RedisConfig {
     @Value("${spring.data.redis.port}")
     private String redisPort;
 
-    @Value("${spring.data.redis.password}")
-    private String password;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(redisHost);
         configuration.setPort(Integer.parseInt(redisPort));
-        configuration.setPassword(password);
         return new LettuceConnectionFactory(configuration);
     }
 
     @Bean
-    public RedisTemplate<String, UserDetails> userRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, UserDetails> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, UserPrincipalDetails> userRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, UserPrincipalDetails> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<UserDetails>(UserDetails.class));
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<UserPrincipalDetails>(UserPrincipalDetails.class));
         return redisTemplate;
     }
 

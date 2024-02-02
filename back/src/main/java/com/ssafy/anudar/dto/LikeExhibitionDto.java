@@ -1,24 +1,3 @@
-package com.ssafy.anudar.dto;
-
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.LikeExhibition;
-import com.ssafy.anudar.model.User;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class LikeExhibitionDto {
-    private User user;
-    private Exhibition exhibition;
-
-    public static LikeExhibitionDto fromEntity(LikeExhibition likeExhibition){
-        return new LikeExhibitionDto(
-                likeExhibition.getUser(),
-                likeExhibition.getExhibition()
-        );
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:625a9562d8316606727444459a7c88037b68c1397b19e6658089ae616daa7f47
+size 668

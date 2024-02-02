@@ -1,0 +1,31 @@
+.likeexhibitionarea {
+    width: 271px;
+    height: 431px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.likeexhibitiontitle {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 5px;
+    text-align: start;
+}
+
+.likeexhibitionartist {
+    color: #000000;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 5px;
+    text-align: start;
+}
+
+.likeexhibitionperiod {
+    color: #848484;
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 5px;
+    text-align: start;
+}

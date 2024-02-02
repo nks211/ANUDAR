@@ -32,9 +32,8 @@ public class ExhibitionService {
     private final WorkRepository workRepository;
     private final LikeExhibitionRepository likeExhibitionRepository;
 
-    List<ArrayList> asdf = new ArrayList<>();
     @Transactional
-    public ExhibitionDto saveExhibition (String name, String detail, String start_time, String end_time, String username,
+    public ExhibitionDto saveExhibition (String name, String detail, String start_time, String end_time, String image, String username,
                                          String docent_start, String docent_end,
                                          List<String> works_title, List<String> works_detail, List<Integer> works_price, List<String> works_image) {
         // 날짜 String 형태 포맷
@@ -46,7 +45,7 @@ public class ExhibitionService {
         userRepository.save(user);
 
         // 전시회 저장
-        Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), user);
+        Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), image, user);
         exhibitionRepository.save(exhibition);
 
         // 도슨트 저장

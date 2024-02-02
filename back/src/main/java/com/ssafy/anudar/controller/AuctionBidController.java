@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuctionBidController {
     private final SimpMessagingTemplate simpMessagingTemplate;
-    @MessageMapping
+    @MessageMapping("/chat")
     public void sendMessage(AutionBidRequest req, SimpMessageHeaderAccessor accessor){
-        simpMessagingTemplate.convertAndSend("/sub/live/" + req.getChannelId(), req);
+        simpMessagingTemplate.convertAndSend("/sub/chat/" + req.getChannelId(), req);
     }
 }

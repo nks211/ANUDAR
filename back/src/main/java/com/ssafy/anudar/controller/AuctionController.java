@@ -1,14 +1,3 @@
-package com.ssafy.anudar.controller;
-
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/auction")
-@RequiredArgsConstructor
-public class AuctionController {
-
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:09ce42fee56589f03c577cbdc957eadabdfa5839dbbd19a6af17721abaacb8b1
+size 311

@@ -4,6 +4,7 @@ import "./navbar.css";
 import Notice, { UptoDate } from "../notice/notice.jsx";
 import Login from "../signup/login.jsx";
 import { AppContext } from "../App.js";
+import Modal from "react-modal";
 
 export const LoginContext = createContext();
 
@@ -44,7 +45,7 @@ export const modalback = {
 function NavBar() {
 
   const navigate = useNavigate();
-  const { login, notice, setLogin, setNotice } = useContext(AppContext);
+  const { login, notice, setLogin, setNotice, modalsetting } = useContext(AppContext);
   const [popup, setPopup] = useState(false);
   const [menutab, setMenuTab] = useState("");
 
@@ -67,7 +68,10 @@ function NavBar() {
         <div onClick={() => { setMenuTab(menu[2]); navigate("/work"); window.scrollTo(0, 0); }} className={menutab === menu[2] ? "selected" : "menu"}>작품</div>
         <div onClick={() => { setMenuTab(menu[3]); navigate("/auction"); window.scrollTo(0, 0); }} className={menutab === menu[3] ? "selected" : "menu"}>경매</div>
       </div>
-        {popup ? <><div style={modalback} onClick={() => { setPopup(false); }}></div><LoginContext.Provider value={{ login, setLogin, popup, setPopup }}><Login /></LoginContext.Provider></> : null}
+      <Modal isOpen={popup} onRequestClose={() => { setPopup(false); }} style={modalsetting}>
+        <LoginContext.Provider value={{ login, setLogin, popup, setPopup }}><Login /></LoginContext.Provider>
+      </Modal>
+      {/* {popup ? <><div style={modalback} onClick={() => { setPopup(false); }}></div><LoginContext.Provider value={{ login, setLogin, popup, setPopup }}><Login /></LoginContext.Provider></> : null} */}
     </div>
   );
 }

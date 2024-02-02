@@ -22,11 +22,31 @@ export default function App() {
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
 
+  const modalsetting = {
+    overlay: {
+        position: "fixed",
+        backgroundColor: "#00000040",
+    },
+    content: {
+        position: "absolute",
+        top: "80px",
+        left: "35%",
+        width: "30%",
+        height: "40%",
+        borderRadius: "20px",
+        padding: "20px",
+        border: "0",
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "transparent",
+    }
+  };
+
   // const [menu, setMenu] = useState("");
 
   return (
     <>
-      <AppContext.Provider value={{ login, setLogin, notice, setNotice }}>
+      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className="App">
           <Routes>

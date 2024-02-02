@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a09191fa8b6db9cc7e3476bef0a16fcb912ed0b4d5e214385415097eddc58a0f
-size 717
+import { React, useContext } from "react";
+import "./checkpassword.css";
+import { MypageContext } from "../mypage/mypage";
+
+export default function CheckPassword() {
+
+    const { passwordcheck, setPasswordCheck } = useContext(MypageContext);
+
+    return (
+        <div className="checkpasswordarea">
+            <div className="checkpasswordtitle">비밀번호 입력</div>
+            <div className="checkpassworddetail">본인 확인을 위해 비밀번호를 입력해주세요.</div>
+            <input className="checkpasswordinput" type="password" placeholder="비밀번호" />
+            <div onClick={() => { setPasswordCheck(false); }} className="checkpasswordbutton">확인</div>
+        </div>
+    );
+
+};

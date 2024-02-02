@@ -1,8 +1,6 @@
 package com.ssafy.anudar.controller;
 
-import com.ssafy.anudar.dto.AuctionWorkDto;
-import com.ssafy.anudar.dto.FollowDto;
-import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
@@ -100,5 +98,39 @@ public class UserController {
         userService.unfollow(authentication.getName(), username);
     }
 
+    // 작가 팔로잉 목록
+    @GetMapping("/following")
+    public ResponseEntity<List<UserDto>> following (Authentication authentication) {
+        List<UserDto> followings = userService.following(authentication.getName());
+        return new ResponseEntity<>(followings, HttpStatus.OK);
+    }
+
+    // 작가 팔로워 목록
+    @GetMapping("/follower")
+    public ResponseEntity<List<UserDto>> follower (Authentication authentication) {
+        List<UserDto> followers = userService.follower(authentication.getName());
+        return new ResponseEntity<>(followers, HttpStatus.OK);
+    }
+
+    // 찜한 전시 목록
+    @GetMapping("/like/exhibit")
+    public ResponseEntity<List<ExhibitionDto>> likeExhibit (Authentication authentication) {
+        List<ExhibitionDto> exhibitions = userService.likeExhibit(authentication.getName());
+        return new ResponseEntity<>(exhibitions, HttpStatus.OK);
+    }
+
+    // 찜한 작품 목록
+    @GetMapping("/like/work")
+    public ResponseEntity<List<WorkDto>> likeWork (Authentication authentication) {
+        List<WorkDto> works = userService.likeWork(authentication.getName());
+        return new ResponseEntity<>(works, HttpStatus.OK);
+    }
+    
+    // 낙찰 작품 목록
+    @GetMapping("/bid/work")
+    public ResponseEntity<List<WorkDto>> bidWork (Authentication authentication) {
+        List<WorkDto> works = userService.bidWork(authentication.getName());
+        return new ResponseEntity<>(works, HttpStatus.OK);
+    }
 }
 

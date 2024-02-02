@@ -1,18 +1,14 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExhibitionReview extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +18,23 @@ public class ExhibitionReview extends BaseTimeEntity {
     @Column(name= "content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
+
+    @Builder
+    public ExhibitionReview(String content, Exhibition exhibition, User user){
+        this.content = content;
+        this.exhibition = exhibition;
+        this.user = user;
+    }
+
 
 //    대댓글인듯 :)
 //    @ManyToOne

@@ -2,10 +2,7 @@ package com.ssafy.anudar.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -36,5 +33,12 @@ public class AuctionWork {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
+
+    @Builder
+    public AuctionWork(Work work, User user) {
+        finalPrice = work.getPrice();
+        this.work = work;
+        this.user = user;
+    }
 
 }

@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/info/author/**")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/exhibit/list/**")
+                .requestMatchers("/exhibit/{exhibition_id}/comments-list")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/work/exhibit/**")
                 .requestMatchers("/work/user/**")

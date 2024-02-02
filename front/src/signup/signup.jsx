@@ -14,6 +14,7 @@ function Signup() {
 
     const upload = (e) => {
         const file = e.target.files[0];
+        if (file === null) return;
         const reader = new FileReader();
         reader.readAsDataURL(file);
 

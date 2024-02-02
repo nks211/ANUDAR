@@ -31,6 +31,7 @@ public class UserService {
     private final AuctionWorkRepository auctionWorkRepository;
     private final LikeExhibitionRepository likeExhibitionRepository;
     private final LikeWorkRepository likeWorkRepository;
+    private final UserCacheRepository userCacheRepository;
 
     // 알림 보내기위해서 추가
     private final EventNotifyService eventNotifyService;
@@ -66,7 +67,8 @@ public class UserService {
         if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
         }
-
+        // save in redis
+        userCacheRepository.setUser(UserPrincipalDetails.fromEntity(user));
         return JwtUtil.generateToken(username, key, expiredTimeMs);
     }
 

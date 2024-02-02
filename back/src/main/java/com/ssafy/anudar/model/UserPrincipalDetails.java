@@ -6,13 +6,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class UserPrincipalDetails implements UserDetails {
+public class UserPrincipalDetails implements UserDetails, Serializable {
 
     private Long id;
     private String username;

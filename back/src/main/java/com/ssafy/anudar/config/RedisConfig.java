@@ -24,7 +24,7 @@ public class RedisConfig {
     @Value("${spring.data.redis.port}")
     private String redisPort;
 
-    @Value("${spring.data.redis.port}")
+    @Value("${spring.data.redis.password}")
     private String password;
 
     @Bean
@@ -37,7 +37,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, UserDetails> memberRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String, UserDetails> userRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, UserDetails> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

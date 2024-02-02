@@ -2,11 +2,11 @@ import { create } from "zustand";
 import { immer, persist } from "zustand/middleware";
 
 // 로그인, 회원가입, 메뉴바, 로그인 모달 입력값 관련 상태 관리 함수
-const mainstate = create((set) => {
+export const mainstate = create((set) => {
     login: false
     loginuser: {}
     signup: {
-        profileimage: ""
+        profileimage: "../../asset/profile_image.png"
         id: ""
         password: ""
         passwordcheck: ""
@@ -54,27 +54,27 @@ const mainstate = create((set) => {
 });
 
 // 전시회 목록 및 상세 조회 관련 상태 관리 함수
-const exhibitionstate = create((set) => {
+export const exhibitionstate = create((set) => {
 
 });
 
 // 작품 목록 및 상세 조회 관련 상태 관리 함수
-const workstate = create((set) => {
+export const workstate = create((set) => {
 
 });
 
 // 작가 목록 및 상세 조회 관련 상태 관리 함수
-const artiststate = create((set) => {
+export const artiststate = create((set) => {
 
 });
 
 // 경매 관련 상태 관리 함수
-const auctionstate = create((set) => {
+export const auctionstate = create((set) => {
 
 });
 
 // 마이페이지 관련 상태 관리 함수
-const mypagestate = create((set) => {
+export const mypagestate = create((set) => {
 
     mytab: ["내 정보", "찜한 전시회", "찜한 작품", "팔로잉 목록", "경매 내역", "내 전시", "내 작품"]
     mytabindex: ""
@@ -130,13 +130,13 @@ const mypagestate = create((set) => {
         
     }
     scrolltoref: (ref) => {
-        
+
     }
 
 });
 
 // 팝업 모달창 관련 상태 관리 함수
-const popupstate = create((set) => {
+export const popupstate = create((set) => {
 
     homepopup: false
     homenoticepopup: false
@@ -153,16 +153,16 @@ const popupstate = create((set) => {
 });
 
 // 도슨트 화면 관련 상태 관리 함수
-const docentstate = create((set) => {
+export const docentstate = create((set) => {
 
 });
 
 // 전시회 및 작품 등록 페이지 관련 상태 관리 함수
-const registstate = create((set) => {
+export const registstate = create((set) => {
 
 });
 
 // 검색 입력창 관련 상태 관리 함수
-const searchstate = create((set) => {
+export const searchstate = create((set) => {
 
 });

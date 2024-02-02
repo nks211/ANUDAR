@@ -54,9 +54,9 @@ public class UserService {
     }
 
     public UserPrincipalDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(UserPrincipalDetails::fromEntity)
-                .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED));
+        return userCacheRepository.getUser(username).orElseGet(() ->
+                userRepository.findByUsername(username).map(UserPrincipalDetails::fromEntity)
+                        .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED)));
     }
 
     public String login(String username, String password) {

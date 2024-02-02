@@ -5,14 +5,15 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +28,12 @@ public class S3Service {
     @Value("${cloud.aws.s3.folder.folderName2}")
     private String exhibitFolder;
 
+    @Value("${cloud.aws.s3.folder.folderName3}")
+    private String videoFolder;
+
     private final AmazonS3 amazonS3;
 
+    // 이미지 업로드
     public String uploadFile(MultipartFile file, FileFolder fileFolder) {
         //파일 이름 생성
         String fileName = getFileFolder(fileFolder) + createFileName(file.getOriginalFilename());
@@ -50,6 +55,75 @@ public class S3Service {
         return amazonS3.getUrl(bucket, fileName).toString();
     }
 
+    // 동영상 업로드
+    public String uploadVideo(String sesssionId, String filename) {
+        String zipFilePath = File.separator + "mnt" + File.separator + "recordings" + File.separator + sesssionId + File.separator + sesssionId + ".zip";
+        String extractDirPath = File.separator + "mnt" + File.separator + "recordings" + File.separator + sesssionId;
+        String desiredFileName = filename + ".webm";
+
+        if(amazonS3.getUrl(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName)!=null) { // 이미 영상이 있음
+            return amazonS3.getUrl(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName).toString();
+        }
+
+        try {
+            unzip(zipFilePath, extractDirPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // Find desired file
+        File desiredFile = new File(extractDirPath, desiredFileName);
+        if (!desiredFile.exists()) {
+            System.out.println("Desired file not found: " + desiredFileName);
+            return null;
+        }
+
+
+        amazonS3.putObject(
+                new PutObjectRequest(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName, desiredFile)
+        );
+
+        return amazonS3.getUrl(bucket, getFileFolder(FileFolder.VIDEO) + desiredFileName).toString();
+    }
+
+    // 파일 압축 풀기
+    private static void unzip(String zipFilePath, String destDir) throws IOException {
+        byte[] buffer = new byte[1024];
+        try (ZipInputStream zis = new ZipInputStream(FileUtils.openInputStream(new File(zipFilePath)))) {
+            ZipEntry zipEntry = zis.getNextEntry();
+            while (zipEntry != null) {
+                File newFile = newFile(destDir, zipEntry);
+                if (zipEntry.isDirectory()) {
+                    newFile.mkdirs();
+                } else {
+                    // write file content
+                    try (FileOutputStream fos = new FileOutputStream(newFile)) {
+                        int len;
+                        while ((len = zis.read(buffer)) > 0) {
+                            fos.write(buffer, 0, len);
+                        }
+                    }
+                }
+                zipEntry = zis.getNextEntry();
+            }
+        }
+    }
+
+    // 목표 파일 찾기
+    private static File newFile(String destinationDir, ZipEntry zipEntry) throws IOException {
+        File destFile = new File(destinationDir, zipEntry.getName());
+        String destDirPath = destFile.getParent();
+        if (destDirPath == null) {
+            destDirPath = new File(destinationDir).getAbsolutePath();
+        }
+        File dir = new File(destDirPath);
+        dir.mkdirs();
+        destFile.createNewFile();
+        return destFile;
+    }
+
+
     //파일 이름 생성 로직
     private String createFileName(String originalFileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFileName));
@@ -64,13 +138,6 @@ public class S3Service {
         }
     }
 
-    public void deleteFile(String fileName) {
-
-    }
-
-    public byte[] downloadFile(String fileName) throws FileNotFoundException {
-        return new byte[0];
-    }
 
     public String getFileFolder(FileFolder fileFolder) {
 

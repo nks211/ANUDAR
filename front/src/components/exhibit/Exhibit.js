@@ -47,9 +47,9 @@ export default function Exhibit(props) {
               <div>입장하기</div>
             </div>
           </div>
-          <p className="exhibitName1">{props.exhibit.title}</p>
-          <p className="exhibitArtist1">{props.exhibit.artist}</p>
-          <p className="exhibitPeriod1">기간 | {period}</p>
+          <div className="exhibitName1">{props.exhibit.title}</div>
+          <div className="exhibitArtist1">{props.exhibit.artist}</div>
+          <div className="exhibitPeriod1">기간 | {period}</div>
           <div>
           </div>
         </div>
@@ -67,9 +67,9 @@ export default function Exhibit(props) {
           >
             <img className="exhibitImage2" style={{width:375, height:500}} src={"../../"+props.exhibit.image}></img>
           </div>
-          <p className="exhibitName2">{props.exhibit.title}</p>
-          <p className="exhibitArtist2">{props.exhibit.artist}</p>
-          <p className="exhibitPeriod2">기간 | {period}</p>
+          <div className="exhibitName2">{props.exhibit.title}</div>
+          <div className="exhibitArtist2">{props.exhibit.artist}</div>
+          <div className="exhibitPeriod2">기간 | {period}</div>
           <div>
           </div>
         </div>
@@ -84,9 +84,9 @@ export default function Exhibit(props) {
           <div className="exhibitImageCard3">
             {props.exhibit.image}
           </div>
-          <p className="exhibitName3">{props.exhibit.title}</p>
-          <p className="exhibitArtist3">{props.exhibit.artist}</p>
-          <p className="exhibitPeriod3">기간 | {period}</p>
+          <div className="exhibitName3">{props.exhibit.title}</div>
+          <div className="exhibitArtist3">{props.exhibit.artist}</div>
+          <div className="exhibitPeriod3">기간 | {period}</div>
           <div>
           </div>
         </div>

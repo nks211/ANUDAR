@@ -33,7 +33,7 @@
 }
 
 .exhibitArtist1 {
-  margin: 6px 0;
+  margin: 2px 0;
   font-size: 14px;
 }
 
@@ -112,32 +112,29 @@
 }
 
 
+
+
 .exhibitCard3 {
-  width: 300px;
-  /* height: 800px; */
-  /* margin: 10px; */
-  margin-bottom: 30px;
+  width: 270px;
   text-align: center;
 }
 
-
-
 .exhibitImageCard3 {
-  width: 300px;
-  height: 400px;
+  width: 270px;
+  height: 360px;
 }
 
 .exhibitImage3 {
-  width: 300px;
-  height: 400px;
+  width: 270px;
+  height: 360px;
 }
 
 .exhibitName3 {
-  width: 300px;
-  margin-top: 15px;
+  width: 270px;
+  margin-top: 12px;
   margin-bottom: 0;
   font-weight: 900;
-  font-size: 22.5px;
+  font-size: 20px;
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,12 +143,12 @@
 }
 
 .exhibitArtist3 {
-  margin: 5px 0;
-  font-size: 18px;
+  margin-bottom: 2px;
+  font-size: 16px;
 }
 
 .exhibitPeriod3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
   color: #848484;
 }

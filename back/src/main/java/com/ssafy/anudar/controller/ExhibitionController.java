@@ -47,7 +47,7 @@ public class ExhibitionController {
 
     // 작품 사진 등록
     @PostMapping("/workImgs")
-    public ResponseEntity<List<String>> uploadImages(@RequestParam(value="workImgs") List<MultipartFile> images) {
+    public ResponseEntity<List<String>> uploadImages(@RequestPart(value="workImgs") List<MultipartFile> images) {
         List<String> uploadedUrls = new ArrayList<>();
 
         for (MultipartFile image : images) {

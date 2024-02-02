@@ -34,6 +34,9 @@ public class S3Service {
     @Value("${cloud.aws.s3.folder.folderName3}")
     private String videoFolder;
 
+    @Value("${cloud.aws.s3.folder.folderName4}")
+    private String workFolder;
+
     private final AmazonS3 amazonS3;
 
     // 이미지 업로드
@@ -149,11 +152,12 @@ public class S3Service {
         String folder = "";
         if(fileFolder == FileFolder.USER_IMG) {
             folder = userFolder;
-
-        }else if(fileFolder ==FileFolder.EXHIBIT_IMG){
+        } else if(fileFolder ==FileFolder.EXHIBIT_IMG){
             folder = exhibitFolder;
         } else if(fileFolder == FileFolder.VIDEO) {
             folder = videoFolder;
+        } else if(fileFolder == FileFolder.WORK_IMG){
+            folder = workFolder;
         }
         return folder;
     }

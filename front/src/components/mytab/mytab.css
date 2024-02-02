@@ -1,14 +1,20 @@
+.mytabareadefault {
+    width: 360px;
+    height: 1590px;
+    position: relative;
+    background-color: #ffffff;
+}
+
 .mytabarea {
     width: 360px;
     height: 1590px;
-    top: 150px;
+    top: -30px;
     position: fixed;
     background-color: #ffffff;
 }
 
 .mytabpage {
     color: #967e76;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 28px;
     font-weight: 600;
     left: 60px;
@@ -42,7 +48,6 @@
 
 .tab {
     color: #000000;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
     font-weight: 400;
     left: 80px;
@@ -65,7 +70,6 @@
     padding: 10px 20px;
     top: 10px;
     position: relative;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 20px;
     font-weight: 600;
     display: flex;
@@ -75,7 +79,6 @@
 
 .tabtitle {
     color: #967e76;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 12px;
     font-weight: 600;
     margin: 10px;

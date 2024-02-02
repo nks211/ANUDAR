@@ -125,7 +125,7 @@ const auctions = [
 ];
 
 const toggleswitch = (toggle) => { return toggle ? <img src="../../asset/list_unwrapped.png" /> : <img src="../../asset/list_wrapped.png" />; }
-const filterswitch = (toggle, index) => { return (!toggle && index >= 3) ? "none" : "flex" }
+const filterswitch = (toggle, index) => { return (!toggle && index >= 3) ? "none" : "flex"; }
 
 function MyHistory() {
 
@@ -145,28 +145,28 @@ function MyHistory() {
                 <div className="historytitle" ref={(spot) => (scrollref.current[0] = spot)}>
                     <div>찜한 전시회</div>
                     <div className="dataarea">
-                        {Object.values(exhibitions).map((value, i) => (<ExhibitionItem style={{ display: filterswitch(exhibitionswitch, i) }} key={i} width="270px" height="360px" exhibition={value} />))}
+                        {Object.values(exhibitions).map((value, i) => (<div style={{ display: filterswitch(exhibitionswitch, i) }}><ExhibitionItem key={i} width="270px" height="360px" exhibition={value} /></div>))}
                     </div>
-                    <div onClick={() => { setExhibitionSwitch(!exhibitionswitch); }}>{toggleswitch(exhibitionswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setExhibitionSwitch(!exhibitionswitch); }}>{toggleswitch(exhibitionswitch)}</div>
                 </div>
                 <div className="historytitle" ref={(spot) => (scrollref.current[1] = spot)}>
                     <div>찜한 작품</div>
                     <div className="dataarea">
-                        {Object.values(works).map((value, i) => (<WorkItem style={{ display: filterswitch(workswitch, i) }} key={i} width="250px" height="250px" work={value} />))}
+                        {Object.values(works).map((value, i) => (<div style={{ display: filterswitch(workswitch, i) }}><WorkItem key={i} width="250px" height="250px" work={value} /></div>))}
                     </div>
-                    <div onClick={() => { setWorkSwitch(!workswitch); }}>{toggleswitch(workswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setWorkSwitch(!workswitch); }}>{toggleswitch(workswitch)}</div>
                 </div>
                 <div className="historytitle" ref={(spot) => (scrollref.current[2] = spot)}>
                     <div>팔로우한 작가</div>
                     <div className="dataarea">
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 0) }} work={{ url: "../../asset/artist1.png", title: "클로드 모네", }} />
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 1) }} work={{ url: "../../asset/artist2.png", title: "잭슨 폴록", }} />
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 2) }} work={{ url: "../../asset/artist3.png", title: "프리다 칼로", }} />
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 3) }} work={{ url: "../../asset/artist1.png", title: "클로드 모네", }} />
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 4) }} work={{ url: "../../asset/artist2.png", title: "잭슨 폴록", }} />
-                        <WorkItem width="250px" height="250px" style={{ display: filterswitch(followswitch, 5) }} work={{ url: "../../asset/artist3.png", title: "프리다 칼로", }} />
+                        <div style={{ display: filterswitch(followswitch, 0) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist1.png", title: "클로드 모네", }} /></div>
+                        <div style={{ display: filterswitch(followswitch, 1) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist2.png", title: "잭슨 폴록", }} /></div>
+                        <div style={{ display: filterswitch(followswitch, 2) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist3.png", title: "프리다 칼로", }} /></div>
+                        <div style={{ display: filterswitch(followswitch, 3) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist1.png", title: "클로드 모네", }} /></div>
+                        <div style={{ display: filterswitch(followswitch, 4) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist2.png", title: "잭슨 폴록", }} /></div>
+                        <div style={{ display: filterswitch(followswitch, 5) }}><WorkItem width="250px" height="250px" work={{ url: "../../asset/artist3.png", title: "프리다 칼로", }} /></div>
                     </div>
-                    <div onClick={() => { setFollowSwitch(!followswitch); }}>{toggleswitch(followswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setFollowSwitch(!followswitch); }}>{toggleswitch(followswitch)}</div>
                 </div>
             </div>
             <div>
@@ -195,7 +195,7 @@ function MyHistory() {
                             </tbody>
                         </table>
                     </div>
-                    <div onClick={() => { setAuctionSwitch(!auctionswitch); }}>{toggleswitch(auctionswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setAuctionSwitch(!auctionswitch); }}>{toggleswitch(auctionswitch)}</div>
                 </div>
             </div>
             <div>
@@ -203,16 +203,16 @@ function MyHistory() {
                 <div className="historytitle" ref={(spot) => (scrollref.current[4] = spot)}>
                     <div>내 전시회</div>
                     <div className="dataarea">
-                        {Object.values(exhibitions).map((value, i) => (<ExhibitionItem style={{ display: filterswitch(myexhibitionswitch, i) }} key={i} width="270px" height="360px" exhibition={value} />))}
+                        {Object.values(exhibitions).map((value, i) => (<div style={{ display: filterswitch(myexhibitionswitch, i) }}><ExhibitionItem key={i} width="270px" height="360px" exhibition={value} /></div>))}
                     </div>
-                    <div onClick={() => { setMyExhibitionSwitch(!myexhibitionswitch); }}>{toggleswitch(myexhibitionswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setMyExhibitionSwitch(!myexhibitionswitch); }}>{toggleswitch(myexhibitionswitch)}</div>
                 </div>
                 <div className="historytitle" ref={(spot) => (scrollref.current[5] = spot)}>
                     <div>내 작품</div>
                     <div className="dataarea">
-                        {Object.values(works).map((value, i) => (<WorkItem style={{ display: filterswitch(myworkswitch, i) }} key={i} width="250px" height="250px" work={value} />))}
+                        {Object.values(works).map((value, i) => (<div style={{ display: filterswitch(myworkswitch, i) }}><WorkItem key={i} width="250px" height="250px" work={value} /></div>))}
                     </div>
-                    <div onClick={() => { setMyWorkSwitch(!myworkswitch); }}>{toggleswitch(myworkswitch)}</div>
+                    <div style={{ cursor: "pointer" }} onClick={() => { setMyWorkSwitch(!myworkswitch); }}>{toggleswitch(myworkswitch)}</div>
                 </div>
             </div>
         </>

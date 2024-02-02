@@ -1,4 +1,5 @@
-import { React } from "react";
+import { React, useContext, useState } from "react";
+import Modal from "react-modal";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,6 +8,8 @@ import "../components/myinfo/myhistory/myhistory.css";
 import { works } from "../components/myinfo/myhistory/myhistory";
 import ExhibitionItem from "../components/work/exhibitionitem";
 import WorkItem from "../components/work/workitem";
+import ModalPopup from "../components/modal/modalpopup";
+import { AppContext } from "../App";
 
 const test = [
     {
@@ -35,6 +38,11 @@ const test = [
     },
 ];
 
+const sample = <div style={{ height: "150px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+    <input type="text" placeholder="아이디" />
+    <input type="password" placeholder="비밀번호"/>
+</div>;
+
 const auctionworksetting = {
     className: "slickwork",
     infinite: true,
@@ -49,9 +57,16 @@ const auctionworksetting = {
 }
 
 function Auction() {
+
+    const [popupopen, setPopupOpen] = useState(false);
+    const { modalsetting } = useContext(AppContext);
+
     return (
         <div>
-            <img onClick={() => {  }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
+            <Modal isOpen={popupopen} style={modalsetting} onRequestClose={() => { setPopupOpen(false); }}>
+                <ModalPopup title="이것은 모달창 제목입니다" detail="이것은 모달창 세부 설명입니다" content={<div style={{ height: "100px", border: "1px solid" }}>이것은 모달창 콘텐츠 공간입니다</div>} okfunction={() => { setPopupOpen(false); }} okbutton={true} okbuttonlabel="확인" cancelbutton={false} cancelbuttonlabel="취소"/>
+            </Modal>
+            <img onClick={() => { setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
             <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>
             <div className="auctionworkarea">
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

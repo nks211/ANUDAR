@@ -16,30 +16,9 @@ export default function WorkDetailPage() {
   let workInfo = dummy.works[workId]
   let [title, artist, description, image, price, startDate] = [workInfo.title, workInfo.artist, workInfo.description, workInfo.image, workInfo.price.toLocaleString(), workInfo.startDate];
 
-  console.log([title, artist, description, image, price, startDate])
-
-  // let workInfo = {};
-  // let [title, artist, description, image, price, startDate] = ''
-  
-  // for (let i=0; i<dummy.works.length; i++) {
-  //   if (i === Number(workId)) {
-  //     workInfo = dummy.works[i]
-  //     artist = workInfo.artist
-  //     title = workInfo.title
-  //     description = workInfo.description
-  //     image = workInfo.image
-  //     price = workInfo.price.toLocaleString()
-  //     startDate = workInfo.startDate
-  //   }
-  // }
-
-  // console.log(workInfo)
-  // console.log([title, artist, description, image, price, startDate])
-
-
   for (let i=0; i<dummy.works.length; i++) {
     if (i !== Number(workId) && artist === dummy.works[i].artist) {
-      works.push(dummy.works[i])
+      works.push(JSON.stringify(dummy.works[i]))
     }
   }
   
@@ -60,7 +39,6 @@ export default function WorkDetailPage() {
         <div className="workInfo">
           <div className="workHeader"> {/* 제목, 찜하기 버튼 */}
             <div className="workTitle boldFont">{title}</div>
-            {/* <div>찜하기</div> */}
             <Like icon="asset/heart" name="찜하기" />
           </div>
           <div style={{paddingLeft:"10px"}}>
@@ -84,7 +62,6 @@ export default function WorkDetailPage() {
             <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
           ))}
         </div> */}
-
       </div>
     </div>
   )

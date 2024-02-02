@@ -2,6 +2,9 @@ import { React, useContext, useState } from "react";
 import "./myboard.css";
 import { MypageContext } from "../../../mypage/mypage";
 import { MyEditContext } from "./../myinfo";
+import Modal from "react-modal";
+import ModalPopup from "../../modal/modalpopup";
+import { AppContext } from "../../../App";
 
 const changedata = {
     backgroundColor: "#ffffff",
@@ -9,7 +12,6 @@ const changedata = {
     borderRadius: "5px",
     width: "150px",
     height: "30px",
-    fontFamily: "Inter-Regular",
     fontSize: "14px",
     fontWeight: 400,
 };
@@ -22,8 +24,16 @@ const phonenumberformatting = (number) => {
 function MyBoard(props) {
     
     const [userinfo, setUserInfo] = useState(props.user);
+    const { modalsetting } = useContext(AppContext);
     const { passpopup, setPassPopup } = useContext(MypageContext);
+    const [exitpopup, setExitPopup] = useState(false);
     const { editmode, usernickname, userphonenumber, setUserNickname, setUserPhonenumber } = useContext(MyEditContext);
+
+    const exitmodal = () => {
+        return <Modal isOpen={exitpopup} onRequestClose={() => { setExitPopup(false); }} style={modalsetting}>
+            <ModalPopup title="회원 탈퇴" detail="정말로 탈퇴하시겠습니까?" okbutton={true} cancelbutton={true} okbuttonlabel="확인" cancelbuttonlabel="취소" />
+        </Modal>;
+     };
     
     return (
         <div className="myboardarea">
@@ -57,7 +67,8 @@ function MyBoard(props) {
                     </tr>
                 </tbody>
             </table>
-            <div className="exit">회원탈퇴</div>
+            <div onClick={() => { setExitPopup(true); }} className="exit">회원탈퇴</div>
+            { exitmodal() }
         </div>
     );
 }

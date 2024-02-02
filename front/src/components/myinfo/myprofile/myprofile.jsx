@@ -7,6 +7,7 @@ function MyProfile(props) {
     const [urlimage, setUrlImage] = useState("../../asset/profile_image.png");
     const upload = (e) => {
         const file = e.target.files[0];
+        if (file === null) return;
         const reader = new FileReader();
         reader.readAsDataURL(file);
 

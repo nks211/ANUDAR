@@ -2,7 +2,9 @@ import './App.css';
 import Home from './home/home'
 import ExhibitPage from './exhibit/ExhibitPage'
 import ExhibitDetailPage from './exhibit/ExhibitDetailPage'
+import Exhibit3DPage from './exhibit/Exhibit3DPage'
 import ExhibitRegistPage from './exhibit/ExhibitRegistPage'
+import DocentPage from './docent/DocentPage'
 import WorkPage from './work/WorkPage'
 import WorkDetailPage from './work/WorkDetailPage'
 import ArtistPage from './artist/ArtistPage'
@@ -20,16 +22,41 @@ export default function App() {
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
 
+  const modalsetting = {
+    overlay: {
+        position: "fixed",
+        backgroundColor: "#00000040",
+    },
+    content: {
+        position: "absolute",
+        top: "80px",
+        left: "35%",
+        width: "30%",
+        height: "40%",
+        borderRadius: "20px",
+        padding: "20px",
+        border: "0",
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "transparent",
+    }
+  };
+
+  // const [menu, setMenu] = useState("");
+
   return (
     <>
-      <AppContext.Provider value={{ login, setLogin, notice, setNotice }}>
+      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className="App">
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>
             <Route exact path="/exhibit/:id" element={<ExhibitDetailPage />}></Route>
+            {/* 임시 path */}
+            <Route exact path="/exhibit/:id/2" element={<Exhibit3DPage />}></Route>
             <Route exact path="/exhibit/regist" element={<ExhibitRegistPage />}></Route>
+            <Route exact path="/docent/:id" element={<DocentPage />}></Route>
             <Route exact path="/work" element={<WorkPage />}></Route>
             <Route exact path="/work/:id" element={<WorkDetailPage/>}></Route>
             <Route exact path="/artist" element={<ArtistPage />}></Route>

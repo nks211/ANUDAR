@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Exhibit from '../components/exhibit/Exhibit';
 import Calendar from '../components/exhibit/Calendar';
-import './ExhibitPage.css'
+// import './ExhibitPage.css'
 
 export default function ExhibitRegistPage() {
   const [title, setTitle] = useState("");
@@ -27,7 +27,7 @@ export default function ExhibitRegistPage() {
   const [lastSat, setLastSat] = useState();
   const [ampm, setAmpm] = useState("am");
 
-  
+
   function getEndDate(year, month) {
     return(new Date(year, month, 0).getDate())
   }
@@ -59,8 +59,6 @@ export default function ExhibitRegistPage() {
   return (
     <div className="exhibitRegist">
       <div style={{textAlign:"left", fontSize:"28px", fontWeight:"900", color:"#967E76"}}>전시회 등록하기</div>
-      {/* <div style={{fontSize:"18px", marginTop:"10px"}}>온라인으로 나의 작품을 선보일 수 있는 기회!</div>
-      <div style={{fontSize:"18px"}}>도슨트와 함께 더욱 풍성한 전시회를 꾸며보세요</div> */}
       <hr style={{width:"100%", border:"1px solid #EEE3CB", margin:"20px 0"}}/>
       <div className="registColumn">
         <div className="registPoster">
@@ -75,52 +73,55 @@ export default function ExhibitRegistPage() {
         </div>
         <div className="registInfo">
           <div className="registTitle">전시회 정보</div>
-          <div className="registDescription"><span>*</span>는 필수 입력사항입니다.</div>
-          <div className="registInput"><div className="item1"><span>*</span> 전시회 이름</div>
-            <input id="exhibitTitle" placeholder="최대 글자수 20자" maxLength="20" onChange={(event)=>{setTitle(event.target.value)}}/>
-          </div>
-          <div className="registInput" style={{marginBottom:"2px"}}>
-            <div className="item1"><span>*</span> 전시회 설명</div>
-            <textarea id="exhibitDescription" placeholder="최대 글자수 255자" maxLength="255" onChange={(event)=>{setDescription(event.target.value)}}/>
-          </div>
+          <div className="registDescription">설명설명</div>
+
+          <div className="registInput">전시회 이름</div>
+          <input id="exhibitTitle" placeholder="최대 글자수 20자" maxLength="20" onChange={(event)=>{setTitle(event.target.value)}}/>
+
+          <div className="registInput">전시회 설명</div>
+          <textarea id="exhibitDescription" placeholder="최대 글자수 255자" maxLength="255" onChange={(event)=>{setDescription(event.target.value)}}/>
           <div style={{textAlign:'right', fontSize:"12px", marginBottom:"5px"}}>{description.length}/255</div>
-          <div className="registInput"><div className="item1"><span>*</span> 전시회 기간</div>
-            <div className="item2" style={{flexDirection: "column"}}>
-
-              <div style={{width:"100%", display:"flex", alignItems: "flex-start", flexDirection: "column"}}>
-                {/* 시작일 */}
-                <div className="periodSetting" style={{display:"flex"}}>
-                  <div>시작일</div>
-                  <input type="number" value={exhibitY} style={{textAlign:"center"}} onChange={(event)=>{
-                    const y = event.target.value
-                    if (y.length == 4 && y < curY) { alert('입력할 수 없는 년도입니다.'); setExhibitY(curY) }
-                    else { setExhibitY(y.slice(0, 4)) }
-                  }}/>
-                  <div>/</div>
-                  <input type="number" value={exhibitM} style={{textAlign:"center", width:"20px"}} onChange={(event)=>{
-                    const m = event.target.value
-                    if (m > 12 || m < 0 || (exhibitY === curY && m < curM && m.length)) { alert('입력할 수 없는 달 입니다.'); setExhibitM(curM) }
-                    else { setExhibitM(m.slice(0, 2)) }
-                  }}/>
-                  <div>/ 1</div>
-                </div>
-                {/* 종료일 */}
-                <div className="periodSetting" style={{display:"flex"}}>
-                  <div>종료일</div>
-                  <div style={{width:"110px"}}>{exhibitY.length === 4?exhibitY:curY} / {exhibitM?exhibitM:curM} / {exhibitEndD}</div>
-                  <input type="checkbox" id="endCheck" style={{margin:0, marginRight:"5px", padding:0}} onClick={()=>{ setIsEnd(!isEnd) }}/>
-                  <label for="endCheck" style={{fontSize:"14px"}}>종료일 후 전시</label>
-                  <span className="tooltipToggle" ariaLabel="전시 기간 종료 후 전시 여부를 체크해주세요." tabindex="0">
-                    <img className="checkTooltip" src="../../asset/tooltip.png" width={20} height={20}/>
-                  </span>
-                </div>
-
-              </div>
+          
+          <div className="registInput">전시회 기간</div>
+          <div style={{display:"flex"}}>
+            <div style={{textAlign:"left"}}>시작일</div>
+            <input type="number" value={exhibitY} style={{textAlign:"center", width:"35px"}} onChange={(event)=>{
+              const y = event.target.value
+              if (y.length == 4 && y < curY) {
+                alert('입력할 수 없는 년도입니다.')
+                setExhibitY(curY)
+              } else {
+                setExhibitY(y.slice(0, 4))
+              }
+            }}/>
+            <div>/</div>
+            <div><input type="number" value={exhibitM} style={{textAlign:"center", width:"20px"}} onChange={(event)=>{
+              const m = event.target.value
+              if (m > 12 || m < 0 || (exhibitY === curY && m < curM && m.length)) {
+                alert('입력할 수 없는 달 입니다.')
+                setExhibitM(curM)
+              } else {
+                setExhibitM(m.slice(0, 2))
+              }}}/>
             </div>
+            <div>/ 1</div>
           </div>
-          <div className="registInput" style={{marginBottom:"2px"}}>
-            <div className="item1"><span>*</span> 도슨트 일정</div>
-            <div className="item2" style={{flexDirection: "column"}}>
+
+          <div style={{display:"flex", alignItems: "center"}}>
+            <div style={{textAlign:"left"}}>종료일</div>
+            <div>{exhibitY.length === 4?exhibitY:curY} / {exhibitM?exhibitM:curM} / {exhibitEndD}</div>
+            <input type="checkbox" id="endCheck" style={{margin:0, marginRight:"5px", padding:0}} onClick={()=>{
+              setIsEnd(!isEnd)
+            }}/>
+            <label for="endCheck" style={{fontSize:"14px"}}>종료일 후 전시</label>
+            <span className="tooltipToggle" ariaLabel="전시 기간 종료 후 전시 여부를 체크해주세요." tabindex="0">
+              <img className="checkTooltip" src="../../asset/tooltip.png" width={20} height={20}/>
+            </span>
+          </div>
+
+          {/* <div className="registInput" style={{marginBottom:"2px"}}> */}
+            <div className="registInput">도슨트 일정</div>
+            <div style={{flexDirection: "column"}}>
               <div className="item4">
                 <div>{`${exhibitY.length === 4?exhibitY:curY} / ${exhibitM?exhibitM:curM} / `}</div>
                 <div><input type="number" value={docentDate} style={{textAlign:"center", width:"20px"}} onChange={(event)=>{
@@ -160,7 +161,7 @@ export default function ExhibitRegistPage() {
               </div>
 
             </div>
-          </div>
+          {/* </div> */}
 
           {/* <select>
             <option>2024</option>

@@ -7,7 +7,6 @@
 
 .mytable {
     color: #000000;
-    font-family: "Inter-SemiBold", Helvetica;
     font-size: 20px;
     font-weight: 600;
     text-align: start;
@@ -48,7 +47,6 @@
     justify-content: center;
     align-items: center;
     color: #967E76;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
@@ -62,7 +60,6 @@
 
 .exit {
     color: #949494;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 16px;
     font-weight: 400;
     text-align: end;

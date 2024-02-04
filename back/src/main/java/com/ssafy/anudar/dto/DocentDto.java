@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:71c6271b63fa7c1ec6f4084fe46e30cfb6995ab5e72f9f018d0b0a67cc7d7eb4
-size 561
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.Docent;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class DocentDto {
+    private LocalDateTime start_time;
+    private LocalDateTime end_time;
+    private long exhibition_id;
+
+    public static DocentDto fromEntity (Docent docent) {
+        return new DocentDto(
+                docent.getStart_time(),
+                docent.getEnd_time(),
+                docent.getExhibition().getId()
+        );
+    }
+}

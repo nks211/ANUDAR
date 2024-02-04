@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5be1837579535319c13e2116bbd9719f5df760df45f66b4f3ce4256e2758f0dd
-size 508
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.AuctionWork;
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.Work;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AuctionWorkRepository extends JpaRepository<AuctionWork, Long> {
+    List<AuctionWork> findByUser(User user);
+
+    List<AuctionWork> findAllByUser(User user);
+
+}

@@ -72,44 +72,22 @@ public class ExhibitionService {
     }
 
     // 전시회 찜하기
-    public void likeExhibition(String username, String exhibition_id){
+    @Transactional
+    public void likeExhibition(String username, Long exhibition_id){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        // exhibition_id를 Long으로 변환
-        Long exhibitionId = Long.valueOf(exhibition_id);
-
-        Exhibition exhibition = exhibitionRepository.findById(exhibitionId)
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
 
-        if(!exhibition.getUser().getUsername().equals(username)){
-            likeExhibitionRepository.findByUserAndExhibition(user, exhibition)
-                    .orElseGet(() -> {
-                        // 없으면 찜 생성해주기
-                        LikeExhibition likeExhibition = new LikeExhibition(user, exhibition);
-                        likeExhibitionRepository.save(likeExhibition);
-                        return likeExhibition;
-                    });
+        Optional<LikeExhibition> likeExhibition = likeExhibitionRepository.findByUserAndExhibition(user, exhibition);
+
+        if(likeExhibition.isPresent()) { // 좋아요가 이미 존재 -> 취소
+            likeExhibitionRepository.delete(likeExhibition.get());
+        } else { // 좋아요가 없음 -> 생성
+            likeExhibitionRepository.save(new LikeExhibition(user, exhibition));
         }
-    }
 
-    // 전시회 찜 취소하기
-    public void unlikeExhibition(String username, String exhibition_id) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-
-        // exhibition_id를 Long으로 변환
-        Long exhibitionId = Long.valueOf(exhibition_id);
-
-        Exhibition exhibition = exhibitionRepository.findById(exhibitionId)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
-
-        // 현재 로그인한 사용자의 찜인지 확인
-        LikeExhibition likeExhibition = likeExhibitionRepository.findByUserAndExhibition(user, exhibition)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.LIKE_NOT_FOUND));
-
-        // 찜 삭제하기
-        likeExhibitionRepository.delete(likeExhibition);
     }
 
 }

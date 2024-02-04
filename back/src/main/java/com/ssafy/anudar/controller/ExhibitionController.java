@@ -71,19 +71,13 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 
-    // 전시회 좋아요
+    // 전시회 좋아요/취소
     @PostMapping("/like/{exhibition_id}")
-    public String like(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
-        exhibitionService.likeExhibition(authentication.getName(), String.valueOf(exhibition_id));
-        return "좋아요";
+    public ResponseEntity<String> like(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
+        exhibitionService.likeExhibition(authentication.getName(), exhibition_id);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
-    // 전시회 좋아요 취소 하기
-    @DeleteMapping("/unlike/{exhibition_id}")
-    public String unlike(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
-        exhibitionService.unlikeExhibition(authentication.getName(), String.valueOf(exhibition_id));
-        return "좋아요 취소";
-    }
 
    // 전시회 방명록 작성하기
     @PostMapping("/{exhibition_id}/regist-comment")

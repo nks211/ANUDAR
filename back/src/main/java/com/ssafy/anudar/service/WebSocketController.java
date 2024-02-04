@@ -18,4 +18,5 @@ public class WebSocketController {
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatDto.getSessionId(), chatDto);
     }
 
+
 }

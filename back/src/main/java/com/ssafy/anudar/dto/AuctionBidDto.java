@@ -1,12 +1,12 @@
-package com.ssafy.anudar.dto.request;
+package com.ssafy.anudar.dto;
 
 import com.ssafy.anudar.model.Work;
 import lombok.Data;
 
 @Data
-public class AutionBidRequest {
-    private Integer channelId;
+public class AuctionBidDto {
+    private String sessionId;
     private String username;
-    private Work work;
+//    private Work work;
     private Integer askingprice;
 }

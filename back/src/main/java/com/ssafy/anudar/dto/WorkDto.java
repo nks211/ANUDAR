@@ -1,6 +1,5 @@
 package com.ssafy.anudar.dto;
 
-import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.Work;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -17,6 +16,7 @@ public class WorkDto {
     private String detail;
     private Integer price;
     private int bid;
+    private String author;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
@@ -25,7 +25,8 @@ public class WorkDto {
                 work.getImage(),
                 work.getDetail(),
                 work.getPrice(),
-                work.getBid()
+                work.getBid(),
+                work.getUser().getUsername()
         );
     }
 }

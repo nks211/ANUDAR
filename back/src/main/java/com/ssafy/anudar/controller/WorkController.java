@@ -1,5 +1,6 @@
 package com.ssafy.anudar.controller;
 
+import com.ssafy.anudar.dto.WorkDto;
 import com.ssafy.anudar.model.Work;
 import com.ssafy.anudar.service.WorkService;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +21,14 @@ public class WorkController {
 
     // 작품 전체 조회 : 작가 등 테이블 연결 필요
     @GetMapping
-    public ResponseEntity<List<Work>> infos() {
-        List<Work> works = workService.getAllWorks();
-        return new ResponseEntity<>(works,HttpStatus.OK);
+    public ResponseEntity<List<WorkDto>> workList() {
+        return new ResponseEntity<>(workService.getAllWorks(),HttpStatus.OK);
     }
 
     // 작품 상세 조회
     @GetMapping("/infos/{work_id}")
-    public ResponseEntity<Work> workDetail(@PathVariable Long work_id) {
-        Optional<Work> workOptional = workService.getWorkById(work_id);
-
-        return workOptional
-                .map(workDto -> new ResponseEntity<>(workDto, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<WorkDto> workDetail(@PathVariable Long work_id) {
+        return new ResponseEntity<>(workService.getWorkById(work_id), HttpStatus.OK);
     }
 
     // 작가 작품 조회

@@ -2,6 +2,7 @@ package com.ssafy.anudar.service;
 
 
 
+import com.ssafy.anudar.dto.WorkDto;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.*;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +25,16 @@ public class WorkService {
     private final AuctionWorkRepository auctionWorkRepository;
 
     // 전체 작품 조회
-    public List<Work> getAllWorks() {
-        return workRepository.findAll();
+    public List<WorkDto> getAllWorks() {
+        return workRepository.findAll()
+                .stream().map(WorkDto::fromEntity).toList();
     }
 
     // 작품 상세 조회
-    public Optional<Work> getWorkById(Long work_id) {
-        return workRepository.findById(work_id);
+    public WorkDto getWorkById(Long work_id) {
+        Work work = workRepository.findById(work_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.WORK_NOT_FOUND));
+        return WorkDto.fromEntity(work);
     }
 
     // 작가 작품 조회

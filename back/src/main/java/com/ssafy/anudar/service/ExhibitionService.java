@@ -65,8 +65,10 @@ public class ExhibitionService {
     public List<Exhibition> getAllExhibitions() { return exhibitionRepository.findAll(); }
 
     // 전시회 상세 조회
-    public Optional<Exhibition> getExhibitionById(Long exhibition_id) {
-        return exhibitionRepository.findById(exhibition_id);
+    public ExhibitionDto getExhibitionById(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
+        return ExhibitionDto.fromEntity(exhibition);
     }
 
     // 전시회 찜하기

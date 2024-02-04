@@ -67,12 +67,8 @@ public class ExhibitionController {
 
     // 전시회 상세 조회
     @GetMapping("/list/{exhibition_id}")
-    public ResponseEntity<Exhibition> exhibitionDetail(@PathVariable Long exhibition_id) {
-        Optional<Exhibition> exhibitionOptional = exhibitionService.getExhibitionById(exhibition_id);
-
-        return exhibitionOptional
-                .map(exhibitionDto -> new ResponseEntity<>(exhibitionDto, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<ExhibitionDto> exhibitionDetail(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 
     // 전시회 좋아요

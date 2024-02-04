@@ -2,6 +2,7 @@ package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
+import com.ssafy.anudar.dto.ExhibitionDetailDto;
 import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.request.ExhibitionRegistRequest;
 import com.ssafy.anudar.dto.ReviewDto;
@@ -67,7 +68,7 @@ public class ExhibitionController {
 
     // 전시회 상세 조회
     @GetMapping("/list/{exhibition_id}")
-    public ResponseEntity<ExhibitionDto> exhibitionDetail(@PathVariable Long exhibition_id) {
+    public ResponseEntity<ExhibitionDetailDto> exhibitionDetail(@PathVariable Long exhibition_id) {
         return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 

@@ -33,6 +33,9 @@ public class Exhibition {
     private String image;
 
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+    private List<Work> works;
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)

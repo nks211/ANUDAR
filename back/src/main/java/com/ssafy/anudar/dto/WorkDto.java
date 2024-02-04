@@ -11,17 +11,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class WorkDto {
+    private Long id;
     private String title;
+    private String image;
     private String detail;
     private Integer price;
-    private String image;
+    private int bid;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
+                work.getId(),
                 work.getTitle(),
+                work.getImage(),
                 work.getDetail(),
                 work.getPrice(),
-                work.getTitle()
+                work.getBid()
         );
     }
 }

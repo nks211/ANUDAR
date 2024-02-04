@@ -1,6 +1,7 @@
 package com.ssafy.anudar.service;
 
 
+import com.ssafy.anudar.dto.ExhibitionDetailDto;
 import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.WorkDto;
 import com.ssafy.anudar.exception.BadRequestException;
@@ -71,10 +72,10 @@ public class ExhibitionService {
     }
 
     // 전시회 상세 조회
-    public ExhibitionDto getExhibitionById(Long exhibition_id) {
+    public ExhibitionDetailDto getExhibitionById(Long exhibition_id) {
         Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
-        return ExhibitionDto.fromEntity(exhibition);
+        return ExhibitionDetailDto.fromEntity(exhibition);
     }
 
     // 전시회 찜하기

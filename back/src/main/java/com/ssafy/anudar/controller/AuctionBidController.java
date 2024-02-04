@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:37a30829d9b8f74c7c7e773d34bd1b93a6701d5a1671ae317789bc572b6d9341
-size 839
+package com.ssafy.anudar.controller;
+
+import com.ssafy.anudar.dto.request.AutionBidRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/live")
+@RequiredArgsConstructor
+public class AuctionBidController {
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    @MessageMapping("/chat")
+    public void sendMessage(AutionBidRequest req, SimpMessageHeaderAccessor accessor){
+        simpMessagingTemplate.convertAndSend("/sub/chat/" + req.getChannelId(), req);
+    }
+}

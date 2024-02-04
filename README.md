@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00f58f93b23ded229325769981d21cf70674d28794132e8b16b3dfa4a88fcb35
-size 247
+# ssafy06 연결 테스트 : 유나 브랜치 테스트
+# ssafy02 연결 테스트!!!!! !!!!!!~!!
+# ssafy05 연결 테스트 : 규리 pull 7
+# ssafy04 연결 테스트입니다요~
+# ssafy03 연결 테스트트 : 민우 브랜치 테스트트트 6

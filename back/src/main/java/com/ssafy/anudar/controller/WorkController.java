@@ -33,16 +33,14 @@ public class WorkController {
 
     // 작가 작품 조회
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<List<Work>> workByUser(@PathVariable Long user_id) {
-        List<Work> works = workService.getWorkByUser(user_id);
-        return new ResponseEntity<>(works, HttpStatus.OK);
+    public ResponseEntity<List<WorkDto>> workByUser(@PathVariable Long user_id) {
+        return new ResponseEntity<>(workService.getWorkByUser(user_id), HttpStatus.OK);
     }
 
     // 전시 작품 조회
     @GetMapping("/exhibit/{exhibition_id}")
-    public ResponseEntity<List<Work>> workByExhibition(@PathVariable Long exhibition_id) {
-        List<Work> works = workService.getWorkByExhibition(exhibition_id);
-        return new ResponseEntity<>(works, HttpStatus.OK);
+    public ResponseEntity<List<WorkDto>> workByExhibition(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(workService.getWorkByExhibition(exhibition_id), HttpStatus.OK);
     }
 
     // 작품 찜하기/취소

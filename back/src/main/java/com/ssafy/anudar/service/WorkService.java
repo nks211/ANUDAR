@@ -38,15 +38,19 @@ public class WorkService {
     }
 
     // 작가 작품 조회
-    public List<Work> getWorkByUser(Long user_id) {
-        Optional<User> user = repository.findById(user_id);
-        return workRepository.findAllByUser(user);
+    public List<WorkDto> getWorkByUser(Long user_id) {
+        User user = repository.findById(user_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return workRepository.findAllByUser(user)
+                .stream().map(WorkDto::fromEntity).toList();
     }
 
     // 전시 작품 조회
-    public List<Work> getWorkByExhibition(Long exhibition_id) {
-        Optional<Exhibition> exhibition = exhibitionRepository.findById(exhibition_id);
-        return workRepository.findAllByExhibition(exhibition);
+    public List<WorkDto> getWorkByExhibition(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.WORK_NOT_FOUND));
+        return workRepository.findAllByExhibition(exhibition)
+                .stream().map(WorkDto::fromEntity).toList();
     }
 
     // 작품 찜하기/취소

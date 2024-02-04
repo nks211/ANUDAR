@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -94,9 +95,8 @@ public class ExhibitionController {
 
     // 전시회 방명록 조회하기
     @GetMapping("/{exhibition_id}/comments-list")
-    public ResponseEntity<List<ExhibitionReview>> listComments(@PathVariable Long exhibition_id) {
-        List<ExhibitionReview> exhibitionReviews = reviewService.getAllExhibitionReviews(exhibition_id);
-        return new ResponseEntity<>(exhibitionReviews, HttpStatus.OK);
+    public ResponseEntity<List<ReviewDto>> listComments(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(reviewService.getAllExhibitionReviews(exhibition_id), HttpStatus.OK);
     }
 
     // 방명록 삭제

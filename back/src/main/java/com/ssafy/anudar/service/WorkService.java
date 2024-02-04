@@ -64,6 +64,9 @@ public class WorkService {
 
     // 작품 찜 수 조회
     public Integer likeCount(Long work_id) {
-        return workRepository.findById(work_id).get().getBid();
+        Work work = workRepository.findById(work_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.WORK_NOT_FOUND));
+        return work.getBid();
     }
+
 }

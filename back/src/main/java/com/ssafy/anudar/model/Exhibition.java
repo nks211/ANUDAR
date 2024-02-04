@@ -1,6 +1,5 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,9 +29,6 @@ public class Exhibition {
     @Column(name = "end_time")
     private LocalDateTime end_time;
 
-    @Column(name="docent_url")
-    private String docent_url;
-
     @Column(name = "image")
     private String image;
 
@@ -45,7 +41,6 @@ public class Exhibition {
     @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
     private Docent docent;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -58,12 +53,6 @@ public class Exhibition {
         this.end_time = end_time;
         this.image = image;
         this.user = user;
-    }
-
-    public String setDocentUrl(Long exhibitionId) {
-        String docent_url = "http://anudar.com/docent/" + exhibitionId;
-        this.docent_url = docent_url;
-        return docent_url;
     }
 
 }

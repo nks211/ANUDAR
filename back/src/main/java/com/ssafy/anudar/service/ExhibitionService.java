@@ -58,9 +58,6 @@ public class ExhibitionService {
             WorkDto.fromEntity(workRepository.save(work));
         }
 
-        // 도슨트 url 저장
-        exhibition.setDocent_url("https://anudar.com/docent/" + exhibition.getId());  // 도슨트 URL을 직접 저장하도록 수정
-
         return ExhibitionDto.fromEntity(exhibition);
     }
 

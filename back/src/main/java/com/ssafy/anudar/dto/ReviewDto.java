@@ -1,23 +1,3 @@
-package com.ssafy.anudar.dto;
-
-import com.ssafy.anudar.model.ExhibitionReview;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ReviewDto {
-    private Long id;
-    private String content;
-    private String user; // 댓글을 쓰는 유저의 이름
-
-    public static ReviewDto fromEntity (ExhibitionReview review) {
-        return new ReviewDto(
-                review.getId(),
-                review.getContent(),
-                review.getUser().getName()
-        );
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0a9b8e2fa46204a549ac6bed786e99766dc1c05cb5961fadbcb3385ef3b221d5
+size 766

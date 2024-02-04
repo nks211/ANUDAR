@@ -49,17 +49,11 @@ public class WorkController {
         return new ResponseEntity<>(works, HttpStatus.OK);
     }
 
-    // 작품 찜하기
+    // 작품 찜하기/취소
     @PostMapping("/like/{work_id}")
     public ResponseEntity<String> like(Authentication authentication, @PathVariable("work_id") Long work_id) {
-        System.out.println(authentication);
-        return new ResponseEntity<>(workService.likeWork(authentication.getName(),work_id),HttpStatus.OK);
-    }
-
-    // 작품 찜하기 취소
-    @DeleteMapping("/unlike/{work_id}")
-    public ResponseEntity<String> unlike(Authentication authentication, @PathVariable("work_id") Long work_id) {
-        return new ResponseEntity<>(workService.unlikeWork(authentication.getName(), work_id), HttpStatus.OK);
+        workService.likeWork(authentication.getName(),work_id);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
     }
 
     // 작품 찜 수 조회

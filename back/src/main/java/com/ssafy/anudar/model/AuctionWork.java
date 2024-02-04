@@ -24,21 +24,20 @@ public class AuctionWork {
     @JoinColumn(name="work_id")
     private Work work;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
     @Builder
-    public AuctionWork(Work work, User user) {
-        finalPrice = work.getPrice();
+    public AuctionWork(Auction auction, Work work, User user, int finalPrice) {
+        this.auction =auction;
         this.work = work;
         this.user = user;
+        this.finalPrice = finalPrice;
     }
 
 }

@@ -20,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -62,7 +63,12 @@ public class ExhibitionService {
     }
 
     // 전시회 전체 조회
-    public List<Exhibition> getAllExhibitions() { return exhibitionRepository.findAll(); }
+    public List<ExhibitionDto> getAllExhibitions() {
+        return exhibitionRepository.findAll()
+                .stream()
+                .map(ExhibitionDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 
     // 전시회 상세 조회
     public ExhibitionDto getExhibitionById(Long exhibition_id) {

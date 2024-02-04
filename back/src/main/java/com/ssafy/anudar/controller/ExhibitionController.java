@@ -60,8 +60,8 @@ public class ExhibitionController {
 
     // 전시회 전체 조회
     @GetMapping("/list")
-    public ResponseEntity<List<Exhibition>> list() {
-        List<Exhibition> exhibitions = exhibitionService.getAllExhibitions();
+    public ResponseEntity<List<ExhibitionDto>> list() {
+        List<ExhibitionDto> exhibitions = exhibitionService.getAllExhibitions();
         return new ResponseEntity<>(exhibitions, HttpStatus.OK);
     }
 

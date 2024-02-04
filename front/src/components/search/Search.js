@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52a65df9747ad42859e9625d37834aee5c4bc135ac416634e52ba885c4c304bb
-size 612
+import { useState } from 'react'
+import './Search.css'
+
+export default function Search(props) {
+  const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <div className="search">
+      <input id="searchValue" type="text" onChange={event=>{
+        setSearchValue(event.target.value)
+        }}
+        onKeyDown={(event)=>{
+          if (event.keyCode === 13) {
+            props.updateValues(searchValue)
+          }}}
+        />
+      <button style={{fontFamily: "SUIT-Regular", borderRadius: "0.7rem"}}
+      onClick={()=>{props.updateValues(searchValue)}}
+      >검색</button>
+    </div>
+  )
+}

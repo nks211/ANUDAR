@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eae5d0c0595e8f26c04cf13c8330e37492829ed55b3d3f84a692322f67b12c4d
-size 254
+import './ToolTip.css'
+
+export default function ToolTip(props) {
+  return (
+    <span className="tooltipToggle" ariaLabel={props.ariaLabel} tabindex="0">
+      <img src={"../../asset/"+props.img} width={props.size} height={props.size}/>
+    </span>
+  )
+}

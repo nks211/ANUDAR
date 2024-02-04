@@ -1,20 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Notify;
-import com.ssafy.anudar.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-// NotifyRepository : 알림 객체를 저장하고 관리 함
-// EmitterRepository : SSE 연결을 관리하는 SseEmitter 객체와 이벤트 캐시를 웹 형태로 저장하고 관리
-@Repository
-public interface NotifyRepository extends JpaRepository<Notify, Long> {
-    // 읽은 알람은 지우기
-    void deleteByIsRead(boolean isRead);
-}
-
-
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:53762705cc66d917970d8af7f432eecdc6fd5385978610c3db17a499bda110ad
+size 543

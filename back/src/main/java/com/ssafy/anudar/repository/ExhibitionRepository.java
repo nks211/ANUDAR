@@ -1,13 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.dto.ExhibitionDto;
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-@Repository
-public interface ExhibitionRepository extends JpaRepository<Exhibition, Long> {
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:7a0d111d13dca26bc8b09dc5253097561611dcfc42efac944fcc200483a7db16
+size 288

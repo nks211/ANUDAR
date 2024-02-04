@@ -1,35 +1,3 @@
-package com.ssafy.anudar.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
-
-
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Follow {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="follow_id")
-    private long id;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)  // default EAGER
-    @JoinColumn(name = "to_user")
-    private User toUser;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "from_user")
-    private User fromUser;
-
-    @Builder
-    public Follow(User toUser, User fromUser){
-        this.toUser = toUser;
-        this.fromUser = fromUser;
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2cfd1a205e40da9be778e25c5a3a25791214d3ab72da692b5c024a4ba91d9af9
+size 701

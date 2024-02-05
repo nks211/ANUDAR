@@ -27,9 +27,9 @@ public class AuctionWebSocketConfig implements WebSocketMessageBrokerConfigurer 
         registry.setApplicationDestinationPrefixes("/pub");
     }
 
-    @Override
-    // STOMP 연결 시도 시 호출되는 메소드
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new FilterChannelInterceptor());
-    }
+//    @Override
+//    // STOMP 연결 시도 시 호출되는 메소드
+//    public void configureClientInboundChannel(ChannelRegistration registration) {
+//        registration.interceptors(new FilterChannelInterceptor());
+//    }
 }

@@ -1,7 +1,7 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
-import com.ssafy.anudar.dto.AuctionWorkDto;
+import com.ssafy.anudar.dto.SuccessWorkDto;
 import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
@@ -129,11 +129,11 @@ public class UserService {
     }
 
     // 나의 결제 내역
-    public List<AuctionWorkDto> getpay(String username){
+    public List<SuccessWorkDto> getpay(String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
+        return auctionWorkRepository.findByUser(user).stream().map(SuccessWorkDto::fromEntity).collect(Collectors.toList());
     }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {

@@ -1,6 +1,6 @@
 package com.ssafy.anudar.controller;
 
-import com.ssafy.anudar.dto.AuctionWorkDto;
+import com.ssafy.anudar.dto.SuccessWorkDto;
 import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
@@ -83,7 +83,7 @@ public class UserController {
 
     // 나의 결제 내역
     @GetMapping("/pay/work")
-    public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
+    public ResponseEntity<List<SuccessWorkDto>> mypay(Authentication authentication) {
         return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
     }
 

@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -63,7 +62,7 @@ public class User extends BaseTimeEntity{
     private List<Exhibition> exhibitions;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<AuctionWork> acutionWorks;
+    private List<SuccessWork> successWorks;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

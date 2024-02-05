@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -34,7 +33,7 @@ public class Work {
     private Integer bid;
 
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AuctionWork auctionWork;
+    private SuccessWork successWork;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

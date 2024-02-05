@@ -7,17 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AuctionWork {
+public class SuccessWork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="auction_work_id")
+    @Column(name="success_work_id")
     private Long id;
 
     @Column(name="final_price")

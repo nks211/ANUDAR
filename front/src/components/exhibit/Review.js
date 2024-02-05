@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a5c651cd0702ea908471ccbe81525ccf815ffc005b33ad70f8e8c981efe5c693
-size 505
+import './Review.css'
+
+export default function Review(props) {
+  return (
+    <div>
+      <div className="reviewContainer">
+        <div className="reviewBox">
+          <div className="reviewCreate">
+            <div className="reviewWriter">{props.userName}</div>
+            <div className="reviewDate">{props.todayDate}</div>
+          </div>
+          <div className="reviewDelete">삭제</div>
+        </div>
+        <div className="reviewContent">{props.content}</div>
+      </div>
+    </div>
+  )
+}

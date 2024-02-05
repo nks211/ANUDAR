@@ -1,3 +1,40 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d3eca660c0531e2c9a32a73568a9fa8540c86549b8bafc55fbd772cec7c59959
-size 960
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExhibitionReview extends BaseTimeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exhibition_review_id")
+    private Long id;
+
+    @Column(name= "content")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name="exhibition_id")
+    private Exhibition exhibition;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @Builder
+    public ExhibitionReview(String content, Exhibition exhibition, User user){
+        this.content = content;
+        this.exhibition = exhibition;
+        this.user = user;
+    }
+
+
+//    대댓글인듯 :)
+//    @ManyToOne
+//    @JoinColumn(name = "exhibition_review")
+//    private Exhibition exhibition_review;
+}

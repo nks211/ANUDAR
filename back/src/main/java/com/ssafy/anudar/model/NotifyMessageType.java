@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f705dc505633f67bfe9ff7c0a2869c2f95ba2b3c10c6bca8c0c9b372bde5b382
-size 511
+package com.ssafy.anudar.model;
+
+public enum NotifyMessageType {
+    AUTION_NEW_REQUEST("새로운 경매가 시작합니다."),
+    DOCENT_NEW_REQUEST("새로운 도슨트가 시작합니다."),
+    REVIEW_NEW_REQUEST("새로운 방명록이 달렸습니다."),
+    FOLLOW_NEW_REQUEST("새로운 팔로우가 있습니다.");
+    private String message;
+
+    NotifyMessageType(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return message;
+    }
+}

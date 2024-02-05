@@ -1,3 +1,179 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:404c63661aaaa4d774c6f4fbd79cb124234fc423423405e9c449ceeb80433429
-size 2717
+.workCard1 {
+    width: 300px;
+    height: 370px;
+    margin: 10px;
+    /* cursor: pointer; */
+    /* cursor: grab; */
+  }
+  
+  .workImageCard1 {
+    width: 300px;
+    height: 300px;
+    position: relative;
+  }
+  
+  .workImage1 {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .workInfo1 {
+    font-size: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+  
+  .workInfo1 p{
+    margin: 2px 0;
+  }
+  
+  .workInfo1 span{
+    font-weight: 900;
+  }
+  
+  .workThumbnail {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  .workName1 {
+    margin-top: 16px;
+    margin-bottom: 5px;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: right;
+  }
+  
+  .workArtist1 {
+    margin: 0;
+    font-size: 16px;
+    text-align: right;
+  }
+  
+  
+  .workCard2 {
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+  }
+  
+  .workImageCard2 {
+    width: 250px;
+    height: 250px;
+    position: relative;
+  }
+  
+  .workImage2 {
+    /* border-radius: 5%;  */
+    width: 250px;
+    height: 250px;
+  }
+  
+  .workInfo2 {
+    font-size: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+  
+  .workInfo2 p{
+    margin: 2px 0;
+  }
+  
+  .workInfo2 span{
+    font-weight: 900;
+  }
+  
+  /* 
+  .workImageSize {
+    width: 250px;
+    height: 250px;
+  } */
+  
+  
+  
+  
+  .workCard3 {
+    width: 300px;
+    height: 300px;
+    margin: 10px;
+  }
+  
+  .workImageCard3 {
+    width: 300px;
+    height: 300px;
+    position: relative;
+  }
+  
+  .workImage3 {
+    /* border-radius: 5%;  */
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* 작품4 */
+  .workCard4 {
+    width: 250px;
+    height: 295px;
+    margin: 20px 35px;
+  }
+  
+  .workImageCard4 {
+    width: 250px;
+    height: 250px;
+    position: relative;
+  }
+  
+  .workImage4 {
+    /* border-radius: 5%;  */
+    width: 250px;
+    height: 250px;
+  }
+  
+  .workName4 {
+    font-size: 20px;
+    font-weight: 900;
+    text-align: right;
+    margin: 0;
+  }
+  
+  .workArtist4 {
+    font-size: 16px;
+    text-align: right;
+    margin: 0;
+  }
+  
+  
+  .workInfo4 {
+    margin-top: 6px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 5px;
+  }
+  
+  .deleteBtn {
+    font-size: 14px;
+    color: #848484;
+    text-align: right;
+  }

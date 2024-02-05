@@ -1,14 +1,27 @@
 package com.ssafy.anudar.controller;
 
 
+import com.ssafy.anudar.dto.SuccessWorkDto;
+import com.ssafy.anudar.dto.request.SuccessWorkRequset;
+import com.ssafy.anudar.service.AuctionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ResourceBundle;
 
 @RestController
 @RequestMapping("/auction")
 @RequiredArgsConstructor
 public class AuctionController {
+    private final AuctionService auctionService;
+    @PostMapping("/bidok")
+    public ResponseEntity<SuccessWorkDto> bidok(@RequestBody SuccessWorkRequset req) {
+        SuccessWorkDto successWorkDto = auctionService
+                .saveSuccessWork(req.getWorkId(), req.getUserId(),
+                req.getAuctionId(), req.getFinalPrice());
 
-
+        return new ResponseEntity<>(successWorkDto, HttpStatus.OK);
+    }
 }

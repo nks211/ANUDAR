@@ -20,6 +20,7 @@ function App() {
           <Route exact path="/artist" element={<Artist />}></Route>
           <Route exact path="/auction" element={<Auction />}></Route>
           <Route exact path="/user/join" element={<Signup/>}></Route>
+        
         </Routes>
       </div>
     </>

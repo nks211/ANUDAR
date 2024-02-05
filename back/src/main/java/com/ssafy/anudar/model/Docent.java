@@ -30,6 +30,9 @@ public class Docent {
     @JoinColumn(name = "exhibition_id")
     private Exhibition exhibition;
 
+    @OneToOne(mappedBy = "docent", fetch = FetchType.LAZY)
+    private ChatRoom chatRoom;
+
     @Builder
     public Docent(LocalDateTime start_time, LocalDateTime end_time, Exhibition exhibition) {
         this.start_time = start_time;

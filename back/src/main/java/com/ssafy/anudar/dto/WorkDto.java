@@ -1,27 +1,3 @@
-package com.ssafy.anudar.dto;
-
-import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.model.Work;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class WorkDto {
-    private String title;
-    private String detail;
-    private Integer price;
-    private String image;
-
-    public static WorkDto fromEntity (Work work) {
-        return new WorkDto(
-                work.getTitle(),
-                work.getDetail(),
-                work.getPrice(),
-                work.getTitle()
-        );
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:771992c22eff6349ad4ae930eba756c10a5bdfec65b3725f933cdab23a88401a
+size 659

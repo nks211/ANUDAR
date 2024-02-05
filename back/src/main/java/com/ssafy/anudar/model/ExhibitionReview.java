@@ -1,6 +1,5 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,12 +18,10 @@ public class ExhibitionReview extends BaseTimeEntity {
     private String content;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name="user_id")
     private User user;
 

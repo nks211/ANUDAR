@@ -1,6 +1,7 @@
 package com.ssafy.anudar.service;
 
 
+import com.ssafy.anudar.dto.ExhibitionDetailDto;
 import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.WorkDto;
 import com.ssafy.anudar.exception.BadRequestException;
@@ -20,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -58,59 +60,41 @@ public class ExhibitionService {
             WorkDto.fromEntity(workRepository.save(work));
         }
 
-        // 도슨트 url 저장
-        exhibition.setDocent_url("https://anudar.com/docent/" + exhibition.getId());  // 도슨트 URL을 직접 저장하도록 수정
-
         return ExhibitionDto.fromEntity(exhibition);
     }
 
     // 전시회 전체 조회
-    public List<Exhibition> getAllExhibitions() { return exhibitionRepository.findAll(); }
+    public List<ExhibitionDto> getAllExhibitions() {
+        return exhibitionRepository.findAll()
+                .stream()
+                .map(ExhibitionDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 
     // 전시회 상세 조회
-    public Optional<Exhibition> getExhibitionById(Long exhibition_id) {
-        return exhibitionRepository.findById(exhibition_id);
+    public ExhibitionDetailDto getExhibitionById(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
+        return ExhibitionDetailDto.fromEntity(exhibition);
     }
 
     // 전시회 찜하기
-    public void likeExhibition(String username, String exhibition_id){
+    @Transactional
+    public void likeExhibition(String username, Long exhibition_id){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        // exhibition_id를 Long으로 변환
-        Long exhibitionId = Long.valueOf(exhibition_id);
-
-        Exhibition exhibition = exhibitionRepository.findById(exhibitionId)
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
 
-        if(!exhibition.getUser().getUsername().equals(username)){
-            likeExhibitionRepository.findByUserAndExhibition(user, exhibition)
-                    .orElseGet(() -> {
-                        // 없으면 찜 생성해주기
-                        LikeExhibition likeExhibition = new LikeExhibition(user, exhibition);
-                        likeExhibitionRepository.save(likeExhibition);
-                        return likeExhibition;
-                    });
+        Optional<LikeExhibition> likeExhibition = likeExhibitionRepository.findByUserAndExhibition(user, exhibition);
+
+        if(likeExhibition.isPresent()) { // 좋아요가 이미 존재 -> 취소
+            likeExhibitionRepository.delete(likeExhibition.get());
+        } else { // 좋아요가 없음 -> 생성
+            likeExhibitionRepository.save(new LikeExhibition(user, exhibition));
         }
-    }
 
-    // 전시회 찜 취소하기
-    public void unlikeExhibition(String username, String exhibition_id) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-
-        // exhibition_id를 Long으로 변환
-        Long exhibitionId = Long.valueOf(exhibition_id);
-
-        Exhibition exhibition = exhibitionRepository.findById(exhibitionId)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
-
-        // 현재 로그인한 사용자의 찜인지 확인
-        LikeExhibition likeExhibition = likeExhibitionRepository.findByUserAndExhibition(user, exhibition)
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.LIKE_NOT_FOUND));
-
-        // 찜 삭제하기
-        likeExhibitionRepository.delete(likeExhibition);
     }
 
 }

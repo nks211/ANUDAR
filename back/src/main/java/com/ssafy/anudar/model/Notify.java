@@ -1,5 +1,6 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,6 +26,7 @@ public class Notify extends BaseTimeEntity {
     private Boolean isRead;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="user_id")
     private User receiver;
 

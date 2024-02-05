@@ -1,5 +1,6 @@
 package com.ssafy.anudar.service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.ssafy.anudar.config.JwtUtil;
 import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
@@ -13,6 +14,7 @@ import com.ssafy.anudar.repository.NotifyRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,6 +146,33 @@ public class UserService {
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
+    }
+
+
+    // 알림 삭제
+    @Transactional
+    public void deleteNotification(String username, Long notificationId) {
+        // 알림 조회
+        Optional<Notify> notifyOptional = notifyRepository.findById(notificationId);
+
+        // 알림이 존재하지 않을 경우 예외 처리
+        if (notifyOptional.isEmpty()) {
+            throw new BadRequestException(ExceptionStatus.NOTIFICATION_NOT_FOUND);
+        }
+
+        Notify notify = notifyOptional.get();
+
+        // 알림 소유자가 요청한 사용자와 일치하지 않을 경우 예외 처리
+        if (!notify.getReceiver().getUsername().equals(username)) {
+            throw new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED);
+        }
+
+        // 사용자의 알림 리스트에서도 해당 알림 삭제
+        User user = notify.getReceiver();
+        user.getNotifies().remove(notify);
+
+        // 알림 삭제
+        notifyRepository.delete(notify);
     }
 
 }

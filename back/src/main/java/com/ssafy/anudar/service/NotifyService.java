@@ -1,6 +1,7 @@
 package com.ssafy.anudar.service;
 
 
+import com.ssafy.anudar.model.Notify;
 import com.ssafy.anudar.repository.EmitterRepository;
 import com.ssafy.anudar.repository.NotifyRepository;
 import org.springframework.stereotype.Service;
@@ -81,4 +82,5 @@ public class NotifyService {
 
         return emitter;
     }
+
 }

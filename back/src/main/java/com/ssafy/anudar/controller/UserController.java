@@ -4,16 +4,20 @@ import com.ssafy.anudar.dto.FollowDto;
 import com.ssafy.anudar.dto.UserDto;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.model.Notify;
+import com.ssafy.anudar.service.NotifyService;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.management.Notification;
 import java.util.List;
 
 @RestController
@@ -21,6 +25,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+    private final NotifyService notifyService;
     private final UserService userService;
     private final S3Service s3Service;
 
@@ -83,6 +88,13 @@ public class UserController {
     @DeleteMapping("/unfollow/{username}")
     public void unfollow(Authentication authentication, @PathVariable("username") String username) {
         userService.unfollow(authentication.getName(), username);
+    }
+
+    // 알림 삭제
+    @DeleteMapping("notifications/{notificationId}")
+    public ResponseEntity<String> deleteNotification(Authentication authentication, @PathVariable("notificationId") Long notificationId) {
+        userService.deleteNotification(authentication.getName(), notificationId);
+        return ResponseEntity.ok(notificationId + "번 알림이 삭제되었습니다.");
     }
 
 }

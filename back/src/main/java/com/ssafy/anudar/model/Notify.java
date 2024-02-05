@@ -49,4 +49,8 @@ public class Notify extends BaseTimeEntity {
         REVIEW     // 댓글 작성
     }
 
+    public boolean isRead(){
+        return this.isRead;
+    }
+
 }

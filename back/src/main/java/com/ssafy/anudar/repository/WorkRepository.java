@@ -1,19 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.model.Work;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface WorkRepository extends JpaRepository<Work, Long> {
-    Optional<Work> findById(Long id);
-
-    List<Work> findAllByUser(Optional<User> user);
-
-    List<Work> findAllByExhibition(Optional<Exhibition> exhibition);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a42df1dfcbbd80d164dbdbec2a0bb940a15863126cc00746957f5e616e0ca092
+size 538

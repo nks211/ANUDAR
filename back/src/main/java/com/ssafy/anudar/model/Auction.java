@@ -1,29 +1,3 @@
-package com.ssafy.anudar.model;
-
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Auction {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="auction_id")
-    private Long id;
-
-    @Column(name="start_time")
-    private LocalDateTime start_time;
-
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    private List<AuctionWork> auctionWorks;
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:aa90ecc7412b88447e03990c9f2d874deaf108a8e150dbd31d2c26d30cc8e89a
+size 689

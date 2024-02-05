@@ -1,11 +1,7 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -25,14 +21,20 @@ public class SuccessWork {
     @JoinColumn(name="work_id")
     private Work work;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
+
+    @Builder
+    public SuccessWork (Auction auction, Work work, User user, int finalPrice) {
+        this.auction =auction;
+        this.work = work;
+        this.user = user;
+        this.finalPrice = finalPrice;
+    }
 
 }

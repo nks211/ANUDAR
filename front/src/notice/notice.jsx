@@ -1,27 +1,35 @@
-import { React, useState } from "react";
+import { React } from "react";
+
+const style = {
+    backgroundColor:"#ffffff",
+    width: 300,
+    height: 90,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: "0px 0px 20px #777777",
+};
+
+export function UptoDate() {
+
+    return (
+        <div style={style}>
+            최근 알림이 없습니다.
+        </div>
+    );
+
+}
 
 function Notice(props) {
 
-    const style = {
-        backgroundColor:"#ffffff",
-        width: 300,
-        height: 90,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow: "0px 0px 20px #777777",
-    };
-
     const title = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 16,
         fontWeight: 400,
     };
 
     const detail = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 12,
         fontWeight: 400,
     }

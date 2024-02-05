@@ -1,6 +1,5 @@
 package com.ssafy.anudar.service;
 
-import com.amazonaws.services.kms.model.NotFoundException;
 import com.ssafy.anudar.config.JwtUtil;
 import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
@@ -37,7 +36,6 @@ public class UserService {
     private final UserCacheRepository userCacheRepository;
 
     // 알림 보내기위해서 추가
-    private final EventNotifyService eventNotifyService;
     private final NotifyRepository notifyRepository;
 
     @Value("${jwt.secret}")
@@ -174,6 +172,52 @@ public class UserService {
 
     }
 
+    // 알림 조회
+    public List<NotifyDto> getNotifiesByUserId(Long userId) {
+        List<Notify> notifies = notifyRepository.findByReceiverId(userId);
+        return notifies.stream()
+                .map(NotifyDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    // 알림 읽음 처리
+    @Transactional
+    public NotifyDto markAsRead(Authentication authentication, Long notifyId) {
+        String currentUsername = authentication.getName(); // 현재 인증된 사용자의 사용자명
+        Notify notify = notifyRepository.findById(notifyId)
+                .orElseThrow(() -> new IllegalStateException("Notification not found"));
+
+        // 현재 사용자가 알림의 수신자와 일치하는지 확인
+        if (!notify.getReceiver().getUsername().equals(currentUsername)) {
+            throw new IllegalStateException("Unauthorized to mark this notification as read");
+        }
+
+        notify.setIsRead(true); // 알림을 읽음 상태로 설정
+        notify = notifyRepository.save(notify); // 변경 사항 저장
+
+        return NotifyDto.fromEntity(notify); // NotifyDto로 변환하여 반환
+    }
+
+
+    // 알림 삭제
+    @Transactional
+    public void deleteNotify(Authentication authentication, Long notifyId) {
+        String currentUsername = authentication.getName(); // 현재 인증된 사용자의 이름(또는 ID)을 가져옵니다.
+        Notify notify = notifyRepository.findById(notifyId)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.NOTIFICATION_NOT_FOUND));
+
+        // 현재 사용자가 알림의 수신자와 일치하는지 확인합니다.
+        if (!notify.getReceiver().getUsername().equals(currentUsername)) {
+            throw new RuntimeException("Unauthorized to delete this notification");
+        }
+
+        // 사용자의 알림 리스트에서도 해당 알림 삭제
+        User user = notify.getReceiver();
+        user.getNotifies().remove(notify);
+
+        notifyRepository.deleteById(notifyId);
+    }
+
     // 언팔로우
     public void unfollow(String toUsername, String fromUsername) {
         // 팔로우 대상 및 본인 존재 여부
@@ -182,32 +226,6 @@ public class UserService {
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
-    }
-
-    // 알림 삭제
-    @Transactional
-    public void deleteNotification(String username, Long notificationId) {
-        // 알림 조회
-        Optional<Notify> notifyOptional = notifyRepository.findById(notificationId);
-
-        // 알림이 존재하지 않을 경우 예외 처리
-        if (notifyOptional.isEmpty()) {
-            throw new BadRequestException(ExceptionStatus.NOTIFICATION_NOT_FOUND);
-        }
-
-        Notify notify = notifyOptional.get();
-
-        // 알림 소유자가 요청한 사용자와 일치하지 않을 경우 예외 처리
-        if (!notify.getReceiver().getUsername().equals(username)) {
-            throw new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED);
-        }
-
-        // 사용자의 알림 리스트에서도 해당 알림 삭제
-        User user = notify.getReceiver();
-        user.getNotifies().remove(notify);
-
-        // 알림 삭제
-        notifyRepository.delete(notify);
     }
 
     // 팔로잉 목록
@@ -264,5 +282,6 @@ public class UserService {
                 .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
                 .collect(Collectors.toList());
     }
+
 }
 

@@ -2,6 +2,7 @@ package com.ssafy.anudar.repository;
 
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.UserRole;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRole(UserRole role);
     
 
-
     void deleteById(Long id);
+
 }

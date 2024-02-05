@@ -24,8 +24,7 @@ public class Notify extends BaseTimeEntity {
     @Column(name="isRead")
     private Boolean isRead;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User receiver;
 
@@ -42,7 +41,7 @@ public class Notify extends BaseTimeEntity {
     }
 
     public enum NotifyType {
-        AUTION,   // 경매 시작 알림
+        AUCTION,   // 경매 시작 알림
         DOCENT,   // 도슨트 시작 알림
         FOLLOW,  // 팔로우 알림
         REVIEW     // 댓글 작성

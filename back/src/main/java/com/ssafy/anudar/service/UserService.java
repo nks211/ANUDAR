@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.ssafy.anudar.model.Notify.NotifyType.FOLLOW;
@@ -235,5 +236,18 @@ public class UserService {
                 .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
                 .collect(Collectors.toList());
     }
+
+    // username 중복 체크
+    public void usernameCheck(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_USERNAME);
+    }
+
+    // nickname 중복 체크
+    public void nicknameCheck(String nickname) {
+        Optional<User> user = userRepository.findByNickname(nickname);
+        if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_NICKNAME);
+    }
+
 }
 

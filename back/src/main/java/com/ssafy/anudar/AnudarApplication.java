@@ -1,22 +1,3 @@
-package com.ssafy.anudar;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-@EnableJpaAuditing
-@SpringBootApplication
-public class AnudarApplication {
-
-    @Bean
-    public BCryptPasswordEncoder encodePassword() {
-        return new BCryptPasswordEncoder();
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(AnudarApplication.class, args);
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:783e7968285928bdf86c5c3cc8e05c1d49ea357fadcd6afa995a0f0de0ce8e92
+size 784

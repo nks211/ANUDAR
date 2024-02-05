@@ -101,7 +101,15 @@ public class ExhibitionController {
 
     // 방명록 삭제
     @DeleteMapping("/{review_id}")
-    public void deleteComment(Authentication authentication, @PathVariable Long review_id) {
+    public ResponseEntity<String> deleteComment(Authentication authentication, @PathVariable Long review_id) {
         reviewService.deleteReview(authentication, review_id);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
+
+    // 현재 진행중인 전시 가져오기
+    @GetMapping("/list/current")
+    public ResponseEntity<List<ExhibitionDto>> listCurrent() {
+        return new ResponseEntity<>(exhibitionService.getCurrentExhibitions(), HttpStatus.OK);
+    }
+
 }

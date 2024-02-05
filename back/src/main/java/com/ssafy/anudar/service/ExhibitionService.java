@@ -68,7 +68,7 @@ public class ExhibitionService {
         return exhibitionRepository.findAll()
                 .stream()
                 .map(ExhibitionDto::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     // 전시회 상세 조회
@@ -95,6 +95,13 @@ public class ExhibitionService {
             likeExhibitionRepository.save(new LikeExhibition(user, exhibition));
         }
 
+    }
+
+    // 현재 시간 기준으로 진행중인 전시가져오기
+    public List<ExhibitionDto> getCurrentExhibitions () {
+        return exhibitionRepository.findExhibitionsByCurrentTime(LocalDateTime.now())
+                .stream().map(ExhibitionDto::fromEntity)
+                .toList();
     }
 
 }

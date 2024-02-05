@@ -1,10 +1,8 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -31,24 +29,25 @@ public class Work {
     private String image;
 
     @Column(name="bid")
-    private Integer bid;
+    private Integer bid = 0;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AuctionWork auctionWork;
+    private SuccessWork successWork;
 
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
-    private List<LikeWork> likeWorks;
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
+
+    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
+    private List<LikeWork> likeWorks;
 
     @Builder
     public Work(String title, String detail, Integer price, String image, User user, Exhibition exhibition) {
@@ -58,7 +57,6 @@ public class Work {
         this.image = image;
         this.user = user;
         this.exhibition = exhibition;
-        bid = 0;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.ssafy.anudar.dto;
 
-import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.Work;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -11,17 +10,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class WorkDto {
+    private Long id;
     private String title;
+    private String image;
     private String detail;
     private Integer price;
-    private String image;
+    private int bid;
+    private String author;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
+                work.getId(),
                 work.getTitle(),
+                work.getImage(),
                 work.getDetail(),
                 work.getPrice(),
-                work.getTitle()
+                work.getBid(),
+                work.getUser().getUsername()
         );
     }
 }

@@ -28,7 +28,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuctionWorkRepository auctionWorkRepository;
+    private final SuccessWorkRepository successWorkRepository;
     private final LikeExhibitionRepository likeExhibitionRepository;
     private final LikeWorkRepository likeWorkRepository;
     private final UserCacheRepository userCacheRepository;
@@ -134,11 +134,11 @@ public class UserService {
     }
 
     // 나의 결제 내역
-    public List<AuctionWorkDto> getpay(String username){
+    public List<SuccessWorkDto> getpay(String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
+        return successWorkRepository.findByUser(user).stream().map(SuccessWorkDto::fromEntity).collect(Collectors.toList());
     }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
@@ -230,9 +230,9 @@ public class UserService {
         // 본인 확인
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        List<AuctionWork> bids = auctionWorkRepository.findAllByUser(user);
+        List<SuccessWork> bids = successWorkRepository.findAllByUser(user);
         return bids.stream()
-                .map(auctionWork -> WorkDto.fromEntity(auctionWork.getWork()))
+                .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
                 .collect(Collectors.toList());
     }
 }

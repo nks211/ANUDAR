@@ -1,5 +1,6 @@
 package com.ssafy.anudar.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -7,9 +8,13 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+import java.security.Key;
+
 @Configuration
 @EnableWebSocketMessageBroker
+@RequiredArgsConstructor
 public class AuctionWebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    private final String key;
     // 웹소켓 서버의 엔드포인트 : ws
     // 클라이언트는 다른 origin이므로 cors 오류 방지 위해 setAllowedOrigins 설정
     @Override
@@ -27,9 +32,9 @@ public class AuctionWebSocketConfig implements WebSocketMessageBrokerConfigurer 
         registry.setApplicationDestinationPrefixes("/pub");
     }
 
-//    @Override
-//    // STOMP 연결 시도 시 호출되는 메소드
-//    public void configureClientInboundChannel(ChannelRegistration registration) {
-//        registration.interceptors(new FilterChannelInterceptor());
-//    }
+    @Override
+    // STOMP 연결 시도 시 호출되는 메소드
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(new FilterChannelInterceptor(key));
+    }
 }

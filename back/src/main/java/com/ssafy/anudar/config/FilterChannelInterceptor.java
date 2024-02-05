@@ -1,7 +1,7 @@
 package com.ssafy.anudar.config;
 
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.messaging.Message;
@@ -10,15 +10,14 @@ import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 99) // spring security 보다 인터셉터의 우선 순위를 올리기 위해
-@Component
 @RequiredArgsConstructor
 public class FilterChannelInterceptor implements ChannelInterceptor {
-//    private final JwtTokenProvider
+//    private final JwtUtil jwtUtil;
+    private final String key;
 
     // preSend : 메시지가 채널로 전송되기 전에 호출되는 메소드
     @Override
@@ -28,6 +27,8 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
         assert headerAccessor != null;
 
+        // 인증하는 과정
+        // 구독 & 연결된 경우에만 체크
         if (!StompCommand.UNSUBSCRIBE.equals(headerAccessor.getCommand()) && !StompCommand.DISCONNECT.equals(headerAccessor.getCommand())) {
             String authorizationHeader = String.valueOf(headerAccessor.getNativeHeader("Authorization"));
             if (authorizationHeader == null || authorizationHeader.equals("null")) {
@@ -36,9 +37,20 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
 
             String token = Objects.requireNonNull(headerAccessor.getNativeHeader("Authorization")).get(0)
                     .replace("Bearer ", "");
-//            try {
-//                jwtTokenProvider
-//            }
+            try {
+//                // 토큰 권한 확인
+//                JwtUtil.isExpired(token, key);
+//                Authentication user = jwtUtil.getAuthentication(token, key);
+//                headerAccessor.setUser(user);
+//                Integer userId = Jwts.
+//                String username = JwtUtil.getUsername(token, key);
+//                headerAccessor.addNativeHeader("User", username);
+            } catch (MessageDeliveryException e) {
+                throw new MessageDeliveryException("메세지 에러");
+            } catch (SecurityException | MalformedJwtException | ExpiredJwtException
+                     | UnsupportedJwtException | IllegalArgumentException e) {
+                throw new MessageDeliveryException("인증 정보가 올바르지 않습니다. 다시 로그인 후 이용해주세요.");
+            }
         }
         return message;
     }

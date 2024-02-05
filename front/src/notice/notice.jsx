@@ -1,3 +1,61 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:18106f84ec179a5c446409018e296a1d12a6f50088ab48d0bc7de688499cfa47
-size 1416
+import { React } from "react";
+
+const style = {
+    backgroundColor:"#ffffff",
+    width: 300,
+    height: 90,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: "0px 0px 20px #777777",
+};
+
+export function UptoDate() {
+
+    return (
+        <div style={style}>
+            최근 알림이 없습니다.
+        </div>
+    );
+
+}
+
+function Notice(props) {
+
+    const title = {
+        color: "#000000",
+        fontSize: 16,
+        fontWeight: 400,
+    };
+
+    const detail = {
+        color: "#000000",
+        fontSize: 12,
+        fontWeight: 400,
+    }
+
+    return (
+        <div style={style}>
+            <div style={{
+                backgroundColor: "#ff0000",
+                borderRadius: "5px",
+                height: "10px",
+                width: "10px",
+                position: "absolute",
+                left: "30px",
+                top: "40px",
+            }}/>
+            <div style={{ position: "absolute", left: "76px", top: "16px" }}>
+                <div style={title}>{ props.title }</div>
+            </div>
+            <div style={{ position: "absolute", left: "150px", top: "19px"}}>
+                <div style={detail}>{ props.date }</div>
+            </div>
+            <div style={{ position: "absolute", left: "76px", top: "53px" }}>
+                <div style={detail}>{ props.details }</div>
+            </div>
+        </div>
+    );
+}
+
+export default Notice;

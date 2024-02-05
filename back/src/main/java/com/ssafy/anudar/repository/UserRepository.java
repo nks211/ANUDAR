@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:70e448241375408e90d607d4f5e42e33d0da824a491143130be107ae2c9932be
-size 487
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.UserRole;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
+
+    List<User> findByRole(UserRole role);
+    
+
+
+    void deleteById(Long id);
+}

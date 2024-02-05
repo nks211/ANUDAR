@@ -5,12 +5,15 @@ server:
   port: 8080
   ssl:
     enabled: false
-OPENVIDU_URL: http://43.200.169.6:8080/
-OPENVIDU_SECRET: MY_SECRET
+
+OPENVIDU_URL: https://i10d105.p.ssafy.io:8443/
+OPENVIDU_SECRET: ANUDAR
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url : jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
+    url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
+
     username: ssafy
     password: ssafy
   jpa:
@@ -19,6 +22,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+  data:
+    redis:
+      host: i10d105.p.ssafy.io
+      port: 6379
+
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
   access-token:
@@ -30,6 +38,8 @@ cloud:
       folder:
         folderName1: user/
         folderName2: exhibit/
+        folderName3: video/
+        folderName4: work/
     credentials:
       access-key: AKIA3YP4ZZRHKG3CAJ2Y
       secret-key: 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

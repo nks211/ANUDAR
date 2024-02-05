@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface WorkRepository extends JpaRepository<Work, Long> {
     Optional<Work> findById(Long id);
 
-    List<Work> findAllByUser(Optional<User> user);
+    List<Work> findAllByUser(User user);
 
-    List<Work> findAllByExhibition(Optional<Exhibition> exhibition);
+    List<Work> findAllByExhibition(Exhibition exhibition);
 }

@@ -17,6 +17,7 @@ public class ExhibitionRegistRequest {
     String detail;
     String start_time;
     String end_time;
+    String image;
 
     // 도슨트 정보
     String docent_start;

@@ -2,16 +2,15 @@ package com.ssafy.anudar.service;
 
 import com.amazonaws.services.kms.model.NotFoundException;
 import com.ssafy.anudar.config.JwtUtil;
-import com.ssafy.anudar.dto.FollowDto;
-import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
+
 import com.ssafy.anudar.model.*;
-import com.ssafy.anudar.repository.FollowRepository;
-import com.ssafy.anudar.repository.NotifyRepository;
-import com.ssafy.anudar.repository.UserRepository;
+import com.ssafy.anudar.repository.*;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -32,6 +31,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SuccessWorkRepository successWorkRepository;
+    private final LikeExhibitionRepository likeExhibitionRepository;
+    private final LikeWorkRepository likeWorkRepository;
+    private final UserCacheRepository userCacheRepository;
 
     // 알림 보내기위해서 추가
     private final EventNotifyService eventNotifyService;
@@ -54,9 +57,9 @@ public class UserService {
     }
 
     public UserPrincipalDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(UserPrincipalDetails::fromEntity)
-                .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED));
+        return userCacheRepository.getUser(username).orElseGet(() ->
+                userRepository.findByUsername(username).map(UserPrincipalDetails::fromEntity)
+                        .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED)));
     }
 
     public String login(String username, String password) {
@@ -67,7 +70,8 @@ public class UserService {
         if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
         }
-
+        // save in redis
+        userCacheRepository.setUser(UserPrincipalDetails.fromEntity(user));
         return JwtUtil.generateToken(username, key, expiredTimeMs);
     }
 
@@ -83,22 +87,41 @@ public class UserService {
         // username으로 데이터를 불러와서 값을 변경하기
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // username과 name은 수정은 X / 비밀번호 수정 따로 추가 예정
-        // null 값 들어오면 null로 수정해주기 필요
+        // username과 name은 수정은 X
         user.setNickname(req.getNickname());
         user.setEmail(req.getEmail());
         user.setImage(req.getImage());
+        user.setPhone(req.getPhone());
         // 수정된 사용자 정보를 저장
         return UserDto.fromEntity(userRepository.save(user));
 
     }
 
-    // 회원 탈퇴 : enable 변경
-    public UserDto signout(String username) {
+    // 비밀번호 수정
+    public UserDto updatepassword(String username, String oldpassword, String newpassword, String checkpassword) {
+        // 로그인 로직
+        // 회원가입 여부 체크
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
-        // false로 변경된 회원의 정보 저장
-        return UserDto.fromEntity(userRepository.save(user));
+        // 기본 비밀번호와 동일한지 체크
+        if(bCryptPasswordEncoder.matches(oldpassword, user.getPassword()) && newpassword.equals(checkpassword)) {
+            // 새로운 비밀번호와 비밀번호 확인이 동일한지 체크
+            user.setPassword(bCryptPasswordEncoder.encode(newpassword));
+            userRepository.save(user);
+
+        } else {
+            throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
+        }
+
+        return UserDto.fromEntity(user);
+    }
+
+    // 회원 탈퇴 : 연관된 테이블 설정 필요
+    public void signout(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        userRepository.deleteById(user.getId());
     }
 
     // 전체 작가 조회 : 탈퇴하지 않은 사람 중에 작가인 경우 조회 => 다른 테이블과 조인 필요
@@ -113,16 +136,27 @@ public class UserService {
         return UserDto.fromEntity(user);
     }
 
+    // 나의 결제 내역
+    public List<SuccessWorkDto> getpay(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        return successWorkRepository.findByUser(user).stream().map(SuccessWorkDto::fromEntity).collect(Collectors.toList());
+    }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 자신을 팔로우할 경우 예외 처리
+        if (toUsername.equals(fromUsername))
+            throw new BadRequestException(ExceptionStatus.FOLLOW_SELF);
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        // 팔로우 저장
-        Follow follow = followRepository.save(new Follow(toUser, fromUser));
+        // 이미 팔로우 할 경우 예외 처리
+        if(followRepository.findByToUserAndFromUser(toUser, fromUser)!=null)
+            throw new BadRequestException(ExceptionStatus.DUPLICATE_FOLLOW);
 
         // 알림 생성 및 보내기
 //        eventNotifyService.notifyFollow(toUser, fromUser);
@@ -131,23 +165,24 @@ public class UserService {
         String notifyContent = fromUser.getName() + "님이 당신을 팔로우했습니다.";
         Notify notify = new Notify(toUser,FOLLOW, notifyContent, false);
         notifyRepository.save(notify);
-//
-//        // 알림을 유저 엔터티의 알림 리스트에 추가
+
+        // 알림을 유저 엔터티의 알림 리스트에 추가
         toUser.getNotifies().add(notify);
 
-        return FollowDto.fromEntity(follow);
+        //팔로우 저장
+        return FollowDto.fromEntity(followRepository.save(new Follow(toUser, fromUser)));
+
     }
 
     // 언팔로우
     public void unfollow(String toUsername, String fromUsername) {
-        // 팔로우 대상 및 본인
+        // 팔로우 대상 및 본인 존재 여부
         User toUser = userRepository.findByUsername(fromUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         User fromUser = userRepository.findByUsername(toUsername)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         followRepository.deleteByToUserAndFromUser(toUser,fromUser);
     }
-
 
     // 알림 삭제
     @Transactional
@@ -175,5 +210,59 @@ public class UserService {
         notifyRepository.delete(notify);
     }
 
+    // 팔로잉 목록
+    public List<UserDto> following(String username) {
+        // 본인 존재 여부 확인
+        User fromUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<Follow> follows = followRepository.findAllByFromUser(fromUser);
+        return follows.stream()
+                .map(follow -> UserDto.fromEntity(follow.getToUser()))
+                .collect(Collectors.toList());
+    }
+
+    // 팔로워 목록
+    public List<UserDto> follower(String username) {
+        // 본인 존재 여부 확인
+        User toUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<Follow> follows = followRepository.findAllByToUser(toUser);
+        return follows.stream()
+                .map(follow -> UserDto.fromEntity(follow.getFromUser()))
+                .collect(Collectors.toList());
+    }
+
+    // 찜한 전시 목록
+    public List<ExhibitionDto> likeExhibit(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeExhibition> likes = likeExhibitionRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeExhibition -> ExhibitionDto.fromEntity(likeExhibition.getExhibition()))
+                .collect(Collectors.toList());
+    }
+
+    // 찜한 작품 목록
+    public List<WorkDto> likeWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeWork> likes = likeWorkRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeWork -> WorkDto.fromEntity(likeWork.getWork()))
+                .collect(Collectors.toList());
+    }
+
+    // 낙찰 작품 목록
+    public List<WorkDto> bidWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<SuccessWork> bids = successWorkRepository.findAllByUser(user);
+        return bids.stream()
+                .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
+                .collect(Collectors.toList());
+    }
 }
 

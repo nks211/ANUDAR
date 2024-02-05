@@ -1,12 +1,10 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -47,22 +45,24 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies;
 
-    @OneToMany(mappedBy = "toUser")
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
     private List<Follow> followerList;
 
-    @OneToMany(mappedBy = "fromUser")
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
     private List<Follow> followingList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Work> works;
 
-    @OneToMany(mappedBy = "user")
-    private List<AuctionWork> acutionWorks;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Exhibition> exhibitions;
 
-    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SuccessWork> successWorks;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 

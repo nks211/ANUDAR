@@ -1,0 +1,88 @@
+.mytabareadefault {
+    width: 360px;
+    height: 1590px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.mytabarea {
+    width: 360px;
+    height: 1590px;
+    top: -30px;
+    position: fixed;
+    background-color: #ffffff;
+}
+
+.mytabpage {
+    color: #967e76;
+    font-size: 28px;
+    font-weight: 600;
+    left: 60px;
+    top: 60px;
+    position: absolute;
+}
+
+.favorites {
+    width: 260px;
+    height: 190px;
+    top: 240px;
+    margin: 10px 0px;
+    position: relative;
+}
+
+.auction {
+    width: 260px;
+    height: 110px;
+    top: 280px;
+    margin: 10px 0px;
+    position: relative;
+}
+
+.artist {
+    width: 260px;
+    height: 110px;
+    top: 280px;
+    margin: 10px 0px;
+    position: relative;
+}
+
+.tab {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 400;
+    left: 80px;
+    top: 10px;
+    height: 40px;
+    margin: 10px 0px;
+    text-align: start;
+    position: relative;
+    cursor: pointer;
+}
+
+.tabselected {
+    background-color: #eee3cb;
+    color: #967e76;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    text-align: start;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    top: 10px;
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tabtitle {
+    color: #967e76;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 10px;
+    text-align: start;
+    left: 55px;
+    position: relative;
+}

@@ -1,130 +1,129 @@
-.signuparea {
-    width: 800px;
-    height: 1200px;
-    position: absolute;
+.signupArea {
+  width: 800px;
+  height: 1200px;
+  position: absolute;
 }
 
-.title {
-    color: #967E76;
-    font-family: "Inter-SemiBold", Helvetica;
-    font-size: 36px;
-    font-weight: 600;
-    margin: 50px;
-    text-align: start;
+.signupTitle {
+  color: #967E76;
+  font-size: 36px;
+  font-weight: 600;
+  margin: 50px;
+  text-align: start;
 }
 
-.image {
-    width: 200px;
-    height: 200px;
-    left: 45%;
-    top: 20px;
+.signupImage {
+  width: 200px;
+  height: 200px;
+  left: 45%;
+  top: 20px;
+  object-fit: cover;
 }
 
-.profile {
-    background-color: #eee3cb;
-    color: #000000;
-    border-radius: 10px;
-    width: 150px;
-    height: 40px;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 12px;
-    font-weight: 400;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    left: 41%;
-    top: 10px;
-    position: relative;
-    overflow: hidden;
+.signupProfile {
+  background-color: #eee3cb;
+  color: #000000;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 41%;
+  top: 10px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.column {
-    width: 100%;
-    height: 600px;
-    top: 40px;
-    position: relative;
-    display: flex;
-    flex-direction: row;
+.signupColumn {
+  width: 100%;
+  height: 600px;
+  top: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
 }
 
-.column .name {
-    flex: 1.5;
-    text-align: start;
-    padding: 30px 40px;
+.signupColumn .name {
+  flex: 1.5;
+  text-align: start;
+  padding: 30px 40px;
 }
 
-.column .name .item {
-    color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 60px;
+.signupColumn .name .item {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 60px;
 }
 
-.column .inputarea {
-    flex: 5;
-    padding: 20px;
+.signupColumn .inputarea {
+  flex: 5;
+  padding: 20px;
 }
 
-span {
-    color: #ff0000;
+.item span {
+  color: #ff0000;
 }
 
-.column .inputarea .line {
-    border: 2.5px solid;
-    border-color: #cbcbcb;
-    border-radius: 10px;
-    background-color: #ffffff;
-    margin-bottom: 37px;
-    padding: 0px 10px;
-    width: 320px;
-    height: 40px;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 16px;
-    font-weight: 400;
-    text-align: start;
+.signupColumn .inputarea .line {
+  border: 2.5px solid;
+  border-color: #cbcbcb;
+  border-radius: 10px;
+  background-color: #ffffff;
+  margin-bottom: 34px;
+  padding: 0px 10px;
+  width: 320px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: start;
 }
 
-.column .check {
-    flex: 2;
+.signupColumn .check {
+  flex: 2;
 }
 
-.same {
-    color: #9DBC98;
+.pwSame {
+  color: #9DBC98;
 }
 
-.different {
-    color: #ff0000;
+.pwDifferent {
+  color: #ff0000;
 }
 
-.column .check .button {
-    background-color: #cbcbcb;
-    color: #000000;
-    border-radius: 15px;
-    width: 120px;
-    height: 40px;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 14px;
-    font-weight: 400;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.signupColumn .check .button {
+  background-color: #cbcbcb;
+  color: #000000;
+  border-radius: 15px;
+  width: 120px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
-.signupcheck {
-    background-color: #967E76;
-    color: #ffffff;
-    border: 0px;
-    border-radius: 10px;
-    width: 150px;
-    height: 60px;
-    left: 41%;
-    top: 60px;
-    position: relative;
-    font-family: "Inter-SemiBold", Helvetica;
-    font-size: 28px;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.signupCheck {
+  background-color: #967E76;
+  color: #ffffff;
+  border: 0px;
+  border-radius: 10px;
+  width: 150px;
+  height: 60px;
+  left: 41%;
+  top: 60px;
+  position: relative;
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
 }

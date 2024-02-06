@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:069a27bd48a29aa5a7245d39b1932d05c7cb278a13c16d1685b77442b2bb1cb9
-size 217
+package com.ssafy.anudar.dto;
+
+import lombok.Getter;
+
+@Getter
+public class Amount {
+    private int total; // 총 결제 금액
+    private int tax_free; // 비과세 금액
+    private int tax; // 부가세 금액
+}

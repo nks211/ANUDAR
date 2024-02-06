@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3896b21e30549f29c977370bc5ba831df15aa813c855e63258a74b0f42b61bcd
-size 351
+package com.ssafy.anudar.dto.request;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.util.LinkedMultiValueMap;
+
+@Getter
+@AllArgsConstructor
+public class PayRequest {
+    private String url;   // 요청을 보낼 카카오 api url
+    private LinkedMultiValueMap<String, String> map;  // 요청을 담을 request
+}

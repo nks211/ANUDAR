@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d4728aaac60cb6be8814cbb19465ebbcbe7845d0f237454bc5272a00779140d6
-size 480
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.Exhibition;
+import com.ssafy.anudar.model.ExhibitionReview;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface ExhibitionReviewRepository extends JpaRepository<ExhibitionReview, Long> {
+
+    List<ExhibitionReview> findAllByExhibition(Exhibition exhibition);
+}

@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7f172d7152fe78bbaefbe553864e6e44dd42a070908d4e4672601bde147be131
-size 272
+package com.ssafy.anudar.dto;
+
+import lombok.Getter;
+
+@Getter
+public class PayReadyResDto {
+
+    private String tid;             //  결제 고유 번호
+    private String next_redirect_pc_url; // pc 웹일 경우 받는 결제 페이지
+    private String created_at;
+}

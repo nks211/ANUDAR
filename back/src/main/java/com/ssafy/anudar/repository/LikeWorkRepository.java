@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5d3cf5b9b768a4d568d7fb770ccb36e3d60edec37f0bcbd1bd8b824c1e59df43
-size 445
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.LikeWork;
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.Work;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface LikeWorkRepository extends JpaRepository<LikeWork, Long> {
+    Optional<LikeWork> findByUserAndWork(User user, Work work);
+
+    List<LikeWork> findAllByUser(User user);
+}

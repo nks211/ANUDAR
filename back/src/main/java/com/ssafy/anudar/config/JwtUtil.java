@@ -5,25 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JwtUtil {
-
-//    private final UserDetailsService userDetailsService;
-//
-//    // 토큰 인증 조회
-//    public Authentication getAuthentication(String token, String key){
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUsername(token, key));
-//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-//    }
 
     public static String getUsername(String token, String key) {
         return extrectClaims(token, key).get("username", String.class);

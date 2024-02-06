@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
+
 import java.util.Objects;
 
 @Order(Ordered.HIGHEST_PRECEDENCE + 99) // spring security 보다 인터셉터의 우선 순위를 올리기 위해
@@ -27,10 +28,10 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
         assert headerAccessor != null;
 
-        // 인증하는 과정
-        // 구독 & 연결된 경우에만 체크
-        if (!StompCommand.UNSUBSCRIBE.equals(headerAccessor.getCommand()) && !StompCommand.DISCONNECT.equals(headerAccessor.getCommand())) {
+        // 인증하는 과정 : 연결시에만 체크
+        if (headerAccessor.getCommand() == StompCommand.CONNECT) {
             String authorizationHeader = String.valueOf(headerAccessor.getNativeHeader("Authorization"));
+            System.out.println(headerAccessor);
             if (authorizationHeader == null || authorizationHeader.equals("null")) {
                 throw new MessageDeliveryException("로그인 후 이용해주세요.");
             }
@@ -38,13 +39,8 @@ public class FilterChannelInterceptor implements ChannelInterceptor {
             String token = Objects.requireNonNull(headerAccessor.getNativeHeader("Authorization")).get(0)
                     .replace("Bearer ", "");
             try {
-//                // 토큰 권한 확인
-//                JwtUtil.isExpired(token, key);
-//                Authentication user = jwtUtil.getAuthentication(token, key);
-//                headerAccessor.setUser(user);
-//                Integer userId = Jwts.
-//                String username = JwtUtil.getUsername(token, key);
-//                headerAccessor.addNativeHeader("User", username);
+                // 토큰 권한 확인
+                JwtUtil.isExpired(token, key);
             } catch (MessageDeliveryException e) {
                 throw new MessageDeliveryException("메세지 에러");
             } catch (SecurityException | MalformedJwtException | ExpiredJwtException

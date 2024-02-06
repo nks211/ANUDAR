@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD
+=======
+import java.util.stream.Collectors;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
 @Service
 public class ReviewService {
@@ -45,9 +49,17 @@ public class ReviewService {
     }
 
     // 전시회 리뷰 전체 조회
+<<<<<<< HEAD
     public List<ExhibitionReview> getAllExhibitionReviews(Long exhibition_id) {
         Optional<Exhibition> exhibition = exhibitionRepository.findById(exhibition_id);
         return reviewRepository.findAllByExhibition(exhibition);
+=======
+    public List<ReviewDto> getAllExhibitionReviews(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
+        return reviewRepository.findAllByExhibition(exhibition)
+                .stream().map(ReviewDto::fromEntity).toList();
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     }
 
     // 방명록 삭제

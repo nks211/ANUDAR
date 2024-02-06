@@ -28,9 +28,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+<<<<<<< HEAD
     private final AuctionWorkRepository auctionWorkRepository;
     private final LikeExhibitionRepository likeExhibitionRepository;
     private final LikeWorkRepository likeWorkRepository;
+=======
+    private final SuccessWorkRepository successWorkRepository;
+    private final LikeExhibitionRepository likeExhibitionRepository;
+    private final LikeWorkRepository likeWorkRepository;
+    private final UserCacheRepository userCacheRepository;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
     // 알림 보내기위해서 추가
     private final EventNotifyService eventNotifyService;
@@ -53,9 +60,9 @@ public class UserService {
     }
 
     public UserPrincipalDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(UserPrincipalDetails::fromEntity)
-                .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED));
+        return userCacheRepository.getUser(username).orElseGet(() ->
+                userRepository.findByUsername(username).map(UserPrincipalDetails::fromEntity)
+                        .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED)));
     }
 
     public String login(String username, String password) {
@@ -66,7 +73,8 @@ public class UserService {
         if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
         }
-
+        // save in redis
+        userCacheRepository.setUser(UserPrincipalDetails.fromEntity(user));
         return JwtUtil.generateToken(username, key, expiredTimeMs);
     }
 
@@ -132,11 +140,19 @@ public class UserService {
     }
 
     // 나의 결제 내역
+<<<<<<< HEAD
     public List<AuctionWorkDto> getpay(String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
         return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
+=======
+    public List<SuccessWorkDto> getpay(String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        return successWorkRepository.findByUser(user).stream().map(SuccessWorkDto::fromEntity).collect(Collectors.toList());
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
@@ -228,9 +244,15 @@ public class UserService {
         // 본인 확인
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+<<<<<<< HEAD
         List<AuctionWork> bids = auctionWorkRepository.findAllByUser(user);
         return bids.stream()
                 .map(auctionWork -> WorkDto.fromEntity(auctionWork.getWork()))
+=======
+        List<SuccessWork> bids = successWorkRepository.findAllByUser(user);
+        return bids.stream()
+                .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
                 .collect(Collectors.toList());
     }
 }

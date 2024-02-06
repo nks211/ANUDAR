@@ -60,6 +60,12 @@ public class User extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Exhibition> exhibitions;
+<<<<<<< HEAD
+=======
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SuccessWork> successWorks;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AuctionWork> acutionWorks;

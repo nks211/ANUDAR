@@ -81,7 +81,11 @@ public class UserController {
 
     // 나의 결제 내역
     @GetMapping("/pay/work")
+<<<<<<< HEAD
     public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
+=======
+    public ResponseEntity<List<SuccessWorkDto>> mypay(Authentication authentication) {
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
         return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
     }
 

@@ -30,12 +30,21 @@ public class Exhibition {
     @Column(name = "end_time")
     private LocalDateTime end_time;
 
+<<<<<<< HEAD
     @Column(name="docent_url")
     private String docent_url;
 
     @Column(name = "image")
     private String image;
 
+=======
+    @Column(name = "image")
+    private String image;
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+    private List<Work> works;
+
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 
@@ -45,7 +54,10 @@ public class Exhibition {
     @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
     private Docent docent;
 
+<<<<<<< HEAD
     @JsonIgnore
+=======
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -60,10 +72,13 @@ public class Exhibition {
         this.user = user;
     }
 
+<<<<<<< HEAD
     public String setDocentUrl(Long exhibitionId) {
         String docent_url = "http://anudar.com/docent/" + exhibitionId;
         this.docent_url = docent_url;
         return docent_url;
     }
 
+=======
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 }

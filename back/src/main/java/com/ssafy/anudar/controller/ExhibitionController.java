@@ -2,6 +2,10 @@ package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
+<<<<<<< HEAD
+=======
+import com.ssafy.anudar.dto.ExhibitionDetailDto;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.request.ExhibitionRegistRequest;
 import com.ssafy.anudar.dto.ReviewDto;
@@ -19,6 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD
+=======
+import java.util.stream.Collectors;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
 @RestController
 @RequiredArgsConstructor
@@ -60,13 +68,19 @@ public class ExhibitionController {
 
     // 전시회 전체 조회
     @GetMapping("/list")
+<<<<<<< HEAD
     public ResponseEntity<List<Exhibition>> list() {
         List<Exhibition> exhibitions = exhibitionService.getAllExhibitions();
+=======
+    public ResponseEntity<List<ExhibitionDto>> list() {
+        List<ExhibitionDto> exhibitions = exhibitionService.getAllExhibitions();
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
         return new ResponseEntity<>(exhibitions, HttpStatus.OK);
     }
 
     // 전시회 상세 조회
     @GetMapping("/list/{exhibition_id}")
+<<<<<<< HEAD
     public ResponseEntity<Exhibition> exhibitionDetail(@PathVariable Long exhibition_id) {
         Optional<Exhibition> exhibitionOptional = exhibitionService.getExhibitionById(exhibition_id);
 
@@ -88,6 +102,19 @@ public class ExhibitionController {
         exhibitionService.unlikeExhibition(authentication.getName(), String.valueOf(exhibition_id));
         return "좋아요 취소";
     }
+=======
+    public ResponseEntity<ExhibitionDetailDto> exhibitionDetail(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
+    }
+
+    // 전시회 좋아요/취소
+    @PostMapping("/like/{exhibition_id}")
+    public ResponseEntity<String> like(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
+        exhibitionService.likeExhibition(authentication.getName(), exhibition_id);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
    // 전시회 방명록 작성하기
     @PostMapping("/{exhibition_id}/regist-comment")
@@ -103,9 +130,14 @@ public class ExhibitionController {
 
     // 전시회 방명록 조회하기
     @GetMapping("/{exhibition_id}/comments-list")
+<<<<<<< HEAD
     public ResponseEntity<List<ExhibitionReview>> listComments(@PathVariable Long exhibition_id) {
         List<ExhibitionReview> exhibitionReviews = reviewService.getAllExhibitionReviews(exhibition_id);
         return new ResponseEntity<>(exhibitionReviews, HttpStatus.OK);
+=======
+    public ResponseEntity<List<ReviewDto>> listComments(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(reviewService.getAllExhibitionReviews(exhibition_id), HttpStatus.OK);
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     }
 
     // 방명록 삭제

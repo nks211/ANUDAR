@@ -35,6 +35,7 @@ const setting = {
     infinite: true,
     autoplay: true,
     autoplaySpeed: 5000,
+    pauseOnHover: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1
@@ -97,13 +98,6 @@ export default function Home() {
                     <div><img src={homecarousel[4]} /></div>
                 </Slider>
             </div>
-
-            {/* <div style={{ width: "600px", height: "300px", backgroundColor: "#0000fd" }}>
-                <Slider {...customsetting}>
-                    {Object.values(test).map((value, i) => { return <div><div style={{ width: "100%", height: "300px", display: "flex", justifyContent: "center", alignItems: "center", }}><div style={{ width: "200px", height: "200px", color: "#000000", fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center", border: "3px #ffffff solid" }}>{value}     {i}</div></div></div>; })}
-                </Slider>
-            </div> */}
-
             <div style={{ margin: "40px 80px", }}>
                 <div className="nowadays">진행 중인 전시회</div>
                 <div onClick={() => { navigate("/exhibit"); setPathName(window.location.pathname); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>

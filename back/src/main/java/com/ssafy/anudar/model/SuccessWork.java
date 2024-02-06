@@ -1,3 +1,40 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c430bce82a3fb7f4d6d09cca2fec81475ca0160246c2cf16e7817af7bede3bec
-size 888
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class SuccessWork {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="success_work_id")
+    private Long id;
+
+    @Column(name="final_price")
+    private int finalPrice;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="work_id")
+    private Work work;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
+
+    @Builder
+    public SuccessWork (Auction auction, Work work, User user, int finalPrice) {
+        this.auction =auction;
+        this.work = work;
+        this.user = user;
+        this.finalPrice = finalPrice;
+    }
+
+}

@@ -1,38 +1,34 @@
 package com.ssafy.anudar.dto;
 
 import com.ssafy.anudar.model.Notify;
-import com.ssafy.anudar.model.NotifyMessageType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class NotifyDto {
-    public static class Response{
-        private String id;
-        private String name;
-        private String content;
-        private String type;
-        private String createdAt;
-        private NotifyMessageType messageType;
 
-        @Builder
-        public Response(String id, String name, String content, String type, String createdAt) {
-            this.id = id;
-            this.name = name;
-            this.content = content;
-            this.type = type;
-            this.createdAt = createdAt;
-        }
+    private Long id;
+    private String name;
+    private String content;
+    private Boolean isRead;
+    private Notify.NotifyType notifyType;
+    private String receiverName;
 
-        public static Response createResponse(Notify notify){
-            return Response.builder()
-                    .content(notify.getContent())
-                    .id(notify.getId().toString())
-                    .name(notify.getReceiver().getName())
-                    .createdAt(notify.getCreatedAt().toString())
-                    .build();
-        }
+    public static NotifyDto fromEntity(Notify notify) {
+        return new NotifyDto(
+                notify.getId(),
+                notify.getReceiver().getName(),
+                notify.getContent(),
+                notify.getIsRead(),
+                notify.getNotifytype(),
+                notify.getReceiver().getName()
+        );
     }
 }

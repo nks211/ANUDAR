@@ -21,14 +21,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
-<<<<<<< HEAD
-=======
   data:
     redis:
       host: i10d105.p.ssafy.io
       port: 6379
 
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
   access-token:

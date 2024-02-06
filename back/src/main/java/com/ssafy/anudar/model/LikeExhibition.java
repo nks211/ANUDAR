@@ -1,6 +1,5 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +24,6 @@ public class LikeExhibition {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exhibition_id")
-    @JsonIgnore
     private Exhibition exhibition;
 
     @Builder

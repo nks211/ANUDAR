@@ -72,46 +72,6 @@
 
 
 
-.exhibitCard2 {
-  width: 375px;
-  /* height: 800px; */
-  /* margin: 10px; */
-  margin-bottom: 30px;
-}
-
-.exhibitImageCard2 {
-  width: 375px;
-  height: 500px;
-}
-
-.exhibitImage2 {
-  width: 375px;
-  height: 500px;
-}
-
-.exhibitName2 {
-  margin-top: 25px;
-  margin-bottom: 0;
-  font-weight: 900;
-  font-size: 28px;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.exhibitArtist2 {
-  margin: 5px 0;
-  font-size: 18px;
-}
-
-.exhibitPeriod2 {
-  margin: 0;
-  font-size: 18px;
-  color: #848484;
-}
-
-
 
 
 .exhibitCard3 {

@@ -1,10 +1,12 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 import './signup.css';
 
 function Signup() {
 
     const navigate = useNavigate();
+    const {setPathName} = useContext(AppContext);
     
     const [profile, setProfile] = useState("../../asset/profile_image.png");
     const [preview, setPreview] = useState("../../asset/profile_image.png");
@@ -73,7 +75,7 @@ function Signup() {
                     </div>
                 </div>
             </div>
-            <button style={{ textDecoration: "none" }} className="signupCheck" onClick={() => { navigate("/"); window.scrollTo(0, 0); }}>가입</button>
+            <button style={{ textDecoration: "none" }} className="signupCheck" onClick={() => { navigate("/"); setPathName(window.location.pathname); window.scrollTo(0, 0); }}>가입</button>
         </div>
     );
 }

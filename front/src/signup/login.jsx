@@ -1,10 +1,11 @@
 import { React, useState, useContext } from "react";
 import { LoginContext } from "../navbar/navbar.jsx";
+import { AppContext } from "../App.js";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-
+    const {setPathName} = useContext(AppContext);
     const { login, setLogin, popup, setPopup } = useContext(LoginContext);
     const [id, setId] = useState("");
     const [pass, setPass] = useState("");
@@ -19,7 +20,7 @@ function Login() {
             <div className="loginsector">
                 <input type="password" className="input" placeholder="비밀번호" />
             </div>
-            <div onClick={() => { setLogin(true); setPopup(false); navigate("/"); }} className="logincheck">로그인</div>
+            <div onClick={() => { setLogin(true); setPopup(false); navigate("/"); setPathName(window.location.pathname); }} className="logincheck">로그인</div>
         </div>
     );
 

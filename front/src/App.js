@@ -22,6 +22,8 @@ export default function App() {
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
 
+  const [pathName, setPathName] = useState(window.location.pathname);
+
   const modalsetting = {
     overlay: {
         position: "fixed",
@@ -46,9 +48,10 @@ export default function App() {
 
   return (
     <>
-      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
+      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting, pathName, setPathName }}>
         <NavBar />
-        <div style={{ display: "flex", justifyContent: "center", }} className="App">
+        <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent')?"DocentPage":"App"}>
+        {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>

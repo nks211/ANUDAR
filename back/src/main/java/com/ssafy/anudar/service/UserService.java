@@ -156,8 +156,6 @@ public class UserService {
         if(followRepository.findByToUserAndFromUser(toUser, fromUser)!=null)
             throw new BadRequestException(ExceptionStatus.DUPLICATE_FOLLOW);
 
-        // 알림 생성 및 보내기
-//        eventNotifyService.notifyFollow(toUser, fromUser);
 
         // 알림 생성 및 보내기
         String notifyContent = fromUser.getName() + "님이 당신을 팔로우했습니다.";

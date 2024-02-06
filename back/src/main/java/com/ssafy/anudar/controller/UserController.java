@@ -3,7 +3,6 @@ package com.ssafy.anudar.controller;
 import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
-import com.ssafy.anudar.service.NotifyService;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import com.ssafy.anudar.S3.FileFolder;
 import com.ssafy.anudar.S3.S3Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController

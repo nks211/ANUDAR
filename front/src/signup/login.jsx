@@ -1,28 +1,3 @@
-import { React, useState, useContext } from "react";
-import { LoginContext } from "../navbar/navbar.jsx";
-import "./login.css";
-import { useNavigate } from "react-router-dom";
-
-function Login() {
-
-    const { login, setLogin, popup, setPopup } = useContext(LoginContext);
-    const [id, setId] = useState("");
-    const [pass, setPass] = useState("");
-    const navigate = useNavigate();
-
-    return (
-        <div className="loginarea">
-            <div className="logotitle">ANUDAR</div>
-            <div className="loginsector">
-                <input type="text" className="input" placeholder="아이디" />
-            </div>
-            <div className="loginsector">
-                <input type="password" className="input" placeholder="비밀번호" />
-            </div>
-            <div onClick={() => { setLogin(true); setPopup(false); navigate("/"); }} className="logincheck">로그인</div>
-        </div>
-    );
-
-}
-
-export default Login;
+version https://git-lfs.github.com/spec/v1
+oid sha256:0dbcf658a640ad85b5b702cfbdff7bf615c5fe503fec4eb5a8c8d2162583e6e8
+size 950

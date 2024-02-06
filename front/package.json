@@ -8,20 +8,17 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "http-proxy-middleware": "^2.0.6",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
-<<<<<<< HEAD
-    "socket-client": "^1.0.0",
-    "web-vitals": "^2.1.4"
-=======
     "react-slick": "^0.30.1",
     "slick-carousel": "^1.8.1",
+    "socket-client": "^1.0.0",
     "web-vitals": "^2.1.4",
     "zustand": "^4.5.0"
->>>>>>> b27d853a48d078590b43600957466e265f247cae
   },
   "scripts": {
     "start": "react-scripts start",

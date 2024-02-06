@@ -110,6 +110,28 @@ public class UserController {
         userService.unfollow(authentication.getName(), username);
     }
 
+    // 알림 조회
+    @GetMapping("/{userId}/notifies")
+    public ResponseEntity<List<NotifyDto>> getNotifiesByUserId(@PathVariable Long userId) {
+        List<NotifyDto> notifies = userService.getNotifiesByUserId(userId);
+        return ResponseEntity.ok(notifies);
+    }
+
+    // 알림 읽음 처리
+    @PutMapping("/notifies/{notifyId}/read")
+    public ResponseEntity<NotifyDto> markAsRead(Authentication authentication, @PathVariable Long notifyId) {
+        NotifyDto notifyDto = userService.markAsRead(authentication, notifyId);
+        return ResponseEntity.ok(notifyDto);
+    }
+
+    // 알림 삭제
+    @DeleteMapping("/notifies/{notifyId}")
+    public ResponseEntity<String> deleteNotify(Authentication authentication, @PathVariable Long notifyId) {
+        userService.deleteNotify(authentication, notifyId);
+        return new ResponseEntity<>("알림이 성공적으로 삭제되었습니다.", HttpStatus.OK);
+    }
+
+
     // 작가 팔로잉 목록
     @GetMapping("/following")
     public ResponseEntity<List<UserDto>> following (Authentication authentication) {

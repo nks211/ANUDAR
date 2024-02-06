@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -21,9 +21,15 @@ public class UserDto {
     private String email;
     private String image;
     private String phone;
-    private List<Notify> notifies; // 알림 리스트 추가
+    private List<NotifyDto> notifies; // 알림 리스트 추가
 
-    public static UserDto fromEntity (User user) {
+    public static UserDto fromEntity(User user) {
+        List<NotifyDto> notifyDtos = user.getNotifies()
+                .stream()
+                .map(NotifyDto::fromEntity)
+                .collect(Collectors.toList());
+
+
         return new UserDto(
                 user.getUsername(),
                 user.getName(),
@@ -31,7 +37,7 @@ public class UserDto {
                 user.getEmail(),
                 user.getImage(),
                 user.getPhone(),
-                user.getNotifies()
+                notifyDtos
         );
     }
 }

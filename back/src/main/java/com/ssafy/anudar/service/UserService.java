@@ -12,6 +12,7 @@ import com.ssafy.anudar.repository.*;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,6 @@ public class UserService {
     private final UserCacheRepository userCacheRepository;
 
     // 알림 보내기위해서 추가
-    private final EventNotifyService eventNotifyService;
     private final NotifyRepository notifyRepository;
 
     @Value("${jwt.secret}")
@@ -156,8 +156,6 @@ public class UserService {
         if(followRepository.findByToUserAndFromUser(toUser, fromUser)!=null)
             throw new BadRequestException(ExceptionStatus.DUPLICATE_FOLLOW);
 
-        // 알림 생성 및 보내기
-//        eventNotifyService.notifyFollow(toUser, fromUser);
 
         // 알림 생성 및 보내기
         String notifyContent = fromUser.getName() + "님이 당신을 팔로우했습니다.";
@@ -170,6 +168,52 @@ public class UserService {
         //팔로우 저장
         return FollowDto.fromEntity(followRepository.save(new Follow(toUser, fromUser)));
 
+    }
+
+    // 알림 조회
+    public List<NotifyDto> getNotifiesByUserId(Long userId) {
+        List<Notify> notifies = notifyRepository.findByReceiverId(userId);
+        return notifies.stream()
+                .map(NotifyDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    // 알림 읽음 처리
+    @Transactional
+    public NotifyDto markAsRead(Authentication authentication, Long notifyId) {
+        String currentUsername = authentication.getName(); // 현재 인증된 사용자의 사용자명
+        Notify notify = notifyRepository.findById(notifyId)
+                .orElseThrow(() -> new IllegalStateException("Notification not found"));
+
+        // 현재 사용자가 알림의 수신자와 일치하는지 확인
+        if (!notify.getReceiver().getUsername().equals(currentUsername)) {
+            throw new IllegalStateException("Unauthorized to mark this notification as read");
+        }
+
+        notify.setIsRead(true); // 알림을 읽음 상태로 설정
+        notify = notifyRepository.save(notify); // 변경 사항 저장
+
+        return NotifyDto.fromEntity(notify); // NotifyDto로 변환하여 반환
+    }
+
+
+    // 알림 삭제
+    @Transactional
+    public void deleteNotify(Authentication authentication, Long notifyId) {
+        String currentUsername = authentication.getName(); // 현재 인증된 사용자의 이름(또는 ID)을 가져옵니다.
+        Notify notify = notifyRepository.findById(notifyId)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.NOTIFICATION_NOT_FOUND));
+
+        // 현재 사용자가 알림의 수신자와 일치하는지 확인합니다.
+        if (!notify.getReceiver().getUsername().equals(currentUsername)) {
+            throw new RuntimeException("Unauthorized to delete this notification");
+        }
+
+        // 사용자의 알림 리스트에서도 해당 알림 삭제
+        User user = notify.getReceiver();
+        user.getNotifies().remove(notify);
+
+        notifyRepository.deleteById(notifyId);
     }
 
     // 언팔로우

@@ -7,7 +7,6 @@ import com.ssafy.anudar.dto.ExhibitionDto;
 import com.ssafy.anudar.dto.request.ExhibitionRegistRequest;
 import com.ssafy.anudar.dto.ReviewDto;
 import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.ExhibitionReview;
 import com.ssafy.anudar.service.ExhibitionService;
 import com.ssafy.anudar.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,7 +34,7 @@ public class ExhibitionController {
         ExhibitionDto exhibitionDto = exhibitionService
                 .saveExhibition(req.getName(), req.getDetail(), req.getStart_time(), req.getEnd_time(), req.getImage(), authentication.getName(),
                         req.getDocent_start(), req.getDocent_end(),
-                        req.getWorks_title(), req.getWorks_detail(), req.getWorks_price(), req.getWorks_image());
+                        req.getWorks());
         return new ResponseEntity<>(exhibitionDto, HttpStatus.OK);
     }
 

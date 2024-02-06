@@ -15,12 +15,17 @@ import Mypage from './mypage/mypage';
 import { createContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
+import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {
 
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
+
+  const localdata = JSON.parse(localStorage.getItem("userdata"));
+  const loginuser = mainstate((state) => state.loginuser);
+  const [loginnickname, setLoginNickname] = useState(localdata != null ? localdata.nickname : loginuser.nickname);
 
   const modalsetting = {
     overlay: {
@@ -42,11 +47,9 @@ export default function App() {
     }
   };
 
-  // const [menu, setMenu] = useState("");
-
   return (
     <>
-      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
+      <AppContext.Provider value={{ modalsetting, loginnickname }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className="App">
           <Routes>

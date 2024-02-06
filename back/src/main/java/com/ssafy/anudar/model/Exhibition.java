@@ -1,10 +1,7 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +29,12 @@ public class Exhibition {
     @Column(name = "end_time")
     private LocalDateTime end_time;
 
+    @Column(name = "image")
+    private String image;
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+    private List<Work> works;
+
     @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
 
@@ -41,8 +44,18 @@ public class Exhibition {
     @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
     private Docent docent;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public Exhibition(String name, String detail, LocalDateTime start_time, LocalDateTime end_time, String image, User user) {
+        this.name = name;
+        this.detail = detail;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.image = image;
+        this.user = user;
+    }
 
 }

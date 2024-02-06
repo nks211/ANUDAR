@@ -1,10 +1,7 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -19,10 +16,10 @@ public class Docent {
     private Long id;
 
     @Column(name="start_time")
-    private LocalDateTime startTime;
+    private LocalDateTime start_time;
 
     @Column(name = "end_time")
-    private LocalDateTime endTime;
+    private LocalDateTime end_time;
 
     @Column(name = "video")
     private String video;
@@ -31,4 +28,10 @@ public class Docent {
     @JoinColumn(name = "exhibition_id")
     private Exhibition exhibition;
 
+    @Builder
+    public Docent(LocalDateTime start_time, LocalDateTime end_time, Exhibition exhibition) {
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.exhibition = exhibition;
+    }
 }

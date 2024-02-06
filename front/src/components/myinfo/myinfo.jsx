@@ -1,7 +1,9 @@
-import { React, createContext, useState } from "react";
+import { React, createContext, useContext, useState } from "react";
 import MyProfile from "./myprofile/myprofile";
 import MyBoard from "./myboard/myboard";
 import "./myinfo.css";
+import { mypagestate } from "../../StateManagement";
+import { AppContext } from "../../App";
 
 export const MyEditContext = createContext();
 
@@ -16,16 +18,26 @@ const memberinfo = {
 
 function MyInfo() {
 
-    const [editmode, setEditMode] = useState(false);
-    const [usernickname, setUserNickname] = useState(memberinfo.nickname);
-    const [userphonenumber, setUserPhonenumber] = useState(memberinfo.phonenumber);
+    const myeditmode = mypagestate((state) => state.myeditmode);
+    const setmyeditmode = mypagestate((state) => state.setmyeditmode);
+    const { setLoginNickname } = useContext(AppContext);
+    const localdata = JSON.parse(localStorage.getItem("userdata"));
+    const updatedatainput = mypagestate((state) => state.updates);
+    const updatedata = () => {
+        const updatenickname = updatedatainput.newnickname === "" ? localdata.nickname : updatedatainput.newnickname;
+        const updatephonenumber = updatedatainput.newphonenumber === "" ? localdata.number : updatedatainput.newphonenumber;
+        setLoginNickname(updatenickname);
+        localStorage.setItem("userdata", JSON.stringify({ ...localdata, nickname: updatenickname, number: updatephonenumber, }));
+    };
+
+
 
     return (
         <div className="myinfoarea">
             <div className="title">내 정보</div>
             <div style={{ display: "flex", justifyContent: "center", }}><MyProfile nickname="닉네임" follower="100" following="45"/></div>
-            <div style={{ display: "flex", justifyContent: "center", position: "relative", top: "100px", }}><MyEditContext.Provider value={{ editmode, usernickname, userphonenumber, setUserNickname, setUserPhonenumber }}><MyBoard user={memberinfo}/></MyEditContext.Provider></div>
-            <div onClick={() => { setEditMode(!editmode); }} style={{ display: "flex", justifyContent: "center", position: "relative", top: "250px", left: "40%" }} className="checkbutton">{editmode? "저장" : "수정"}</div>
+            <div style={{ display: "flex", justifyContent: "center", position: "relative", top: "100px", }}><MyBoard/></div>
+            <div onClick={() => { setmyeditmode(!myeditmode); updatedata(); }} style={{ display: "flex", justifyContent: "center", position: "relative", top: "250px", left: "40%" }} className="checkbutton">{myeditmode? "저장" : "수정"}</div>
         </div>
     );
 

@@ -1,3 +1,24 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:2fb3b1130936712b3d95daf239d6283d6d53838c6eaa794bd6f74f0721b3f77d
-size 568
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.Auction;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class AuctionDto {
+    private Long id;
+    private LocalDateTime start_time;
+
+    public static AuctionDto fromEntity (Auction auction) {
+        return new AuctionDto(
+                auction.getId(),
+                auction.getStart_time()
+        );
+    }
+}

@@ -5,10 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UpdatePasswordRequest {
-    String oldpassword;
-    String newpassword;
-    String checkpassword;
+@AllArgsConstructor
+public class WorkRegistRequest {
+    private String title;
+    private String detail;
+    private int price;
+    private String image;
 }

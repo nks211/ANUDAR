@@ -1,10 +1,7 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -26,26 +23,40 @@ public class Work {
     private String detail;
 
     @Column(name="price")
-    private int price;
+    private Integer price;
 
     @Column(name="image")
     private String image;
 
     @Column(name="bid")
-    private int bid;
+    private Integer bid = 0;
 
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private AuctionWork auctionWork;
+    private SuccessWork successWork;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
-    private List<LikeWork> likeWorks;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
+
+    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
+    private List<LikeWork> likeWorks;
+
+    @Builder
+    public Work(String title, String detail, Integer price, String image, User user, Exhibition exhibition) {
+        this.title = title;
+        this.detail = detail;
+        this.price = price;
+        this.image = image;
+        this.user = user;
+        this.exhibition = exhibition;
+    }
 
 }

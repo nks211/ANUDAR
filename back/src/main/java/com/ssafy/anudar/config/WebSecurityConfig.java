@@ -48,10 +48,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/join")
                 .requestMatchers("/user/img")
                 .requestMatchers("/sessions/**")
-<<<<<<< HEAD
-=======
                 .requestMatchers("/ws/**")
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
                 .requestMatchers("/user/authors")
                 .requestMatchers("/user/info/author/**")
                 .requestMatchers("/work/infos/**")
@@ -61,7 +58,11 @@ public class WebSecurityConfig {
                 .requestMatchers("/work/exhibit/**")
                 .requestMatchers("/work/user/**")
                 .requestMatchers("/work")
-                .requestMatchers("/work/like/count/**");
+                .requestMatchers("/work/like/count/**")
+                .requestMatchers("/auction/works")
+                .requestMatchers("/user/username")
+                .requestMatchers("/user/nickname")
+                ;
     }
 
     @Bean

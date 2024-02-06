@@ -1,9 +1,5 @@
 package com.ssafy.anudar.repository;
 
-<<<<<<< HEAD
-import com.ssafy.anudar.dto.FollowDto;
-=======
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 import com.ssafy.anudar.model.Follow;
 import com.ssafy.anudar.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

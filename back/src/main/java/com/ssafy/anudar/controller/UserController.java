@@ -40,6 +40,18 @@ public class UserController {
         return new ResponseEntity<>(userService.login(req.getUsername(),req.getPassword()), HttpStatus.OK);
     }
 
+    @PostMapping("/username")
+    public ResponseEntity<String> checkUsername(@RequestBody String username) {
+        userService.usernameCheck(username);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @PostMapping("/nickname")
+    public ResponseEntity<String> checkNickname(@RequestBody String nickname) {
+        userService.nicknameCheck(nickname);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
     @GetMapping("/info")
     public ResponseEntity<UserDto> info(Authentication authentication) {
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
@@ -81,11 +93,7 @@ public class UserController {
 
     // 나의 결제 내역
     @GetMapping("/pay/work")
-<<<<<<< HEAD
-    public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
-=======
     public ResponseEntity<List<SuccessWorkDto>> mypay(Authentication authentication) {
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
         return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
     }
 
@@ -101,6 +109,28 @@ public class UserController {
     public void unfollow(Authentication authentication, @PathVariable("username") String username) {
         userService.unfollow(authentication.getName(), username);
     }
+
+    // 알림 조회
+    @GetMapping("/{userId}/notifies")
+    public ResponseEntity<List<NotifyDto>> getNotifiesByUserId(@PathVariable Long userId) {
+        List<NotifyDto> notifies = userService.getNotifiesByUserId(userId);
+        return ResponseEntity.ok(notifies);
+    }
+
+    // 알림 읽음 처리
+    @PutMapping("/notifies/{notifyId}/read")
+    public ResponseEntity<NotifyDto> markAsRead(Authentication authentication, @PathVariable Long notifyId) {
+        NotifyDto notifyDto = userService.markAsRead(authentication, notifyId);
+        return ResponseEntity.ok(notifyDto);
+    }
+
+    // 알림 삭제
+    @DeleteMapping("/notifies/{notifyId}")
+    public ResponseEntity<String> deleteNotify(Authentication authentication, @PathVariable Long notifyId) {
+        userService.deleteNotify(authentication, notifyId);
+        return new ResponseEntity<>("알림이 성공적으로 삭제되었습니다.", HttpStatus.OK);
+    }
+
 
     // 작가 팔로잉 목록
     @GetMapping("/following")
@@ -129,7 +159,7 @@ public class UserController {
         List<WorkDto> works = userService.likeWork(authentication.getName());
         return new ResponseEntity<>(works, HttpStatus.OK);
     }
-    
+
     // 낙찰 작품 목록
     @GetMapping("/bid/work")
     public ResponseEntity<List<WorkDto>> bidWork (Authentication authentication) {

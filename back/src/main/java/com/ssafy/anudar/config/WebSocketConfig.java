@@ -1,12 +1,6 @@
 package com.ssafy.anudar.config;
 
 
-<<<<<<< HEAD
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-
-=======
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -28,6 +22,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/sub");
         registry.setApplicationDestinationPrefixes("/pub");
     }
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
 }

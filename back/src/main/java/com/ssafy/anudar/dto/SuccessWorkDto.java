@@ -15,17 +15,17 @@ import lombok.NoArgsConstructor;
 public class SuccessWorkDto {
     private Long id;
     private int finalPrice;
-    private Work work;
-    private User user;
-    private Auction auction;
+    private WorkDto work;
+    private UserDto user;
+    private AuctionDto auction;
 
     public static SuccessWorkDto fromEntity (SuccessWork successWork) {
         return new SuccessWorkDto(
                 successWork.getId(),
                 successWork.getFinalPrice(),
-                successWork.getWork(),
-                successWork.getUser(),
-                successWork.getAuction()
+                WorkDto.fromEntity(successWork.getWork()),
+                UserDto.fromEntity(successWork.getUser()),
+                AuctionDto.fromEntity(successWork.getAuction())
         );
     }
 }

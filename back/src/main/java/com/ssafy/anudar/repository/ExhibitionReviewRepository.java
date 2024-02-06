@@ -11,9 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ExhibitionReviewRepository extends JpaRepository<ExhibitionReview, Long> {
 
-<<<<<<< HEAD
-    List<ExhibitionReview> findAllByExhibition(Optional<Exhibition> exhibition);
-=======
     List<ExhibitionReview> findAllByExhibition(Exhibition exhibition);
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 }

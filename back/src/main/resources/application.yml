@@ -12,7 +12,7 @@ OPENVIDU_SECRET: ANUDAR
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
+    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
   jpa:
@@ -21,14 +21,11 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
-<<<<<<< HEAD
-=======
   data:
     redis:
       host: i10d105.p.ssafy.io
       port: 6379
 
->>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
   access-token:

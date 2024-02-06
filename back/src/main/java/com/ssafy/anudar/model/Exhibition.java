@@ -26,7 +26,6 @@ public class Exhibition {
     @Column(name = "start_time")
     private LocalDateTime start_time;
 
-
     @Column(name = "end_time")
     private LocalDateTime end_time;
 

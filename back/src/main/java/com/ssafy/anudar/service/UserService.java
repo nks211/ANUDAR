@@ -1,28 +1,15 @@
 package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.config.JwtUtil;
-import com.ssafy.anudar.dto.AuctionWorkDto;
-import com.ssafy.anudar.dto.FollowDto;
-import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
 
-import com.ssafy.anudar.model.User;
-import com.ssafy.anudar.model.UserPrincipalDetails;
-import com.ssafy.anudar.model.UserRole;
-import com.ssafy.anudar.repository.AuctionWorkRepository;
-import com.ssafy.anudar.model.Follow;
-
-import com.ssafy.anudar.repository.FollowRepository;
-
-
 import com.ssafy.anudar.model.*;
-import com.ssafy.anudar.repository.FollowRepository;
-import com.ssafy.anudar.repository.NotifyRepository;
+import com.ssafy.anudar.repository.*;
 
-import com.ssafy.anudar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,7 +29,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final AuctionWorkRepository auctionWorkRepository;
+    private final SuccessWorkRepository successWorkRepository;
+    private final LikeExhibitionRepository likeExhibitionRepository;
+    private final LikeWorkRepository likeWorkRepository;
+    private final UserCacheRepository userCacheRepository;
 
     // 알림 보내기위해서 추가
     private final EventNotifyService eventNotifyService;
@@ -65,9 +55,9 @@ public class UserService {
     }
 
     public UserPrincipalDetails loadUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .map(UserPrincipalDetails::fromEntity)
-                .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED));
+        return userCacheRepository.getUser(username).orElseGet(() ->
+                userRepository.findByUsername(username).map(UserPrincipalDetails::fromEntity)
+                        .orElseThrow(()-> new UnAuthorizedException(ExceptionStatus.UNAUTHORIZED)));
     }
 
     public String login(String username, String password) {
@@ -78,7 +68,8 @@ public class UserService {
         if(!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new BadRequestException(ExceptionStatus.PASSWORD_MISMATCH);
         }
-
+        // save in redis
+        userCacheRepository.setUser(UserPrincipalDetails.fromEntity(user));
         return JwtUtil.generateToken(username, key, expiredTimeMs);
     }
 
@@ -144,11 +135,11 @@ public class UserService {
     }
 
     // 나의 결제 내역
-    public List<AuctionWorkDto> getpay(String username){
+    public List<SuccessWorkDto> getpay(String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
-        return auctionWorkRepository.findByUser(user).stream().map(AuctionWorkDto::fromEntity).collect(Collectors.toList());
+        return successWorkRepository.findByUser(user).stream().map(SuccessWorkDto::fromEntity).collect(Collectors.toList());
     }
     // 팔로우
     public FollowDto follow(String toUsername, String fromUsername) {
@@ -212,5 +203,51 @@ public class UserService {
                 .map(follow -> UserDto.fromEntity(follow.getFromUser()))
                 .collect(Collectors.toList());
     }
+
+    // 찜한 전시 목록
+    public List<ExhibitionDto> likeExhibit(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeExhibition> likes = likeExhibitionRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeExhibition -> ExhibitionDto.fromEntity(likeExhibition.getExhibition()))
+                .collect(Collectors.toList());
+    }
+
+    // 찜한 작품 목록
+    public List<WorkDto> likeWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<LikeWork> likes = likeWorkRepository.findAllByUser(user);
+        return likes.stream()
+                .map(likeWork -> WorkDto.fromEntity(likeWork.getWork()))
+                .collect(Collectors.toList());
+    }
+
+    // 낙찰 작품 목록
+    public List<WorkDto> bidWork(String username) {
+        // 본인 확인
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        List<SuccessWork> bids = successWorkRepository.findAllByUser(user);
+        return bids.stream()
+                .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
+                .collect(Collectors.toList());
+    }
+
+    // username 중복 체크
+    public void usernameCheck(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_USERNAME);
+    }
+
+    // nickname 중복 체크
+    public void nicknameCheck(String nickname) {
+        Optional<User> user = userRepository.findByNickname(nickname);
+        if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_NICKNAME);
+    }
+
 }
 

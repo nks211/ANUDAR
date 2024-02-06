@@ -1,11 +1,8 @@
 package com.ssafy.anudar.controller;
 
-import com.ssafy.anudar.dto.AuctionWorkDto;
-import com.ssafy.anudar.dto.FollowDto;
-import com.ssafy.anudar.dto.UserDto;
+import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
-import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +38,18 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest req) {
         return new ResponseEntity<>(userService.login(req.getUsername(),req.getPassword()), HttpStatus.OK);
+    }
+
+    @PostMapping("/username")
+    public ResponseEntity<String> checkUsername(@RequestBody String username) {
+        userService.usernameCheck(username);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @PostMapping("/nickname")
+    public ResponseEntity<String> checkNickname(@RequestBody String nickname) {
+        userService.nicknameCheck(nickname);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @GetMapping("/info")
@@ -84,7 +93,7 @@ public class UserController {
 
     // 나의 결제 내역
     @GetMapping("/pay/work")
-    public ResponseEntity<List<AuctionWorkDto>> mypay(Authentication authentication) {
+    public ResponseEntity<List<SuccessWorkDto>> mypay(Authentication authentication) {
         return new ResponseEntity<>(userService.getpay(authentication.getName()), HttpStatus.OK);
     }
 
@@ -112,7 +121,28 @@ public class UserController {
     @GetMapping("/follower")
     public ResponseEntity<List<UserDto>> follower (Authentication authentication) {
         List<UserDto> followers = userService.follower(authentication.getName());
-        return  new ResponseEntity<>(followers, HttpStatus.OK);
+        return new ResponseEntity<>(followers, HttpStatus.OK);
+    }
+
+    // 찜한 전시 목록
+    @GetMapping("/like/exhibit")
+    public ResponseEntity<List<ExhibitionDto>> likeExhibit (Authentication authentication) {
+        List<ExhibitionDto> exhibitions = userService.likeExhibit(authentication.getName());
+        return new ResponseEntity<>(exhibitions, HttpStatus.OK);
+    }
+
+    // 찜한 작품 목록
+    @GetMapping("/like/work")
+    public ResponseEntity<List<WorkDto>> likeWork (Authentication authentication) {
+        List<WorkDto> works = userService.likeWork(authentication.getName());
+        return new ResponseEntity<>(works, HttpStatus.OK);
+    }
+    
+    // 낙찰 작품 목록
+    @GetMapping("/bid/work")
+    public ResponseEntity<List<WorkDto>> bidWork (Authentication authentication) {
+        List<WorkDto> works = userService.bidWork(authentication.getName());
+        return new ResponseEntity<>(works, HttpStatus.OK);
     }
 }
 

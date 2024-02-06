@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 public class DocentDto {
     private LocalDateTime start_time;
     private LocalDateTime end_time;
-    private long exhibition_id;
+    private String video;
 
     public static DocentDto fromEntity (Docent docent) {
         return new DocentDto(
                 docent.getStart_time(),
                 docent.getEnd_time(),
-                docent.getExhibition().getId()
+                docent.getVideo()
         );
     }
 }

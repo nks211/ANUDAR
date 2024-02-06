@@ -16,12 +16,10 @@ public class Follow {
     @Column(name="follow_id")
     private long id;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)  // default EAGER
     @JoinColumn(name = "to_user")
     private User toUser;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user")
     private User fromUser;

@@ -48,15 +48,21 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/join")
                 .requestMatchers("/user/img")
                 .requestMatchers("/sessions/**")
+                .requestMatchers("/ws/**")
                 .requestMatchers("/user/authors")
                 .requestMatchers("/user/info/author/**")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/exhibit/list/**")
+                .requestMatchers("/exhibit/{exhibition_id}/comments-list")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/work/exhibit/**")
                 .requestMatchers("/work/user/**")
                 .requestMatchers("/work")
-                .requestMatchers("/work/like/count/**");
+                .requestMatchers("/work/like/count/**")
+                .requestMatchers("/auction/works")
+                .requestMatchers("/user/username")
+                .requestMatchers("/user/nickname")
+                ;
     }
 
     @Bean

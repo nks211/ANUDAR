@@ -1,28 +1,3 @@
-package com.ssafy.anudar.model;
-
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
-
-@Entity
-@Getter
-@Setter
-public class LikeExhibition {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="like_exhibition_id")
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exhibition_id")
-    private Exhibition exhibition;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5c614942b5b09648aae7b61e97180307f2f1bc712f22641b3cc2256f055a8f63
+size 583

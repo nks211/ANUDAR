@@ -41,6 +41,18 @@ public class UserController {
         return new ResponseEntity<>(userService.login(req.getUsername(),req.getPassword()), HttpStatus.OK);
     }
 
+    @PostMapping("/username")
+    public ResponseEntity<String> checkUsername(@RequestBody String username) {
+        userService.usernameCheck(username);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @PostMapping("/nickname")
+    public ResponseEntity<String> checkNickname(@RequestBody String nickname) {
+        userService.nicknameCheck(nickname);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
     @GetMapping("/info")
     public ResponseEntity<UserDto> info(Authentication authentication) {
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);

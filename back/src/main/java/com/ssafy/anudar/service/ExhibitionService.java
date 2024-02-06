@@ -3,7 +3,7 @@ package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.dto.ExhibitionDetailDto;
 import com.ssafy.anudar.dto.ExhibitionDto;
-import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.dto.request.WorkRegistRequest;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.*;
@@ -18,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,7 +35,7 @@ public class ExhibitionService {
     @Transactional
     public ExhibitionDto saveExhibition (String name, String detail, String start_time, String end_time, String image, String username,
                                          String docent_start, String docent_end,
-                                         List<String> works_title, List<String> works_detail, List<Integer> works_price, List<String> works_image) {
+                                         List<WorkRegistRequest> works) {
         // 날짜 String 형태 포맷
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         // 사용자 ID로 사용자 정보를 조회
@@ -45,6 +43,7 @@ public class ExhibitionService {
         // 작가로 설정
         user.setRole(UserRole.AUTHOR);
         userRepository.save(user);
+
 
         // 전시회 저장
         Exhibition exhibition = new Exhibition(name, detail, LocalDateTime.parse(start_time,formatter), LocalDateTime.parse(end_time,formatter), image, user);
@@ -55,9 +54,9 @@ public class ExhibitionService {
         docentRepository.save(docent);
 
         // 작품들 저장
-        for(int i=0;i<works_title.size();i++){
-            Work work = new Work(works_title.get(i), works_detail.get(i), works_price.get(i), works_image.get(i), user, exhibition);
-            WorkDto.fromEntity(workRepository.save(work));
+
+        for (WorkRegistRequest work : works) {
+            workRepository.save(new Work(work.getTitle(), work.getDetail(), work.getPrice(), work.getImage(), user, exhibition));
         }
 
         return ExhibitionDto.fromEntity(exhibition);

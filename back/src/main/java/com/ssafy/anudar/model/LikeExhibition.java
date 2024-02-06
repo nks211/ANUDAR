@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c441dbcf6338d34ed8de9fab4d385f83939a72323d56017987ac8d95f667c2f9
-size 912
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class LikeExhibition {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="like_exhibition_id")
+    private Long id;
+
+    // LAZY -> EAGER 원래는 LAZY를 쓰는것을 지향 , 연관된게 많아서 다 가져와야 할때는 EAGER 쓰는걸로...
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
+//    @JsonIgnore
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exhibition_id")
+    private Exhibition exhibition;
+
+    @Builder
+    public LikeExhibition(User user, Exhibition exhibition){
+        this.user = user;
+        this.exhibition = exhibition;
+    }
+}

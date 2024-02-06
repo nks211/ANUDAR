@@ -1,10 +1,11 @@
-import { React } from "react";
+import { React, useContext } from "react";
+import { AppContext } from "../App.js";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { mainstate, popupstate } from "../StateManagement.jsx";
 
 function Login() {
-
+    const {setPathName} = useContext(AppContext);
     const navigate = useNavigate();
 
     const setloginstate = mainstate((state) => state.setlogin);
@@ -34,6 +35,7 @@ function Login() {
             // setLogin(true);
             // setPopup(false);
             navigate("/");
+            setPathName(window.location.pathname);
         }
         else {
             alert("아이디 혹은 비밀번호를 확인해주세요.");

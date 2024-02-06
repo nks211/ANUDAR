@@ -27,6 +27,10 @@ public class Auction {
     private List<Work> works;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
+<<<<<<< HEAD
+    private List<AuctionWork> auctionWorks;
+=======
     private List<SuccessWork> successWorks;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
 }

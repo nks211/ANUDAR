@@ -48,7 +48,10 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/join")
                 .requestMatchers("/user/img")
                 .requestMatchers("/sessions/**")
+<<<<<<< HEAD
+=======
                 .requestMatchers("/ws/**")
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
                 .requestMatchers("/user/authors")
                 .requestMatchers("/user/info/author/**")
                 .requestMatchers("/work/infos/**")

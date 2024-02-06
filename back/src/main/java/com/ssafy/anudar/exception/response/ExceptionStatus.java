@@ -9,7 +9,11 @@ public enum ExceptionStatus implements ExceptionInfo {
     // NOT FOUND
     USER_NOT_FOUND(1000, HttpStatus.NOT_FOUND.value(), "사용자가 존재하지 않습니다."),
     EXHIBIT_NOT_FOUND(1001, HttpStatus.NOT_FOUND.value(), "전시가 존재하지 않습니다."),
+<<<<<<< HEAD
+    LIKE_NOT_FOUND(1002, HttpStatus.NOT_FOUND.value(), "좋아요가 존재하지 않습니다."),
+=======
     WORK_NOT_FOUND(1002, HttpStatus.NOT_FOUND.value(), "작품이 존재하지 않습니다."),
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     REVIEW_NOT_FOUND(1003, HttpStatus.NOT_FOUND.value(), "방명록이 존재하지 않습니다."),
     RECORD_NOT_FOUND(1004, HttpStatus.NO_CONTENT.value(), "동영상이 존재하지 않습니다."),
 

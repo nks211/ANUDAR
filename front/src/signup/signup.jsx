@@ -1,5 +1,6 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 import './signup.css';
 import { mainstate } from "../StateManagement";
 
@@ -11,6 +12,7 @@ const phonenumberformatting = (number) => {
 function Signup() {
 
     const navigate = useNavigate();
+    const {setPathName} = useContext(AppContext);
 
     const signupdata = mainstate(state => state.signup);
     const setidinput = mainstate(state => state.setidinput);
@@ -47,6 +49,7 @@ function Signup() {
             if (!nicknamecheck(signupdata.nickname)) alert("닉네임 체크를 해 주세요.");
             localStorage.setItem("userdata", JSON.stringify(signupdata));
             setnumberinput(""); navigate("/"); window.scrollTo(0, 0);
+            setPathName(window.location.pathname);
         }
 
     };

@@ -1,8 +1,10 @@
 package com.ssafy.anudar.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,8 +31,13 @@ public class Work {
     private String image;
 
     @Column(name="bid")
+<<<<<<< HEAD
+    private Integer bid;
+=======
     private Integer bid = 0;
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
 
+    @JsonIgnore
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SuccessWork successWork;
 
@@ -38,17 +45,28 @@ public class Work {
     @JoinColumn(name = "auction_id")
     private Auction auction;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+<<<<<<< HEAD
+    @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
+    private List<LikeWork> likeWorks;
+
+    @JsonIgnore
+=======
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="exhibition_id")
     private Exhibition exhibition;
 
+<<<<<<< HEAD
+=======
     @OneToMany(mappedBy = "work", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
 
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     @Builder
     public Work(String title, String detail, Integer price, String image, User user, Exhibition exhibition) {
         this.title = title;
@@ -57,6 +75,10 @@ public class Work {
         this.image = image;
         this.user = user;
         this.exhibition = exhibition;
+<<<<<<< HEAD
+        bid = 0;
+=======
+>>>>>>> 8fd1a240260cbd4309f53f54122a0ce2e689a39b
     }
 
 }

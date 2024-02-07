@@ -1,3 +1,53 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:955a3fb9fef7f93ab53be7f892dbcb0d3d82320b479f77fe07f88129fd0995e0
-size 790
+.myfavorites, .myauction, .myartist {
+    color: #967E76;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: start;
+    left: 30px;
+    top: 30px;
+    position: relative;
+}
+
+.historytitle {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: start;
+    left: 60px;
+    top: 70px;
+    margin-bottom: 70px;
+    position: relative;
+}
+
+.dataarea {
+    width: 890px;
+    display: flex;
+    flex-flow: row wrap;
+    left: 40px;
+    top: 40px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.historytitle > div > table {
+    width: 950px;
+    margin: 50px 0px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.auctionimage {
+    width: 10%;
+}
+
+.auctionname {
+    width: 40%;
+}
+
+.auctionartist {
+    width: 25%;
+}
+
+.auctionmoney {
+    width: 25%;
+}

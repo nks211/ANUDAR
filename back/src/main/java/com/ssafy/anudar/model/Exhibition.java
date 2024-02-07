@@ -1,3 +1,69 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e475394d18802d170b3cf607cc41daea7662a6ff8e4909efb22f9aaacef167f8
-size 1749
+package com.ssafy.anudar.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Exhibition {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="exhibition_id")
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "detail")
+    private String detail;
+
+    @Column(name = "start_time")
+    private LocalDateTime start_time;
+
+    @Column(name = "end_time")
+    private LocalDateTime end_time;
+
+    @Column(name="docent_url")
+    private String docent_url;
+
+    @Column(name = "image")
+    private String image;
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+    private List<LikeExhibition> likeExhibitions;
+
+    @OneToMany(mappedBy = "exhibition", cascade = CascadeType.ALL)
+    private List<ExhibitionReview> exhibitionReviews;
+
+    @OneToOne(mappedBy = "exhibition", fetch = FetchType.LAZY)
+    private Docent docent;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Builder
+    public Exhibition(String name, String detail, LocalDateTime start_time, LocalDateTime end_time, String image, User user) {
+        this.name = name;
+        this.detail = detail;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.image = image;
+        this.user = user;
+    }
+
+    public String setDocentUrl(Long exhibitionId) {
+        String docent_url = "http://anudar.com/docent/" + exhibitionId;
+        this.docent_url = docent_url;
+        return docent_url;
+    }
+
+}

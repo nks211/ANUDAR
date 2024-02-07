@@ -12,7 +12,7 @@ function AuctionLivePage() {
   const client = useRef({});
   const decodedToken = useRef(
     jwtDecode(
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjY2MjA5LCJleHAiOjE3MDcyNjk4MDl9.MhcH9jXyOt_0GA9tua2ATVYlmtr3VImS118WMuAlrOc"
+      window.localStorage.getItem('authorization')
     )
   );
 
@@ -26,8 +26,7 @@ function AuctionLivePage() {
         subscribe(); // 연결 성공 시 구독하는 로직 실행
       },
       connectHeaders: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjY2MjA5LCJleHAiOjE3MDcyNjk4MDl9.MhcH9jXyOt_0GA9tua2ATVYlmtr3VImS118WMuAlrOc",
+        Authorization: window.localStorage.getItem('authorization'),
       },
     });
     client.current.activate(); // 클라이언트 활성화

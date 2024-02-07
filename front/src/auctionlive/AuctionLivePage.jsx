@@ -19,7 +19,7 @@ function AuctionLivePage() {
   const connect = () => {
     // 연결시
     client.current = new StomJs.Client({
-      brokerURL: "ws://localhost:8080/api/ws",
+      brokerURL: "ws://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(apply_id);

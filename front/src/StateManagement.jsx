@@ -166,12 +166,14 @@ export const popupstate = create((set) => ({
     signuppopup: false,
     mypagecheckpopup: false,
     mypagechangepopup: false,
+    paymentPopup: false,
 
     sethomepopup: (result) => set(() => ({ homepopup: result })),
     sethomenoticepopup: (result) => set(() => ({ homenoticepopup: result })),
     setsignuppopup: (result) => set(() => ({ signuppopup: result })),
     setmypagecheckpopup: (result) => set(() => ({ mypagecheckpopup: result })),
     setmypagechangepopup: (result) => set(() => ({ mypagechangepopup: result })),
+    setPaymentPopup: (result) => set(() => ({ paymentPopup: result })),
 
 }));
 

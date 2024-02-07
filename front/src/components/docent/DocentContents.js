@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { DocentContext } from '../../docent/DocentPage'
 import './DocentContents.css'
 import dummy from '../../db/data.json'

@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../App";
+import { useContext } from "react";
 import './Artist.css'
 
 export default function Artist(props) {
   const navigate = useNavigate();
+  const {setPathName} = useContext(AppContext);
   
   return (
     <div className="artistCard">
       <div className="artistImage cursorPointer" onClick={()=>{
         navigate(`/artist/${props.artistId}`)
+        setPathName(window.location.pathname)
         window.scrollTo(0, 0)
         }}>
         <img style={{width:300, height:300, "object-fit": "cover"}} src={props.image}></img>
@@ -15,6 +19,7 @@ export default function Artist(props) {
       <div className="artistInfo">
         <div className="artistName boldFont cursorPointer" onClick={()=> {
           navigate(`/artist/${props.artistId}`)
+          setPathName(window.location.pathname)
           window.scrollTo(0, 0)
         }
         }>{props.artistName}</div>

@@ -15,12 +15,18 @@ import Mypage from './mypage/mypage';
 import { createContext, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
+import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {
 
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
+
+  const [pathName, setPathName] = useState(window.location.pathname);
+  const localdata = JSON.parse(localStorage.getItem("userdata"));
+  const loginuser = mainstate((state) => state.loginuser);
+  const [loginnickname, setLoginNickname] = useState(localdata != null ? localdata.nickname : loginuser.nickname);
 
   const modalsetting = {
     overlay: {
@@ -42,13 +48,12 @@ export default function App() {
     }
   };
 
-  // const [menu, setMenu] = useState("");
-
   return (
     <>
-      <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
+      <AppContext.Provider value={{ modalsetting, loginnickname, pathName, setPathName }}>
         <NavBar />
-        <div style={{ display: "flex", justifyContent: "center", }} className="App">
+        <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent')?"DocentPage":"App"}>
+        {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>

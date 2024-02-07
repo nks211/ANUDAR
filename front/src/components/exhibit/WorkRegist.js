@@ -57,7 +57,7 @@ export default function WorkRegist() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1
-}
+  }
 
 
   return (
@@ -85,9 +85,10 @@ export default function WorkRegist() {
             <div className="workInput">
               <div className="item1"><span>*</span> 이미지 등록</div>
               <div className="item2" style={{display:"flex"}}>
-                <span>{fileName}{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(defaultPreview); setFileName(); setWorkImg()}}></img>:""}</span>
+                {/*  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" */}
+                <span><div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{fileName}</div>{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(defaultPreview); setFileName(); setWorkImg()}}></img>:""}</span>
                 <label className="uploadBtn" for="workImg">선택</label>
-                <input type="file" id="workImg" accept="image/*" onChange={event => upload(event)} style={{ display: "none" }} required/>
+                <input type="file" id="workImg" accept="image/*" onChange={event => {upload(event); event.target.value = '';}} style={{ display: "none" }} required/>
               </div>
             </div>
             <div className="workInput" style={{marginBottom:"18px"}}>
@@ -99,10 +100,10 @@ export default function WorkRegist() {
             <div style={{display:"flex", justifyContent: "center"}}>
               <button id="workRegistBtn" type="submit" onClick={(event)=>{
                 event.preventDefault()
-                // if (!title || !description || !fileName || !price) {
-                //   alert('모든 정보를 입력해주세요.')
-                //   return
-                // }
+                if (!title || !description || !fileName || !price) {
+                  alert('모든 정보를 입력해주세요.')
+                  return
+                }
 
                 if (works.length === 20) {
                   alert('작품은 최대 20개까지 등록 가능합니다.')

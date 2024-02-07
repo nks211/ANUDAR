@@ -4,16 +4,14 @@ import MyInfo from "../components/myinfo/myinfo";
 import MyHistory from "../components/myinfo/myhistory/myhistory";
 import CheckPassword from "../components/checkpassword";
 import ChangePassword from "../components/changepassword/changepassword";
-import { modalback } from "../navbar/navbar";
 import Modal from "react-modal";
 import { AppContext } from "../App";
+import { popupstate } from "../StateManagement";
 
 export const MypageContext = createContext();
 
 function Mypage() {
 
-    const [passwordcheck, setPasswordCheck] = useState(false);
-    const [passpopup, setPassPopup] = useState(false);
     const { modalsetting } = useContext(AppContext);
     const mytab = ["내 정보", "찜한 전시회", "찜한 작품", "팔로잉 목록", "경매 내역", "내 전시", "내 작품"];
     const [myindex, setMyIndex] = useState(mytab[0]);
@@ -36,16 +34,19 @@ function Mypage() {
         }
     }
 
+    const mypagecheckpopup = popupstate((state) => state.mypagecheckpopup);
+    const mypagechangepopup = popupstate((state) => state.mypagechangepopup);
+    const setmypagechangepopup = popupstate((state) => state.setmypagechangepopup);
+
     return (
-        <MypageContext.Provider value={{ passpopup, setPassPopup, mytab, myindex, setMyIndex, scrollref, scrollspot, scrolltoref, passwordcheck, setPasswordCheck }}>
+        <MypageContext.Provider value={{ mytab, myindex, setMyIndex, scrollref, scrollspot, scrolltoref }}>
             <div style={{ width: "100%" }}>
                 <div style={{ float: "left", width: "25%", zIndex: "1", }}><MyTab /></div>
                 <div style={{ float: "right", width: "70%", margin: "30px 0px", }} >
-                    { passwordcheck? (myindex === mytab[0]? <MyInfo /> : <MyHistory />) : null }</div>
+                    { mypagecheckpopup? (myindex === mytab[0]? <MyInfo /> : <MyHistory />) : null }</div>
             </div>
-            <Modal isOpen={!passwordcheck} style={modalsetting}><CheckPassword/></Modal>
-            <Modal isOpen={passpopup} style={modalsetting} onRequestClose={() => { setPassPopup(false); }}><ChangePassword/></Modal>
-            {/* { passpopup? <><div style={modalback} onClick={() => { setPassPopup(false); }}></div><ChangePassword/></> : null } */}
+            <Modal isOpen={!mypagecheckpopup} style={modalsetting}><CheckPassword/></Modal>
+            <Modal isOpen={mypagechangepopup} style={modalsetting} onRequestClose={() => { setmypagechangepopup(false); }}><ChangePassword/></Modal>
         </MypageContext.Provider>
     );
 }

@@ -1,3 +1,71 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:258a6240901c588f77baeb820ee502b6b00866abc44e0cacb315af4907ddd352
-size 1314
+.loginarea {
+    z-index: 10;
+    background-color: #eee3cb;
+    border-radius: 10px;
+    width: 420px;
+    height: 210px;
+    top: 40%;
+    left: 40%;
+    position: fixed;
+    overflow: hidden;
+}
+
+.loginarea .logotitle {
+    color: #967e76;
+    font-family: "Josefin Sans-Bold", Helvetica;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    top: 20px;
+    position: relative;
+}
+
+.loginsector {
+    width: 100%;
+    margin: 10px 0px;
+    position: relative;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    background-color: #ffffff;
+    border: 2px solid;
+    border-color: #967e76;
+    border-radius: 5px;
+    width: 320px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'SUIT-Regular'; 
+}
+
+.logincheck {
+    width: 100px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #967e76;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    position: relative;
+    top: 20px;
+    left: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.close {
+    z-index: 15;
+    color: #967e76;
+    /* font-family: "Manjari-Regular", Helvetica; */
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    top: 42%;
+    left: 60%;
+}

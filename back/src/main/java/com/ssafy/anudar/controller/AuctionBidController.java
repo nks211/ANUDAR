@@ -1,18 +1,3 @@
-package com.ssafy.anudar.controller;
-
-import com.ssafy.anudar.dto.AuctionBidDto;
-import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequiredArgsConstructor
-public class AuctionBidController {
-    private final SimpMessagingTemplate simpMessagingTemplate;
-    @MessageMapping("/auctionbid/{sessionId}")
-    public void sendMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
-        simpMessagingTemplate.convertAndSend("/sub/auctionbid/" + auctionBidDto.getSessionId(), auctionBidDto);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:cbb26676121e9d846631c9477ea550bfd0a77ced1383b57e7d42d98ec4f47733
+size 1069

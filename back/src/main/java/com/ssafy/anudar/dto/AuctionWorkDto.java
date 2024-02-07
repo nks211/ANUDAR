@@ -1,7 +1,6 @@
 package com.ssafy.anudar.dto;
 
 import com.ssafy.anudar.model.Auction;
-import com.ssafy.anudar.model.AuctionWork;
 import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.model.Work;
 import lombok.AccessLevel;

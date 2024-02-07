@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class AuctionBidController {
+public class WebSocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     @MessageMapping("/chat/{sessionId}")
     public void handleChatMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor){

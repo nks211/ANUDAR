@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import Home from './home/home'
 import ExhibitPage from './exhibit/ExhibitPage'
 import ExhibitDetailPage from './exhibit/ExhibitDetailPage'
@@ -20,8 +21,7 @@ import { mainstate } from "./StateManagement.jsx";
 export const AppContext = createContext();
 export default function App() {
 
-  const [login, setLogin] = useState(false);
-  const [notice, setNotice] = useState(true);
+  let exhibits = null
 
   const [pathName, setPathName] = useState(window.location.pathname);
   const localdata = JSON.parse(localStorage.getItem("userdata"));

@@ -51,7 +51,7 @@ export default function ExhibitPage() {
 
   useEffect(()=>{
     allExhibits()
-    console.log('...')
+    // console.log('...')
   }, [exhibitList])
   
   useEffect(()=>{

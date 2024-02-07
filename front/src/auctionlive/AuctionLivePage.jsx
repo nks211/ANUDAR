@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import * as StomJs from "@stomp/stompjs";
 import { jwtDecode } from "jwt-decode";
 
-function AuctionLive() {
+function AuctionLivePage() {
   const [chatList, setChatList] = useState([]); // 회면에 표시될 채팅 기록
   const [chat, setChat] = useState(""); // 채널을 구분하는 식별자를 URL 파라미터로 받음
 
@@ -12,7 +12,7 @@ function AuctionLive() {
   const client = useRef({});
   const decodedToken = useRef(
     jwtDecode(
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjI4MTkxLCJleHAiOjE3MDcyMzE3OTF9.4TcYBQpvXbIfIjUdIGcTtob5TsTEkFDqSwVFysIdItY"
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjY2MjA5LCJleHAiOjE3MDcyNjk4MDl9.MhcH9jXyOt_0GA9tua2ATVYlmtr3VImS118WMuAlrOc"
     )
   );
 
@@ -27,7 +27,7 @@ function AuctionLive() {
       },
       connectHeaders: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjI4MTkxLCJleHAiOjE3MDcyMzE3OTF9.4TcYBQpvXbIfIjUdIGcTtob5TsTEkFDqSwVFysIdItY",
+          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3MjY2MjA5LCJleHAiOjE3MDcyNjk4MDl9.MhcH9jXyOt_0GA9tua2ATVYlmtr3VImS118WMuAlrOc",
       },
     });
     client.current.activate(); // 클라이언트 활성화
@@ -107,4 +107,4 @@ function AuctionLive() {
   );
 }
 
-export default AuctionLive;
+export default AuctionLivePage;

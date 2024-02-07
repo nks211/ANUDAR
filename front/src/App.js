@@ -15,7 +15,7 @@ import Mypage from "./mypage/mypage";
 import { createContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./navbar/navbar";
-import AuctionLive from "./auctionlive/auctionlive";
+import AuctionLivePage from "./auctionlive/AuctionLivePage";
 
 export const AppContext = createContext();
 export default function App() {
@@ -89,7 +89,7 @@ export default function App() {
             <Route
               exact
               path="/auction/live/:apply_id"
-              element={<AuctionLive />}
+              element={<AuctionLivePage />}
             />
           </Routes>
         </div>

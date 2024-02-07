@@ -1,6 +1,7 @@
 package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.dto.AuctionBidDto;
+import com.ssafy.anudar.dto.AuctionStatusDto;
 import com.ssafy.anudar.dto.ChatDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class WebSocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private Integer currentBid = 0 ; // 현재가를 저장하는 변수 : 나중엔 startprice로 설정
+    private String currentBidUser = "응찰한 사용자가 없습니다.";
+
     @MessageMapping("/chat/{sessionId}")
     public void handleChatMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor){
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatDto.getSessionId(), chatDto);
@@ -19,8 +23,25 @@ public class WebSocketController {
     @MessageMapping("/auctionbid/{sessionId}")
     public void handleAuctionBidMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
         // 여기서 현재가 갱신 로직 수행
+        Integer askingprice = auctionBidDto.getAskingprice();
+        String askingBidUser = auctionBidDto.getUsername();
+
+        if (askingprice > currentBid) {
+            currentBid = askingprice;
+            currentBidUser = askingBidUser;
+
+        }
+
+        // AuctionStatusDto를 생성하고 현재가 및 최고 입찰자 정보 설정
+        AuctionStatusDto auctionStatusDto = new AuctionStatusDto();
+        auctionStatusDto.setSessionId(auctionBidDto.getSessionId());
+        auctionStatusDto.setUsername(auctionBidDto.getUsername());
+        auctionStatusDto.setAskingprice(auctionBidDto.getAskingprice());
+        auctionStatusDto.setCurrentBid(currentBid);
+        auctionStatusDto.setCurrentBidUser(currentBidUser);
+
 
         // 갱신된 현재가를 프론트로 전달
-        simpMessagingTemplate.convertAndSend("/sub/auctionbid/" + auctionBidDto.getSessionId(), auctionBidDto);
+        simpMessagingTemplate.convertAndSend("/sub/auctionbid/" + auctionBidDto.getSessionId(), auctionStatusDto);
     }
 }

@@ -1,14 +1,18 @@
 package com.ssafy.anudar.dto;
 
-import com.ssafy.anudar.model.Work;
+
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Data
-public class AuctionBidDto {
+@Setter
+public class AuctionStatusDto {
     private String sessionId;
     private String username;
-//    private Work work;
+    //    private Work work;
     private Integer askingprice;
+    private Integer currentBid;
+    private String currentBidUser;
 }

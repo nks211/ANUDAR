@@ -7,27 +7,27 @@ import { jwtDecode } from "jwt-decode";
 function AuctionLivePage() {
   const [chatList, setChatList] = useState([]); // 회면에 표시될 채팅 기록
   const [chat, setChat] = useState(""); // 채널을 구분하는 식별자를 URL 파라미터로 받음
+  const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
+  const [currentBidUser, setCurrentBidUser] = useState("아직 응찰이 없습니다.");
 
   const { apply_id } = useParams();
   const client = useRef({});
   const decodedToken = useRef(
-    jwtDecode(
-      window.localStorage.getItem('authorization')
-    )
+    jwtDecode(window.localStorage.getItem("authorization"))
   );
 
   const connect = () => {
     // 연결시
     client.current = new StomJs.Client({
-      // brokerURL: "ws://localhost:8080/api/ws",
-      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(apply_id);
         subscribe(); // 연결 성공 시 구독하는 로직 실행
       },
       connectHeaders: {
-        Authorization: window.localStorage.getItem('authorization'),
+        Authorization: window.localStorage.getItem("authorization"),
       },
     });
     client.current.activate(); // 클라이언트 활성화
@@ -39,6 +39,13 @@ function AuctionLivePage() {
       const json_body = JSON.parse(body.body); // string으로 오기 때문에 JSON 사용하려면 파싱 필요
       console.log(body.body);
       setChatList((_chat_list) => [..._chat_list, json_body]); // 화면에 받은 메시지 표시
+
+      // 현재가 갱신 로직
+      const currentPrice = json_body.currentBid;
+      const currentBidUser = json_body.currentBidUser;
+      setCurrentPrice(currentPrice);
+      setCurrentBidUser(currentBidUser);
+      console.log(currentPrice);
     });
   };
 
@@ -83,6 +90,10 @@ function AuctionLivePage() {
 
   return (
     <div>
+      <div>
+        <p>응찰자 : {currentBidUser}</p>
+        <p>현재가 : {currentPrice}</p>
+      </div>
       <div className={"chat-list"}>
         {chatList.map((chatItem, index) => (
           <div key={index}>

@@ -47,3 +47,6 @@ cloud:
       auto: false
     stack:
       auto: false
+
+pay:
+  admin-key: f96a4358025c235a0e472878e375606a

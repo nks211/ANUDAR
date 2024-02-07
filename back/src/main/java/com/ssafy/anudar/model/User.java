@@ -43,6 +43,12 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
+    @Column(name="points")
+    private Long points = 0L;
+
+    @Column(nullable = true)
+    private String tid; // 카카오페이 결제 고유 번호 저장 필드
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies = new ArrayList<>();
 
@@ -80,6 +86,10 @@ public class User extends BaseTimeEntity{
         this.email=email;
         this.image=image;
         this.phone=phone;
+    }
+
+    public void updateTid(String tid) {
+        this.tid = tid;
     }
 
 }

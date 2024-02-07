@@ -12,12 +12,12 @@ OPENVIDU_SECRET: ANUDAR
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
     username: ssafy
     password: ssafy
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true

@@ -18,6 +18,9 @@ public class AuctionBidController {
     }
     @MessageMapping("/auctionbid/{sessionId}")
     public void handleAuctionBidMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
+        // 여기서 현재가 갱신 로직 수행
+
+        // 갱신된 현재가를 프론트로 전달
         simpMessagingTemplate.convertAndSend("/sub/auctionbid/" + auctionBidDto.getSessionId(), auctionBidDto);
     }
 }

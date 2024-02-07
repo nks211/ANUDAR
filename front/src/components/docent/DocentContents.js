@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { DocentContext } from '../../docent/DocentPage'
+import Chatting from './Chatting'
 import './DocentContents.css'
 import dummy from '../../db/data.json'
 
@@ -53,31 +54,16 @@ function DocentContent() {
             <hr/>
           </div>
           <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:"100%"}}>
-            <div id="chatting">
-              {/* {chats.map(chat=>(
-                <div>{chat}</div>
-              ))} */}
-              <div><span>닉네임</span> 실시간 채팅1</div>
-              <div><span>닉네임</span> 실시간 채팅2</div>
-              <div><span>닉네임</span> 실시간 채팅3</div>
-              <div><span>닉네임</span> 실시간 채팅4</div>
-              <div><span>닉네임</span> 실시간 채팅5</div>
-              {/* 
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div><div>실시간 채팅</div>
-              <div>실시간 채팅</div> */}
+           
+            <div id="chatting"> 
+            <Chatting/>
             </div>
-            <div id="chatInput">
+            {/* <div id="chatInput">
               <input placeholder="채팅을 입력하세요"></input>
               <button onClick={()=>{
                 // *수정* API 연결
               }}>입력</button>
-            </div>
+            </div> */}
           </div>
         </>
       )

@@ -30,14 +30,16 @@ export default function ExhibitRegistPage() {
   const [lastSat, setLastSat] = useState();
   const [ampm, setAmpm] = useState("am");
 
+  function calcYM() {
+    let curYear = [1,2,3,4,5,6,7,8,9,10,11,12].slice(curM, 12);
+    let nextYear = [1,2,3,4,5,6,7,8,9,10,11,12].slice(0, curM);
 
-  function calcMonth() {
-    let options = [1,2,3,4,5,6,7,8,9,10,11,12].slice(curM, 12);
-    if (exhibitY!=curY) {
-      options = [1,2,3,4,5,6,7,8,9,10,11,12].slice(0, curM);
-    }
+    let curYM = curYear.map(function(m) { return [curY, m] })
+    let nextYM = nextYear.map(function(m) { return [curY+1, m] })
+
+    let selectYM = curYM.concat(nextYM)
     
-    return Object.values(options).map((m) => {return(<option value={m}>{m}</option>)})
+    return Object.values(selectYM).map((ym) => {return(<option value={ym}>{`${ym[0]}년 ${ym[1]}월`}</option>)})
   }
 
   function getEndDate(year, month) {
@@ -90,7 +92,6 @@ export default function ExhibitRegistPage() {
     }
   }
 
-
   return (
     <div>
       <div className="exhibitRegist">
@@ -135,15 +136,12 @@ export default function ExhibitRegistPage() {
                 {/* 시작일 */}
                 <div className="periodSetting" style={{marginBottom:"5px"}}>
                   <span>시작일</span>
-                  <select onChange={ event => setExhibitY(event.target.value) }>
-                    <option value={curY}>{curY}</option>
-                    <option value={curY+1}>{curY+1}</option>
-                  </select><span>년</span>
-                  <select onChange={ event => setExhibitM(event.target.value) }>{calcMonth()}</select><span>월 1일</span>
+                  <select onChange={event=>{ const [y, m] = event.target.value.split(','); setExhibitY(Number(y)); setExhibitM(Number(m))}}>{calcYM()}</select>
+                  <span>1일</span>
                 </div>
                 {/* 종료일 */}
                 <div className="periodSetting">
-                  종료일 {exhibitY.length === 4?exhibitY:curY}년 {exhibitM?exhibitM:curM}월 {exhibitEndD}일
+                  종료일 {exhibitY}년 {exhibitM}월 {exhibitEndD}일
                   <input type="checkbox" onClick={()=>{ setIsEnd(!isEnd) }}/>
                   <label for="endCheck" style={{fontSize:"14px"}}>종료일 후 전시</label>
                   <ToolTip size={17} img="tooltip.png" ariaLabel="전시 기간 종료 후 전시 여부를 체크해주세요"/>
@@ -156,7 +154,7 @@ export default function ExhibitRegistPage() {
               <div className="item1"><span>*</span> 도슨트 일정</div>
               <div className="item2">
                 <div className="docentSetting">
-                  <div>{`${exhibitY.length === 4?exhibitY:curY} / ${exhibitM?exhibitM:curM} / `}</div>
+                  <div>{`${exhibitY} / ${exhibitM} / `}</div>
                   <input type="number" value={docentDate} onChange={ event => checkInput(event, "docentDate") } />
                   <select value={ampm} style={{marginLeft:"15px"}} onChange={ event => setAmpm(event.target.value) }>
                     <option value={"am"}>오전</option>

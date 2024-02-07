@@ -25,6 +25,10 @@ spring:
     redis:
       host: i10d105.p.ssafy.io
       port: 6379
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
 
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey

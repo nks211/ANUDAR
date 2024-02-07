@@ -27,18 +27,19 @@ export default function DocentPage(){
   const [chat, setChat] = useState("");
 
   const client = useRef({});
-  const decodedToken = useRef(jwtDecode("Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3Mjc4NjEwLCJleHAiOjE3MDcyODIyMTB9.gcGChHvcremfcu8hw5ddBPZSdGHkj7qd_ysQXv3MTec"));
+  const decodedToken = useRef(jwtDecode(window.localStorage.getItem('authorization')));
 
   const connect = () => {
     client.current = new StomJs.Client({
-      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "ws://localhost:8080/api/ws",
+      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(docentId);
         subscribe();
       },
       connectHeaders : {
-        Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNzA3Mjc4NjEwLCJleHAiOjE3MDcyODIyMTB9.gcGChHvcremfcu8hw5ddBPZSdGHkj7qd_ysQXv3MTec"
+        Authorization: window.localStorage.getItem('authorization'),
       },
     });
     client.current.activate();

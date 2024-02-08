@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class UserDto {
     private String phone;
     private Long userPoints;
     private List<NotifyDto> notifies; // 알림 리스트 추가
+
 
     public static UserDto fromEntity(User user) {
         List<NotifyDto> notifyDtos = user.getNotifies()

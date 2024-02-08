@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+//    private final NotifyService notifyService;
     private final UserService userService;
     private final S3Service s3Service;
 
@@ -159,7 +160,7 @@ public class UserController {
         List<WorkDto> works = userService.likeWork(authentication.getName());
         return new ResponseEntity<>(works, HttpStatus.OK);
     }
-    
+
     // 낙찰 작품 목록
     @GetMapping("/bid/work")
     public ResponseEntity<List<WorkDto>> bidWork (Authentication authentication) {

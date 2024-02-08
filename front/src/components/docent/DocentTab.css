@@ -1,0 +1,30 @@
+.docentTab {
+  background-color: #967E76;
+  /* background-color: white; */
+  /* width: 70px; */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 50%;
+    margin: 15px 0 15px;
+    cursor: pointer;
+  }
+
+  .reverseTab {
+    background-color: white;
+    width: 100%;
+
+    img {
+      width: 50%;
+    }
+  }
+
+  div {
+    /* margin: 50px 0; */
+    cursor: pointer;
+  }
+}

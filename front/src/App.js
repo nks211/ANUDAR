@@ -46,20 +46,6 @@ export default function App() {
 
   return (
     <>
-<<<<<<< HEAD
-      <NavBar/>
-      <div style={{ display: "flex", justifyContent: "center" }} className="App">
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/exhibit" element={<Exhibit />}></Route>
-          <Route exact path="/work" element={<Work />}></Route>
-          <Route exact path="/artist" element={<Artist />}></Route>
-          <Route exact path="/auction" element={<Auction />}></Route>
-          <Route exact path="/user/join" element={<Signup/>}></Route>
-        
-        </Routes>
-      </div>
-=======
       <AppContext.Provider value={{ login, setLogin, notice, setNotice, modalsetting }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className="App">
@@ -81,7 +67,6 @@ export default function App() {
           </Routes>
         </div>
       </AppContext.Provider>
->>>>>>> 7ed2e1c82b65baf19451fdb72c5fd0cd5d61cba5
     </>
 
   );

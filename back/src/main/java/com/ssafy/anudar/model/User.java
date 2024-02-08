@@ -43,11 +43,9 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
-    @Column(name="points")
-    private Long points = 0L;
+    @Column(name="userpoints")
+    private Long userPoints = 0L;
 
-    @Column(nullable = true)
-    private String tid; // 카카오페이 결제 고유 번호 저장 필드
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies = new ArrayList<>();
@@ -76,6 +74,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user")
     private List<ExhibitionReview> exhibitionReviews;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
+
     @Builder
     public User(String username, String password, String name, String nickname,
                 String email, String image, String phone) {
@@ -88,8 +89,10 @@ public class User extends BaseTimeEntity{
         this.phone=phone;
     }
 
-    public void updateTid(String tid) {
-        this.tid = tid;
+    public void addPoints(Long totalAmount) {
+        if (this.userPoints == null) {
+            this.userPoints = 0L;
+        }
+        this.userPoints += totalAmount;
     }
-
 }

@@ -293,5 +293,13 @@ public class UserService {
         if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_NICKNAME);
     }
 
+    // 사용자 id 찾기
+    public Long findUserIdByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(User::getId) // User 엔터티에서 ID를 추출
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+    }
+
+
 }
 

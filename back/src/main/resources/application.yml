@@ -12,7 +12,7 @@ OPENVIDU_SECRET: ANUDAR
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://anudar-db.cha26u2smu7f.ap-northeast-2.rds.amazonaws.com:3306/anudar
+    url: jdbc:mysql://127.0.0.1:3306/anudar?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
   jpa:
@@ -25,6 +25,10 @@ spring:
     redis:
       host: i10d105.p.ssafy.io
       port: 6379
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
 
 jwt:
   secret: ssafyprojectanudarexhibitionjwtsecretkeyssafyprojectanudarexhibitionjwtsecretkey
@@ -49,4 +53,4 @@ cloud:
       auto: false
 
 pay:
-  admin-key: f96a4358025c235a0e472878e375606a
+  secret-key: DEV74C8F7DF51B6051010E38F848EBC0665960E7

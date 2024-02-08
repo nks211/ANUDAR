@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:06a41ae7c832e1a4bd2c67f5f6c83c28575e025fd5c59b6f51ba54057d9dff52
-size 935
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.Auction;
+import com.ssafy.anudar.model.SuccessWork;
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.Work;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class SuccessWorkDto {
+    private Long id;
+    private int finalPrice;
+    private WorkDto work;
+    private UserDto user;
+    private AuctionDto auction;
+
+    public static SuccessWorkDto fromEntity (SuccessWork successWork) {
+        return new SuccessWorkDto(
+                successWork.getId(),
+                successWork.getFinalPrice(),
+                WorkDto.fromEntity(successWork.getWork()),
+                UserDto.fromEntity(successWork.getUser()),
+                AuctionDto.fromEntity(successWork.getAuction())
+        );
+    }
+}

@@ -22,8 +22,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-//                .setAllowedOrigins("*");
-                .setAllowedOrigins("https://i10d105.p.ssafy.io");
+                .setAllowedOrigins("*");
+//                .setAllowedOrigins("https://i10d105.p.ssafy.io");
     }
 
     // enableSimpleBroker 사용해서 /sub 가 붙은 destination의 클라리언트에게

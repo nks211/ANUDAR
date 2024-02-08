@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class WebSocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private Integer currentBid = 0 ; // 현재가를 저장하는 변수 : 나중엔 startprice로 설정
+    private Integer currentBid = 0 ; // 현재가를 저장하는 변수 : 나중엔 startprice로 설정 => 로컬에 값을 저장해두어야 하지 않을갑..
     private String currentBidUser = "응찰한 사용자가 없습니다.";
 
     @MessageMapping("/chat/{sessionId}")

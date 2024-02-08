@@ -19,8 +19,8 @@ function AuctionLivePage() {
   const connect = () => {
     // 연결시
     client.current = new StomJs.Client({
-      // brokerURL: "ws://localhost:8080/api/ws",
-      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(apply_id);
@@ -114,6 +114,7 @@ function AuctionLivePage() {
         </div>
         <input type={"submit"} value={"응찰하기"} />
       </form>
+      <button>낙찰하기</button>
     </div>
   );
 }

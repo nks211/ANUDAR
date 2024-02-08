@@ -1,41 +1,46 @@
-import { React, createContext, useContext, useState, useCallback, useEffect } from "react";
+import { React, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
 import Notice, { UptoDate } from "../notice/notice.jsx";
 import Login from "../signup/login.jsx";
 import { AppContext } from "../App.js";
 import Modal from "react-modal";
-import { mainstate, mypagestate, popupstate } from "../StateManagement.jsx";
+import { mainstate, popupstate } from "../StateManagement.jsx";
 
 const LoginPanel = () => {
   const navigate = useNavigate();
 
-  const loginstatus = localStorage.getItem("login");
-  const logincheck = loginstatus != null ? loginstatus && loginstatus === "true" : false ;
+  const loginstatus = localStorage.getItem("login") === "true";
+  const localdata = JSON.parse(localStorage.getItem("userdata"));
   const noticepopup = popupstate((state) => state.homenoticepopup);
   const setnoticepopup = popupstate((state) => state.sethomenoticepopup);
   const noticelist = mainstate((state) => state.noticelist);
   const checknotice = mainstate((state) => state.noticecheck);
-  const localdata = localStorage.getItem("userdata");
-  // const [imagedata, setimagedata] = useState(localdata.profileimage);
-  const [imagedata, setimagedata] = useState(localdata&&localdata.profileimage?localdata.profileimage:<img src="../../asset/avatar.png"></img>);
-
-  useEffect(() => {
-    if (localStorage.getItem("userdata")) {
-      setimagedata(JSON.parse(localStorage.getItem("userdata")).profileimage);
-    }
-  });
+  const [imagedata, setimagedata] = useState(loginstatus ? localdata.image : "../../asset/avatar.png");
   
   if (window.location.pathname.includes('/docent')) { return <div></div> }
 
+  // if (localdata) {
+  //   console.log(`{
+  //     id : ${localdata.username} \n
+  //     password: ${localdata.password} \n
+  //     name: ${localdata.name} \n
+  //     nickname: ${localdata.nickname} \n
+  //     email : ${localdata.email} \n
+  //     image : ${localdata.image} \n
+  //     phone : ${localdata.phone} \n
+  //   }`)
+  // }
+  
+
   return(
     <div>
-      <div onClick={() => { setnoticepopup(!noticepopup) }}>{logincheck ?
+      <div onClick={() => { setnoticepopup(!noticepopup) }}>{loginstatus ?
         (noticelist.length > 0 ?
           <img className="noti" src="../../asset/noti_on.png" />
           : <img className="noti" src="../../asset/noti_off.png" />) : ""}
       </div>
-      <div>{logincheck ?
+      <div>{loginstatus ?
         <img width="45px" height="45px" onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} className="mypage" src={imagedata} /> : ""}</div>
       <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
         {noticelist.length > 0 ? Object.values(noticelist).map((notice, i) => <div onClick={() => { checknotice(notice) }}><Notice key={i} title={notice.title} date={notice.date} details={notice.details}/></div>) : UptoDate()}
@@ -45,25 +50,17 @@ const LoginPanel = () => {
   );
 }
 
-export const modalback = {
-  backgroundColor: "#00000040",
-  width: "100%",
-  height: "100vh",
-  zIndex: "5",
-  position: "fixed",
-  top: "0",
-  left: "0",
-};
-
 export default function NavBar() {
   
   const navigate = useNavigate();
   const { modalsetting } = useContext(AppContext);
 
-  const locallogin = localStorage.getItem("login");
+  const locallogin = localStorage.getItem("login") === "true";
   const localtab = localStorage.getItem("currenttab");
-  const [logincheck, setlogincheck] = useState(locallogin != null ? locallogin : false); 
-  const { loginnickname } = useContext(AppContext);
+  const localtoken = localStorage.getItem("token");
+  const localdata = JSON.parse(localStorage.getItem("userdata"));
+  const [logincheck, setlogincheck] = useState(locallogin != null ? locallogin : false);
+  const [loginuser, setloginuser] = useState(localtoken != null ? localdata : {});
   const [navtab, setnavtab] = useState(localtab != null ? localtab : "");
   const loginpopup = popupstate((state) => state.homepopup);
   const setloginpopup = popupstate((state) => state.sethomepopup);
@@ -71,21 +68,15 @@ export default function NavBar() {
   const tabbar = mainstate((state) => state.tabbar);
 
   useEffect(() => {
-    if (localStorage.getItem("login")) {
-      setlogincheck(JSON.parse(localStorage.getItem("login")));
+    if (locallogin) { 
+      setlogincheck(locallogin);
     }
   });
 
 
   if (window.location.pathname.includes('/docent')) { 
-    return (
-      <div>
-        {LoginPanel()}
-      </div>
-    );
+    return (<div>{LoginPanel()}</div>);
   }
-
-
 
   return (
     <div id="nav">
@@ -94,10 +85,9 @@ export default function NavBar() {
         <div className="sector">
           {LoginPanel()}
           <div className={logincheck ? "login" : "logout"}>
-            <button onClick={logincheck ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{logincheck ? loginnickname + " 님" : "로그인"}</button>
+            <button onClick={logincheck ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{logincheck ? loginuser.nickname + " 님" : "로그인"}</button>
             <div className="line"> |  </div>
-            <button onClick={logincheck ? () => { setlogincheck(false); setnoticepopup(false); localStorage.setItem("login", false); localStorage.setItem("currenttab", ""); navigate("/"); window.scrollTo(0, 0); } : () => { navigate("/user/join"); window.scrollTo(0, 0); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{logincheck ? "로그아웃" : "회원가입"}</button>
-          
+            <button onClick={logincheck ? () => { setlogincheck(false); setnoticepopup(false); localStorage.setItem("login", false); localStorage.setItem("currenttab", ""); localStorage.removeItem("token"); localStorage.removeItem("userdata"); navigate("/"); window.scrollTo(0, 0); } : () => { navigate("/user/join"); window.scrollTo(0, 0); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{logincheck ? "로그아웃" : "회원가입"}</button>  
           </div>
         </div>
       </div>

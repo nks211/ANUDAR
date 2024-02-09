@@ -20,7 +20,8 @@ export default class OpenViduVideoComponent extends Component {
     }
 
     render() {
-        return <video autoPlay={true} ref={this.videoRef} />;
+        const videoWidth = this.props.user === 'docent' ? '800px' : '200px';
+        return <video style={{ width: videoWidth, height: 'auto' }} autoPlay={true} ref={this.videoRef} />;
     }
 
 }

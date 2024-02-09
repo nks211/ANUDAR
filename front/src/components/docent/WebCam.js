@@ -115,28 +115,26 @@ function WebCam({ MysessionId, myUserName }) {
     <div>
       {session !== undefined ? (
         <div>
-          {mainStreamManager !== undefined ? (
-            <div>
-              <h2>도슨트 입니당</h2>
-              <UserVideoComponent streamManager={mainStreamManager} />
-            </div>
-          ) : (<div>도슨트가 없어요</div>)}
 
-          <div>
-            {publisher !== undefined ? (
-              <div>
-                <h2>publisher</h2>
-                <UserVideoComponent streamManager={publisher} />
+          <div className="stream-container">
+            {publisher && (
+              <div className="stream-item" key={publisher.stream.streamId}>
+                <UserVideoComponent user='user' streamManager={publisher} />
               </div>
-            ) : null}
-            {subscribers.map((sub) => (
-              <div key={sub.stream.streamId}>
-                <span>{sub.id}</span>
-                <h2>subscribers</h2>
-                <UserVideoComponent streamManager={sub} />
+            )}
+            {subscribers.map(sub => (
+              <div className="stream-item" key={sub.stream.streamId}>
+                <UserVideoComponent user='user' streamManager={sub} />
               </div>
             ))}
           </div>
+
+          {mainStreamManager !== undefined ? (
+            <div>
+              <h2>도슨트 입니당</h2>
+              <UserVideoComponent user='docent' streamManager={mainStreamManager} />
+            </div>
+          ) : (<div>도슨트가 없어요</div>)}
         </div>
       )
         : (<div>세션이 없어요.</div>)}

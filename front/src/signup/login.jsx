@@ -3,12 +3,12 @@ import { AppContext } from "../App.js";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 import { mainstate, popupstate } from "../StateManagement.jsx";
+import { login, myinfo } from "../API";
 
 function Login() {
     const {setPathName} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const setloginstate = mainstate((state) => state.setlogin);
     const { loginidinput, loginpasswordinput, setloginidinput, setloginpasswordinput } = mainstate((state) => ({
         loginidinput: state.idinput,
         loginpasswordinput: state.passwordinput,
@@ -16,24 +16,21 @@ function Login() {
         setloginpasswordinput: state.setloginpasswordinput,
     }));
     
-    const logincomplete = mainstate((state) => state.logincomplete);
     const loginpopup = popupstate((state) => state.sethomepopup);
-    const setlogintoken = mainstate((state) => state.setlogintoken);
 
-    const loginenter = (event) => {
+    const loginenter = async (event) => {
         event.preventDefault();
-        const localdata = JSON.parse(localStorage.getItem("userdata"));
-        const check = loginidinput === localdata.id && loginpasswordinput === localdata.password;
-        if (loginidinput && loginpasswordinput && check) {
+
+        const token = await login(loginidinput, loginpasswordinput);
+        if (token != "") {
             // 로그인 요청
-            logincomplete(loginidinput, loginpasswordinput);
-            setloginstate(true);
             loginpopup(false);
             // 로그인 토큰 값 스토리지 저장
+            const infodata = await myinfo(token);
+            localStorage.setItem("userdata", JSON.stringify(infodata));
             localStorage.setItem("login", true);
             localStorage.setItem("currenttab", "");
-            // setLogin(true);
-            // setPopup(false);
+            localStorage.setItem("token", token);
             navigate("/");
             setPathName(window.location.pathname);
         }

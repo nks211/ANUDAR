@@ -14,19 +14,17 @@ export const checkid = async (id) => {
   return await axios.post(url, id)
     .then(response => {
       if (response.status === 200) return true;
+      else return false;
     })
     .catch((e) => { console.log(e); return false; });
 };
 
 export const checknickname = async (nickname) => {
   const url = "/api/user/nickname";
-  return axios.post(url, nickname, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
+  return await axios.post(url, nickname)
     .then(response => {
       if (response.status === 200) return true;
+      else return false;
     })
     .catch((e) => { console.log(e); return false; });
 };
@@ -35,14 +33,12 @@ export const signup = async (userdata) => {
   const url = "/api/user/join";
   return await axios.post(url, userdata)
     .then(response => { return response.data; })
-    .catch((e) => { console.log(e); return {}; });
+    .catch((e) => { console.log(e); });
 };
 
 export const login = async (id, password) => {
   const url = "/api/user/login";
-  return await axios.post(url, { "username": id, "password": password }, {
-    headers: { "Content-Type": "application/json" }
-  })
+  return await axios.post(url, { "username": id, "password": password })
     .then(response => { return response.data; })
     .catch((e) => { console.log(e); return ""; });
 };
@@ -50,10 +46,11 @@ export const login = async (id, password) => {
 export const myinfo = async (token) => {
   if (token && token != "") {
     const url = "/api/user/info";
-    return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } }).then(response => {
-      return response.data;
-    }).catch((e) => { console.log(e); return {}; });
+    return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+      .then(response => { return response.data; })
+      .catch((e) => { console.log(e); return {}; });
   }
+  else { alert("유효하지 않은 토큰입니다."); }
 };
 
 export const updateinfo = () => {
@@ -118,8 +115,8 @@ export async function uploadWorkImg(data) {
   form.append("image", data);
   try {
     return await axios.post(url, form)
-    .then(res => { return res.data? res.data : "" })
-  } catch(err) {
+      .then(res => { return res.data ? res.data : "" })
+  } catch (err) {
     console.log(err)
   }
 };

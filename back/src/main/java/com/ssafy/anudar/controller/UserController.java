@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+//    private final NotifyService notifyService;
     private final UserService userService;
     private final S3Service s3Service;
 

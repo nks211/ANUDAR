@@ -166,12 +166,14 @@ export const popupstate = create((set) => ({
     signuppopup: false,
     mypagecheckpopup: false,
     mypagechangepopup: false,
+    paymentPopup: false,
 
     sethomepopup: (result) => set(() => ({ homepopup: result })),
     sethomenoticepopup: (result) => set(() => ({ homenoticepopup: result })),
     setsignuppopup: (result) => set(() => ({ signuppopup: result })),
     setmypagecheckpopup: (result) => set(() => ({ mypagecheckpopup: result })),
     setmypagechangepopup: (result) => set(() => ({ mypagechangepopup: result })),
+    setPaymentPopup: (result) => set(() => ({ paymentPopup: result })),
 
 }));
 
@@ -189,3 +191,10 @@ export const registstate = create((set) => ({
 export const searchstate = create((set) => ({
 
 }));
+
+
+// export const today = 0;
+
+export function getToday() {
+    
+}

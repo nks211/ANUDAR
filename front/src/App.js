@@ -1,4 +1,5 @@
 import './App.css';
+import axios from 'axios';
 import Home from './home/home'
 import ExhibitPage from './exhibit/ExhibitPage'
 import ExhibitDetailPage from './exhibit/ExhibitDetailPage'

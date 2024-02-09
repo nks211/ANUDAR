@@ -12,12 +12,13 @@ export default function CheckPassword() {
     const [checkinput, setCheckInput] = useState("");
     const passwordcheck = () => {
         const userpassword = JSON.parse(localStorage.getItem("userdata")).password;
-        if (checkinput === userpassword) {
-            setmypagecheckpopup(!mypagecheckpopup);
-        }
-        else {
-            alert("비밀번호가 맞지 않습니다");
-        }
+        setmypagecheckpopup(!mypagecheckpopup);
+        // if (checkinput === userpassword) {
+        //     setmypagecheckpopup(!mypagecheckpopup);
+        // }
+        // else {
+        //     alert("비밀번호가 맞지 않습니다");
+        // }
     }
 
     return (

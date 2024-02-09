@@ -1,12 +1,11 @@
 import axios from "axios";
 
 export const getAuthor = async (username) => {
-    const url = "/api/user/nickname"
-    return axios.post(url, username, {
-        headers : {
-            "Authorization" :  window.localStorage.getItem("authorization")
-        }
+    const url = "/api/user/info/author/nickname/}" + username
+    return axios.get(url, username)
+    .then(response => {
+        console.log(response.data);
+        return response.data;
     })
-    .then()
     .catch((e) => {console.log(e)});
 };

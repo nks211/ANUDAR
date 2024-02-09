@@ -3,12 +3,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as StomJs from "@stomp/stompjs";
 import { jwtDecode } from "jwt-decode";
+import { getAuthor } from "../API";
 
 function AuctionLivePage() {
   const [chatList, setChatList] = useState([]); // 회면에 표시될 채팅 기록
   const [chat, setChat] = useState(""); // 채널을 구분하는 식별자를 URL 파라미터로 받음
   const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
   const [currentBidUser, setCurrentBidUser] = useState("아직 응찰이 없습니다.");
+  const [nickname, setNickname] = useState("");
 
   const { apply_id } = useParams();
   const client = useRef({});
@@ -56,6 +58,8 @@ function AuctionLivePage() {
     // 토큰 디코딩 후 사용자 정보 추출
     const username = decodedToken.current.username;
     console.log(username);
+    setNickname(getAuthor(username));
+    console.log(nickname);
 
     client.current.publish({
       destination: "/pub/auctionbid/" + apply_id,

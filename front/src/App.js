@@ -20,13 +20,11 @@ import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {
+
   const [login, setLogin] = useState(false);
   const [notice, setNotice] = useState(true);
 
   const [pathName, setPathName] = useState(window.location.pathname);
-  const localdata = JSON.parse(localStorage.getItem("userdata"));
-  const loginuser = mainstate((state) => state.loginuser);
-  const [loginnickname, setLoginNickname] = useState(localdata != null ? localdata.nickname : loginuser.nickname);
 
   const modalsetting = {
     overlay: {
@@ -50,7 +48,7 @@ export default function App() {
 
   return (
     <>
-      <AppContext.Provider value={{ modalsetting, loginnickname, pathName, setPathName }}>
+      <AppContext.Provider value={{ modalsetting, pathName, setPathName }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent')?"DocentPage":"App"}>
         {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}

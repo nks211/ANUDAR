@@ -58,8 +58,8 @@ function AuctionLivePage() {
     // 토큰 디코딩 후 사용자 정보 추출
     const username = decodedToken.current.username;
     console.log(username);
-    setNickname(getAuthor(username));
-    console.log(nickname);
+    // setNickname(getAuthor(username));
+    // console.log(nickname);
 
     client.current.publish({
       destination: "/pub/auctionbid/" + apply_id,

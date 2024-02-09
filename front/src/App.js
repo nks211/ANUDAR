@@ -21,8 +21,6 @@ import { mainstate } from "./StateManagement.jsx";
 export const AppContext = createContext();
 export default function App() {
 
-  let exhibits = null
-
   const [pathName, setPathName] = useState(window.location.pathname);
   const localdata = JSON.parse(localStorage.getItem("userdata"));
   const loginuser = mainstate((state) => state.loginuser);

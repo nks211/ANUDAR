@@ -5,8 +5,8 @@ import './Exhibit.css';
 
 export default function Exhibit(props) {
   const [enterOpacity, setEnterOpacity] = useState(0);
-  const [sYear, sMonth, sDay] = props.exhibit.start.split(" ")[0].split("-");
-  const [eYear, eMonth, eDay] = props.exhibit.end.split(" ")[0].split("-");
+  const [sYear, sMonth, sDay] = props.exhibit.start_time.split("T")[0].split("-");
+  const [eYear, eMonth, eDay] = props.exhibit.end_time.split("T")[0].split("-");
 
   let period = "";
   if (sYear == eYear) {
@@ -50,8 +50,8 @@ export default function Exhibit(props) {
                 <div>입장하기</div>
               </div>
             </div>
-            <div className="exhibitName1">{props.exhibit.title}</div>
-            <div className="exhibitArtist1">{props.exhibit.artist}</div>
+            <div className="exhibitName1">{props.exhibit.name}</div>
+            <div className="exhibitArtist1">{props.exhibit.author}</div>
             <div className="exhibitPeriod1">기간 | {period}</div>
             <div>
             </div>
@@ -71,8 +71,8 @@ export default function Exhibit(props) {
       //       >
       //         <img className="exhibitImage2" style={{width:375, height:500}} src={"../../"+props.exhibit.image}></img>
       //       </div>
-      //       <div className="exhibitName2">{props.exhibit.title}</div>
-      //       <div className="exhibitArtist2">{props.exhibit.artist}</div>
+      //       <div className="exhibitName2">{props.exhibit.name}</div>
+      //       <div className="exhibitArtist2">{props.exhibit.author}</div>
       //       <div className="exhibitPeriod2">기간 | {period}</div>
       //       <div>
       //       </div>
@@ -84,8 +84,8 @@ export default function Exhibit(props) {
         // <div style={{width:"100vw", height:"500px", display:"flex", margin:"40px 0"}}>
         //   <div id="exhibitDetailBanner">
         //     <div style={{textAlign:"right"}}>
-        //       <div style={{fontSize:"45px", fontWeight:"900"}}>{props.exhibit.title}</div>
-        //       <div style={{fontSize:"25px", fontWeight:"600"}}>{props.exhibit.artist}</div>
+        //       <div style={{fontSize:"45px", fontWeight:"900"}}>{props.exhibit.name}</div>
+        //       <div style={{fontSize:"25px", fontWeight:"600"}}>{props.exhibit.author}</div>
         //     </div>
         //   </div>
         //   <div style={{width:"30vw"}}>
@@ -93,7 +93,7 @@ export default function Exhibit(props) {
         //     <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img>
         //   </div>
         //   <div style={{width:"35vw", backgroundColor:"gray"}}>
-        //     <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.description}</div>
+        //     <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.detail}</div>
         //   </div>
         // </div>
       )
@@ -105,8 +105,8 @@ export default function Exhibit(props) {
             <div className="exhibitImageCard3">
               {props.exhibit.image}
             </div>
-            <div className="exhibitName3">{props.exhibit.title}</div>
-            <div className="exhibitArtist3">{props.exhibit.artist}</div>
+            <div className="exhibitName3">{props.exhibit.name}</div>
+            <div className="exhibitArtist3">{props.exhibit.author}</div>
             <div className="exhibitPeriod3">기간 | {period}</div>
             <div>
             </div>

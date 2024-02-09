@@ -191,3 +191,10 @@ export const registstate = create((set) => ({
 export const searchstate = create((set) => ({
 
 }));
+
+
+// export const today = 0;
+
+export function getToday() {
+    
+}

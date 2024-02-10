@@ -83,12 +83,11 @@ export const successbid = async (finalPrice, workId, nickname, auctionId) => {
     }
     return axios.post(url, data,{
         headers: {
-            'Authorization': window.localStorage.getItem('authorization')
+            'Authorization': "Bearer " + window.localStorage.getItem('authorization')
         }
     })
     .then(response => {
         console.log(response.data);
-        return response.data;
     })
     .catch((e) => { console.log(e); return {}; });
 };

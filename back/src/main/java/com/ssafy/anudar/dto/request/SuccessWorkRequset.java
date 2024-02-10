@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class SuccessWorkRequset {
     int finalPrice;
     Long workId;
-    Long userId;
+    String nickname;
     Long auctionId;
 }

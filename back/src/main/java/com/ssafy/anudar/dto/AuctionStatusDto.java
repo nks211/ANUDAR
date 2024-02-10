@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class AuctionStatusDto {
     private String sessionId;
-    private String username;
+    private String nickname;
     //    private Work work;
     private Integer askingprice;
     private Integer currentBid;

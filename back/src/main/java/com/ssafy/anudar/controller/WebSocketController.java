@@ -24,7 +24,7 @@ public class WebSocketController {
     public void handleAuctionBidMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
         // 여기서 현재가 갱신 로직 수행
         Integer askingprice = auctionBidDto.getAskingprice();
-        String askingBidUser = auctionBidDto.getUsername();
+        String askingBidUser = auctionBidDto.getNickname();
 
         if (askingprice > currentBid) {
             currentBid = askingprice;
@@ -35,7 +35,7 @@ public class WebSocketController {
         // AuctionStatusDto를 생성하고 현재가 및 최고 입찰자 정보 설정
         AuctionStatusDto auctionStatusDto = new AuctionStatusDto();
         auctionStatusDto.setSessionId(auctionBidDto.getSessionId());
-        auctionStatusDto.setUsername(auctionBidDto.getUsername());
+        auctionStatusDto.setNickname(auctionBidDto.getNickname());
         auctionStatusDto.setAskingprice(auctionBidDto.getAskingprice());
         auctionStatusDto.setCurrentBid(currentBid);
         auctionStatusDto.setCurrentBidUser(currentBidUser);

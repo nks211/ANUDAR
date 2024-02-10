@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const getAuthor = async (username) => {
-    const url = "/api/user/info/author/nickname/}" + username
-    return axios.get(url, username)
+    const url = "/api/user/info/author/" + username
+    return axios.get(url)
     .then(response => {
         console.log(response.data);
         return response.data;
@@ -71,4 +71,24 @@ export const changepassword = () => {
 };
 
 export const signout = () => {
+};
+
+export const successbid = async (finalPrice, workId, nickname, auctionId) => {
+    const url = "/api/auction/bidok"
+    const data = {
+        finalPrice : finalPrice,
+        workId : workId, 
+        nickname : nickname,
+        auctionId : auctionId
+    }
+    return axios.post(url, data,{
+        headers: {
+            'Authorization': window.localStorage.getItem('authorization')
+        }
+    })
+    .then(response => {
+        console.log(response.data);
+        return response.data;
+    })
+    .catch((e) => { console.log(e); return {}; });
 };

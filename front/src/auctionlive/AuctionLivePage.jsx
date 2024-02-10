@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as StomJs from "@stomp/stompjs";
 import { jwtDecode } from "jwt-decode";
-import { getAuthor } from "../API";
+import { getAuthor, successbid } from "../API";
 
 function AuctionLivePage() {
   const [chatList, setChatList] = useState([]); // 회면에 표시될 채팅 기록
@@ -58,14 +58,22 @@ function AuctionLivePage() {
     // 토큰 디코딩 후 사용자 정보 추출
     const username = decodedToken.current.username;
     console.log(username);
-    // setNickname(getAuthor(username));
-    // console.log(nickname);
+
+    // username으로 get 요청
+    getAuthor(username)
+    .then(userData => {
+      setNickname(userData.nickname);
+      console.log(userData.nickname);
+    })
+    .catch(e =>{
+      console.log("회원 정보를 찾을 수 없습니다.", e);
+    })
 
     client.current.publish({
       destination: "/pub/auctionbid/" + apply_id,
       body: JSON.stringify({
         sessionId: apply_id,
-        username: username,
+        nickname: nickname,
         askingprice: chat,
       }),
     });
@@ -92,6 +100,8 @@ function AuctionLivePage() {
     return () => disconnect();
   }, []);
 
+  
+
   return (
     <div>
       <div>
@@ -102,7 +112,7 @@ function AuctionLivePage() {
         {chatList.map((chatItem, index) => (
           <div key={index}>
             <p>
-              {chatItem.username}님이 {chatItem.askingprice}원을 응찰하였습니다!
+              {nickname}님이 {chatItem.askingprice}원을 응찰하였습니다!
             </p>
           </div>
         ))}
@@ -118,7 +128,7 @@ function AuctionLivePage() {
         </div>
         <input type={"submit"} value={"응찰하기"} />
       </form>
-      <button>낙찰하기</button>
+      <button onClick={() =>successbid(currentPrice, 1, currentBidUser, 1)}>낙찰하기</button>
     </div>
   );
 }

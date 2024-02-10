@@ -12,6 +12,7 @@ import DocentButton from '../components/docent/DocentButton';
 export const DocentContext = createContext();
 export default function DocentPage(){
   const docentId = useLocation().pathname.split('/').pop();
+  const username = "사랑" + Math.floor(Math.random() * 100);
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
@@ -105,7 +106,7 @@ export default function DocentPage(){
 
           {/* 8:1 -> 8 (WebCam, DocentContent) */}
           <div style={{flex:"8", display:"flex", padding:"1vw"}}>
-            <div style={{flex:"2"}}><WebCam /></div>
+            <div style={{flex:"2"}}><WebCam MysessionId={docentId} myUserName={username} /></div>
             <div style={{flex:menu==="close"?"0":"1"}}><DocentContents/></div>
           </div>
           <div style={{flex:"1"}}><DocentButton/></div>

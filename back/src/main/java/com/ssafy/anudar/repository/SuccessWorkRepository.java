@@ -1,15 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.SuccessWork;
-import com.ssafy.anudar.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-@Repository
-public interface SuccessWorkRepository extends JpaRepository<SuccessWork, SuccessWork> {
-    List<SuccessWork> findByUser(User user);
-
-    List<SuccessWork> findAllByUser(User user);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d08f2fe9bf854ea277b43d859410c80e3fd15fa89124364a71f244d524921cb2
+size 451

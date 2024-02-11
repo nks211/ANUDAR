@@ -53,17 +53,17 @@ function WebCam({ MysessionId, myUserName }) {
         publishVideo: true,
       });
 
+      await mySession.publish(publisher);
+
+      setSession(mySession);
+      setPublisher(publisher);
+
       // 만약 나의 myUserName이 'host'일 경우 주요 비디오 스트림으로 설정합니다.
       // 녹화를 시작합니다.
       if (myUserName === 'host') {
         handleMainVideoStream(publisher);
         startRecording(MysessionId);
       }
-
-      await mySession.publish(publisher);
-
-      setSession(mySession);
-      setPublisher(publisher);
     } catch (error) {
       console.log('There was an error connecting to the session:', error.code, error.message);
     }

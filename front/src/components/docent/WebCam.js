@@ -57,6 +57,7 @@ function WebCam({ MysessionId, myUserName }) {
       // 녹화를 시작합니다.
       if (myUserName === 'host') {
         handleMainVideoStream(publisher);
+        startRecording(MysessionId);
       }
 
       await mySession.publish(publisher);
@@ -70,10 +71,6 @@ function WebCam({ MysessionId, myUserName }) {
   }
 
   const leaveSession = () => {
-    if (myUserName === 'host') {
-      axios.delete(APPLICATION_SERVER_URL + 'api/sessions/' + MysessionId + '/recordings')
-      axios.delete(APPLICATION_SERVER_URL + 'api/sessions/' + MysessionId)
-    }
 
     if (session) {
       session.disconnect();
@@ -84,6 +81,10 @@ function WebCam({ MysessionId, myUserName }) {
     setMainStreamManager(undefined);
     setPublisher(undefined);
   };
+
+  const startRecording = async (sessionId) => {
+    await axios.post(APPLICATION_SERVER_URL + 'api/sessions/recording/' + sessionId);
+  }
 
   const getToken = async () => {
     const sessionId = await createSession(MysessionId);

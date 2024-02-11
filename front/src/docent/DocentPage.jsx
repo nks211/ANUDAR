@@ -9,7 +9,7 @@ import DocentButton from '../components/docent/DocentButton';
 export const DocentContext = createContext();
 export default function DocentPage(){
   const docentId = useLocation().pathname.split('/').pop();
-  const username = "사랑" + Math.floor(Math.random() * 100);
+  const username = "host";
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);

@@ -126,23 +126,8 @@ export async function uploadWorkImg(data, token) {
   const form = new FormData();
   form.append("workImgs", data);
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
+  const config = { headers : { Authorization: `Bearer ${token}` } }
 
-  console.log(data)
-  
-  // try {
-  //   const res = await axios.post(url, form, config)
-  //   return res.data ? res.data : ""
-  // } catch (err) {
-  //   console.log(err)
-  //   return ""
-  // }
-  // return await axios.post(url, form, {headers : { Authorization: `Bearer ${token}`}})
-  
   return await axios.post(url, form, config)
   .then(res => { return res.data ? res.data : "" })
   .catch((err) => { console.log(err); return ""; });

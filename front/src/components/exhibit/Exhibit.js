@@ -38,6 +38,7 @@ export default function Exhibit(props) {
   
   switch (props.exhibitType) {
     case 1:  // 전시회 목록
+    console.log(props.exhibit)  // ***수정*** : author에 작가 아이디값이 들어감..
       return (
         <div>
           <div className="exhibitCard1">

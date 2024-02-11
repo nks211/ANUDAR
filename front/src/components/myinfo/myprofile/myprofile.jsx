@@ -59,7 +59,7 @@ export default function MyProfile(props) {
   return (
     <div className="myprofilearea">
       <div className="left">
-        <img width="200px" height="200px" style={{ objectFit: "cover", }} src={url} />
+        <img width="200px" height="200px" style={{ objectFit: "cover", borderRadius:"70%", overflow:"hidden" }} src={url} />
         <label className="myprofileimage" for="profileurl">프로필 사진 수정</label>
         <input type="file" id="profileurl" accept="image/*" onChange={e => upload(e)} style={{ display: "none" }} />
       </div>

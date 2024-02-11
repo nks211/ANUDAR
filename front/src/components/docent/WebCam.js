@@ -83,7 +83,7 @@ function WebCam({ MysessionId, myUserName }) {
   };
 
   const startRecording = async (sessionId) => {
-    await axios.post(APPLICATION_SERVER_URL + 'api/sessions/recording/' + sessionId);
+    await axios.post(APPLICATION_SERVER_URL + 'api/sessions/'+sessionId+'/recording');
   }
 
   const getToken = async () => {
@@ -132,7 +132,6 @@ function WebCam({ MysessionId, myUserName }) {
 
           {mainStreamManager !== undefined ? (
             <div>
-              <h2>도슨트 입니당</h2>
               <UserVideoComponent user='docent' streamManager={mainStreamManager} />
             </div>
           ) : (<div>도슨트가 없어요</div>)}

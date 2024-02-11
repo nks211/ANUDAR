@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { KeyController } from './KeyController';
 
 export default function Exhibit3DPage() {
@@ -45,7 +47,7 @@ export default function Exhibit3DPage() {
             1000
         );
         camera.position.y = 3;
-        camera.position.z = 5;
+        camera.position.z = 7;
         scene.add(camera);
 
         // Light
@@ -91,13 +93,6 @@ export default function Exhibit3DPage() {
                 controls.moveRight(0.07);
             }
         }
-
-        // CanvasTexture
-        // const texCanvas = document.createElement('canvas');
-        // const texContext = texCanvas.getContext('2d');
-        // texCanvas.width = 1500;
-        // texCanvas.height = 500;
-        // const CanvasTexture = new THREE.CanvasTexture(texCanvas);
 
         // Mesh
         const textureLoader = new THREE.TextureLoader(loadingManager);
@@ -146,18 +141,156 @@ export default function Exhibit3DPage() {
 
         const wallHeight = 6; // 벽 높이
 
-        // 입구 벽 생성
+        // 입구 벽 Geometry
         const EntranceWallGeometry = new THREE.BoxGeometry(10, wallHeight, 0.5);
-        const EntranceWallMaterial = new THREE.MeshStandardMaterial({
+        // 입구 벽 Material
+        const EntranceMaterial = new THREE.MeshStandardMaterial({
             map : wallBaseColorTex,
             normalMap: wallNormalTex,
             roughnessMap: wallRoughnessTex,
-            roughness: 0.3,
-            // map: CanvasTexture
+            roughness: 0.3
         });
 
+        //==전시회 글귀==//
+        
+        // 줄바꿈 함수
+        function wrapText(text, maxLength) {
+            let lines = [];
+            let currentLine = '';
+            let currentLength = 0;
+        
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                currentLine += char;
+                currentLength++;
+
+                if(text[i]==='\n') {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                    currentLength = 0;
+                }
+
+                else if (currentLength >= maxLength && text.length - i > 3) {
+                    if(text[i+1]==='.' || text[i+1]==='!' || text[i+1]==='?' || text[i+1]===',')
+                        continue;
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                    currentLength = 0;
+                }
+            }
+        
+            if (currentLine.length > 0) {
+                lines.push(currentLine.trim());
+            }
+        
+            return lines.join('\n');
+        }
+
+        // 폰트 로더
+        const fontLoader = new FontLoader();
+        // 한 줄 제한 길이
+        const exhibitTitleMaxLength = 9;
+        const exhibitDetailMaxLength = 22;
+
+        const authorNameMaxLength = 9;
+        const authorDetailMaxLength = 22;
+        // 내용
+        const exhibitTitle = '단군의 도자기 전시회';
+        const exhibitDetail = '기원전 800년 전, 고조선의 단군이 만들어낸 101가지의 도자기 전시회 입니다! 이 도자기는 영국에서 시작되었으며, 약 3000년의 역사적 가치를 가지고 있는 유물로서 아주 큰 가치를 가지고 있습니다.';
+        const authorName = '모네';
+        const authorDetail = '작가 이력: \n- 엄청난 출신 \n- 엄청난 스펙 \n - 엄청난 작품들';
+        
+        // 줄바꿈 적용
+        const exhibitTitleWrap = wrapText(exhibitTitle, exhibitTitleMaxLength);
+        const exhibitDetailWrap = wrapText(exhibitDetail, exhibitDetailMaxLength);
+        const authorNameWrap = wrapText(authorName, authorNameMaxLength);
+        const authorDetailWrap = wrapText(authorDetail, authorDetailMaxLength);
+        // 텍스트 그룹
+        const exhibitTextGroup = new THREE.Group();
+        const exhibitBackTextGroup = new THREE.Group();
+        const authorTextGroup = new THREE.Group();
+        const authorBackTextGroup = new THREE.Group();
+
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.2,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.01,
+                bevelSegments: 5
+            };
+            const detailParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text geometry
+            const exhibitTitleGeometry = new TextGeometry(exhibitTitleWrap, titleParam);
+            const exhibitDetailGeometry = new TextGeometry(exhibitDetailWrap, detailParam);
+            const authorNameGeometry = new TextGeometry(authorNameWrap, titleParam);
+            const authorDetailGeometry = new TextGeometry(authorDetailWrap, detailParam);
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // mesh
+            const exhibitTitleMesh = new THREE.Mesh(exhibitTitleGeometry, textMaterial);
+            const exhibitDetailMesh = new THREE.Mesh(exhibitDetailGeometry, textMaterial);
+            const authorNameMesh = new THREE.Mesh(authorNameGeometry, textMaterial);
+            const authorDetailMesh = new THREE.Mesh(authorDetailGeometry, textMaterial);
+
+            const exhibitBackTitleMesh = new THREE.Mesh(exhibitTitleGeometry, textMaterial);
+            const exhibitBackDetailMesh = new THREE.Mesh(exhibitDetailGeometry, textMaterial);
+            const authorBackNameMesh = new THREE.Mesh(authorNameGeometry, textMaterial);
+            const authorBackDetailMesh = new THREE.Mesh(authorDetailGeometry, textMaterial);
+
+            // 위치 조정
+            exhibitDetailMesh.position.y = -0.8;
+            exhibitBackDetailMesh.position.y = -0.8;
+            authorDetailMesh.position.y = -0.8;
+            authorBackDetailMesh.position.y = -0.8;
+
+            // 그룹 추가
+            exhibitTextGroup.add(exhibitTitleMesh, exhibitDetailMesh);
+            exhibitBackTextGroup.add(exhibitBackTitleMesh, exhibitBackDetailMesh);
+            authorTextGroup.add(authorNameMesh, authorDetailMesh);
+            authorBackTextGroup.add(authorBackNameMesh, authorBackDetailMesh);
+        });
+        // 그룹 위치
+        exhibitTextGroup.position.x = -10;
+        exhibitTextGroup.position.y = wallHeight/2 + 1.5;
+        exhibitTextGroup.position.z = -1 + 0.15;
+
+        exhibitBackTextGroup.rotation.y = Math.PI;
+        exhibitBackTextGroup.position.x = -7.5;
+        exhibitBackTextGroup.position.y = wallHeight/2 + 1.5;
+        exhibitBackTextGroup.position.z = -1 -0.15;
+
+        authorTextGroup.position.x = 7.5;
+        authorTextGroup.position.y = wallHeight/2 + 1.5;
+        authorTextGroup.position.z = -1 + 0.15;
+
+        authorBackTextGroup.rotation.y = Math.PI;
+        authorBackTextGroup.position.x = 10;
+        authorBackTextGroup.position.y = wallHeight/2 + 1.5;
+        authorBackTextGroup.position.z = -1 -0.15;
+
+        // 씬 추가
+        scene.add(exhibitTextGroup, exhibitBackTextGroup, authorTextGroup, authorBackTextGroup);
+
         // 왼쪽 입구
-        const leftEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceWallMaterial);
+        const leftEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceMaterial);
         leftEntrance.position.x = -8;
         leftEntrance.position.y = wallHeight/2; // 바닥 위에 벽 위치
         leftEntrance.position.z = -1;
@@ -188,7 +321,7 @@ export default function Exhibit3DPage() {
         scene.add(exhibitFront, exhibitBack);
 
         // 오른쪽 입구
-        const rightEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceWallMaterial);
+        const rightEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceMaterial);
         rightEntrance.position.x = 8;
         rightEntrance.position.y = wallHeight/2; // 바닥 위에 벽 위치
         rightEntrance.position.z = -1;
@@ -242,24 +375,65 @@ export default function Exhibit3DPage() {
         const centerWall = new THREE.Mesh(ExhibitWallGeometry, ExhibitWallMaterial);
 
         // 작품 텍스쳐
-        const workTextures = [
-            textureLoader.load('../../asset/work0.jpg'),
-            textureLoader.load('../../asset/work1.jpg'),
-            textureLoader.load('../../asset/work2.jpg'),
-            textureLoader.load('../../asset/work3.jpg'),
-            textureLoader.load('../../asset/work4.jpg'),
-            textureLoader.load('../../asset/work5.jpg'),
-            textureLoader.load('../../asset/work6.jpg'),
-            textureLoader.load('../../asset/work7.jpg'),
-            textureLoader.load('../../asset/work8.jpg'),
-            textureLoader.load('../../asset/work9.jpg')
-        ]
-        const workTexturesNum = workTextures.length;
+        const workTextures = [];
+        const workTitles = [];
+        const workTitleWraps = [];
+
+        // 한 줄 제한 길이
+        const workMaxLength = 7;
+
+        // 작품 입력
+        const workNum = 20; // 작품 수
+        for(let i=0;i<workNum;i++){
+            workTextures[i]=textureLoader.load(`../../asset/work${i}.jpg`)
+            workTitles[i]=`작품${i}`;
+            workTitleWraps[i] = wrapText(workTitles[i], workMaxLength);
+        }
+        const workGroups = []; // 작품 그룹
+        for(let i=0;i<workNum;i++){
+            workGroups[i] = new THREE.Group();
+        }
 
         // 중앙 앞 작품 생성
         const centerFrontNum = 1;
-        const centerFrontWorksNum = centerFrontNum*wallPerWorkNum<workTexturesNum?4:workTexturesNum%4;
+        const centerFrontWorksNum = centerFrontNum*wallPerWorkNum<=workNum?4
+            :(centerFrontNum*wallPerWorkNum-workNum>4?0:workNum%4);
+        
         const frontCenterWorks = []; // 작품
+
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // text geometry & Mesh
+            const workTitleGeometry = [];
+            const workTitleMesh = [];
+
+            for(let i=0;i<centerFrontWorksNum;i++){
+                const workIdx = (centerFrontNum-1)*wallPerWorkNum + i;
+                workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
+                workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
+                workTitleMesh[i].position.x = -1;
+                workTitleMesh[i].position.y = -1.25;
+                workTitleMesh[i].position.z = 0.15;
+                workGroups[workIdx].add(workTitleMesh[i]);
+            }
+        });
+
+        // 작품 배치
         for(let i=0;i<centerFrontWorksNum;i++){
             const workIdx = (centerFrontNum-1)*wallPerWorkNum + i;
             const workMaterials = [];
@@ -270,16 +444,54 @@ export default function Exhibit3DPage() {
                     workMaterials.push(new THREE.MeshStandardMaterial({color: 'white'}));
             }
             frontCenterWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
-            frontCenterWorks[i].position.x = i * workGap - workGap * (centerFrontWorksNum -1) / 2;
-            frontCenterWorks[i].position.y = 0.5;
             frontCenterWorks[i].position.z = 0.25;
-            centerGroup.add(frontCenterWorks[i]);
+            workGroups[workIdx].add(frontCenterWorks[i]);
+            workGroups[workIdx].position.x = i * workGap - workGap * (centerFrontWorksNum -1) / 2;
+            workGroups[workIdx].position.y = 0.5
+            centerGroup.add(workGroups[workIdx]);
         }
 
         // 중앙 뒤 작품 생성
-        const centerBackNum = 2;
-        const centerBackWorksNum = centerBackNum*wallPerWorkNum<workTexturesNum?4:workTexturesNum%4;
+        const centerBackNum = 5;
+        const centerBackWorksNum = centerBackNum*wallPerWorkNum<=workNum?4
+            :(centerBackNum*wallPerWorkNum-workNum>4?0:workNum%4);
+
         const backCenterWorks = []; // 작품
+        
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // text geometry & Mesh
+            const workTitleGeometry = [];
+            const workTitleMesh = [];
+
+            for(let i=0;i<centerBackWorksNum;i++){
+                const workIdx = (centerBackNum-1)*wallPerWorkNum + i;
+                workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
+                workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
+                workTitleMesh[i].rotation.y = Math.PI;
+                workTitleMesh[i].position.x = 1;
+                workTitleMesh[i].position.y = -1.25;
+                workTitleMesh[i].position.z = -0.15;
+                workGroups[workIdx].add(workTitleMesh[i]);
+            }
+        });
+
+        // 작품 배치
         for(let i=0;i<centerBackWorksNum;i++){
             const workIdx = (centerBackNum-1)*wallPerWorkNum + i;
             const workMaterials = [];
@@ -291,10 +503,11 @@ export default function Exhibit3DPage() {
             }
             backCenterWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
             backCenterWorks[i].rotation.y = Math.PI;
-            backCenterWorks[i].position.x = i * workGap - workGap * (centerBackWorksNum-1) / 2;
-            backCenterWorks[i].position.y = 0.5;
             backCenterWorks[i].position.z = -0.25;
-            centerGroup.add(backCenterWorks[i]);
+            workGroups[workIdx].add(backCenterWorks[i]);
+            workGroups[workIdx].position.x = i * workGap - workGap * (centerBackWorksNum -1) / 2;
+            workGroups[workIdx].position.y = 0.5
+            centerGroup.add(workGroups[workIdx]);
         }
 
         // 중앙 전시 위치
@@ -303,6 +516,81 @@ export default function Exhibit3DPage() {
         centerGroup.position.y = centerPos[1]; // 바닥 위에 전시 위치
         centerGroup.position.z = centerPos[2];
         scene.add(centerGroup);
+
+        // 뒤편 전시
+        const backGroup = new THREE.Group();
+
+        // 뒤편 전시 Geometry
+        const ExhibitBackWallGeometry = new THREE.BoxGeometry(26, wallHeight, 0.5);
+        const backWorkGap = 5; // 작품 간격
+
+        // 뒤편 벽
+        const backWall = new THREE.Mesh(ExhibitBackWallGeometry, ExhibitWallMaterial);
+
+        // 뒤편 작품 생성
+        const backNum = 2;
+        const backWorksNum = backNum*wallPerWorkNum<=workNum?4
+            :(backNum*wallPerWorkNum-workNum>4?0:workNum%4);
+
+        const backWorks = []; // 작품
+
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // text geometry & Mesh
+            const workTitleGeometry = [];
+            const workTitleMesh = [];
+
+            for(let i=0;i<backWorksNum;i++){
+                const workIdx = (backNum-1)*wallPerWorkNum + i;
+                workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
+                workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
+                workTitleMesh[i].position.x = -1;
+                workTitleMesh[i].position.y = -1.25;
+                workTitleMesh[i].position.z = 0.15;
+                workGroups[workIdx].add(workTitleMesh[i]);
+            }
+        });
+
+        // 작품 배치
+        for(let i=0;i<backWorksNum;i++){
+            const workIdx = (backNum-1)*wallPerWorkNum + i;
+            const workMaterials = [];
+            for (let j = 0; j < 6; j++) {
+                if (j === 4)
+                    workMaterials.push(new THREE.MeshStandardMaterial({map: workTextures[workIdx]}));
+                else
+                    workMaterials.push(new THREE.MeshStandardMaterial({color: 'white'}));
+            }
+            backWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
+            backWorks[i].position.z = 0.25;
+            workGroups[workIdx].add(backWorks[i]);
+            workGroups[workIdx].position.x = i * backWorkGap - backWorkGap * (backWorksNum -1) / 2;
+            workGroups[workIdx].position.y = 0.5
+            backGroup.add(workGroups[workIdx]);
+        }
+
+        // 뒤편 전시 위치
+        const backPos = [0, wallHeight/2, -23] // x, y, z;
+        backGroup.add(backWall);
+        backGroup.position.x = backPos[0];
+        backGroup.position.y = backPos[1]; // 바닥 위에 전시 위치
+        backGroup.position.z = backPos[2];
+        scene.add(backGroup);
 
         // 양옆 전시 Geometry
         const ExhibitSideWallGeometry = new THREE.BoxGeometry(22.5, wallHeight, 0.5);
@@ -316,8 +604,44 @@ export default function Exhibit3DPage() {
 
         // 오른쪽 앞 작품 생성
         const rightNum = 3;
-        const rightWorksNum = rightNum*wallPerWorkNum<workTexturesNum?4:workTexturesNum%4;
+        const rightWorksNum = rightNum*wallPerWorkNum<=workNum?4
+            :(rightNum*wallPerWorkNum-workNum>4?0:workNum%4);
+
         const rightWorks = []; // 작품
+
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // text geometry & Mesh
+            const workTitleGeometry = [];
+            const workTitleMesh = [];
+
+            for(let i=0;i<rightWorksNum;i++){
+                const workIdx = (rightNum-1)*wallPerWorkNum + i;
+                workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
+                workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
+                workTitleMesh[i].position.x = -1;
+                workTitleMesh[i].position.y = -1.25;
+                workTitleMesh[i].position.z = 0.15;
+                workGroups[workIdx].add(workTitleMesh[i]);
+            }
+        });
+
+        // 작품 배치
         for(let i=0;i<rightWorksNum;i++){
             const workIdx = (rightNum-1)*wallPerWorkNum + i;
             const workMaterials = [];
@@ -328,10 +652,11 @@ export default function Exhibit3DPage() {
                     workMaterials.push(new THREE.MeshStandardMaterial({color: 'white'}));
             }
             rightWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
-            rightWorks[i].position.x = i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2;
-            rightWorks[i].position.y = 0.5;
             rightWorks[i].position.z = 0.25;
-            rightGroup.add(rightWorks[i]);
+            workGroups[workIdx].add(rightWorks[i]);
+            workGroups[workIdx].position.x = i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2;
+            workGroups[workIdx].position.y = 0.5
+            rightGroup.add(workGroups[workIdx]);
         }
 
         // 오른쪽 전시 위치
@@ -351,10 +676,46 @@ export default function Exhibit3DPage() {
 
         // 왼쪽 앞 작품 생성
         const leftNum = 4;
-        const leftWorksNum = leftNum*wallPerWorkNum<workTexturesNum?4:(workTexturesNum%4);
+        const leftWorksNum = leftNum*wallPerWorkNum<=workNum?4
+            :(leftNum*wallPerWorkNum-workNum>4?0:workNum%4);
+
         const leftWorks = []; // 작품
+
+        // 폰트 로드 및 메쉬 생성
+        fontLoader.load('../../asset/fonts/SUIT Variable_Regular.json', function(font) {
+            // 텍스트 geometry 파라미터
+            const titleParam = {
+                font: font,
+                size: 0.1,
+                height: 0.1,
+                curveSegments: 12,
+                bevelEnabled: true,
+                bevelThickness: 0.03,
+                bevelSize: 0.005,
+                bevelSegments: 5
+            };
+
+            // text material
+            const textMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+
+            // text geometry & Mesh
+            const workTitleGeometry = [];
+            const workTitleMesh = [];
+
+            for(let i=0;i<leftWorksNum;i++){
+                const workIdx = (leftNum-1)*wallPerWorkNum + i;
+                workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
+                workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
+                workTitleMesh[i].position.x = -1;
+                workTitleMesh[i].position.y = -1.25;
+                workTitleMesh[i].position.z = 0.15;
+                workGroups[workIdx].add(workTitleMesh[i]);
+            }
+        });
+
+        // 작품 배치
         for(let i=0;i<leftWorksNum;i++){
-            const workIdx = (rightNum-1)*wallPerWorkNum + i;
+            const workIdx = (leftNum-1)*wallPerWorkNum + i;
             const workMaterials = [];
             for (let j = 0; j < 6; j++) {
                 if (j === 4)
@@ -363,10 +724,11 @@ export default function Exhibit3DPage() {
                     workMaterials.push(new THREE.MeshStandardMaterial({color: 'white'}));
             }
             leftWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
-            leftWorks[i].position.x = i * sideWorkGap - sideWorkGap * (leftWorksNum -1) / 2;
-            leftWorks[i].position.y = 0.5;
             leftWorks[i].position.z = 0.25;
-            leftGroup.add(leftWorks[i]);
+            workGroups[workIdx].add(leftWorks[i]);
+            workGroups[workIdx].position.x = i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2;
+            workGroups[workIdx].position.y = 0.5
+            leftGroup.add(workGroups[workIdx]);
         }
 
         // 왼쪽 전시 위치
@@ -383,13 +745,6 @@ export default function Exhibit3DPage() {
 
         function draw() {
             const delta = clock.getDelta();
-
-            // 글자 폰트 코드
-            // texContext.fillStyle = 'white';
-            // texContext.fillRect(0, 0, 1500, 500);
-            // texContext.fillStyle = 'black';
-            // texContext.font = 'bold 20px sans-serif';
-            // texContext.fillText('작품A', 500, 20);
 
             walk();
 

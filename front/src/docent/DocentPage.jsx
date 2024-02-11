@@ -17,7 +17,7 @@ export default function DocentPage(){
   const [docentVideoAvailable, setDocentVideoAvailable] = useState(true);
   const [videoUrl, setVideoUrl] = useState(null);
   useEffect(() => {
-    axios.get('https://i10d105.p.ssafy.io/api/docent/'+docentId)
+    axios.get('https://i10d105.p.ssafy.io/api/exhibit/docent/'+docentId)
       .then(response => { // 도슨트 영상이 있음!
         if(response.status === 200) {
           setDocentVideoAvailable(true)

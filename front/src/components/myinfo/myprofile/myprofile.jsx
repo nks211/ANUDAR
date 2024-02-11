@@ -16,26 +16,16 @@ export default function MyProfile(props) {
 
   const setting = {
     overlay: {
-        position: "fixed",
-        backgroundColor: "#00000040",
+      position: "fixed",
+      backgroundColor: "#00000040",
     },
     content: {
-        position: "absolute",
-        // overflow: "hidden",
-    //     inset: "0",
-    //     // top: "80px",
-    //     // left: "35%",
-    //     top: "15vw",
-    //     width: "80vw",
-    //     height: "50%",
-    //     borderRadius: "20px",
-    //     padding: "0",
-    //     margin: "0",
-        border: "0",
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: "transparent",
-        alignItems: "center"
+      position: "absolute",
+      border: "0",
+      display: "flex",
+      justifyContent: "center",
+      backgroundColor: "transparent",
+      alignItems: "center"
     }
   };
 
@@ -44,7 +34,6 @@ export default function MyProfile(props) {
   const paymentmodal = () => {
     return <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false) }} style={setting}>
             <Payment/>
-            {/* <ModalPopup title="회원 탈퇴" detail="정말로 탈퇴하시겠습니까?" okbutton={true} cancelbutton={true} okbuttonlabel="확인" cancelbuttonlabel="취소" /> */}
           </Modal>;
   };
 

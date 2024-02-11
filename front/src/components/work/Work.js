@@ -10,34 +10,34 @@ export default function Work(props) {
   const {setPathName} = useContext(AppContext);
 
   switch (workType) {
-    case 1:
+    case 1:  // 작품 목록
       return (
         <div className="workCard1">
           <div className="workImageCard1"  
             onMouseOver={()=>{setInfoOpacity(1)}}
             onMouseOut={()=>{setInfoOpacity(0)}}>
             <div className="workImage1" onClick={()=> {
-              navigate(`/work/${props.workId}`)
+              navigate(`/work/${props.work.id}`)
               setPathName(window.location.pathname)
               window.scrollTo(0, 0)
             }}>
-              <img src={props.image} style={{width:300, height:300}}></img>
+              <img src={props.work.image} style={{width:300, height:300, objectFit:"cover"}}></img>
             </div>
             <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}} onClick={()=> {
-              navigate(`/work/${props.workId}`)
+              navigate(`/work/${props.work.id}`)
               setPathName(window.location.pathname)
               window.scrollTo(0, 0)
             }}>
-              <div className="workThumbnail"><span>시작가</span> <div>KRW {props.workAuctionPrice.toLocaleString()}</div></div>
-              <div className="workThumbnail"><span>경매일</span> <div>{props.workAuctionDate}</div></div>
+              <div className="workThumbnail"><span>시작가</span> <div>KRW {props.work.price.toLocaleString()}</div></div>
+              {/* <div className="workThumbnail"><span>경매일</span> <div>{props.workAuctionDate}</div></div> */}
             </div>
           </div>
           <div className="workName1 cursorPointer" onClick={()=> {
-            navigate(`/work/${props.workId}`)
+            navigate(`/work/${props.work.id}`)
             setPathName(window.location.pathname)
             window.scrollTo(0, 0)
-          }}>{props.workName}</div>
-          <div className="workArtist1">{props.workArtist}</div>
+          }}>{props.work.title}</div>
+          <div className="workArtist1">{props.work.author}</div>
         </div>
       )
 
@@ -50,7 +50,7 @@ export default function Work(props) {
               onMouseOut={()=>{setInfoOpacity(0)}}
             >
               <div className="workImage2">
-                <img /*className="workImageSize"*/ src={props.image} width={250} height={250}></img>
+                <img /*className="workImageSize"*/ src={props.image}></img>
               </div>
               <div className="workInfo2" style={{opacity : infoOpacity}}>
                 <div style={{padding: 30}}>

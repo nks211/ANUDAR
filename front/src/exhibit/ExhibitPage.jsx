@@ -31,12 +31,22 @@ export default function ExhibitPage() {
     } catch (err) {
       console.log(err)
     } 
-  } 
+  }
+
+  // async function getAllData() {
+  //   try {
+  //     const res = await getAllExhibitList()
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   useEffect(()=>{
+    console.log('ExhibitPage')
+    console.log(localStorage)
     onMounted()
     setExhibitList(curExhibits) 
-  }, [])
+  }, [localStorage.getItem("currenttab")])
 
 
   return (

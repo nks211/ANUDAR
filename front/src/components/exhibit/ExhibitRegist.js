@@ -1,15 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from "react-router-dom";
 import Exhibit from './Exhibit';
 import ToolTip from './ToolTip';
 import './ExhibitRegist.css'
+import { mainstate } from '../../StateManagement';
+import { uploadExhibitImg, registExhibit } from '../../API';
+import { ExhibitRegistContext } from '../../exhibit/ExhibitRegistPage';
 
 export default function ExhibitRegist() {
+  const { works, setWorks } = useContext(ExhibitRegistContext);
+  const loginUser = mainstate((state) => (state.loginuser));
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [preview, setPreview] = useState(<div className="previewImg"></div>);
-  const [poster, setPoster] = useState();
-  const [fileName, setFileName] = useState();
+  const [poster, setPoster] = useState("");
+  const [fileName, setFileName] = useState("");
   
+  const navigate = useNavigate();
 
   let [curY, curM] = [0, 0];
 
@@ -59,20 +67,21 @@ export default function ExhibitRegist() {
     getLastSat()
   })
 
-  const upload = (event) => {
+  const logintoken = mainstate((state) => (state.logintoken))
+
+  const upload = async (event) => {
     const file = event.target.files[0];
     if (!file) { return; }  // 파일 선택 후 취소 선택시 오류 나지 않도록
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+
+    const imageurl = await uploadExhibitImg(file, logintoken);
     setFileName(file.name)
 
-    return new Promise((resolve) => {
-        reader.onload = () => {
-            setPreview(<img style={{width:270, height:360, objectFit: "cover"}} src={(reader.result || null)} />)
-            setPoster(reader.result || null);
-            resolve();
-        };
-    });
+    if (imageurl != "") {
+      setPreview(<img style={{width:270, height:360, objectFit: "cover"}} src={imageurl} />)
+      setPoster(imageurl)
+    } else {
+      alert('이미지를 찾을 수 없습니다.')
+    }
   }
 
   function checkInput(event, inputType) {
@@ -91,14 +100,49 @@ export default function ExhibitRegist() {
     }
   }
 
+  const exhibitForm = async (event) => {
+    event.preventDefault()
+
+    if (!title || !description || !exhibitY || !exhibitM || !docentDate || !docentHour || !docentMinute || !poster ) {
+      alert('모든 정보를 입력해주세요')
+      return
+    } else if (works.length < 5) {
+      alert('작품 최소 등록 개수는 5개입니다.')
+      return
+    }
+
+    const m = String(exhibitM).padStart(2, '0')  // 전시회 달
+    const d = String(exhibitEndD).padStart(2, '0')  // 전시회 종료일
+    const dd = String(docentDate).padStart(2, '0')  // 도슨트 일
+    const h = String((ampm==="am")?docentHour:docentHour+12).padStart(2, '0')  // 도슨트 시작시간
+    const eh = String(Number(h)+2).padStart(2, '0')  // 도슨트 종료시간
+    const dm = String(docentMinute).padStart(2, '0')
+
+    const data = {
+      "name": title, 
+      "detail": description, 
+      "start_time": `${exhibitY}-${m}-01 00:00:00`,
+      "end_time": `${exhibitY}-${m}-${d} 23:59:59`,
+      "docent_start": `${exhibitY}-${m}-${dd} ${h}:${dm}:00`,
+      "docent_end": `${exhibitY}-${m}-${(eh>24?dd+1:dd)} ${eh>24?eh-24:eh}:${dm}:00`,
+      "image": poster,
+      "works": works
+    }
+
+    const res = await registExhibit(data, logintoken)
+    console.log(res)
+    const exhibitId = res.id
+    console.log(exhibitId)
+    navigate(`/exhibit/${exhibitId}`)
+  }
+
   return (
     <div className="exhibitRegist">
       <div id="exhibitRegistHeader">
         <div>전시회 등록하기</div>
-        <button onClick={() => {
-          // 모든 정보 입력했는지 확인하기
+        <button onClick={exhibitForm
           // 모달창 .. -> 정보 맞는지 확인
-        }}>최종 등록</button>
+        }>최종 등록</button>
       </div>
       <hr style={{ width: "100%", border: "1px solid #EEE3CB", margin: "20px 0" }} />
       <div className="registColumn">
@@ -107,7 +151,7 @@ export default function ExhibitRegist() {
           <div className="registTitle">대표 이미지</div>
           <div className="registDescription">전시회 목록에서 보여질 이미지입니다.</div>
           {/* *수정* : artist = username */}
-          <Exhibit exhibitType={3} exhibit={{ "name": (title ? title : "전시회 이름"), "author": "작가명(API)", "start_time": `${exhibitY}-${String(exhibitM).padStart(2, '0')}-01`, "end_time": `${exhibitY}-${String(exhibitM).padStart(2, '0')}-${String(exhibitEndD).padStart(2, '0')}`, "image": preview }} />
+          <Exhibit exhibitType={3} exhibit={{ "name": (title ? title : "전시회 이름"), "author": loginUser.name, "start_time": `${exhibitY}-${String(exhibitM).padStart(2, '0')}-01`, "end_time": `${exhibitY}-${String(exhibitM).padStart(2, '0')}-${String(exhibitEndD).padStart(2, '0')}`, "image": preview }} />
         </div>
         {/* 전시회 정보 */}
         <div className="registInfo">
@@ -176,7 +220,7 @@ export default function ExhibitRegist() {
             <div className="item1"><span>*</span> 대표 이미지</div>
             <div className="item3" style={{ display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex" }}>
-                <span>{fileName}{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName() }}></img> : ""}</span>
+                <span>{fileName}{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName(""); setPoster("") }}></img> : ""}</span>
                 <label className="uploadBtn" for="poster">선택</label>
                 <input type="file" id="poster" accept="image/*" onChange={event => { upload(event); event.target.value = ''; }} style={{ display: "none" }} />
               </div>

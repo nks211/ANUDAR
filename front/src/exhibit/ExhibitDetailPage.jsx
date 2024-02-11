@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext , useState } from 'react';
+import { useContext , useEffect, useState } from 'react';
 import { AppContext } from '../App';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -10,27 +10,42 @@ import Review from "../components/exhibit/Review";
 import dummy from "../db/data.json"
 import './ExhibitPage.css'
 import '../index.css'
+import { getExhibitDetail } from '../API';
+import { mainstate } from '../StateManagement';
 
 export default function ExhibitDetailPage() {
   const exhibitId = useLocation().pathname.split('/').pop();
-  const exhibit = dummy.exhibits[exhibitId]
+  const [exhibit, setExhibit] = useState({})
+  const [works, setWorks] = useState([])
+  const loginuser = mainstate(state => state.loginuser);
 
-  // *수정* : API 연결 -> 작성자명
-  const userName = "작성자"
+  async function getData() {
+    try {
+      const res = await getExhibitDetail(exhibitId)
+      setExhibit(res)
+      setWorks(res.workList)
+      // console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+  }, [])
+
+  const userName = loginuser.nickname
   
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [selectValue, setSelectValue] = useState("earliest");
+
   const navigate = useNavigate();
   const {setPathName} = useContext(AppContext);
 
   let reviews = null;
 
-  const works = [];
-  // for (let i=0; i<dummy.works.length; i++) {
-  for (let i=0; i<10; i++) {
-    works.push(dummy.works[i])
-  }
+  // const works = exhibit.workList
 
   // 캐러셀
   const setting = {
@@ -47,30 +62,24 @@ export default function ExhibitDetailPage() {
   function createReview() {
     const today = new Date();
     const newToday = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,'0') + "-" + String(today.getDate()).padStart(2,'0')
-    const newReview = <Review userName={userName+(comments.length+1)} todayDate={newToday} content={comment} />
+    const newReview = <Review userName={userName} todayDate={newToday} content={comment} />
     setComments([...comments, newReview])
   }
   
   return (
-    // <div style={{width:"750px"}}>
     <div>
       <div className="bodyCenter">
         <div style={{ transform: "translateX(2.5%)", height:"550px" }} className="exhibitContainer">
           <Slider {...setting}>
             {Object.values(works).map((work) => { 
               return (
-                  // <img style={{width:"100%"}} src="../asset/exhibit_detail_carousel.png"/>
                 <div style={{position:"relative"}}>
-                  {/* <img src={}></img> */}
-                  {/* <img style={{width:"1920px"}} src="../asset/exhibit_detail_carousel.png"/><img/> */}
-                  <img style={{width:"750px"}} src="../asset/exhibit_carousel2.png"/><img/>
-                  <div className="carousels"><img className="carouselImg" style={{width:"240px", height:"240px"}} src={"../"+work.image}/></div>
+                <img style={{width:"750px"}} src="../asset/exhibit_carousel2.png"/><img/>
+                <div className="carousels"><img className="carouselImg" style={{width:"240px", height:"240px"}} src={work.image}/></div>
                 </div>
               )})}
           </Slider>
         </div>
-
-        {/* <div style={{width:"100vw", height:"50px", backgroundColor:"black"}}></div> */}
 
         {/* 전시회 포스터, 설명 */}
         <div>
@@ -82,7 +91,6 @@ export default function ExhibitDetailPage() {
         <div className="exhibitButtons">
           {/* *수정* : 전시회 입장 주소 .. */}
           <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 입장</button>
-          {/* *수정* : API 연결 -> 도슨트ID로 입장! */}
           <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
         </div>
 

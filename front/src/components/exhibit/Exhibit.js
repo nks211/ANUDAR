@@ -31,6 +31,10 @@ export default function Exhibit(props) {
   //   };
   // }, []);
 
+  useEffect(()=>{
+    console.log('Exhibit')
+  }, [])
+
   
   switch (props.exhibitType) {
     case 1:  // 전시회 목록
@@ -41,7 +45,7 @@ export default function Exhibit(props) {
               onMouseOver={()=>{setEnterOpacity(1)}}
               onMouseOut={()=>{setEnterOpacity(0)}}
             >
-              <img className="exhibitImage1" style={{width:240, height:320}} src={"../../"+props.exhibit.image}></img>
+              <img className="exhibitImage1" style={{width:240, height:320}} src={props.exhibit.image}></img>
               <div className="exhibitEnter1" style={{opacity : enterOpacity}} onClick={()=>{
                 navigate(`/exhibit/${props.exhibit.id}`)
                 setPathName(window.location.pathname)

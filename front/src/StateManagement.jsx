@@ -3,9 +3,9 @@ import { immer } from "zustand/middleware";
 
 // 로그인, 회원가입, 메뉴바, 로그인 모달 입력값 관련 상태 관리 함수
 export const mainstate = create((set) => ({
-    login: false,
-    loginuser: {},
-    logintoken: "",
+    isLogin: localStorage.login === "true",
+    loginuser: localStorage.login === "true"?JSON.parse(localStorage.userdata):{},
+    logintoken: localStorage.login === "true"?localStorage.token:"",
     signup: {
         profileimage: "../../asset/profile_image.png",
         id: "",
@@ -50,7 +50,8 @@ export const mainstate = create((set) => ({
     idinput: "",
     passwordinput: "",
 
-    setlogin: (result) => set(() => ({ login: result })),
+    setIsLogin: (result) => set({ isLogin: result }),
+    // setIsLogin: (result) => set(() => ({ isLogin: result })),
     setloginuser: (user) => set(() => ({ loginuser: user })),
     setlogintoken: (token) => set(() => ({ logintoken: token })),
     setprofileimage: (image) => set((state) => ({ signup: { ...state.signup, profileimage: image } })),

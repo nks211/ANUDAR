@@ -1,31 +1,31 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import dummy from "../db/data.json"
 import Work from "../components/work/Work";
 import Search from "../components/search/Search";
 import '../index.css'
+import { getWorks } from "../API";
 
 export default function WorkPage() {
-  const workList = [];
+  const [works, setWorks] = useState([]);
 
-  for (let i=0; i<dummy.works.length; i++) {
-    workList.push(dummy.works[i])
+  async function getData() {
+    try {
+      const res = await getWorks()
+      setWorks(res)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const [works, setWorks] = useState(workList);
-
-  let content = <div className="workList">
-                  {works.map(work=>(
-                    // <Work className="Work" workType={1} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-                    <Work className="Work" workType={1} 
-                    work={work}
-                    workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-                  ))}
-                </div>
-
+  useEffect(()=>{
+    getData()
+  }, [])
 
   return (
     <div>
       <Search updateValues={(searchWork) => {
+
+        // filter ..??
         const newWorks = []
         for (let i=0; i<dummy.works.length; i++) {
           // *수정* : title (API 연결 후) 변경
@@ -35,22 +35,11 @@ export default function WorkPage() {
             console.log(newWorks)
           }
         }
-        setWorks(newWorks)
-        // content = <div className="WorkList">
-        //             {works.map(work=>(
-        //               <Work className="Work" workType={1} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-        //             ))}
-        //           </div>
-
+        // setWorks(newWorks)
       }}/>
-      {/* // </div> */}
-      {/* <div>{searchWork}</div> */}
-      {content}
-      {/* <div className="WorkList">
-        {works.map(work=>(
-          <Work className="Work" workType={1} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-        ))}
-      </div> */}
+      <div className="workList">
+        {works.map(work=>( <Work className="Work" workType={1} work={work}/> ))}
+      </div>
     </div>
   );
 };

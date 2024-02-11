@@ -116,4 +116,11 @@ public class ExhibitionController {
         exhibitionService.saveDocentVideo(docentId, videoId);
         return new ResponseEntity<>("Success",HttpStatus.OK);
     }
+
+    // 도슨트 비디오 가져오기
+    @GetMapping("/docent/{docentId}")
+    public ResponseEntity<String> getDocentVideo(@PathVariable("docentId") Long docentId) {
+        String filename = exhibitionService.getDocentVideo(docentId);
+        return new ResponseEntity<>(s3Service.uploadVideo(String.valueOf(docentId), filename),HttpStatus.OK);
+    }
 }

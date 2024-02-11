@@ -111,4 +111,13 @@ public class ExhibitionService {
         docent.setVideo(video);
     }
 
+    // 도슨트 비디오 정보 가져오기
+    public String getDocentVideo(Long docentId) {
+        Docent docent = docentRepository.findById(docentId)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
+        if(docent.getVideo() == null)
+            throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);
+        return docent.getVideo();
+    }
+
 }

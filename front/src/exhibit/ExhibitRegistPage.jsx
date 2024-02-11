@@ -182,7 +182,7 @@ export default function ExhibitRegistPage() {
                 <div style={{display:"flex"}}>
                   <span>{fileName}{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(<div className="previewImg"></div>); setFileName()}}></img>:""}</span>
                   <label className="uploadBtn" for="poster">선택</label>
-                  <input type="file" id="poster" accept="image/*" onChange={event => upload(event)} style={{ display: "none" }}/>
+                  <input type="file" id="poster" accept="image/*" onChange={event => {upload(event); event.target.value = '';}} style={{ display: "none" }}/>
                 </div>
                 <div className="registGuide">권장이미지 375px * 500px 이상</div>
               </div>

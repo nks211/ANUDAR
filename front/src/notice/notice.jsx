@@ -41,17 +41,17 @@ function Notice(props) {
                 borderRadius: "5px",
                 height: "10px",
                 width: "10px",
-                position: "absolute",
-                left: "30px",
-                top: "40px",
+                position: "relative",
+                left: "20px",
+                top: "0px",
             }}/>
-            <div style={{ position: "absolute", left: "76px", top: "16px" }}>
+            <div style={{ position: "relative", left: "40px", top: "-20px" }}>
                 <div style={title}>{ props.title }</div>
             </div>
-            <div style={{ position: "absolute", left: "150px", top: "19px"}}>
+            <div style={{ position: "relative", left: "100px", top: "-20px"}}>
                 <div style={detail}>{ props.date }</div>
             </div>
-            <div style={{ position: "absolute", left: "76px", top: "53px" }}>
+            <div style={{ position: "relative", left: "-115px", top: "20px" }}>
                 <div style={detail}>{ props.details }</div>
             </div>
         </div>

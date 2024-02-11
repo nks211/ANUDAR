@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
+import { AppContext } from "../App";
 import dummy from "../db/data.json"
 import Exhibit from "../components/exhibit/Exhibit";
 import Search from "../components/search/Search";
@@ -14,6 +15,7 @@ export default function ExhibitPage() {
   if (isArtist) {
     showRegistBtn = <div className="exhibitRegistBtn" onClick={()=>{
                       navigate(`/exhibit/regist`)
+                      setPathName(window.location.pathname)
                       window.scrollTo(0, 0)
                     }}>전시회 등록</div>
   }
@@ -25,6 +27,7 @@ export default function ExhibitPage() {
   const [onGoingBtn, setOnGoingBtn] = useState("toggleBtn clickToggleBtn");
 
   const navigate = useNavigate();
+  const {setPathName} = useContext(AppContext);
 
   function allExhibits() {
     for (let i=0; i<dummy.exhibits.length; i++) {

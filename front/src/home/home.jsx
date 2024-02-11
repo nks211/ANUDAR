@@ -1,5 +1,6 @@
-import { React } from "react";
+import { React, useContext  } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
 import Slider from "react-slick";
 import "./home.css";
 import "slick-carousel/slick/slick.css";
@@ -34,6 +35,7 @@ const setting = {
     infinite: true,
     autoplay: true,
     autoplaySpeed: 5000,
+    pauseOnHover: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1
@@ -80,9 +82,10 @@ const worksthisweek = [
     }
 ]
 
-function Home() {
+export default function Home() {
 
     const navigate = useNavigate();
+    const {setPathName} = useContext(AppContext);
 
     return (
         <div>
@@ -95,23 +98,16 @@ function Home() {
                     <div><img src={homecarousel[4]} /></div>
                 </Slider>
             </div>
-
-            {/* <div style={{ width: "600px", height: "300px", backgroundColor: "#0000fd" }}>
-                <Slider {...customsetting}>
-                    {Object.values(test).map((value, i) => { return <div><div style={{ width: "100%", height: "300px", display: "flex", justifyContent: "center", alignItems: "center", }}><div style={{ width: "200px", height: "200px", color: "#000000", fontSize: "20px", display: "flex", justifyContent: "center", alignItems: "center", border: "3px #ffffff solid" }}>{value}     {i}</div></div></div>; })}
-                </Slider>
-            </div> */}
-
             <div style={{ margin: "40px 80px", }}>
                 <div className="nowadays">진행 중인 전시회</div>
-                <div onClick={() => { navigate("/exhibit"); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
+                <div onClick={() => { navigate("/exhibit"); setPathName(window.location.pathname); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", }}>
                     {Object.values(exhibitionNow).map((value) => { return <ExhibitionItem width="330px" height="450px" exhibition={value} /> })}
                 </div>
             </div>
             <div style={{ margin: "40px 80px", }}>
                 <div className="nowadays">금주의 작품</div>
-                <div onClick={() => { navigate("/work"); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
+                <div onClick={() => { navigate("/work"); setPathName(window.location.pathname); window.scrollTo(0, 0) }} className="nowdetails">더보기 &gt;</div>
                 <div style={{ display: "flex", justifyContent: "center" }}>
 
                     <div style={{ width: "1000px", }}>
@@ -124,5 +120,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

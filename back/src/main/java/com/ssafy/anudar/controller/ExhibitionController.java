@@ -110,4 +110,10 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getCurrentExhibitions(), HttpStatus.OK);
     }
 
+    // 도슨트 비디오 정보 저장
+    @PostMapping("/docent/{docentId}/{videoId}")
+    public ResponseEntity<String> saveDocentVideo(@PathVariable("docentId") Long docentId, @PathVariable("videoId") String videoId) {
+        exhibitionService.saveDocentVideo(docentId, videoId);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
+    }
 }

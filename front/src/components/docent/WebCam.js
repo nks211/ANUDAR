@@ -5,13 +5,13 @@ import UserVideoComponent from './UserVideoComponent';
 import './WebCam.css'
 
 const APPLICATION_SERVER_URL = 'https://i10d105.p.ssafy.io/';
-const hostStreamId = "";
 
 function WebCam({ MysessionId, myUserName }) {
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
+  const [streamId, setStreamId] = useState('');
 
   useEffect(() => {
     joinSession();
@@ -33,7 +33,6 @@ function WebCam({ MysessionId, myUserName }) {
         // 스트림의 username이 'host'일 때 메인 스트림으로 해주기
         if(event.stream.connection.data.split('%')[0] === 'host'){
           handleMainVideoStream(subscriber);
-          hostStreamId=event.stream.streamId
         }
       }
     });
@@ -55,14 +54,19 @@ function WebCam({ MysessionId, myUserName }) {
 
       await mySession.publish(publisher);
 
+      setStreamId(publisher.stream.streamId);
+      console.log("Publisher의 Stream ID:", streamId);
+
       setSession(mySession);
       setPublisher(publisher);
 
       // 만약 나의 myUserName이 'host'일 경우 주요 비디오 스트림으로 설정합니다.
       // 녹화를 시작합니다.
+      // streamId를 db에 저장합니다.
       if (myUserName === 'host') {
         handleMainVideoStream(publisher);
         startRecording(MysessionId);
+        await axios.post(APPLICATION_SERVER_URL + 'api/exhibit/docent/'+ MysessionId + '/' + streamId);
       }
     } catch (error) {
       console.log('There was an error connecting to the session:', error.code, error.message);

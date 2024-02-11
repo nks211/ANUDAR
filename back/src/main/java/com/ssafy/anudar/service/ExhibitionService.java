@@ -103,4 +103,12 @@ public class ExhibitionService {
                 .toList();
     }
 
+    // 도슨트 비디오 정보 저장
+    @Transactional
+    public void saveDocentVideo(Long docentId, String video) {
+        Docent docent = docentRepository.findById(docentId)
+                .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
+        docent.setVideo(video);
+    }
+
 }

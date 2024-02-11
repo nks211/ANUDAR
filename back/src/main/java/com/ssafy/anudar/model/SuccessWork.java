@@ -1,22 +1,17 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AuctionWork {
+public class SuccessWork {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="auction_work_id")
+    @Column(name="success_work_id")
     private Long id;
 
     @Column(name="final_price")
@@ -33,5 +28,13 @@ public class AuctionWork {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_id")
     private Auction auction;
+
+    @Builder
+    public SuccessWork (Auction auction, Work work, User user, int finalPrice) {
+        this.auction =auction;
+        this.work = work;
+        this.user = user;
+        this.finalPrice = finalPrice;
+    }
 
 }

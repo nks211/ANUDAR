@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import "./checkpassword.css";
 import { popupstate } from "../StateManagement";
-import bcrypt from "bcryptjs";
 import { changepassword } from "../API";
 
 export default function CheckPassword() {

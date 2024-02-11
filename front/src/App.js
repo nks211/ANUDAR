@@ -15,6 +15,7 @@ import Mypage from './mypage/mypage';
 import { createContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
+import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {

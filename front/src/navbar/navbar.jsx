@@ -48,7 +48,6 @@ const LoginPanel = (image, notices) => {
 }
 
 export default function NavBar() {
-
   const navigate = useNavigate();
   const { modalsetting } = useContext(AppContext);
 

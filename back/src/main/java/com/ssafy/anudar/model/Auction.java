@@ -23,6 +23,10 @@ public class Auction {
     @Column(name="start_time")
     private LocalDateTime start_time;
 
+    @OneToMany(mappedBy = "auction")
+    private List<Work> works;
+
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    private List<AuctionWork> auctionWorks;
+    private List<SuccessWork> successWorks;
+
 }

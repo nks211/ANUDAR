@@ -11,7 +11,6 @@ function WebCam({ MysessionId, myUserName }) {
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
-  const [streamId, setStreamId] = useState('');
 
   useEffect(() => {
     joinSession();
@@ -54,8 +53,7 @@ function WebCam({ MysessionId, myUserName }) {
 
       await mySession.publish(publisher);
 
-      setStreamId(publisher.stream.streamId);
-      console.log("Publisher의 Stream ID:", streamId);
+      console.log("Publisher의 Stream ID:", publisher.stream.streamId);
 
       setSession(mySession);
       setPublisher(publisher);
@@ -66,7 +64,7 @@ function WebCam({ MysessionId, myUserName }) {
       if (myUserName === 'host') {
         handleMainVideoStream(publisher);
         startRecording(MysessionId);
-        await axios.post(APPLICATION_SERVER_URL + 'api/exhibit/docent/'+ MysessionId + '/' + streamId);
+        await axios.post(APPLICATION_SERVER_URL + 'api/exhibit/docent/'+ MysessionId + '/' + publisher.stream.streamId);
       }
     } catch (error) {
       console.log('There was an error connecting to the session:', error.code, error.message);

@@ -3,7 +3,7 @@ import "./modalpopup.css";
 
 export default function ModalPopup(props) {
     return (
-        <div className="modalpopuparea">
+        <div style={{ height: props.height, }} className="modalpopuparea">
             <div className="modalpopuptitle">{props.title}</div>
             <div className="modalpopupdetail">{props.detail}</div>
             <div className="modalpopupcontentarea">{props.content}</div>

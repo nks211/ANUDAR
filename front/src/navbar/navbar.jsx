@@ -7,6 +7,46 @@ import { AppContext } from "../App.js";
 import Modal from "react-modal";
 import { mainstate, popupstate } from "../StateManagement.jsx";
 
+// const LoginPanel = (image, notices) => {
+//   const navigate = useNavigate();
+
+//   const loginstatus = localStorage.getItem("login") === "true";
+//   const noticepopup = popupstate((state) => state.homenoticepopup);
+//   const setnoticepopup = popupstate((state) => state.sethomenoticepopup);
+//   const checknotice = mainstate((state) => state.noticecheck);
+
+//   if (window.location.pathname.includes('/docent')) { return <div></div> }
+
+//   // if (localdata) {
+//   //   console.log(`{
+//   //     id : ${localdata.username} \n
+//   //     password: ${localdata.password} \n
+//   //     name: ${localdata.name} \n
+//   //     nickname: ${localdata.nickname} \n
+//   //     email : ${localdata.email} \n
+//   //     image : ${localdata.image} \n
+//   //     phone : ${localdata.phone} \n
+//   //   }`)
+//   // }
+
+
+//   return (
+//     <div>
+//       <div onClick={() => { setnoticepopup(!noticepopup) }}>{loginstatus ?
+//         (notices.length > 0 ?
+//           <img className="noti" src="../../asset/noti_on.png" />
+//           : <img className="noti" src="../../asset/noti_off.png" />) : ""}
+//       </div>
+//       <div>{loginstatus ?
+//         <img width="45px" height="45px" onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} className="mypage" src={image} /> : ""}</div>
+//       <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
+//         {notices.length > 0 ? Object.values(notices).map((notice, i) => <div onClick={() => { checknotice(notice) }}><Notice key={i} title={notice.title} date={notice.date} details={notice.details} /></div>) : UptoDate()}
+
+//       </div>
+//     </div>
+//   );
+// }
+
 export default function NavBar() {
   const navigate = useNavigate();
   const { modalsetting } = useContext(AppContext);
@@ -50,9 +90,45 @@ export default function NavBar() {
     )
   }
 
+
+
+  useEffect(() => {
+    // if (locallogin) {
+    //   setlogincheck(locallogin);
+    // }
+    // if (localtoken) {
+    //   setloginuser(localdata);
+    //   setimagedata(localdata.image);
+    // }
+    // 로그인 토큰 만료 시간 경과 시 자동 로그아웃 처리됨
+    if (localStorage.getItem("tokentime")) {
+      const logtime = Date.now() - localStorage.getItem("tokentime");
+      if (logtime >= 60 * 60 * 1000) {
+        setIsLogin(false); setnoticepopup(false); 
+        localStorage.setItem("login", false); 
+        localStorage.setItem("currenttab", ""); 
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokentime"); 
+        localStorage.removeItem("userdata"); 
+        navigate("/"); window.scrollTo(0, 0);
+      }
+    }
+  });
+
   if (window.location.pathname.includes('/docent')) { 
     return (<div></div>);
   }
+
+
+
+  // if (window.location.pathname.includes('/docent')) {
+  //   return (<div>{LoginPanel(imagedata, noticelist)}</div>);
+  // }
+
+
+
+
+
 
   return (
     <div id="nav">
@@ -80,6 +156,16 @@ export default function NavBar() {
                 () => { navigate("/user/join"); window.scrollTo(0, 0); }} 
               style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{isLogin ? "로그아웃" : "회원가입"}
             </button>  
+
+
+
+          {/* {LoginPanel(imagedata, noticelist)}
+          <div className={logincheck ? "login" : "logout"}>
+            <button onClick={logincheck ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{logincheck ? loginuser.nickname + " 님" : "로그인"}</button>
+            <div className="line"> |  </div>
+            <button onClick={logincheck ? () => { setlogincheck(false); setnoticepopup(false); localStorage.setItem("login", false); localStorage.setItem("currenttab", ""); localStorage.removeItem("token"); localStorage.removeItem("tokentime"); localStorage.removeItem("userdata"); navigate("/"); window.scrollTo(0, 0); } : () => { navigate("/user/join"); window.scrollTo(0, 0); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{logincheck ? "로그아웃" : "회원가입"}</button> */}
+          
+          
           </div>
         </div>
       </div>

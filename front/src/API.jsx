@@ -54,17 +54,34 @@ export const myinfo = async (token) => {
   else { alert("유효하지 않은 토큰입니다."); }
 };
 
-export const updateinfo = () => {
-
+export const myfollowings = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/following";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => { return response.data; })
+        .catch((e) => { console.log(e); return 0; });
+    }
 };
 
-export const changepassword = () => {
-
+export const myfollowers = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/follower";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => { return response.data; })
+        .catch((e) => { console.log(e); return 0; });
+    }
 };
 
-export const signout = () => {
-
+export const updateinfo = async (newdata, token) => {
+    if (token && token != "") {
+        const url = "/api/user/update";
+        return await axios.put(url, newdata, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => { return response.data; })
+        .catch((e) => { console.log(e); });
+    }
 };
+
+
 
 // 팔로잉 조회
 export async function getFollowing(token) {
@@ -74,6 +91,36 @@ export async function getFollowing(token) {
   .then(res => {return res.data})
   .catch(err => {console.log(err)})
 }
+
+export const changepassword = async (oldpassword, newpassword, token) => {
+  if (token && token != "") {
+      const url = "/api/user/update/password";
+      const request = {
+          "oldpassword": oldpassword,
+          "checkpassword": newpassword,
+          "newpassword": newpassword,
+      };
+      return await axios.put(url, request, { headers: { Authorization: `Bearer ${token}`, } })
+      .then(response => { 
+          if (response.status === 200) return response.data;
+          else console.log(response.data);
+      })
+      .catch((e) => { console.log(e); });
+  }
+};
+
+export const signout = async (token) => {
+  if (token && token != "") {
+      const url = "/api/user/signout";
+      return await axios.delete(url, { headers: { Authorization: `Bearer ${token}`, } })
+      .then(response => { 
+          if (response.status === 200) return true;
+          else return false; 
+      })
+      .catch((e) => { console.log(e); return false; });
+  }
+};
+
 
 
 

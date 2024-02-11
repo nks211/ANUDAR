@@ -109,6 +109,7 @@ export const mypagestate = create((set) => ({
         newpassword: "",
         newpasswordcheck: "",
         newprofileimage: "",
+        newemail: "",
     },
     myprofile: "",
     myinfo: {
@@ -141,6 +142,7 @@ export const mypagestate = create((set) => ({
 
     },
     setnewprofileimage: (input) => set((state) => ({ updates: { ...state.updates, newprofileimage: input } })),
+    setnewemail: (input) => set((state) => ({ updates: { ...state.updates, newemail: input } })),
     getmyinfo: () => {
         
     },

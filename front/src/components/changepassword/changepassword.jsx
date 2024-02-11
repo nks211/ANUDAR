@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import "./changepassword.css";
 import { mypagestate, popupstate } from "../../StateManagement";
+import { changepassword } from "../../API";
 
 function ChangePassword() {
 
@@ -13,16 +14,22 @@ function ChangePassword() {
 
     const setmypagechangepopup = popupstate((state) => state.setmypagechangepopup);
 
-    const passwordcheckupdate = () => {
-        const localdata = JSON.parse(localStorage.getItem("userdata"));
-        if (validdata === localdata.password && updatedata.newpassword === updatedata.newpasswordcheck) {
-            setmypagechangepopup(false);
-            localStorage.setItem("userdata", JSON.stringify({ ...localdata, password: updatedata.newpassword }));
-            setnewpassword(""); setnewpasswordcheck("");
-            alert("비밀번호가 변경되었습니다")
+    const passwordcheckupdate = async () => {
+        const token = localStorage.getItem("token");
+        if (updatedata.newpassword === updatedata.newpasswordcheck) {
+            const result = await changepassword(validdata, updatedata.newpassword, token);
+            if (result != null) {
+                setmypagechangepopup(false);
+                localStorage.setItem("userdata", JSON.stringify(result));
+                setnewpassword(""); setnewpasswordcheck("");
+                alert("비밀번호가 변경되었습니다")
+            }
+            else {
+                alert("입력한 비밀번호 값이 다릅니다");
+            }
         }
         else {
-            alert("입력값을 다시 확인해주세요");
+            alert("비밀번호 확인값이 새 비밀번호와 다릅니다");
         }
     };
 

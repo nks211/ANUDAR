@@ -38,30 +38,26 @@ function Signup() {
         else {
             if (!idcheck) alert("아이디 체크를 해 주세요.");
             if (!nicknamecheck) alert("닉네임 체크를 해 주세요.");
+            const signupinputdata = {
+                "username": signupdata.id,
+                "password": signupdata.password,
+                "name": signupdata.name,
+                "nickname": signupdata.nickname,
+                "email": signupdata.email,
+                "image": signupdata.profileimage,
+                "phone": signupdata.number,
+            };
+            const signupjsondata = await signup(signupinputdata);
+            if (signupjsondata.username === signupdata.id) {
+                alert("회원가입이 완료되었습니다");
+                setpasswordinput("");
+                setpasswordcheckinput("");
+                setnumberinput("");
+                navigate("/"); window.scrollTo(0, 0);
+                setPathName(window.location.pathname);
+            }
             else {
-                const signupinputdata = {
-                    "username": signupdata.id,
-                    "password": signupdata.password,
-                    "name": signupdata.name,
-                    "nickname": signupdata.nickname,
-                    "email": signupdata.email,
-                    "image": signupdata.profileimage,
-                    "phone": signupdata.number,
-                };
-                const signupjsondata = await signup(signupinputdata);
-                console.log(signupjsondata);
-                if (signupjsondata.id === signupinputdata.id) {
-                    localStorage.setItem("userpassword", signupjsondata.password);
-                    alert("회원가입이 완료되었습니다");
-                    setpasswordinput("");
-                    setpasswordcheckinput(""); 
-                    setnumberinput(""); 
-                    navigate("/"); window.scrollTo(0, 0);
-                    setPathName(window.location.pathname);
-                }
-                else {
-                    console.log("error");
-                }
+                console.log("error");
             }
         }
 
@@ -76,7 +72,7 @@ function Signup() {
             setprofileimage(imageurl);
         }
         else {
-            alert("이미지를 찾을 수 없습니다.");
+            alert("이미지를 등록할 수 없습니다.");
         }
     }
 

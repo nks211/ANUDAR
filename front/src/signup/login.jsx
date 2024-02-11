@@ -53,6 +53,7 @@ export default function Login() {
             setlogintoken(token)
             setloginuser(infodata)
 
+            localStorage.setItem("tokentime", Date.now());
             navigate("/");
             setPathName(window.location.pathname);
         }

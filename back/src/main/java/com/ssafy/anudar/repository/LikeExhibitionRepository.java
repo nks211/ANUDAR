@@ -1,17 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.LikeExhibition;
-import com.ssafy.anudar.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface LikeExhibitionRepository extends JpaRepository<LikeExhibition, Long> {
-    Optional<LikeExhibition> findByUserAndExhibition(User user, Exhibition exhibition);
-
-    List<LikeExhibition> findAllByUser(User user);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0bb230ed89fde6ebdc7e1a94d86662e22517d25e41e9309d0d02b224fb555249
+size 568

@@ -1,20 +1,3 @@
-import { useState } from 'react'
-import './Like.css'
-
-export default function Like(props) {
-  const [isOn, setIsOn] = useState(false);
-  return (
-    <>
-      <div className="likeButton cursorPointer" 
-        onClick={()=>{
-
-        }}
-        onMouseOver={()=>{setIsOn(true)}}
-        onMouseOut={()=>{setIsOn(false)}}>
-        <img src={isOn? "../../../"+props.icon+"_reverse.png" : "../../../"+props.icon+".png"} width={25} height={25}></img>
-        <div style={{width:"10px"}}></div>
-        <div>{props.name}</div>
-      </div>
-    </>
-  )
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:17c2bbce2154436471b99ac9f1ce669343d279e7855aa65ad5c30f384329d878
+size 2917

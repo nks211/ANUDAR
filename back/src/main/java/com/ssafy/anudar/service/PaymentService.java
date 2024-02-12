@@ -37,6 +37,7 @@ public class PaymentService {
     private final UserRepository userRepository;
 
     private final String kakaoPayReadyUrl = "https://open-api.kakaopay.com/online/v1/payment/ready";
+    private final String kakaoPayApproveUrl = "https://open-api.kakaopay.com/online/v1/payment/approve";
 
     public PaymentService(RestTemplateBuilder restTemplateBuilder, PaymentRepository paymentRepository, UserRepository userRepository) {
         this.restTemplate = restTemplateBuilder.build();
@@ -44,8 +45,13 @@ public class PaymentService {
         this.userRepository = userRepository;
     }
 
+
     // 결제 준비
     public PaymentReadyDto preparePayment(PaymentReadyRequestDto requestDto, Long userId) {
+
+//        requestDto.setApproval_url("http://localhost:8080/approval");
+//        requestDto.setCancel_url("http://localhost:8080/cancel");
+//        requestDto.setFail_url("http://localhost:8080/fail");
 
         // 사용자 정보 가져오기
         User user = userRepository.findById(userId)
@@ -72,10 +78,11 @@ public class PaymentService {
     }
 
     // 결제 승인
-    public PaymentApproveDto approvePayment(PaymentApproveRequestDto requestDto) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "SECRET_KEY " + secretKey);
+    public PaymentApproveDto approvePayment(String username, PaymentApproveRequestDto requestDto) {
+
+        // 사용자 정보 가져오기
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
         // 결제 승인 요청에 필요한 정보를 설정
         Map<String, Object> requestMap = new HashMap<>();
@@ -85,9 +92,11 @@ public class PaymentService {
         requestMap.put("partner_user_id", requestDto.getPartner_user_id()); // 가맹점 회원 id
         requestMap.put("pg_token", requestDto.getPg_token()); // 사용자 결제 수단 선택 후 받은 pg_token
 
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestMap, headers);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "SECRET_KEY " + secretKey);
 
-        String kakaoPayApproveUrl = "https://open-api.kakaopay.com/online/v1/payment/approve";
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestMap, headers);
         ResponseEntity<PaymentApproveDto> response = restTemplate.postForEntity(kakaoPayApproveUrl, request, PaymentApproveDto.class);
 
 
@@ -98,7 +107,7 @@ public class PaymentService {
                 Long totalAmount = Long.valueOf(paymentInfo.getTotal_amount());
 
                 // 사용자 엔터티를 통해 사용자 포인트 정보 업데이트
-                User user = paymentInfo.getUser();
+//                User user = paymentInfo.getUser();
 
                 // 사용자 포인트 업데이트 메소드 호출
                 user.addPoints(totalAmount);

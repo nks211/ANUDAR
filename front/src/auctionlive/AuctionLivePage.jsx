@@ -102,7 +102,7 @@ export default function AuctionLivePage() {
         nickname: loginuser.nickname,
         askingprice: chat,
       }),
-    });
+    }); 
     setChat("");
   };
 

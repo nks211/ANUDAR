@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3cbfe55dfd1e9c6836b4176fafe39e3f2b9f7fc606919a1ea46227fab8ac9a47
-size 1061
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.Notify;
+import com.ssafy.anudar.model.User;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class UserDto {
+    private String username;
+    private String name;
+    private String nickname;
+    private String email;
+    private String image;
+    private String phone;
+    private List<NotifyDto> notifies = new ArrayList<>(); // 알림 리스트 추가
+
+    public static UserDto fromEntity (User user) {
+        return new UserDto(
+                user.getUsername(),
+                user.getName(),
+                user.getNickname(),
+                user.getEmail(),
+                user.getImage(),
+                user.getPhone(),
+                user.getNotifies().stream().map(NotifyDto::fromEntity).collect(Collectors.toList())
+        );
+    }
+}

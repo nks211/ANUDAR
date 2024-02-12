@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f957ebbc3e71e7dd4ba1099c2d6d57162fe3f16ae66d8a54d3164b73354c1918
-size 1119
+import React, { useContext } from "react";
+import { DocentContext } from '../../docent/DocentPage'
+
+
+export default function Chatting() {
+  const { setChat, publish, chatList, chat, nickname } = useContext(DocentContext);
+
+
+  const handleChange = (event) => {
+    // 채팅 입력 시 state에 값 설정
+    setChat(event.target.value);
+  };
+
+  const handleSubmit = (event, chat) => {
+    // 보내기 버튼 눌렀을 때 publish
+    event.preventDefault();
+    publish(chat);
+  };
+
+  return (
+    <div>
+      <div className={"chat-list"}>
+        {chatList.map((chatItem, index) => (
+          <div key={index}>
+            <p>{chatItem.nickname} : {chatItem.message}</p>
+          </div>
+        ))}
+      </div>
+      <div id="chatInput">      
+        <form onSubmit={(event) => handleSubmit(event, chat)}>
+        <div>
+          <input placeholder="채팅을 입력하세요."
+            type={"text"}
+            name={"chatInput"}
+            onChange={handleChange}
+            value={chat}
+          />
+        </div>
+        <input type={"submit"} value={"입력"} />
+      </form>
+      </div>
+
+    </div>
+  );
+};

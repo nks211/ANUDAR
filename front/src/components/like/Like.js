@@ -42,11 +42,8 @@ export default function Like(props) {
         onClick={()=>{
           switch (props.likeType) {
             case "artist":  // 작가 팔로우
-              if (props.isLike) {
-                unfollow()
-              } else {
-                follow()
-              }
+              if (props.isLike) { unfollow() } 
+              else { follow() }
               props.onChangeLike(!props.isLike)
               break;
             
@@ -61,7 +58,7 @@ export default function Like(props) {
         }}
         onMouseOver={()=>{setIsOn(true)}}
         onMouseOut={()=>{setIsOn(false)}}>
-        <img src={isOn||props.isLike? "../../../"+props.icon+"_reverse.png" : "../../../"+props.icon+".png"} width={25} height={25}></img>
+        {props.likeType==="work"?<img src={isOn||props.isLike? "../../../"+props.icon+"_reverse.png" : "../../../"+props.icon+".png"} width={25} height={25}/>:<></>}
         {/* <img src={props.isLike? "../../../"+props.icon+".png" : "../../../"+props.icon+"_reverse.png"} width={25} height={25}></img> */}
         <div style={{width:"10px"}}></div>
         <div>{props.name}</div>

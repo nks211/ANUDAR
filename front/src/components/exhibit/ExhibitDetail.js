@@ -81,7 +81,7 @@ export default function ExhibitDetail(props) {
           </div>
           <div style={{width:"30vw"}}>
             {/* // <img className="exhibitImage2" style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img> */}
-            <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px"}} src={props.exhibit.image}></img>
+            <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px", objectFit:"cover"}} src={props.exhibit.image}></img>
           </div>
           <div style={{width:"35vw", backgroundColor:"gray"}}>
             <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.detail}</div>

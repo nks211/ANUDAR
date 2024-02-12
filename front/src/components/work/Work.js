@@ -66,7 +66,7 @@ export default function Work(props) {
         </div>
       )
     
-    case 3:
+    case 3:  // 작가 상세
       return (
         <div>
           <div className="workCard3">
@@ -75,18 +75,18 @@ export default function Work(props) {
               onMouseOut={()=>{setInfoOpacity(0)}}
             >
               <div className="workImage3" onClick={()=> {
-                navigate(`/work/${props.workId}`)
+                navigate(`/work/${props.work.id}`)
                 setPathName(window.location.pathname)
                 window.scrollTo(0, 0)
               }}>
-                <img src={props.image}></img>
+                <img src={props.work.image}></img>
               </div>
               <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}}  onClick={()=> {
-                navigate(`/work/${props.workId}`)
+                navigate(`/work/${props.work.id}`)
                 setPathName(window.location.pathname)
                 window.scrollTo(0, 0)
               }}>
-                <p><span>{props.workName}</span></p>
+                <p><span>{props.work.title}</span></p>
               </div>
             </div>
           </div>

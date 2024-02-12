@@ -5,7 +5,7 @@ import Work from "../components/work/Work";
 import Exhibit from "../components/exhibit/Exhibit";
 import dummy from "../db/data.json"
 import './ArtistPage.css'
-import { getAuthor, getFollowing } from "../API";
+import { getAuthor, getAuthorWorks, getFollowing } from "../API";
 import { mainstate } from '../StateManagement';
 
 export default function ArtistDetailPage() {
@@ -18,6 +18,7 @@ export default function ArtistDetailPage() {
 
   const [isFollow, setIsFollow] = useState(false);
 
+  // 작가 정보 조회
   async function getData() {
     try {
       const res = await getAuthor(artistName)
@@ -28,6 +29,7 @@ export default function ArtistDetailPage() {
     }
   }
 
+  // 팔로잉 목록 조회
   async function getFollow() {
     try {
       let followList;  // 팔로잉 리스트
@@ -43,31 +45,29 @@ export default function ArtistDetailPage() {
     }
   }
 
+  // 작가 작품 조회
+  async function getWorks() {
+    try {
+      const res = await getAuthorWorks(artistName, logintoken)
+      setWorks(res)
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(()=>{
     getData()
     getFollow()
+    getWorks()
   }, [])
 
   const changeFollow = (value) => {
     setIsFollow(value)
   }
 
-
-
-  let worksContent = <div></div>
   let exhibitsContent = <div></div>
 
-  // if (works.length > 0) {
-  //   const workList = JSON.parse(`[${works}]`);
-  //   worksContent = <div className="workList">
-  //                   {workList.map(work=>(
-  //                     // *수정* props 변경 ..
-  //                     <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-  //                   ))}
-  //                 </div>
-  // }
-
-  
   // if (exhibits.length > 0) {
   //   const exhibitList = JSON.parse(`[${exhibits}]`);
   //   exhibitsContent = <div className="exhibitList">
@@ -82,7 +82,7 @@ export default function ArtistDetailPage() {
       <div className="artistArea">
         <div style={{width:450}}>
         {/* <div> */}
-          <img src={artistInfo.image} style={{"object-fit": "cover"}} width={350} height={450}></img>
+          <img src={artistInfo.image} style={{"object-fit": "cover"}} width={350} height={450}/>
         </div>
         <div className="artistInfoArea">
           <div className="artistHeader">  {/* 작가명, 팔로우 버튼 */}
@@ -110,7 +110,9 @@ export default function ArtistDetailPage() {
 
       <div className="artistWorks boldFont">작품</div>
       <div className="artistWorkList">
-        {worksContent}
+        <div className="workList">
+          {works.map(work=>( <Work className="Work" workType={3} work={work} /> ))}
+        </div>
       </div>
       
       <div className="artistExhibits boldFont">전시회</div>

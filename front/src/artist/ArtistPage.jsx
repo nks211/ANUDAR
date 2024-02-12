@@ -8,8 +8,6 @@ import { getAuthors } from "../API";
 export default function ArtistPage() {
   const [artists, setArtists] = useState([]);
 
-  // console.log(artists)
-
   async function getData() {
     try {
       const res = await getAuthors()
@@ -22,7 +20,6 @@ export default function ArtistPage() {
   useEffect(()=>{
     getData()
   }, [])
-
 
   let content = <div className="artistList">
                   {artists.map(artist=>(

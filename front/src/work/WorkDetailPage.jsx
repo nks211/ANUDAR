@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Like from "../components/like/Like";
 import Work from "../components/work/Work";
 import './WorkPage.css'
-import { getLikeWorks, getWork } from '../API';
+import { getLikeWorks, getWork, getAuthorWorks } from '../API';
 import { mainstate } from '../StateManagement';
 
 export default function WorkDetailPage() {
@@ -12,22 +12,26 @@ export default function WorkDetailPage() {
   const [work, setWork] = useState({})
   const [isLike, setIsLike] = useState(false)
   const logintoken = mainstate((state) => (state.logintoken))
+  const [works, setWorks] = useState([]);  // 작가의 작품
 
+  // 작품 정보 조회
   async function getData() {
     try {
       const res = await getWork(workId)
       setWork(res)
+      getWorks(res)
     } catch (err) {
       console.log(err)
     }
   }
   
+  // 작품 찜 목록 조회
   async function getLike() {
     try {
       let likes;
       const res = await getLikeWorks(logintoken)
       likes = res
-      console.log(likes)
+      // console.log(likes)
 
       for (let i=0; i<likes.length; i++) {
         if (likes[i].id === Number(workId)) { setIsLike(true); return }
@@ -38,10 +42,25 @@ export default function WorkDetailPage() {
     }
   }
 
+  // 작가 작품 조회
+  async function getWorks(work) {
+    try {
+      const res = await getAuthorWorks(work.author, logintoken)
+      setWorks(res)
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(()=>{
     getData()
     getLike()
   }, [])
+  
+  // useEffect(()=>{
+  //   if (Object.keys(work).length) { getWorks() }
+  // }, [work])
 
   const changeLike = (value) => {
     setIsLike(value)
@@ -74,7 +93,7 @@ export default function WorkDetailPage() {
   return (
     <div>
       <div className="workArea">
-        <img src={work.image} width={450} height={450}></img>
+        <img src={work.image} />
         <div className="workInfo">
           <div className="workHeader"> {/* 제목, 찜하기 버튼 */}
             <div className="workTitle boldFont">{work.title}</div>
@@ -94,6 +113,9 @@ export default function WorkDetailPage() {
       
       <div className="otherWorks boldFont">작가의 다른 작품</div>
       <div className="otherWorkList">
+        <div className="workList">
+          {works.map(work=>( <Work className="Work" workType={3} work={work} /> ))}
+        </div>
         {/* {content} */}
         {/* <div className="workList">
           {workList.map(work=>(

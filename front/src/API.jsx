@@ -286,13 +286,19 @@ export async function getLikeWorks(token) {
 // 작품 찜하기 및 취소
 export async function likeWork(id, token) {
   const url = `/api/work/like/${id}`
-  const config = { 
-    headers : { 
-      "Authorization": `Bearer ${token}`,
-    }
-  }
-  console.log(url)
+  const config = { headers : { Authorization: `Bearer ${token}` } }
+
   return await axios.post(url, {}, config)
   .then(res => {console.log(res)})
+  .catch(err => {console.log(err)})
+}
+
+// 작가 작품 조회
+export async function getAuthorWorks(name, token) {
+  const url = `/api/work/user/${name}`
+  const config = { headers : { Authorization: `Bearer ${token}` } }
+
+  return await axios.get(url, config)
+  .then(res => {return res.data})
   .catch(err => {console.log(err)})
 }

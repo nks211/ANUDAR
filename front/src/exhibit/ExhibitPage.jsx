@@ -18,14 +18,14 @@ export default function ExhibitPage() {
   const [selectBtn, setSelectBtn] = useState("cur");
   const navigate = useNavigate();
 
-  async function onMounted() {
+  async function getData() {
     try {
       await getAllExhibitList()
-      .then(res => {setAllExhibits(res); console.log(allExhibits)})
+      .then(res => setAllExhibits(res))
       .catch(err=>console.log(err))
 
       await getCurExhibitList()
-      .then(res=> {setCurExhibits(res); console.log(curExhibits)})
+      .then(res=> {setCurExhibits(res); setExhibitList(res)})
       .catch(err=>console.log(err))
 
     } catch (err) {
@@ -33,21 +33,11 @@ export default function ExhibitPage() {
     } 
   }
 
-  // async function getAllData() {
-  //   try {
-  //     const res = await getAllExhibitList()
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
   useEffect(()=>{
     console.log('ExhibitPage')
     console.log(localStorage)
-    onMounted()
-    setExhibitList(curExhibits) 
-  }, [localStorage.getItem("currenttab")])
-
+    getData()
+  }, [])
 
   return (
     <div>
@@ -66,11 +56,9 @@ export default function ExhibitPage() {
 
         <div className="exhibitHeaderRight">
           <Search updateValues={(searchExhibit) => {
-            const newExhibits = []
-            for (let i=1; i<=exhibitList.length; i++) {
-              if (exhibitList[i]?.name.includes(searchExhibit)) { newExhibits.push(exhibitList[i]) }
-            }
-            setExhibitList(newExhibits)
+            let exhibits = selectBtn==="cur"?curExhibits:allExhibits
+            const filterExhibits = exhibits.filter(exhibit => exhibit.name.includes(searchExhibit))
+            setExhibitList(filterExhibits)
           }}/>
           <div className="exhibitRegistBtn" onClick={()=>{
             navigate(`/exhibit/regist`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 등록

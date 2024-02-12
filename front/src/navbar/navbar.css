@@ -87,6 +87,9 @@
     top: 2px;
     position: absolute;
     cursor: pointer;
+    border-radius: 70%;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .sector .login {

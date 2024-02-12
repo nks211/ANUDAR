@@ -7,76 +7,128 @@ import { AppContext } from "../App.js";
 import Modal from "react-modal";
 import { mainstate, popupstate } from "../StateManagement.jsx";
 
-const LoginPanel = () => {
-  const navigate = useNavigate();
+// const LoginPanel = (image, notices) => {
+//   const navigate = useNavigate();
 
-  const loginstatus = localStorage.getItem("login") === "true";
-  const localdata = JSON.parse(localStorage.getItem("userdata"));
-  const noticepopup = popupstate((state) => state.homenoticepopup);
-  const setnoticepopup = popupstate((state) => state.sethomenoticepopup);
-  const noticelist = mainstate((state) => state.noticelist);
-  const checknotice = mainstate((state) => state.noticecheck);
-  const [imagedata, setimagedata] = useState(loginstatus ? localdata.image : "../../asset/avatar.png");
-  
-  if (window.location.pathname.includes('/docent')) { return <div></div> }
+//   const loginstatus = localStorage.getItem("login") === "true";
+//   const noticepopup = popupstate((state) => state.homenoticepopup);
+//   const setnoticepopup = popupstate((state) => state.sethomenoticepopup);
+//   const checknotice = mainstate((state) => state.noticecheck);
 
-  // if (localdata) {
-  //   console.log(`{
-  //     id : ${localdata.username} \n
-  //     password: ${localdata.password} \n
-  //     name: ${localdata.name} \n
-  //     nickname: ${localdata.nickname} \n
-  //     email : ${localdata.email} \n
-  //     image : ${localdata.image} \n
-  //     phone : ${localdata.phone} \n
-  //   }`)
-  // }
-  
+//   if (window.location.pathname.includes('/docent')) { return <div></div> }
 
-  return(
-    <div>
-      <div onClick={() => { setnoticepopup(!noticepopup) }}>{loginstatus ?
-        (noticelist.length > 0 ?
-          <img className="noti" src="../../asset/noti_on.png" />
-          : <img className="noti" src="../../asset/noti_off.png" />) : ""}
-      </div>
-      <div>{loginstatus ?
-        <img width="45px" height="45px" onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} className="mypage" src={imagedata} /> : ""}</div>
-      <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
-        {noticelist.length > 0 ? Object.values(noticelist).map((notice, i) => <div onClick={() => { checknotice(notice) }}><Notice key={i} title={notice.title} date={notice.date} details={notice.details}/></div>) : UptoDate()}
-      
-      </div>
-    </div>
-  );
-}
+//   // if (localdata) {
+//   //   console.log(`{
+//   //     id : ${localdata.username} \n
+//   //     password: ${localdata.password} \n
+//   //     name: ${localdata.name} \n
+//   //     nickname: ${localdata.nickname} \n
+//   //     email : ${localdata.email} \n
+//   //     image : ${localdata.image} \n
+//   //     phone : ${localdata.phone} \n
+//   //   }`)
+//   // }
+
+
+//   return (
+//     <div>
+//       <div onClick={() => { setnoticepopup(!noticepopup) }}>{loginstatus ?
+//         (notices.length > 0 ?
+//           <img className="noti" src="../../asset/noti_on.png" />
+//           : <img className="noti" src="../../asset/noti_off.png" />) : ""}
+//       </div>
+//       <div>{loginstatus ?
+//         <img width="45px" height="45px" onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} className="mypage" src={image} /> : ""}</div>
+//       <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
+//         {notices.length > 0 ? Object.values(notices).map((notice, i) => <div onClick={() => { checknotice(notice) }}><Notice key={i} title={notice.title} date={notice.date} details={notice.details} /></div>) : UptoDate()}
+
+//       </div>
+//     </div>
+//   );
+// }
 
 export default function NavBar() {
-  
   const navigate = useNavigate();
   const { modalsetting } = useContext(AppContext);
-
-  const locallogin = localStorage.getItem("login") === "true";
+  
   const localtab = localStorage.getItem("currenttab");
-  const localtoken = localStorage.getItem("token");
-  const localdata = JSON.parse(localStorage.getItem("userdata"));
-  const [logincheck, setlogincheck] = useState(locallogin != null ? locallogin : false);
-  const [loginuser, setloginuser] = useState(localtoken != null ? localdata : {});
   const [navtab, setnavtab] = useState(localtab != null ? localtab : "");
   const loginpopup = popupstate((state) => state.homepopup);
   const setloginpopup = popupstate((state) => state.sethomepopup);
   const setnoticepopup = popupstate((state) => state.sethomenoticepopup);
-  const tabbar = mainstate((state) => state.tabbar);
+
+  // getSnapshot 오류 ..?
+  const isLogin = mainstate((state) => state.isLogin)
+  const setIsLogin = mainstate((state) => state.setIsLogin)
+  const loginUser = mainstate((state) => state.loginuser)
+  const setloginUser = mainstate((state) => state.setloginuser)
+  // const logintoken = mainstate((state) => state.logintoken)
+  const setlogintoken = mainstate((state) => state.setlogintoken)
+  const tabbar = mainstate((state) => state.tabbar)
+
+
+  // 로그인패널
+  const noticepopup = popupstate((state) => state.homenoticepopup);
+  const noticelist = mainstate((state) => state.noticelist);
+  const checknotice = mainstate((state) => state.noticecheck);
+  
+  function LoginPanel() {
+    return (
+      <div>
+      <div onClick={() => { setnoticepopup(!noticepopup) }}>{isLogin ?
+        (noticelist.length > 0 ?
+          <img className="noti" src="../../asset/noti_on.png" />
+          : <img className="noti" src="../../asset/noti_off.png" />) : ""}
+      </div>
+      <div>{isLogin ?
+        <img width="45px" height="45px" className="mypage" src={loginUser.image?loginUser.image:"../../asset/avatar.png"} onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} /> : ""}
+      </div>
+      <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
+        {noticelist.length > 0 ? Object.values(noticelist).map((notice, i) => <div onClick={() => { checknotice(notice) }}><Notice key={i} title={notice.title} date={notice.date} details={notice.details}/></div>) : UptoDate()}
+      </div>
+    </div>
+    )
+  }
+
+
 
   useEffect(() => {
-    if (locallogin) { 
-      setlogincheck(locallogin);
+    // if (locallogin) {
+    //   setlogincheck(locallogin);
+    // }
+    // if (localtoken) {
+    //   setloginuser(localdata);
+    //   setimagedata(localdata.image);
+    // }
+    // 로그인 토큰 만료 시간 경과 시 자동 로그아웃 처리됨
+    if (localStorage.getItem("tokentime")) {
+      const logtime = Date.now() - localStorage.getItem("tokentime");
+      if (logtime >= 60 * 60 * 1000) {
+        setIsLogin(false); setnoticepopup(false); 
+        localStorage.setItem("login", false); 
+        localStorage.setItem("currenttab", ""); 
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokentime"); 
+        localStorage.removeItem("userdata"); 
+        navigate("/"); window.scrollTo(0, 0);
+      }
     }
   });
 
-
   if (window.location.pathname.includes('/docent')) { 
-    return (<div>{LoginPanel()}</div>);
+    return (<div></div>);
   }
+
+
+
+  // if (window.location.pathname.includes('/docent')) {
+  //   return (<div>{LoginPanel(imagedata, noticelist)}</div>);
+  // }
+
+
+
+
+
 
   return (
     <div id="nav">
@@ -84,10 +136,36 @@ export default function NavBar() {
         <div className="logo" onClick={() => { setnavtab(""); localStorage.setItem("currenttab", ""); navigate("/"); window.scrollTo(0, 0); }}>ANUDAR</div>
         <div className="sector">
           {LoginPanel()}
+          <div className={isLogin ? "login" : "logout"}>
+            <button onClick={isLogin ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{isLogin ? loginUser.nickname + " 님" : "로그인"}</button>
+            <div className="line"> |  </div>
+            <button onClick={
+              isLogin ? 
+                () => { 
+                  setIsLogin(false)
+                  setloginUser({})
+                  setlogintoken("")
+                  setnoticepopup(false); 
+
+                  localStorage.setItem("login", false); 
+                  localStorage.setItem("currenttab", ""); 
+                  localStorage.removeItem("token"); 
+                  localStorage.removeItem("userdata"); 
+                  navigate("/"); window.scrollTo(0, 0); 
+                  } : 
+                () => { navigate("/user/join"); window.scrollTo(0, 0); }} 
+              style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{isLogin ? "로그아웃" : "회원가입"}
+            </button>  
+
+
+
+          {/* {LoginPanel(imagedata, noticelist)}
           <div className={logincheck ? "login" : "logout"}>
             <button onClick={logincheck ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{logincheck ? loginuser.nickname + " 님" : "로그인"}</button>
             <div className="line"> |  </div>
-            <button onClick={logincheck ? () => { setlogincheck(false); setnoticepopup(false); localStorage.setItem("login", false); localStorage.setItem("currenttab", ""); localStorage.removeItem("token"); localStorage.removeItem("userdata"); navigate("/"); window.scrollTo(0, 0); } : () => { navigate("/user/join"); window.scrollTo(0, 0); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{logincheck ? "로그아웃" : "회원가입"}</button>  
+            <button onClick={logincheck ? () => { setlogincheck(false); setnoticepopup(false); localStorage.setItem("login", false); localStorage.setItem("currenttab", ""); localStorage.removeItem("token"); localStorage.removeItem("tokentime"); localStorage.removeItem("userdata"); navigate("/"); window.scrollTo(0, 0); } : () => { navigate("/user/join"); window.scrollTo(0, 0); }} style={{ border: 0, backgroundColor: "transparent" }} className="signbutton">{logincheck ? "로그아웃" : "회원가입"}</button> */}
+          
+          
           </div>
         </div>
       </div>
@@ -100,5 +178,4 @@ export default function NavBar() {
       <Modal isOpen={loginpopup} onRequestClose={() => { setloginpopup(false); }} style={modalsetting}><Login /></Modal>
     </div>
   );
-
 }

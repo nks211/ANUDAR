@@ -15,13 +15,13 @@ export default function Bidding() {
     const handleSubmit = (event, chat) => {
       // 보내기 버튼 눌렀을 때 publish
       event.preventDefault();
-      if (!isNaN(chat) && chat >= currentPrice) {
+      if (!isNaN(chat) && chat > currentPrice) {
         console.log('응찰이 완료되었습니다.');
         publish(chat);
       }
       else {
-        console.log('현재가보다 낮은 가격입니다.');
-        alert('현재가보다 낮은 가격입니다.');
+        console.log('현재가보다 높은 가격으로 응찰해주십시오.');
+        alert('현재가보다 높은 가격으로 응찰해주십시오.');
       }
     };
     return (
@@ -34,7 +34,7 @@ export default function Bidding() {
         {chatList.map((chatItem, index) => (
           <div key={index}>
             <p>
-              {nickname}님이 {chatItem.askingprice}원을 응찰하였습니다!
+              {chatItem.nickname}님이 {chatItem.askingprice}원을 응찰하였습니다!
             </p>
           </div>
         ))}
@@ -50,7 +50,7 @@ export default function Bidding() {
         </div>
         <input type={"submit"} value={"응찰하기"} />
       </form>
-      <button onClick={() =>successbid(currentPrice, 3, currentBidUser, 1)}>낙찰하기</button>
+      <button onClick={() =>successbid(currentPrice, 2, currentBidUser, 1)}>낙찰하기</button>
     </div>
     );
   };

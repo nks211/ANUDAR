@@ -22,7 +22,7 @@ export default function Chatting() {
       <div className={"chat-list"}>
         {chatList.map((chatItem, index) => (
           <div key={index}>
-            <p>{nickname} : {chatItem.message}</p>
+            <p>{chatItem.nickname} : {chatItem.message}</p>
           </div>
         ))}
       </div>

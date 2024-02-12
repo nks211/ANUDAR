@@ -18,6 +18,7 @@ export default function AuctionLivePage() {
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
   const [nickname, setNickname] = useState("");
+  
 
   let auctionList = [];
   // const [auctionList, setAuctionList] = useState([]);
@@ -36,15 +37,15 @@ export default function AuctionLivePage() {
     // 경매 정보 불러오기
     auctionlist()
     .then(auctionData => {
-      console.log(auctionData)
       auctionList.push(...auctionData);
-      // setAuctionList(...auctionData);
-      console.log(auctionList);
+      console.log(auctionList)
     })
     .catch(e =>{
       console.log("경매 정보를 찾을 수 없습니다.", e);
     })
   }, [pathName]);
+
+  console.log(auctionList)
 
   // 채팅
   const [chatList, setChatList] = useState([]);
@@ -53,30 +54,35 @@ export default function AuctionLivePage() {
   const [currentBidUser, setCurrentBidUser] = useState("아직 응찰이 없습니다.");
 
   const client = useRef({});
-  const decodedToken = useRef(jwtDecode(window.localStorage.getItem('authorization')));
+  const decodedToken = useRef(jwtDecode(window.localStorage.getItem('token')));
 
   const connect = () => {
     client.current = new StomJs.Client({
-      // brokerURL: "ws://localhost:8080/api/ws",
-      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(auctionId);
+        publish(0);
         subscribe();
       },
       connectHeaders : {
-        Authorization: window.localStorage.getItem('authorization'),
+        Authorization: window.localStorage.getItem('token'),
       },
     });
     client.current.activate();
   };
 
+
   const subscribe = () => {
     client.current.subscribe("/sub/auctionbid/" + auctionId, (body) => {
       const json_body = JSON.parse(body.body);
       console.log(body.body);
-      setChatList((_chat_list) => [..._chat_list, json_body]);
-
+      console.log(json_body.askingprice);
+      if (json_body.askingprice !== 0) {
+        setChatList((_chat_list) => [..._chat_list, json_body]);
+      }
+      
       // 현재가 갱신 로직
       const currentPrice = json_body.currentBid;
       const currentBidUser = json_body.currentBidUser;

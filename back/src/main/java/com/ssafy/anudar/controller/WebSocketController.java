@@ -20,6 +20,7 @@ public class WebSocketController {
     public void handleChatMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor){
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatDto.getSessionId(), chatDto);
     }
+
     @MessageMapping("/auctionbid/{sessionId}")
     public void handleAuctionBidMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
         // 여기서 현재가 갱신 로직 수행

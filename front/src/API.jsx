@@ -83,7 +83,7 @@ export const successbid = async (finalPrice, workId, nickname, auctionId) => {
     }
     return await axios.post(url, data,{
         headers: {
-            'Authorization': "Bearer " + window.localStorage.getItem('authorization')
+            'Authorization': "Bearer " + window.localStorage.getItem('token')
         }
     })
     .then(response => {
@@ -96,7 +96,7 @@ export const auctionlist = async () => {
     const url = "/api/auction/works";
     return await axios.get(url, {
         headers: {
-            'Authorization': "Bearer " + window.localStorage.getItem('authorization')
+            'Authorization': "Bearer " + window.localStorage.getItem('token')
         }
     })
     .then(response => {

@@ -30,19 +30,19 @@ export default function DocentPage(){
   const [chat, setChat] = useState("");
 
   const client = useRef({});
-  const decodedToken = useRef(jwtDecode(window.localStorage.getItem('authorization')));
+  const decodedToken = useRef(jwtDecode(window.localStorage.getItem('token')));
 
   const connect = () => {
     client.current = new StomJs.Client({
-      // brokerURL: "ws://localhost:8080/api/ws",
-      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(docentId);
         subscribe();
       },
       connectHeaders : {
-        Authorization: window.localStorage.getItem('authorization'),
+        Authorization: window.localStorage.getItem('token'),
       },
     });
     client.current.activate();

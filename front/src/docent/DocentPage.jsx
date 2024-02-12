@@ -10,12 +10,14 @@ import axios from 'axios';
 export const DocentContext = createContext();
 export default function DocentPage(){
   const docentId = useLocation().pathname.split('/').pop();
-  const username = "host";
+  // const username = "host";
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
   const [docentVideoAvailable, setDocentVideoAvailable] = useState(true);
   const [videoUrl, setVideoUrl] = useState(null);
+  const [username, setUsername] = useState('');
+
   useEffect(() => {
     axios.get('https://i10d105.p.ssafy.io/api/exhibit/docent/'+docentId)
       .then(response => { // 도슨트 영상이 있음!
@@ -28,6 +30,21 @@ export default function DocentPage(){
         console.log(error)
         setDocentVideoAvailable(false)
       })
+
+      axios.get('https://i10d105.p.ssafy.io/api/exhibit/'+docentId+'/author')
+        .then(response => {
+          console.log(response.data);
+          const username = JSON.parse(localStorage.getItem('userdata')).username
+          console.log(username)
+          if(username === response.data) {
+            setUsername('host');
+          }else {
+            setUsername(JSON.parse(localStorage.getItem('userdata')).nickname)
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
 
       return () => {
         setPathName(window.location.pathname);

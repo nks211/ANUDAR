@@ -95,16 +95,16 @@ export default function Exhibit3DPage() {
 
         function walk() {
             if(keyController.keys['KeyW'] || keyController.keys['ArrowUp']) {
-                controls.moveForward(0.1);
+                controls.moveForward(0.08);
             }
             if(keyController.keys['KeyS'] || keyController.keys['ArrowDown']) {
-                controls.moveForward(-0.1);
+                controls.moveForward(-0.08);
             }
             if(keyController.keys['KeyA'] || keyController.keys['ArrowLeft']) {
-                controls.moveRight(-0.1);
+                controls.moveRight(-0.08);
             }
             if(keyController.keys['KeyD'] || keyController.keys['ArrowRight']) {
-                controls.moveRight(0.1);
+                controls.moveRight(0.08);
             }
         }
 
@@ -423,7 +423,7 @@ export default function Exhibit3DPage() {
         const workMaxLength = 7;
 
         // 작품 입력
-        const workNum = 8; // 작품 수
+        const workNum = 20; // 작품 수
         for(let i=0;i<workNum;i++){
             workTextures[i]=textureLoader.load(`../../asset/work${i}.jpg`)
             workTitles[i]=`작품${i}`;

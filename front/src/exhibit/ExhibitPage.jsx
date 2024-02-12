@@ -6,6 +6,7 @@ import Exhibit from "../components/exhibit/Exhibit";
 import Search from "../components/search/Search";
 import '../index.css'
 import './ExhibitPage.css'
+import { mainstate } from "../StateManagement";
 
 import { getAllExhibitList, getCurExhibitList } from "../API";
 
@@ -14,6 +15,8 @@ export default function ExhibitPage() {
   const [allExhibits, setAllExhibits] = useState([]);  // 전체 전시 저장
   const [curExhibits, setCurExhibits] = useState([]);  // 진행 중 전시 저장
   const [exhibitList, setExhibitList] = useState(curExhibits);  // 선택한 전시
+
+  const isLogin = mainstate((state)=>state.isLogin)
 
   const [selectBtn, setSelectBtn] = useState("cur");
   const navigate = useNavigate();
@@ -34,8 +37,8 @@ export default function ExhibitPage() {
   }
 
   useEffect(()=>{
-    console.log('ExhibitPage')
-    console.log(localStorage)
+    // console.log('ExhibitPage')
+    // console.log(localStorage)
     getData()
   }, [])
 
@@ -60,9 +63,11 @@ export default function ExhibitPage() {
             const filterExhibits = exhibits.filter(exhibit => exhibit.name.includes(searchExhibit))
             setExhibitList(filterExhibits)
           }}/>
+          {isLogin?
           <div className="exhibitRegistBtn" onClick={()=>{
             navigate(`/exhibit/regist`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 등록
-          </div>
+          </div>:<></>}
+          
         </div>
       </div>
       <div className="exhibitList">

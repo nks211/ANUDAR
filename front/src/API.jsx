@@ -125,24 +125,7 @@ export const signout = async (token) => {
 
 
 
-/* 전시회 페이지 */
-
-// 전체 전시회 리스트
-// export const getAllExhibitList = async () => {
-//   const url = "/api/exhibit/list"
-//   return await axios.get(url)
-//   .then((res) => { return (res.data); })
-//   .catch((err) => { console.log(err); /* return {}; */ });
-// }
-
-// // 진행 중인 전시회 리스트
-// export const getCurExhibitList = async () => {
-//   const url = "/api/exhibit/list/current"
-//   return await axios.get(url)
-//   .then(res => { return (res.data); })
-//   .catch((err) => { console.log(err); });
-// }
-
+/* ------------------------------- 전시회 페이지 ------------------------------- */
 
 // 전체 전시회 리스트
 export async function getAllExhibitList() {
@@ -219,8 +202,70 @@ export async function getLikeExhibit(token) {
   .catch(err => {console.log(err)})
 }
 
+// 전시 찜하기 및 취소
+export async function likeExhibit(id, token) {
+  const url = `/api/exhibit/like/${id}`
+  const config = { headers : { Authorization: `Bearer ${token}` } }
 
-/* 작가 페이지 */
+  return await axios.post(url, {}, config)
+  .then(res => {console.log(res)})
+  .catch(err => {console.log(err)})
+}
+
+
+
+// // 전시회 등록
+// export async function registExhibit(data, token) {
+//   const url = "/api/exhibit/regist"
+//   const config = { headers : { Authorization: `Bearer ${token}` } }
+//   return await axios.post(url, data, config)
+//   .then(res => {return res.data})
+//   .catch(err => console.log(err))
+// }
+
+
+/* --- 방명록 --- */
+// 방명록 작성
+export async function createReview(id, data, token) {
+  const url = `/api/exhibit/${id}/regist-comment`  // 전시회 id
+  const config = { headers : { 
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/text; charset=utf-8'
+  }}
+  return await axios.post(url, data, config)
+  .then(res => {console.log(res.data.content); return res.data})
+  .catch(err => console.log(err))
+}
+
+// 방명록 조회
+export async function readReview(id) {
+  const url = `/api/exhibit/${id}/comments-list`  // 전시회 id
+  return await axios.get(url)
+  .then(res => {return res.data})
+  .catch(err => console.log(err))
+}
+
+// 방명록 삭제
+export async function deleteReview(id, token) {
+  const url = `/api/exhibit/${id}`  // 리뷰 id
+  const config = { headers : { Authorization: `Bearer ${token}` } }
+  return await axios.delete(url, config)
+  .then(res => {alert('방명록이 삭제되었습니다.'); return res.data})
+  .catch(err => {console.log(err)})
+
+}
+
+// // 작가 언팔로우
+// export async function unfollowAuthor(name, token) {
+//   const url = `/api/user/unfollow/${name}`
+//   const config = { headers : { Authorization: `Bearer ${token}` } }
+//   return await axios.delete(url, config)
+//   .then(res => {return res.data})
+//   .catch(err => {console.log(err)})
+// }
+
+
+/* ------------------------------- 작가 페이지 ------------------------------- */
 // 전체 작가 조회
 export async function getAuthors() {
   const url = "/api/user/authors"
@@ -257,7 +302,7 @@ export async function unfollowAuthor(name, token) {
 
 
 
-/* 작품 페이지 */
+/* ------------------------------- 작품 페이지 ------------------------------- */
 // 전체 작품 조회
 export async function getWorks() {
   const url = "/api/work"
@@ -297,7 +342,7 @@ export async function likeWork(id, token) {
 export async function getAuthorWorks(name, token) {
   const url = `/api/work/user/${name}`
   const config = { headers : { Authorization: `Bearer ${token}` } }
-
+  console.log(url)
   return await axios.get(url, config)
   .then(res => {return res.data})
   .catch(err => {console.log(err)})

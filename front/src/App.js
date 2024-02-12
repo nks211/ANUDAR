@@ -20,10 +20,17 @@ import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {
+  const isLogin = mainstate((state) => state.isLogin)
   const logintoken = mainstate((state) => state.logintoken)
+  // console.log(localStorage)
   useEffect(()=> {
     console.log(logintoken)
-  }, [])
+  }, [logintoken])
+  // }, [isLogin])
+
+  // useEffect(()=>{
+
+  // }, [])
   // const { isLogin }  = mainstate((state) => ({ isLogin: state.isLogin }));
   // const isLogin = mainstate((state) => state.isLogin);
 

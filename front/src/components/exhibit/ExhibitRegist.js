@@ -66,8 +66,12 @@ export default function ExhibitRegist() {
   useEffect(()=>{
     getLastSat()
   })
-
+  
   const logintoken = mainstate((state) => (state.logintoken))
+  useEffect(()=>{
+    console.log(logintoken)
+  }, [])
+  
 
   const upload = async (event) => {
     const file = event.target.files[0];

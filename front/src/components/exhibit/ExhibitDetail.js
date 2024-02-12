@@ -62,7 +62,9 @@ export default function ExhibitDetail(props) {
 
 	// // activate();
 
-	console.log(props.exhibit)
+	// console.log(props.exhibit)
+
+
 	// console.log(props.exhibit.author.name)
 	// console.log(props.exhibit.docent)
 

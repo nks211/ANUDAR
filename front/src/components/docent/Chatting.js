@@ -3,7 +3,7 @@ import { DocentContext } from '../../docent/DocentPage'
 
 
 export default function Chatting() {
-  const { setChat, publish, chatList, chat, nickname } = useContext(DocentContext);
+  const { setChat, publish, chatList, chat } = useContext(DocentContext);
 
 
   const handleChange = (event) => {

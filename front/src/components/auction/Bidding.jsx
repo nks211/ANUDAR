@@ -4,7 +4,7 @@ import { successbid } from "../../API";
 
 
 export default function Bidding() {
-    const { setChat, publish, chatList, chat, nickname, currentPrice, currentBidUser } = useContext(AuctionLiveContext);
+    const { setChat, publish, chatList, chat, currentPrice, currentBidUser } = useContext(AuctionLiveContext);
   
   
     const handleChange = (event) => {

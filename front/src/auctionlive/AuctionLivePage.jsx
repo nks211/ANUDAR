@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 import * as StomJs from "@stomp/stompjs";
 import { jwtDecode } from "jwt-decode";
 import AuctionButton from '../components/auction/AuctionButton';
-import { auctionlist, getAuthor } from '../API';
+import { auctionlist } from '../API';
 import WebCam from '../components/docent/WebCam';
 import AuctionLiveContents from '../components/auction/AuctionLiveContents';
+import { mainstate } from '../StateManagement'; 
 
 
 export const AuctionLiveContext = createContext();
@@ -17,7 +18,7 @@ export default function AuctionLivePage() {
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
-  const [nickname, setNickname] = useState("");
+  const loginuser = mainstate((state) => (state.loginuser))
   
 
   let auctionList = [];
@@ -94,26 +95,11 @@ export default function AuctionLivePage() {
 
   const publish = (chat) => {
     if (!client.current.connected) return;
-
-    // 토큰 디코딩 후 사용자 정보 추출
-    const username = decodedToken.current.username;
-    console.log(username);
-
-    // username으로 get 요청
-    getAuthor(username)
-    .then(userData => {
-      setNickname(userData.nickname);
-      console.log(userData.nickname);
-    })
-    .catch(e =>{
-      console.log("회원 정보를 찾을 수 없습니다.", e);
-    })
-    
     client.current.publish({
       destination: "/pub/auctionbid/" + auctionId,
       body: JSON.stringify({
         sessionId: auctionId,
-        nickname: nickname,
+        nickname: loginuser.nickname,
         askingprice: chat,
       }),
     });
@@ -145,7 +131,7 @@ export default function AuctionLivePage() {
   const [cam, setCam] = useState(false);
 
   return(
-    <AuctionLiveContext.Provider value={{mic, setMic, cam, setCam, setChat, publish, chatList, chat, nickname, currentPrice, currentBidUser}}>
+    <AuctionLiveContext.Provider value={{mic, setMic, cam, setCam, setChat, publish, chatList, chat, currentPrice, currentBidUser}}>
       <div style={{display:"flex", width:"100%", height:"100vh", backgroundColor:"#5f5f5f"}}>
         <div style={{flex:"24", width:"100%", display:"flex", flexDirection:"column"}}>
 

@@ -84,11 +84,7 @@ export default function App() {
             <Route exact path="/user/info" element={<Mypage />}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
             {/* 실시간 경매 */}
-            <Route
-              exact
-              path="/auction/live/:apply_id"
-              element={<AuctionLivePage />}
-            />
+            <Route exact path="/auction/live/:auction_id" element={<AuctionLivePage />}></Route>
           </Routes>
         </div>
       </AppContext.Provider>

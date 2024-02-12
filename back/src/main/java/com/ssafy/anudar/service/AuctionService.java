@@ -43,7 +43,7 @@ public class AuctionService {
         return SuccessWorkDto.fromEntity(successWork);
     }
 
-    // 경매 할 작품을 가져오기
+    // 경매 할 작품을 가져오기 : 이전 경매일 10일전 ~ 다음 경매일 10일 전 (한달)
     public List<WorkDto> getWorks() {
         Optional<Auction> preAuction = auctionRepository.findPreviusAuction(LocalDateTime.now());
         Auction nextAuction = auctionRepository.findNextAuction(LocalDateTime.now())

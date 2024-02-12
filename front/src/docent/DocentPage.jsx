@@ -8,6 +8,7 @@ import WebCam from '../components/docent/WebCam';
 import DocentContents from '../components/docent/DocentContents';
 import DocentTab from '../components/docent/DocentTab';
 import DocentButton from '../components/docent/DocentButton';
+import { getAuthor } from '../API';
 
 export const DocentContext = createContext();
 export default function DocentPage(){
@@ -16,6 +17,7 @@ export default function DocentPage(){
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
+  const [nickname, setNickname] = useState("");
 
 
     useEffect(() => {
@@ -60,12 +62,22 @@ export default function DocentPage(){
     // 토큰 디코딩 후 사용자 정보 추출
     const username = decodedToken.current.username;
     console.log(username);
+
+    // username으로 get 요청
+    getAuthor(username)
+    .then(userData => {
+      setNickname(userData.nickname);
+      console.log(userData.nickname);
+    })
+    .catch(e =>{
+      console.log("회원 정보를 찾을 수 없습니다.", e);
+    })
     
     client.current.publish({
       destination: "/pub/chat/" + docentId,
       body: JSON.stringify({
         sessionId: docentId,
-        username: username,
+        nickname: nickname,
         message: chat,
       }),
     });
@@ -99,7 +111,7 @@ export default function DocentPage(){
   const [cam, setCam] = useState(false);
 
   return(
-    <DocentContext.Provider value={{menu, setMenu, mic, setMic, cam, setCam, setChat, publish, chatList, chat}}>
+    <DocentContext.Provider value={{menu, setMenu, mic, setMic, cam, setCam, setChat, publish, chatList, chat, nickname}}>
       {/* <div style={{display:"flex", width:"100%", height:"100vh", backgroundColor:"black"}}> */}
       <div style={{display:"flex", width:"100%", height:"100vh", backgroundColor:"#5f5f5f"}}>
         <div style={{flex:"24", width:"100%", display:"flex", flexDirection:"column"}}>

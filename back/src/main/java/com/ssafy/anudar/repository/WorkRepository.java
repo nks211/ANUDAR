@@ -21,12 +21,14 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
 
     @Query("SELECT w FROM Work w JOIN w.exhibition e " +
             "WHERE w.bid >= 1 " +
-            "AND e.start_time <= :auctionTime")
+            "AND e.start_time <= :auctionTime " +
+            "ORDER BY w.bid")
     List<Work> findAllPrevAuctionWorks(LocalDateTime auctionTime);
 
     @Query("SELECT w FROM Work w JOIN w.exhibition e " +
             "WHERE w.bid >= 1 " +
-            "AND e.start_time <= :nextAuction AND e.start_time > :prevAuction")
+            "AND e.start_time <= :nextAuction AND e.start_time > :prevAuction " +
+            "ORDER BY w.bid"
+    )
     List<Work> findAuctionWorks(LocalDateTime prevAuction, LocalDateTime nextAuction);
-
 }

@@ -3,7 +3,7 @@ import { DocentContext } from '../../docent/DocentPage'
 
 
 export default function Chatting() {
-  const { setChat, publish, chatList, chat } = useContext(DocentContext);
+  const { setChat, publish, chatList, chat, nickname } = useContext(DocentContext);
 
 
   const handleChange = (event) => {
@@ -22,7 +22,7 @@ export default function Chatting() {
       <div className={"chat-list"}>
         {chatList.map((chatItem, index) => (
           <div key={index}>
-            <p>{chatItem.username} : {chatItem.message}</p>
+            <p>{nickname} : {chatItem.message}</p>
           </div>
         ))}
       </div>

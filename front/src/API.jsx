@@ -4,9 +4,9 @@ export const getAuthor = async (username) => {
     const url = "/api/user/info/author/" + username
     return axios.get(url)
     .then(response => {
-        console.log(response.data);
         return response.data;
     })
+    .catch((e) => {console.log(e); return "";});
 };
     
 export const uploadimage = async (data) => {
@@ -74,20 +74,33 @@ export const signout = () => {
 };
 
 export const successbid = async (finalPrice, workId, nickname, auctionId) => {
-    const url = "/api/auction/bidok"
+    const url = "/api/auction/bidok";
     const data = {
         finalPrice : finalPrice,
         workId : workId, 
         nickname : nickname,
         auctionId : auctionId
     }
-    return axios.post(url, data,{
+    return await axios.post(url, data,{
         headers: {
             'Authorization': "Bearer " + window.localStorage.getItem('authorization')
         }
     })
     .then(response => {
         console.log(response.data);
+    })
+    .catch((e) => { console.log(e); return {}; });
+};
+
+export const auctionlist = async () => {
+    const url = "/api/auction/works";
+    return await axios.get(url, {
+        headers: {
+            'Authorization': "Bearer " + window.localStorage.getItem('authorization')
+        }
+    })
+    .then(response => {
+        return response.data;
     })
     .catch((e) => { console.log(e); return {}; });
 };

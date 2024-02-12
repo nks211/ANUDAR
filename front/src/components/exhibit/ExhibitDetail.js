@@ -62,6 +62,11 @@ export default function ExhibitDetail(props) {
 
 	// // activate();
 
+	// console.log(props.exhibit)
+
+
+	// console.log(props.exhibit.author.name)
+	// console.log(props.exhibit.docent)
 
 
   return(
@@ -72,16 +77,16 @@ export default function ExhibitDetail(props) {
         <div style={{width:"100vw", height:"500px", display:"flex", margin:"40px 0"}}>
           <div id="exhibitDetailBanner">
             <div style={{textAlign:"right"}}>
-              <div style={{fontSize:"45px", fontWeight:"900"}}>{props.exhibit.title}</div>
-              <div style={{fontSize:"25px", fontWeight:"600"}}>{props.exhibit.artist}</div>
+              <div style={{fontSize:"45px", fontWeight:"900"}}>{props.exhibit.name}</div>
+              <div style={{fontSize:"25px", fontWeight:"600"}}>{props.exhibit.author?.name}</div>
             </div>
           </div>
           <div style={{width:"30vw"}}>
             {/* // <img className="exhibitImage2" style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img> */}
-            <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img>
+            <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px", objectFit:"cover"}} src={props.exhibit.image}></img>
           </div>
           <div style={{width:"35vw", backgroundColor:"gray"}}>
-            <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.description}</div>
+            <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.detail}</div>
           </div>
         </div>
 

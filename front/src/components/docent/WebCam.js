@@ -5,7 +5,6 @@ import UserVideoComponent from './UserVideoComponent';
 import './WebCam.css'
 
 const APPLICATION_SERVER_URL = 'https://i10d105.p.ssafy.io/';
-const hostStreamId = "";
 
 function WebCam({ MysessionId, myUserName }) {
   const [session, setSession] = useState(undefined);
@@ -33,7 +32,6 @@ function WebCam({ MysessionId, myUserName }) {
         // 스트림의 username이 'host'일 때 메인 스트림으로 해주기
         if(event.stream.connection.data.split('%')[0] === 'host'){
           handleMainVideoStream(subscriber);
-          hostStreamId=event.stream.streamId
         }
       }
     });
@@ -53,16 +51,21 @@ function WebCam({ MysessionId, myUserName }) {
         publishVideo: true,
       });
 
-      // 만약 나의 myUserName이 'host'일 경우 주요 비디오 스트림으로 설정합니다.
-      // 녹화를 시작합니다.
-      if (myUserName === 'host') {
-        handleMainVideoStream(publisher);
-      }
-
       await mySession.publish(publisher);
+
+      console.log("Publisher의 Stream ID:", publisher.stream.streamId);
 
       setSession(mySession);
       setPublisher(publisher);
+
+      // 만약 나의 myUserName이 'host'일 경우 주요 비디오 스트림으로 설정합니다.
+      // 녹화를 시작합니다.
+      // streamId를 db에 저장합니다.
+      if (myUserName === 'host') {
+        handleMainVideoStream(publisher);
+        startRecording(MysessionId);
+        await axios.post(APPLICATION_SERVER_URL + 'api/exhibit/docent/'+ MysessionId + '/' + publisher.stream.streamId);
+      }
     } catch (error) {
       console.log('There was an error connecting to the session:', error.code, error.message);
     }
@@ -70,10 +73,6 @@ function WebCam({ MysessionId, myUserName }) {
   }
 
   const leaveSession = () => {
-    if (myUserName === 'host') {
-      axios.delete(APPLICATION_SERVER_URL + 'api/sessions/' + MysessionId + '/recordings')
-      axios.delete(APPLICATION_SERVER_URL + 'api/sessions/' + MysessionId)
-    }
 
     if (session) {
       session.disconnect();
@@ -84,6 +83,10 @@ function WebCam({ MysessionId, myUserName }) {
     setMainStreamManager(undefined);
     setPublisher(undefined);
   };
+
+  const startRecording = async (sessionId) => {
+    await axios.post(APPLICATION_SERVER_URL + 'api/sessions/'+sessionId+'/recording');
+  }
 
   const getToken = async () => {
     const sessionId = await createSession(MysessionId);
@@ -131,7 +134,6 @@ function WebCam({ MysessionId, myUserName }) {
 
           {mainStreamManager !== undefined ? (
             <div>
-              <h2>도슨트 입니당</h2>
               <UserVideoComponent user='docent' streamManager={mainStreamManager} />
             </div>
           ) : (<div>도슨트가 없어요</div>)}

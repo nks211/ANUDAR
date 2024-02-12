@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { DocentContext } from '../../docent/DocentPage'
 import Chatting from './Chatting'
 import './DocentContents.css'

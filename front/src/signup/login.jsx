@@ -5,32 +5,55 @@ import { useNavigate } from "react-router-dom";
 import { mainstate, popupstate } from "../StateManagement.jsx";
 import { login, myinfo } from "../API";
 
-function Login() {
+export default function Login() {
     const {setPathName} = useContext(AppContext);
     const navigate = useNavigate();
 
-    const { loginidinput, loginpasswordinput, setloginidinput, setloginpasswordinput } = mainstate((state) => ({
+    const { 
+        setIsLogin,
+        loginidinput, 
+        loginpasswordinput, 
+        setloginidinput, 
+        setloginpasswordinput,
+        // loginuser,
+        setloginuser,
+        // logintoken,
+        setlogintoken,
+    } 
+    = mainstate((state) => ({
+        setIsLogin: state.setIsLogin,
         loginidinput: state.idinput,
         loginpasswordinput: state.passwordinput,
         setloginidinput: state.setloginidinput,
         setloginpasswordinput: state.setloginpasswordinput,
+        // loginuser: state.loginuser,
+        setloginuser: state.setloginuser,
+        // logintoken: state.logintoken,
+        setlogintoken: state.setlogintoken,
     }));
     
     const loginpopup = popupstate((state) => state.sethomepopup);
 
     const loginenter = async (event) => {
         event.preventDefault();
-
+        
         const token = await login(loginidinput, loginpasswordinput);
         if (token != "") {
-            // 로그인 요청
-            loginpopup(false);
             // 로그인 토큰 값 스토리지 저장
             const infodata = await myinfo(token);
             localStorage.setItem("userdata", JSON.stringify(infodata));
             localStorage.setItem("login", true);
             localStorage.setItem("currenttab", "");
             localStorage.setItem("token", token);
+
+            // 로그인 요청
+            loginpopup(false);
+            setIsLogin(true)
+
+            setlogintoken(token)
+            setloginuser(infodata)
+
+            localStorage.setItem("tokentime", Date.now());
             navigate("/");
             setPathName(window.location.pathname);
         }
@@ -51,7 +74,4 @@ function Login() {
             <button style={{ border: 0, }} className="logincheck">로그인</button>
         </form>
     );
-
 }
-
-export default Login;

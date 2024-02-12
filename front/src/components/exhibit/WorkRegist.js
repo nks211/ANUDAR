@@ -1,17 +1,19 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './WorkRegist.css'
+import { uploadWorkImg } from '../../API';
+import { mainstate } from '../../StateManagement';
+import { ExhibitRegistContext } from '../../exhibit/ExhibitRegistPage';
 
 export default function WorkRegist() {
-  const [workId, setWorkId] = useState(0);
-  const [works, setWorks] = useState([]);
-
+  const { works, setWorks } = useContext(ExhibitRegistContext);
   const [carouselWorks, setCarouselWorks] = useState([]);
-
+  
+  const [workId, setWorkId] = useState(0);
   const [title, setTitle] = useState();
-  const [description, setDescription] = useState("");
+  const [detail, setDetail] = useState("");
   const [price, setPrice] = useState();
 
   const defaultPreview = <div className="previewImg"></div>;
@@ -27,33 +29,34 @@ export default function WorkRegist() {
 
   const selectxy = useRef(null);
   const registxy = useRef(null);
+  
+  const logintoken = mainstate((state) => (state.logintoken))
+  // console.log(logintoken)
+  // console.log(localStorage.getItem("token"))
 
-
-  const upload = (event) => {
+  const upload = async (event) => {
     const file = event.target.files[0];
     if (!file) { return; }
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const imageurl = await uploadWorkImg(file, logintoken);
     setFileName(file.name)
-
-    return new Promise((resolve) => {
-      reader.onload = () => {
-          setPreview(<img style={{width:300, height:300, objectFit: "cover"}} src={(reader.result || null)} />)
-          setWorkImg(reader.result || null);
-          resolve();
-      };
-    });
+    
+    if (imageurl != "") {
+      // console.log(String(imageurl))
+      setPreview(<img style={{width:300, height:300, objectFit: "cover"}} src={String(imageurl)} />)
+      setWorkImg(String(imageurl))
+    } else {
+      alert('이미지를 찾을 수 없습니다.')
+    }
   }
-
 
   // 캐러셀
   const setting = {
-    dots: true,
+    dots: false,
     dotsClass: "slidedots",
     infinite: false,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2500,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1
@@ -79,13 +82,12 @@ export default function WorkRegist() {
             </div>
             <div className="workInput" style={{marginBottom:"2px"}}>
               <div className="item1"><span>*</span> 작품 설명</div>
-              <textarea value={description} placeholder="최대 글자수 500자" maxLength="500" onChange={(event)=>{setDescription(event.target.value)}} required/>
+              <textarea value={detail} placeholder="최대 글자수 500자" maxLength="500" onChange={(event)=>{setDetail(event.target.value)}} required/>
             </div>
-            <div style={{textAlign:'right', fontSize:"12px", marginBottom:"8px"}}>{description.length}/500</div>
+            <div style={{textAlign:'right', fontSize:"12px", marginBottom:"8px"}}>{detail.length}/500</div>
             <div className="workInput">
               <div className="item1"><span>*</span> 이미지 등록</div>
               <div className="item2" style={{display:"flex"}}>
-                {/*  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" */}
                 <span><div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{fileName}</div>{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(defaultPreview); setFileName(); setWorkImg()}}></img>:""}</span>
                 <label className="uploadBtn" for="workImg">선택</label>
                 <input type="file" id="workImg" accept="image/*" onChange={event => {upload(event); event.target.value = '';}} style={{ display: "none" }} required/>
@@ -95,12 +97,11 @@ export default function WorkRegist() {
               <div className="item1"><span>*</span> 최소 경매가</div>
               {/* *수정* 단위 만원 */}
               <input value={price} min={10} max={100} type="number" placeholder="최소 10만원, 최대 100만원까지 입력 가능합니다" onChange={(event)=>{setPrice(event.target.value)}} required/>
-              {/* 버튼 .. 리셋 -> 0 1 5 10 50 100 */}
             </div>
             <div style={{display:"flex", justifyContent: "center"}}>
               <button id="workRegistBtn" type="submit" onClick={(event)=>{
                 event.preventDefault()
-                if (!title || !description || !fileName || !price) {
+                if (!title || !detail || !fileName || !price) {
                   alert('모든 정보를 입력해주세요.')
                   return
                 }
@@ -109,12 +110,13 @@ export default function WorkRegist() {
                   alert('작품은 최대 20개까지 등록 가능합니다.')
                   return
                 }
-                const newWork = {"id":workId, "title":title, "description":description, "img":workImg, "price":price, "preview":preview}
+                // const newWork = {"id":workId, "title":title, "description":description, "img":workImg, "price":price, "preview":preview}
+                // const newWork = {"id":workId, "title":title, "image":workImg, "detail":detail, "price":price, "bid":0, "author":{loginUser}}
+                const newWork = {"id":workId, "title":title, "image":workImg, "detail":detail, "price":price*10000}
                 const newWorks = [...works, newWork]
 
                 setWorks(newWorks)
-                setWorkId(workId+1); setTitle(""); setDescription(""); setWorkImg(); setPrice(""); setPreview(defaultPreview); setFileName("");
-                // console.log(works)
+                setWorkId(workId+1); setTitle(""); setDetail(""); setWorkImg(); setPrice(""); setPreview(defaultPreview); setFileName("");
                 }}>작품 등록
               </button>
             </div>
@@ -129,11 +131,9 @@ export default function WorkRegist() {
           <Slider {...setting}>
             {Object.values(carouselWorks).map((work) => { 
               return (
-                // <div><img style={{width:"250px", height:"250px"}} src={work.img}/></div>
                 <div style={{position:"relative"}}>
                   <img style={{width:"750px"}} src="../asset/exhibit_carousel2.png"/><img/>
-                  <div className="carousels"><img className="carouselImg" style={{width:"240px", height:"240px"}} src={work.img}/></div>
-                  {/* <img className="carouselImg" style={{width:"240px", height:"240px"}} src={work.img}/> */}
+                  <div className="carousels"><img className="carouselImg" style={{width:"240px", height:"240px"}} src={work.image}/></div>
                 </div>
               )
               
@@ -175,7 +175,7 @@ export default function WorkRegist() {
                 setCarouselWorks(newCarousels)
               }
             }}>
-              <img id="workPreview" src={work.img}/>
+              <img id="workPreview" src={work.image}/>
               <div className={(carouselWorks.some(w=> w.id === work.id))?"selectWork":"unselectWork"}></div>
             </div>
           </div>

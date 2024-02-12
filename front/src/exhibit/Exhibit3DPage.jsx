@@ -34,6 +34,7 @@ export default function Exhibit3DPage() {
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1);
+        renderer.shadowMap.enabled = true;
 
         // Scene
         const scene = new THREE.Scene();
@@ -51,13 +52,26 @@ export default function Exhibit3DPage() {
         scene.add(camera);
 
         // Light
-        const ambientLight = new THREE.AmbientLight('white', 0.5);
+        const ambientLight = new THREE.AmbientLight('white', 1);
         scene.add(ambientLight);
 
         const directionalLight = new THREE.DirectionalLight('white', 1);
-        directionalLight.position.x = 1;
-        directionalLight.position.z = 2;
+        directionalLight.position.set(5, 10, 10);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.camera.near = 1;
+        directionalLight.shadow.camera.far = 30;
+        // directionalLight.shadow.radius = 5;
+        directionalLight.shadow.camera.left = -25;
+        directionalLight.shadow.camera.right = 25;
+        directionalLight.shadow.camera.top = 25;
+        directionalLight.shadow.camera.bottom = -25;
+
+        // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+
         scene.add(directionalLight);
+        // scene.add(directionalLightHelper);
 
         // Controls
         const controls = new PointerLockControls(camera, renderer.domElement);
@@ -81,16 +95,16 @@ export default function Exhibit3DPage() {
 
         function walk() {
             if(keyController.keys['KeyW'] || keyController.keys['ArrowUp']) {
-                controls.moveForward(0.07);
+                controls.moveForward(0.1);
             }
             if(keyController.keys['KeyS'] || keyController.keys['ArrowDown']) {
-                controls.moveForward(-0.07);
+                controls.moveForward(-0.1);
             }
             if(keyController.keys['KeyA'] || keyController.keys['ArrowLeft']) {
-                controls.moveRight(-0.07);
+                controls.moveRight(-0.1);
             }
             if(keyController.keys['KeyD'] || keyController.keys['ArrowRight']) {
-                controls.moveRight(0.07);
+                controls.moveRight(0.1);
             }
         }
 
@@ -125,6 +139,7 @@ export default function Exhibit3DPage() {
             floors[i].rotation.x = Math.PI / 2; // 바닥을 수평으로 만들기
             floors[i].position.x = i%floorNumX *floorWidth;
             floors[i].position.z = Math.floor(i/floorNumX) *floorLength;
+            floors[i].receiveShadow = true;
             floorGroup.add(floors[i]);
         }
 
@@ -268,32 +283,25 @@ export default function Exhibit3DPage() {
             authorBackTextGroup.add(authorBackNameMesh, authorBackDetailMesh);
         });
         // 그룹 위치
-        exhibitTextGroup.position.x = -10;
-        exhibitTextGroup.position.y = wallHeight/2 + 1.5;
-        exhibitTextGroup.position.z = -1 + 0.15;
+        exhibitTextGroup.position.set(-10, wallHeight/2 + 1.5, -1 + 0.15);
 
         exhibitBackTextGroup.rotation.y = Math.PI;
-        exhibitBackTextGroup.position.x = -7.5;
-        exhibitBackTextGroup.position.y = wallHeight/2 + 1.5;
-        exhibitBackTextGroup.position.z = -1 -0.15;
+        exhibitBackTextGroup.position.set(-7.5, wallHeight/2 + 1.5, -1 -0.15);
 
-        authorTextGroup.position.x = 7.5;
-        authorTextGroup.position.y = wallHeight/2 + 1.5;
-        authorTextGroup.position.z = -1 + 0.15;
+        authorTextGroup.position.set(7.5, wallHeight/2 + 1.5, -1 + 0.15);
 
         authorBackTextGroup.rotation.y = Math.PI;
-        authorBackTextGroup.position.x = 10;
-        authorBackTextGroup.position.y = wallHeight/2 + 1.5;
-        authorBackTextGroup.position.z = -1 -0.15;
+        authorBackTextGroup.position.set(10, wallHeight/2 + 1.5, -1 -0.15);
 
         // 씬 추가
         scene.add(exhibitTextGroup, exhibitBackTextGroup, authorTextGroup, authorBackTextGroup);
 
         // 왼쪽 입구
         const leftEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceMaterial);
-        leftEntrance.position.x = -8;
-        leftEntrance.position.y = wallHeight/2; // 바닥 위에 벽 위치
-        leftEntrance.position.z = -1;
+        leftEntrance.position.set(-8, wallHeight/2, -1); // 바닥 위에 벽 위치
+        leftEntrance.castShadow = true;
+        leftEntrance.receiveShadow = true;
+
         scene.add(leftEntrance);
 
         // 전시회 사진
@@ -308,23 +316,39 @@ export default function Exhibit3DPage() {
         }
 
         const exhibitFront = new THREE.Mesh(exhibitGeometry, exhibitMaterials);
-        exhibitFront.position.x = -5.5;
-        exhibitFront.position.y = wallHeight/2 + 0.5;
-        exhibitFront.position.z = -1 + 0.25;
+        exhibitFront.position.set(-5.5, wallHeight/2 + 0.5, -1 + 0.25);
 
         const exhibitBack = new THREE.Mesh(exhibitGeometry, exhibitMaterials);
         exhibitBack.rotation.y = Math.PI;
-        exhibitBack.position.x = -5.5;
-        exhibitBack.position.y = wallHeight/2 + 0.5;
-        exhibitBack.position.z = -1 - 0.25;
+        exhibitBack.position.set(-5.5, wallHeight/2 + 0.5, -1 - 0.25);
 
         scene.add(exhibitFront, exhibitBack);
 
+        // 전시회 조명
+        const leftFrontLight = new THREE.SpotLight('white', 10, 5, Math.PI/6);
+        const leftBackLight = new THREE.SpotLight('white', 10, 5, Math.PI/6);
+        
+        leftFrontLight.position.set(-5.5, wallHeight/2 + 3, -1 + 3);
+        leftBackLight.position.set(-5.5, wallHeight/2 + 3, -1 - 3);
+
+        leftFrontLight.target.position.set(-5.5, wallHeight/2 + 0.5, -1 + 0.25);
+        leftBackLight.target.position.set(-5.5, wallHeight/2 + 0.5, -1 - 0.25);
+
+        // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+        const leftFrontLightHelper = new THREE.SpotLightHelper(leftFrontLight);
+        const leftBackLightHelper = new THREE.SpotLightHelper(leftBackLight);
+
+        scene.add(leftFrontLight);
+        scene.add(leftBackLight);
+        // scene.add(leftFrontLightHelper);
+        // scene.add(leftBackLightHelper);
+
         // 오른쪽 입구
         const rightEntrance = new THREE.Mesh(EntranceWallGeometry, EntranceMaterial);
-        rightEntrance.position.x = 8;
-        rightEntrance.position.y = wallHeight/2; // 바닥 위에 벽 위치
-        rightEntrance.position.z = -1;
+        rightEntrance.position.set(8, wallHeight/2, -1); // 바닥 위에 벽 위치
+        rightEntrance.receiveShadow = true;
+        rightEntrance.castShadow = true;
+
         scene.add(rightEntrance);
 
         // 작가 사진
@@ -339,18 +363,32 @@ export default function Exhibit3DPage() {
         }
 
         const authorFront = new THREE.Mesh(authorGeometry, authorMaterials);
-        authorFront.position.x = 5.5;
-        authorFront.position.y = wallHeight/2 + 0.5;
-        authorFront.position.z = -1 + 0.25;
+        authorFront.position.set(5.5, wallHeight/2 + 0.5, -1 + 0.25);
         scene.add(authorFront);
 
         const authorBack = new THREE.Mesh(authorGeometry, authorMaterials);
         authorBack.rotation.y = Math.PI;
-        authorBack.position.x = 5.5;
-        authorBack.position.y = wallHeight/2 + 0.5;
-        authorBack.position.z = -1 - 0.25;
+        authorBack.position.set(5.5, wallHeight/2 + 0.5, -1 - 0.25);
         scene.add(authorBack);
 
+        // 작가 조명
+        const rightFrontLight = new THREE.SpotLight('white', 10, 5, Math.PI/6);
+        const rightBackLight = new THREE.SpotLight('white', 10, 5, Math.PI/6);
+        
+        rightFrontLight.position.set(5.5, wallHeight/2 + 3, -1 + 3);
+        rightBackLight.position.set(5.5, wallHeight/2 + 3, -1 - 3);
+
+        rightFrontLight.target.position.set(5.5, wallHeight/2 + 0.5, -1 + 0.25);
+        rightBackLight.target.position.set(5.5, wallHeight/2 + 0.5, -1 - 0.25);
+
+        // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+        const rightFrontLightHelper = new THREE.SpotLightHelper(rightFrontLight);
+        const rightBackLightHelper = new THREE.SpotLightHelper(rightBackLight);
+
+        scene.add(rightFrontLight);
+        scene.add(rightBackLight);
+        // scene.add(rightFrontLightHelper);
+        // scene.add(rightBackLightHelper);
 
         // 전시 벽 생성
         const ExhibitWallGeometry = new THREE.BoxGeometry(13, wallHeight, 0.5);
@@ -373,6 +411,8 @@ export default function Exhibit3DPage() {
 
         // 중앙 벽
         const centerWall = new THREE.Mesh(ExhibitWallGeometry, ExhibitWallMaterial);
+        centerWall.receiveShadow = true;
+        centerWall.castShadow = true;
 
         // 작품 텍스쳐
         const workTextures = [];
@@ -426,13 +466,11 @@ export default function Exhibit3DPage() {
                 const workIdx = (centerFrontNum-1)*wallPerWorkNum + i;
                 workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
                 workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
-                workTitleMesh[i].position.x = -1;
-                workTitleMesh[i].position.y = -1.25;
-                workTitleMesh[i].position.z = 0.15;
+                workTitleMesh[i].position.set(-1, -1.25, 0.15);
                 workGroups[workIdx].add(workTitleMesh[i]);
             }
         });
-
+        
         // 작품 배치
         for(let i=0;i<centerFrontWorksNum;i++){
             const workIdx = (centerFrontNum-1)*wallPerWorkNum + i;
@@ -447,7 +485,7 @@ export default function Exhibit3DPage() {
             frontCenterWorks[i].position.z = 0.25;
             workGroups[workIdx].add(frontCenterWorks[i]);
             workGroups[workIdx].position.x = i * workGap - workGap * (centerFrontWorksNum -1) / 2;
-            workGroups[workIdx].position.y = 0.5
+            workGroups[workIdx].position.y = 0.5;
             centerGroup.add(workGroups[workIdx]);
         }
 
@@ -484,9 +522,7 @@ export default function Exhibit3DPage() {
                 workTitleGeometry[i] = new TextGeometry(workTitleWraps[workIdx], titleParam);
                 workTitleMesh[i] = new THREE.Mesh(workTitleGeometry[i], textMaterial);
                 workTitleMesh[i].rotation.y = Math.PI;
-                workTitleMesh[i].position.x = 1;
-                workTitleMesh[i].position.y = -1.25;
-                workTitleMesh[i].position.z = -0.15;
+                workTitleMesh[i].position.set(1, -1.25, -0.15);
                 workGroups[workIdx].add(workTitleMesh[i]);
             }
         });
@@ -517,6 +553,41 @@ export default function Exhibit3DPage() {
         centerGroup.position.z = centerPos[2];
         scene.add(centerGroup);
 
+        // 작품 조명
+        const centerFrontLight = [];
+        const centerFrontLightHelper = [];
+        
+        for(let i=0;i<centerFrontWorksNum;i++){
+            centerFrontLight[i] = new THREE.SpotLight('white', 15, 5, Math.PI/9);
+
+            centerFrontLight[i].position.set(i * workGap - workGap * (centerFrontWorksNum -1) / 2, centerPos[1] + 4, centerPos[2] + 3);
+            centerFrontLight[i].target.position.set(i * workGap - workGap * (centerFrontWorksNum -1) / 2, centerPos[1] + 0.5, centerPos[2] + 0.25);
+
+            // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+            centerFrontLightHelper[i] = new THREE.SpotLightHelper(centerFrontLight[i]);
+
+            scene.add(centerFrontLight[i]);
+
+            // scene.add(centerFrontLightHelper[i]);
+        }
+
+        const centerBackLight = [];
+        const centerBackLightHelper = [];
+
+        for(let i=0;i<centerBackWorksNum;i++){
+            centerBackLight[i] = new THREE.SpotLight('white', 15, 5, Math.PI/9);
+
+            centerBackLight[i].position.set(i * workGap - workGap * (centerBackWorksNum -1) / 2, centerPos[1] + 4, centerPos[2] - 3);
+            centerBackLight[i].target.position.set(i * workGap - workGap * (centerBackWorksNum -1) / 2, centerPos[1] + 0.5, centerPos[2] - 0.25);
+
+            // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+            centerBackLightHelper[i] = new THREE.SpotLightHelper(centerBackLight[i]);
+
+            scene.add(centerBackLight[i]);
+
+            // scene.add(centerBackLightHelper[i]);
+        }
+
         // 뒤편 전시
         const backGroup = new THREE.Group();
 
@@ -526,6 +597,8 @@ export default function Exhibit3DPage() {
 
         // 뒤편 벽
         const backWall = new THREE.Mesh(ExhibitBackWallGeometry, ExhibitWallMaterial);
+        backWall.receiveShadow = true;
+        backWall.castShadow = true;
 
         // 뒤편 작품 생성
         const backNum = 2;
@@ -592,6 +665,24 @@ export default function Exhibit3DPage() {
         backGroup.position.z = backPos[2];
         scene.add(backGroup);
 
+        // 작품 조명
+        const backLight = [];
+        const backLightHelper = [];
+        
+        for(let i=0;i<backWorksNum;i++){
+            backLight[i] = new THREE.SpotLight('white', 15, 5, Math.PI/6);
+
+            backLight[i].position.set(i * backWorkGap - backWorkGap * (backWorksNum -1) / 2, backPos[1] + 3, backPos[2] + 3);
+            backLight[i].target.position.set(i * backWorkGap - backWorkGap * (backWorksNum -1) / 2, backPos[1] + 0.5, backPos[2] + 0.25);
+
+            // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+            backLightHelper[i] = new THREE.SpotLightHelper(backLight[i]);
+
+            scene.add(backLight[i]);
+
+            // scene.add(backLightHelper[i]);
+        }
+
         // 양옆 전시 Geometry
         const ExhibitSideWallGeometry = new THREE.BoxGeometry(22.5, wallHeight, 0.5);
         const sideWorkGap = 5; // 작품 간격
@@ -601,6 +692,8 @@ export default function Exhibit3DPage() {
 
         // 오른쪽 벽
         const rightWall = new THREE.Mesh(ExhibitSideWallGeometry, ExhibitWallMaterial);
+        rightWall.receiveShadow = true;
+        rightWall.castShadow = true;
 
         // 오른쪽 앞 작품 생성
         const rightNum = 3;
@@ -668,11 +761,32 @@ export default function Exhibit3DPage() {
         rightGroup.position.z = rightPos[2];
         scene.add(rightGroup);
 
+        // 작품 조명
+        const rightLight = [];
+        const rightLightHelper = [];
+        
+        for(let i=0;i<rightWorksNum;i++){
+            rightLight[i] = new THREE.SpotLight('white', 15, 5, Math.PI/6);
+
+            rightLight[i].position.set(-rightPos[2] - 2, rightPos[1] + 3, -rightPos[0] + i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2 + 1);
+            
+            rightLight[i].target.position.set(-rightPos[2] + 0.25, rightPos[1] + 0.5, -rightPos[0] + i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2 + 1);
+
+            // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+            rightLightHelper[i] = new THREE.SpotLightHelper(rightLight[i]);
+
+            scene.add(rightLight[i]);
+
+            // scene.add(rightLightHelper[i]);
+        }
+
         // 왼쪽 전시
         const leftGroup = new THREE.Group();
 
         // 왼쪽 벽
         const leftWall = new THREE.Mesh(ExhibitSideWallGeometry, ExhibitWallMaterial);
+        leftWall.receiveShadow = true;
+        leftWall.castShadow = true;
 
         // 왼쪽 앞 작품 생성
         const leftNum = 4;
@@ -726,7 +840,7 @@ export default function Exhibit3DPage() {
             leftWorks[i] = new THREE.Mesh(workGeometry, workMaterials);
             leftWorks[i].position.z = 0.25;
             workGroups[workIdx].add(leftWorks[i]);
-            workGroups[workIdx].position.x = i * sideWorkGap - sideWorkGap * (rightWorksNum -1) / 2;
+            workGroups[workIdx].position.x = i * sideWorkGap - sideWorkGap * (leftWorksNum -1) / 2;
             workGroups[workIdx].position.y = 0.5
             leftGroup.add(workGroups[workIdx]);
         }
@@ -739,6 +853,25 @@ export default function Exhibit3DPage() {
         leftGroup.position.y = leftPos[1]; // 바닥 위에 전시 위치
         leftGroup.position.z = leftPos[2];
         scene.add(leftGroup);
+
+        // 작품 조명
+        const leftLight = [];
+        const leftLightHelper = [];
+        
+        for(let i=0;i<leftWorksNum;i++){
+            leftLight[i] = new THREE.SpotLight('white', 15, 5, Math.PI/6);
+
+            leftLight[i].position.set(leftPos[2] + 2, leftPos[1] + 3, leftPos[0] + i * sideWorkGap - sideWorkGap * (leftWorksNum -1) / 2 + 1);
+            
+            leftLight[i].target.position.set(leftPos[2] - 0.25, leftPos[1] + 0.5, leftPos[0] + i * sideWorkGap - sideWorkGap * (leftWorksNum -1) / 2 + 1);
+
+            // 조명 헬퍼 (씬에 넣지 않아도 필요!! 지우면 안됨!!)
+            leftLightHelper[i] = new THREE.SpotLightHelper(leftLight[i]);
+
+            scene.add(leftLight[i]);
+
+            // scene.add(leftLightHelper[i]);
+        }
 
         // 그리기
         const clock = new THREE.Clock();

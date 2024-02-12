@@ -4,12 +4,12 @@ export class KeyController {
         this.keys = [];
 
         window.addEventListener('keydown', e => {
-            console.log(e.code + ' 누름');
+            // console.log(e.code + ' 누름');
             this.keys[e.code] = true;
         });
 
         window.addEventListener('keyup', e => {
-            console.log(e.code + ' 뺌');
+            // console.log(e.code + ' 뺌');
             delete this.keys[e.code];
         });
     }

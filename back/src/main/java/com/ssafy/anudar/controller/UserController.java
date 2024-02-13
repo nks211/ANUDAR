@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/work")
@@ -33,9 +32,9 @@ public class WorkController {
     }
 
     // 작가 작품 조회
-    @GetMapping("/user/{username}")
-    public ResponseEntity<List<WorkDto>> workByUser(@PathVariable String username) {
-        return new ResponseEntity<>(workService.getWorkByUser(username), HttpStatus.OK);
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<List<WorkDto>> workByUser(@PathVariable Long user_id) {
+        return new ResponseEntity<>(workService.getWorkByUser(user_id), HttpStatus.OK);
     }
 
     // 전시 작품 조회

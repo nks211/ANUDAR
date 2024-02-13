@@ -31,15 +31,9 @@ export default function Exhibit(props) {
   //   };
   // }, []);
 
-<<<<<<< HEAD
-  useEffect(()=>{
-    console.log('Exhibit')
-  }, [])
-=======
   // useEffect(()=>{
   //   console.log('Exhibit')
   // }, [])
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
 
   
   switch (props.exhibitType) {

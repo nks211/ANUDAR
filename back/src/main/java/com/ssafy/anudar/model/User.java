@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -44,7 +43,7 @@ public class User extends BaseTimeEntity{
     private String phone;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Notify> notifies = new ArrayList<>();
+    private List<Notify> notifies;
 
     @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
     private List<Follow> followerList;

@@ -23,13 +23,10 @@ export default function Artist(props) {
           window.scrollTo(0, 0)
         }
         }>{props.artist.name}</div>
-<<<<<<< HEAD
-=======
         {/* <img src="../../asset/icon_mail.png" width={22} height={22} /> */}
         <div className="artistExhibit"><img src="../../asset/icon_mail.png" width={15} height={15} /> {props.artist.email}</div>
         <div className="artistExhibit"><img src="../../asset/icon_phone.png" width={15} height={15} /> {props.artist.phone}</div>
         {/* <div className="artistExhibit"><span className="boldFont">대표전시</span> | {props.artist.email}</div> */}
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
         {/* <div className="artistExhibit"><span className="boldFont">대표전시</span> | {props.artistExhibit.join(", ")}</div>
         <div className="artistWork"><span className="boldFont">대표작품</span> | {props.artistWork.join(", ")}</div> */}
       </div>

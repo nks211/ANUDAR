@@ -10,49 +10,14 @@ import Reviews from '../components/exhibit/Reviews';
 import dummy from "../db/data.json"
 import './ExhibitPage.css'
 import '../index.css'
-<<<<<<< HEAD
-import { getExhibitDetail } from '../API';
-import { mainstate } from '../StateManagement';
-=======
 import { getExhibitDetail, getLikeExhibit } from '../API';
 import { mainstate } from '../StateManagement';
 import Like from '../components/like/Like';
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
 
 export default function ExhibitDetailPage() {
   const exhibitId = useLocation().pathname.split('/').pop();
   const [exhibit, setExhibit] = useState({})
   const [works, setWorks] = useState([])
-<<<<<<< HEAD
-  const loginuser = mainstate(state => state.loginuser);
-
-  async function getData() {
-    try {
-      const res = await getExhibitDetail(exhibitId)
-      setExhibit(res)
-      setWorks(res.workList)
-      // console.log(res)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  useEffect(()=>{
-    getData()
-  }, [])
-
-  const userName = loginuser.nickname
-  
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const [selectValue, setSelectValue] = useState("earliest");
-
-  const navigate = useNavigate();
-  const {setPathName} = useContext(AppContext);
-
-  let reviews = null;
-
-=======
   const logintoken = mainstate((state) => (state.logintoken))
 
   const [isLike, setIsLike] = useState(false)
@@ -92,7 +57,6 @@ export default function ExhibitDetailPage() {
   const navigate = useNavigate();
   const {setPathName} = useContext(AppContext);
 
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
   // const works = exhibit.workList
 
   // 캐러셀
@@ -106,16 +70,6 @@ export default function ExhibitDetailPage() {
     slidesToShow: 1,
     slidesToScroll: 1,
   }
-<<<<<<< HEAD
-
-  function createReview() {
-    const today = new Date();
-    const newToday = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,'0') + "-" + String(today.getDate()).padStart(2,'0')
-    const newReview = <Review userName={userName} todayDate={newToday} content={comment} />
-    setComments([...comments, newReview])
-  }
-=======
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
   
   return (
     <div>
@@ -138,7 +92,6 @@ export default function ExhibitDetailPage() {
           <ExhibitDetail exhibitType={2} exhibit={exhibit}/>
         </div>
 
-<<<<<<< HEAD
         {/* 전시회 입장, 도슨트 입장 버튼 */}
         <div className="exhibitButtons">
           {/* *수정* : 전시회 입장 주소 .. */}
@@ -146,8 +99,6 @@ export default function ExhibitDetailPage() {
           <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
         </div>
 
-=======
->>>>>>> 2acb543b3c566420704cd2956737a869d1617245
         {/* 방명록 */}
         <Reviews exhibitId={exhibitId} />
 

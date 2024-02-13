@@ -14,6 +14,7 @@ import Auction from './auction/auction'
 import AuctionPage from './auction/auctionpage';
 import Signup from './signup/signup'
 import Mypage from './mypage/mypage';
+import { mainstate } from './StateManagement';
 import { createContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';

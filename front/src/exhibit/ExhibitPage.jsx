@@ -6,6 +6,7 @@ import Exhibit from "../components/exhibit/Exhibit";
 import Search from "../components/search/Search";
 import '../index.css'
 import './ExhibitPage.css'
+import { mainstate } from "../StateManagement";
 
 import { getAllExhibitList, getCurExhibitList } from "../API";
 
@@ -15,29 +16,31 @@ export default function ExhibitPage() {
   const [curExhibits, setCurExhibits] = useState([]);  // 진행 중 전시 저장
   const [exhibitList, setExhibitList] = useState(curExhibits);  // 선택한 전시
 
+  const isLogin = mainstate((state)=>state.isLogin)
+
   const [selectBtn, setSelectBtn] = useState("cur");
   const navigate = useNavigate();
 
-  async function onMounted() {
+  async function getData() {
     try {
       await getAllExhibitList()
-      .then(res => {setAllExhibits(res); console.log(allExhibits)})
+      .then(res => setAllExhibits(res))
       .catch(err=>console.log(err))
 
       await getCurExhibitList()
-      .then(res=> {setCurExhibits(res); console.log(curExhibits)})
+      .then(res=> {setCurExhibits(res); setExhibitList(res)})
       .catch(err=>console.log(err))
 
     } catch (err) {
       console.log(err)
     } 
-  } 
+  }
 
   useEffect(()=>{
-    onMounted()
-    setExhibitList(curExhibits) 
+    // console.log('ExhibitPage')
+    // console.log(localStorage)
+    getData()
   }, [])
-
 
   return (
     <div>
@@ -56,15 +59,15 @@ export default function ExhibitPage() {
 
         <div className="exhibitHeaderRight">
           <Search updateValues={(searchExhibit) => {
-            const newExhibits = []
-            for (let i=1; i<=exhibitList.length; i++) {
-              if (exhibitList[i]?.name.includes(searchExhibit)) { newExhibits.push(exhibitList[i]) }
-            }
-            setExhibitList(newExhibits)
+            let exhibits = selectBtn==="cur"?curExhibits:allExhibits
+            const filterExhibits = exhibits.filter(exhibit => exhibit.name.includes(searchExhibit))
+            setExhibitList(filterExhibits)
           }}/>
+          {isLogin?
           <div className="exhibitRegistBtn" onClick={()=>{
             navigate(`/exhibit/regist`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 등록
-          </div>
+          </div>:<></>}
+          
         </div>
       </div>
       <div className="exhibitList">

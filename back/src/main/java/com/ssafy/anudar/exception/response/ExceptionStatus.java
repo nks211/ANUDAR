@@ -17,7 +17,9 @@ public enum ExceptionStatus implements ExceptionInfo {
     REVIEW_NOT_FOUND(1003, HttpStatus.NOT_FOUND.value(), "방명록이 존재하지 않습니다."),
     RECORD_NOT_FOUND(1004, HttpStatus.NOT_FOUND.value(), "동영상이 존재하지 않습니다."),
     AUCTION_NOT_FOUND(1005, HttpStatus.NOT_FOUND.value(), "경매가 존재하지 않습니다."),
-    PAYMENT_NOT_FOUND(1006, HttpStatus.NOT_FOUND.value(), "결제 정보가 존재하지 않습니다"),
+    DOCENT_NOT_FOUND(1006, HttpStatus.NOT_FOUND.value(), "도슨트가 존재하지 않습니다."),
+    PAYMENT_NOT_FOUND(1007, HttpStatus.NOT_FOUND.value(), "결제 정보가 존재하지 않습니다"),
+
 
 
     // BAD_REQUEST

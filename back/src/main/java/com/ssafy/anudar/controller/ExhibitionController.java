@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/exhibit")
@@ -70,6 +71,12 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 
+    // 전시회 author username 조회
+    @GetMapping("/{exhibition_id}/author")
+    public ResponseEntity<String> exhibition(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(exhibitionService.getExhibitionAuthorById(exhibition_id), HttpStatus.OK);
+    }
+
     // 전시회 좋아요/취소
     @PostMapping("/like/{exhibition_id}")
     public ResponseEntity<String> like(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
@@ -109,4 +116,17 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getCurrentExhibitions(), HttpStatus.OK);
     }
 
+    // 도슨트 비디오 정보 저장
+    @PostMapping("/docent/{docentId}/{videoId}")
+    public ResponseEntity<String> saveDocentVideo(@PathVariable("docentId") Long docentId, @PathVariable("videoId") String videoId) {
+        exhibitionService.saveDocentVideo(docentId, videoId);
+        return new ResponseEntity<>("Success",HttpStatus.OK);
+    }
+
+    // 도슨트 비디오 가져오기
+    @GetMapping("/docent/{docentId}")
+    public ResponseEntity<String> getDocentVideo(@PathVariable("docentId") Long docentId) {
+        String filename = exhibitionService.getDocentVideo(docentId);
+        return new ResponseEntity<>(s3Service.uploadVideo(String.valueOf(docentId), filename),HttpStatus.OK);
+    }
 }

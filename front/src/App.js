@@ -21,6 +21,59 @@ import Pay from './mypage/Pay.jsx';
 
 export const AppContext = createContext();
 export default function App() {
+  const isLogin = mainstate((state) => state.isLogin)
+  const logintoken = mainstate((state) => state.logintoken)
+  // console.log(localStorage)
+  useEffect(()=> {
+    console.log(logintoken)
+  }, [logintoken])
+  // }, [isLogin])
+
+  // useEffect(()=>{
+
+  // }, [])
+  // const { isLogin }  = mainstate((state) => ({ isLogin: state.isLogin }));
+  // const isLogin = mainstate((state) => state.isLogin);
+
+  // let token;
+  // const { 
+  //   isLogin,
+  //   // setIsLogin,
+  //   // loginidinput, 
+  //   // loginpasswordinput, 
+  //   // setloginidinput, 
+  //   // setloginpasswordinput,
+  //   loginuser,
+  //   // setloginuser,
+  //   logintoken,
+  //   // setlogintoken,
+  // } 
+  // = mainstate((state) => ({
+  //   isLogin: state.isLogin,
+  //   // setIsLogin: state.setIsLogin,
+  //   // loginidinput: state.idinput,
+  //   // loginpasswordinput: state.passwordinput,
+  //   // setloginidinput: state.setloginidinput,
+  //   // setloginpasswordinput: state.setloginpasswordinput,
+  //   loginuser: state.loginuser,
+  //   // setloginuser: state.setloginuser,
+  //   logintoken: state.logintoken,
+  //   // setlogintoken: state.setlogintoken,
+  // }));
+
+  // useEffect(()=>{
+
+  //   if (isLogin === true) {
+  //     console.log('로그인')
+  //   } else {
+  //     // console.log(localStorage)
+  //     console.log('로그아웃')
+  //   }
+
+  //   console.log(loginuser)
+  //   console.log(logintoken)
+  // },[isLogin])
+
 
   console.log(localStorage)
   const handleApprove  = async (pgToken, tid) => {
@@ -118,7 +171,7 @@ export default function App() {
       <AppContext.Provider value={{ modalsetting, pathName, setPathName }}>
         <NavBar />
         <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent')?"DocentPage":"App"}>
-        {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
+          {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>

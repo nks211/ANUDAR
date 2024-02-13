@@ -9,8 +9,12 @@
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "http-proxy-middleware": "^2.0.6",
+<<<<<<< HEAD
     "jquery": "^3.7.1",
     "net": "^1.0.2",
+=======
+    "openvidu-browser": "2.29.0",
+>>>>>>> 1b3e0d2917b56fd341ec1d063dac9cfe523a49bc
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
@@ -18,8 +22,12 @@
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.1",
     "slick-carousel": "^1.8.1",
+<<<<<<< HEAD
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
+=======
+    "three": "^0.161.0",
+>>>>>>> 1b3e0d2917b56fd341ec1d063dac9cfe523a49bc
     "web-vitals": "^2.1.4",
     "zustand": "^4.5.0"
   },

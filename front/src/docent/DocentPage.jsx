@@ -49,7 +49,7 @@ export default function DocentPage(){
       return () => {
         setPathName(window.location.pathname);
       };
-  },[])
+  },[username])
 
   // 클릭된 메뉴
   const [menu, setMenu] = useState();

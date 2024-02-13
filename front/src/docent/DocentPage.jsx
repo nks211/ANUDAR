@@ -10,13 +10,13 @@ import axios from 'axios';
 export const DocentContext = createContext();
 export default function DocentPage(){
   const docentId = useLocation().pathname.split('/').pop();
-  // const username = "host";
+  const username = "";
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
   const [docentVideoAvailable, setDocentVideoAvailable] = useState(true);
   const [videoUrl, setVideoUrl] = useState(null);
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
 
   useEffect(() => {
     axios.get('https://i10d105.p.ssafy.io/api/exhibit/docent/'+docentId)
@@ -34,12 +34,12 @@ export default function DocentPage(){
       axios.get('https://i10d105.p.ssafy.io/api/exhibit/'+docentId+'/author')
         .then(response => {
           console.log(response.data);
-          const username = JSON.parse(localStorage.getItem('userdata')).username
-          console.log(username)
-          if(username === response.data) {
-            setUsername('host');
+          const name = JSON.parse(localStorage.getItem('userdata')).username
+          console.log(name)
+          if(name === response.data) {
+            username = 'host';
           }else {
-            setUsername(JSON.parse(localStorage.getItem('userdata')).nickname)
+            username = JSON.parse(localStorage.getItem('userdata')).nickname
           }
         })
         .catch(error => {

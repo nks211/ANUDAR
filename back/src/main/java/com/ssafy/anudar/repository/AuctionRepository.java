@@ -1,21 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Auction;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-@Repository
-public interface AuctionRepository extends JpaRepository<Auction, Long> {
-
-    @Query("SELECT a FROM Auction a WHERE a.start_time >= :now ORDER BY a.start_time ASC")
-    Optional<Auction> findNextAuction(LocalDateTime now);
-
-    @Query("SELECT a FROM Auction a WHERE a.start_time < :now ORDER BY a.start_time DESC")
-    Optional<Auction> findPreviusAuction(LocalDateTime now);
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d3c2c5ccc47adfaf51b63fc8a127abd6b08265cf5b4c095afe4567f3485ee8c1
+size 697

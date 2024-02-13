@@ -16,7 +16,7 @@ export default function DocentPage(){
   const {pathName, setPathName} = useContext(AppContext);
   const [docentVideoAvailable, setDocentVideoAvailable] = useState(true);
   const [videoUrl, setVideoUrl] = useState(null);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(null);
 
   useEffect(() => {
     axios.get('https://i10d105.p.ssafy.io/api/exhibit/docent/'+docentId)
@@ -67,7 +67,7 @@ export default function DocentPage(){
             <div style={{ flex: "2" }}>
               {docentVideoAvailable ?
                 (<video src={videoUrl} width="840" height="560" controls autoPlay muted></video>) 
-              : (<WebCam MysessionId={docentId} myUserName={username} />)}
+              : username && (<WebCam MysessionId={docentId} myUserName={username} />)}
             </div>
             <div style={{flex:menu==="close"?"0":"1"}}><DocentContents/></div>
           </div>

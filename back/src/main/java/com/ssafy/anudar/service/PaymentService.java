@@ -47,14 +47,14 @@ public class PaymentService {
 
 
     // 결제 준비
-    public PaymentReadyDto preparePayment(PaymentReadyRequestDto requestDto, Long userId) {
+    public PaymentReadyDto preparePayment(String username, PaymentReadyRequestDto requestDto) {
 
 //        requestDto.setApproval_url("http://localhost:8080/approval");
 //        requestDto.setCancel_url("http://localhost:8080/cancel");
 //        requestDto.setFail_url("http://localhost:8080/fail");
 
         // 사용자 정보 가져오기
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
 
         // 결제 정보 생성 및 저장
@@ -67,8 +67,8 @@ public class PaymentService {
         paymentRepository.save(payment);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "SECRET_KEY " + secretKey); //
+        headers.add("Content-Type", MediaType.APPLICATION_JSON + ";charset=UTF-8");
+        headers.add("Authorization", "SECRET_KEY " + secretKey);
 
         HttpEntity<PaymentReadyRequestDto> request = new HttpEntity<>(requestDto, headers);
 
@@ -93,8 +93,8 @@ public class PaymentService {
         requestMap.put("pg_token", requestDto.getPg_token()); // 사용자 결제 수단 선택 후 받은 pg_token
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "SECRET_KEY " + secretKey);
+        headers.add("Content-Type", MediaType.APPLICATION_JSON + ";charset=UTF-8");
+        headers.add("Authorization", "SECRET_KEY " + secretKey);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestMap, headers);
         ResponseEntity<PaymentApproveDto> response = restTemplate.postForEntity(kakaoPayApproveUrl, request, PaymentApproveDto.class);

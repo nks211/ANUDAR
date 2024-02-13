@@ -41,7 +41,7 @@ export default function Payment() {
     partner_order_id: `partner_order_id_${new Date().getTime()}`,
     vat_amount: 0,
     tax_free_amount: 0,
-    cid: 'TC0ONETIME',
+    cid: "TC0ONETIME",
     quantity: 1,
     tax_free_amount: 0,
     // approval_url: 'http://localhost:3000/PaymentApproval',

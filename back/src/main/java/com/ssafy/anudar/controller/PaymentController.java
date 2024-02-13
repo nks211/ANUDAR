@@ -30,9 +30,7 @@ public class PaymentController {
         // 현재 인증된 사용자의 정보를 가져오기
         String username = authentication.getName();
 
-        Long userId = userService.findUserIdByUsername(username);
-
-        PaymentReadyDto paymentReadyResponseDto = paymentService.preparePayment(requestDto, userId);
+        PaymentReadyDto paymentReadyResponseDto = paymentService.preparePayment(username, requestDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

@@ -21,7 +21,7 @@ export default function Pay () {
     console.log(token)
 
     const form = {
-      cid: 'TC0ONETIME',
+      cid: "TC0ONETIME",
       partner_user_id: `partner_user_id_${new Date().getTime()}`,
       partner_order_id: `partner_order_id_${new Date().getTime()}`,
       tid: tid,

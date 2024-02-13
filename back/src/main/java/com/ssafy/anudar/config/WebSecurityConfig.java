@@ -51,6 +51,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/auction/works")
                 .requestMatchers("/user/username")
                 .requestMatchers("/user/nickname")
+                .requestMatchers("/exhibit/docent/**")
+                .requestMatchers("/exhibit/docent/**")
                 ;
     }
 

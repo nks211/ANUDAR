@@ -1,36 +1,29 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
 import axios from 'axios'
 import {useLocation} from 'react-router-dom';
 
+// 결제 승인 요청을 위한 form 데이터
 export default function Pay () {
-    // const location = useLocation();
-    // const [pgToken, setPgToken] = useState('');
-    // console.log(location);
-    // const url = location.search;
-    console.log(localStorage)
+    
     const token = localStorage.getItem('token');
     const tid = localStorage.getItem('tid');
 
     const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const pgToken = queryParams.get('pg_token');
     const pgToken = location.search.split("?pg_token=")[1]
-// 
 
-    console.log(token)
+    console.log(tid, pgToken)
 
     const form = {
       cid: "TC0ONETIME",
-      partner_user_id: `partner_user_id_${new Date().getTime()}`,
-      partner_order_id: `partner_order_id_${new Date().getTime()}`,
+      partner_user_id: 'partner_user_id',
+      partner_order_id: 'partner_order_id',
       tid: tid,
       pg_token : pgToken
     }
 
     console.log(form)
 
-    const handleApprove  = async (form, token) => {
+    const handleApprove  = async () => {
         if (!pgToken || !tid) {
             alert('결제 승인 정보가 누락되었습니다.');
             return;
@@ -40,12 +33,12 @@ export default function Pay () {
         console.log(token)
     
         await axios.post(
-        //   'http://localhost:8080/api/payment/kakaoPayApprove',
-          '/api/payment/kakaoPayApprove', 
+          'http://localhost:8080/api/payment/kakaoPayApprove',
+        //   '/api/payment/kakaoPayApprove', 
             form
           , {
             headers: {
-                "Content-Type": `application/json`,
+                "Content-type": `application/json;charset=utf-8`,
                 "Authorization": `Bearer ${token}`
             }
           })
@@ -64,7 +57,7 @@ export default function Pay () {
     return(
         <div>
 
-            <button onClick={()=>handleApprove(form, token)}>
+            <button onClick={handleApprove}>
                 버튼을 누르면 결제가 완료됩니다.
             </button>
     </div>

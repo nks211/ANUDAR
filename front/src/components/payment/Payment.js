@@ -5,6 +5,7 @@ import './Payment.css'
 
 
 export default function Payment() {
+  
   const [selectPoint, setSelectPoint] = useState(0);
   const [selectKRW, setSelectKRW] = useState(0);
   const [paymentUrl, setPaymentUrl] = useState(''); // 결제 승인 페이지 URL 상태
@@ -30,21 +31,21 @@ export default function Payment() {
       return;
     }
 
-    // axios.post('http://localhost:8080/api/payment/kakaoPayReady', {
-    await axios.post('/api/payment/kakaoPayReady', {
+    
+    axios.post('http://localhost:8080/api/payment/kakaoPayReady', {
+    // await axios.post('/api/payment/kakaoPayReady', {
     item_name: `포인트 ${selectPoint}개 충전`,
     total_amount: selectKRW,
     // partner_user_id: 'partner_user_id',
     // partner_order_id: 'partner_order_id',
-    partner_user_id: `partner_user_id_${new Date().getTime()}`,
+    partner_user_id: 'partner_user_id',
     // 고유 주문번호를 생성하여 partner_order_id에 저장
-    partner_order_id: `partner_order_id_${new Date().getTime()}`,
+    partner_order_id: 'partner_order_id',
     vat_amount: 0,
     tax_free_amount: 0,
     cid: "TC0ONETIME",
     quantity: 1,
     tax_free_amount: 0,
-    // approval_url: 'http://localhost:3000/PaymentApproval',
     approval_url: 'http://localhost:3000/pay',
     cancel_url: 'http://localhost:3000',
     fail_url: 'http://localhost:3000'
@@ -53,11 +54,12 @@ export default function Payment() {
     // fail_url: '/'
   }, {
     headers: {
-      "Content-Type": `application/json`,
+      "Content-Type": `application/json;charset=utf-8`,
       Authorization: `Bearer ${token}`
     }
   })
   .then(response => {
+    
     // tid 값을 저장
     console.log(`tid : ${response.data.tid}`)
     window.localStorage.setItem('tid', response.data.tid);
@@ -107,7 +109,7 @@ export default function Payment() {
           <PointBtn point={1000} krw={10000}/>
         </div>
         <button onClick={handlePayment}>{paymentUrl && (
-          <a href={paymentUrl} target="_blank" rel="noopener noreferrer">결제하기</a>
+          <a href={paymentUrl}>결제하기</a>
         )}</button>
       </div>
     </div>

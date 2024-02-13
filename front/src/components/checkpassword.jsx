@@ -11,17 +11,6 @@ export default function CheckPassword() {
     }));
 
     const [checkinput, setCheckInput] = useState("");
-<<<<<<< HEAD
-    const passwordcheck = () => {
-        const userpassword = JSON.parse(localStorage.getItem("userdata")).password;
-        setmypagecheckpopup(!mypagecheckpopup);
-        // if (checkinput === userpassword) {
-        //     setmypagecheckpopup(!mypagecheckpopup);
-        // }
-        // else {
-        //     alert("비밀번호가 맞지 않습니다");
-        // }
-=======
     const passwordcheck = async () => {
         const token = localStorage.getItem("token");
         const result = await changepassword(checkinput, checkinput, token);
@@ -31,7 +20,6 @@ export default function CheckPassword() {
         else {
             alert("비밀번호가 맞지 않습니다");
         }
->>>>>>> 1b3e0d2917b56fd341ec1d063dac9cfe523a49bc
     }
 
     return (

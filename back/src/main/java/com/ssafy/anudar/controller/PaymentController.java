@@ -29,7 +29,8 @@ public class PaymentController {
 
         // 현재 인증된 사용자의 정보를 가져오기
         String username = authentication.getName();
-
+        System.out.println(username)
+        ;
         PaymentReadyDto paymentReadyResponseDto = paymentService.preparePayment(username, requestDto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -43,8 +44,7 @@ public class PaymentController {
     @PostMapping("/kakaoPayApprove")
     public ResponseEntity<PaymentApproveDto> kakaoPayApprove(Authentication authentication, @RequestBody PaymentApproveRequestDto requestDto) {
         String username = authentication.getName();
-
-
+        System.out.println(username);
         PaymentApproveDto paymentApproveResponseDto = paymentService.approvePayment(username, requestDto);
         return ResponseEntity.ok(paymentApproveResponseDto);
     }

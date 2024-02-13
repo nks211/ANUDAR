@@ -1,30 +1,3 @@
-.docentTab {
-  background-color: #967E76;
-  /* background-color: white; */
-  /* width: 70px; */
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  img {
-    width: 50%;
-    margin: 15px 0 15px;
-    cursor: pointer;
-  }
-
-  .reverseTab {
-    background-color: white;
-    width: 100%;
-
-    img {
-      width: 50%;
-    }
-  }
-
-  div {
-    /* margin: 50px 0; */
-    cursor: pointer;
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:edc13b0d88b06aba5e17a98253f526aee91c2dd2b19c5342fa63130b60415d72
+size 432

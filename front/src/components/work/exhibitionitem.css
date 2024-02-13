@@ -1,31 +1,3 @@
-.likeexhibitionarea {
-    width: 271px;
-    height: 431px;
-    margin-right: 20px;
-    margin-bottom: 40px;
-    position: relative;
-}
-
-.likeexhibitiontitle {
-    color: #000000;
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 5px;
-    text-align: start;
-}
-
-.likeexhibitionartist {
-    color: #000000;
-    font-size: 12px;
-    font-weight: 400;
-    margin-top: 5px;
-    text-align: start;
-}
-
-.likeexhibitionperiod {
-    color: #848484;
-    font-size: 10px;
-    font-weight: 400;
-    margin-top: 5px;
-    text-align: start;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:838a004324dfaf99af1e7c848575c612b98fc44f4ffa872945d2660833ddd2b3
+size 534

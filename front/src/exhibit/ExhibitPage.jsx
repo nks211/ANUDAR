@@ -7,103 +7,67 @@ import Search from "../components/search/Search";
 import '../index.css'
 import './ExhibitPage.css'
 
+import { getAllExhibitList, getCurExhibitList } from "../API";
+
 export default function ExhibitPage() {
-  // *수정* API 연결 후 수정 - 작가 구분
-  // let isArtist = false;
-  let isArtist = true;
-  let showRegistBtn = null;
-  if (isArtist) {
-    showRegistBtn = <div className="exhibitRegistBtn" onClick={()=>{
-                      navigate(`/exhibit/regist`)
-                      setPathName(window.location.pathname)
-                      window.scrollTo(0, 0)
-                    }}>전시회 등록</div>
-  }
+  const {pathname, setPathName} = useContext(AppContext);
+  const [allExhibits, setAllExhibits] = useState([]);  // 전체 전시 저장
+  const [curExhibits, setCurExhibits] = useState([]);  // 진행 중 전시 저장
+  const [exhibitList, setExhibitList] = useState(curExhibits);  // 선택한 전시
 
-  const exhibitList = [];
-  const [exhibits, setExhibits] = useState(exhibitList);
-
-  const [allBtn, setAllBtn] = useState("toggleBtn");
-  const [onGoingBtn, setOnGoingBtn] = useState("toggleBtn clickToggleBtn");
-
+  const [selectBtn, setSelectBtn] = useState("cur");
   const navigate = useNavigate();
-  const {setPathName} = useContext(AppContext);
 
-  function allExhibits() {
-    for (let i=0; i<dummy.exhibits.length; i++) {
-      exhibitList.push(dummy.exhibits[i])
-    }
-  }
+  async function getData() {
+    try {
+      await getAllExhibitList()
+      .then(res => setAllExhibits(res))
+      .catch(err=>console.log(err))
 
-  function onGoingExhibits() {
-    const newExhibits = []
-    var currentDate = new Date();
-  
-    for (let i=0; i<dummy.exhibits.length; i++) {
-      var startDate = new Date(dummy.exhibits[i].start);
-      var endDate = new Date(dummy.exhibits[i].end);
-      if (currentDate >= startDate && currentDate <= endDate) {
-        newExhibits.push(dummy.exhibits[i])
-      }
-    }
-    setExhibits(newExhibits)
+      await getCurExhibitList()
+      .then(res=> {setCurExhibits(res); setExhibitList(res)})
+      .catch(err=>console.log(err))
+
+    } catch (err) {
+      console.log(err)
+    } 
   }
 
   useEffect(()=>{
-    allExhibits()
-    console.log('...')
-  }, [exhibitList])
-  
-  useEffect(()=>{
-    onGoingExhibits()
+    console.log('ExhibitPage')
+    console.log(localStorage)
+    getData()
   }, [])
-
-
-  let content = <div className="exhibitList">
-                  {exhibits.map(exhibit=>(
-                    <Exhibit exhibitType={1} exhibit={exhibit}/>
-                  ))}
-                </div>
 
   return (
     <div>
       <div className="exhibitHeader">
         <div className="exhibitToggle">
           {/* 전체 */}
-          <div className={allBtn} style={{width:65}} onClick={()=>{
-            setAllBtn("toggleBtn clickToggleBtn");
-            setOnGoingBtn("toggleBtn");
-            setExhibits(exhibitList)
+          <div className={"toggleBtn"+(selectBtn==="all"?" clickToggleBtn":"")} style={{width:65}} onClick={()=>{
+            setSelectBtn("all"); setExhibitList(allExhibits)
           }}>전체</div>
 
           {/* 진행 중인 전시 */}
-          <div className={onGoingBtn} style={{width:140}} onClick={()=>{
-            setOnGoingBtn("toggleBtn clickToggleBtn");
-            setAllBtn("toggleBtn");
-            onGoingExhibits()
+          <div className={"toggleBtn"+(selectBtn==="cur"?" clickToggleBtn":"")} style={{width:140}} onClick={()=>{
+            setSelectBtn("cur"); setExhibitList(curExhibits)
           }}>진행 중인 전시</div>
         </div>
 
         <div className="exhibitHeaderRight">
           <Search updateValues={(searchExhibit) => {
-            const newExhibits = []
-            for (let i=0; i<dummy.works.length; i++) {
-              // *수정* : title (API 연결 후) 변경
-              if (dummy.exhibits[i]?.title.includes(searchExhibit) && exhibits.includes(dummy.exhibits[i])) {
-                newExhibits.push(dummy.exhibits[i])
-              }
-            }
-            setExhibits(newExhibits)
+            let exhibits = selectBtn==="cur"?curExhibits:allExhibits
+            const filterExhibits = exhibits.filter(exhibit => exhibit.name.includes(searchExhibit))
+            setExhibitList(filterExhibits)
           }}/>
-          {showRegistBtn}
-          {/* {{isArtist}? "a":"b"}
           <div className="exhibitRegistBtn" onClick={()=>{
-            navigate(`/exhibit/regist`)
-          }}>전시회 등록</div> */}
+            navigate(`/exhibit/regist`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 등록
+          </div>
         </div>
       </div>
-      
-      {content}
-    </div>
+      <div className="exhibitList">
+        {exhibitList.map(exhibit=>( <Exhibit exhibitType={1} exhibit={exhibit}/> ))}
+      </div>
+    </div> 
   );
 }

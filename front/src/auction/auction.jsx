@@ -10,6 +10,7 @@ import ExhibitionItem from "../components/work/exhibitionitem";
 import WorkItem from "../components/work/workitem";
 import ModalPopup from "../components/modal/modalpopup";
 import { AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const test = [
     {
@@ -58,13 +59,34 @@ const auctionworksetting = {
 
 function Auction() {
 
+    const navigate = useNavigate();
     const [popupopen, setPopupOpen] = useState(false);
     const { modalsetting } = useContext(AppContext);
+
+    const okfunction = () => {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var lastdayofmonth = new Date(year, month, 0, 15, 0);
+        if (true) {
+            navigate("/auction/now");
+        }
+        else {
+            alert("이번 달 경매는 모두 마감되었습니다. 다음 달에 다시 이용해 주세요!");
+        }
+    };
 
     return (
         <div>
             <Modal isOpen={popupopen} style={modalsetting} onRequestClose={() => { setPopupOpen(false); }}>
-                <ModalPopup title="이것은 모달창 제목입니다" detail="이것은 모달창 세부 설명입니다" content={<div style={{ height: "100px", border: "1px solid" }}>이것은 모달창 콘텐츠 공간입니다</div>} okfunction={() => { setPopupOpen(false); }} okbutton={true} okbuttonlabel="확인" cancelbutton={false} cancelbuttonlabel="취소"/>
+                <ModalPopup 
+                title="이달의 경매 입장하기" 
+                detail="진행 중인 경매로 이동하시겠습니까?"
+                height={250}
+                content={<div style={{ height: "100px" }}>{  }</div>} 
+                okfunction={() => { okfunction(); }} 
+                okbutton={true} okbuttonlabel="확인" 
+                cancelbutton={false} cancelbuttonlabel="취소"/>
             </Modal>
             <img onClick={() => { setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
             <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>

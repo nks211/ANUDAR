@@ -3,9 +3,9 @@ import { immer } from "zustand/middleware";
 
 // 로그인, 회원가입, 메뉴바, 로그인 모달 입력값 관련 상태 관리 함수
 export const mainstate = create((set) => ({
-    login: false,
-    loginuser: {},
-    logintoken: "",
+    isLogin: localStorage.login === "true",
+    loginuser: localStorage.login === "true"?JSON.parse(localStorage.userdata):{},
+    logintoken: localStorage.login === "true"?localStorage.token:"",
     signup: {
         profileimage: "../../asset/profile_image.png",
         id: "",
@@ -50,7 +50,8 @@ export const mainstate = create((set) => ({
     idinput: "",
     passwordinput: "",
 
-    setlogin: (result) => set(() => ({ login: result })),
+    setIsLogin: (result) => set({ isLogin: result }),
+    // setIsLogin: (result) => set(() => ({ isLogin: result })),
     setloginuser: (user) => set(() => ({ loginuser: user })),
     setlogintoken: (token) => set(() => ({ logintoken: token })),
     setprofileimage: (image) => set((state) => ({ signup: { ...state.signup, profileimage: image } })),
@@ -63,7 +64,7 @@ export const mainstate = create((set) => ({
     setemailinput: (input) => set((state) => ({ signup: { ...state.signup, email: input } })),
     setnumberinput: (input) => set((state) => ({ signup: { ...state.signup, number: input } })),
 
-    setnotice: (result) => set(() => ({ notice: result })),
+    setnoticelist: (result) => set(() => ({ noticelist: result })),
     noticecheck: (notice) => set((state) => ({
         noticelist: state.noticelist.filter((item) => { return JSON.stringify(item) != JSON.stringify(notice); })
     })),
@@ -108,6 +109,7 @@ export const mypagestate = create((set) => ({
         newpassword: "",
         newpasswordcheck: "",
         newprofileimage: "",
+        newemail: "",
     },
     myprofile: "",
     myinfo: {
@@ -140,15 +142,14 @@ export const mypagestate = create((set) => ({
 
     },
     setnewprofileimage: (input) => set((state) => ({ updates: { ...state.updates, newprofileimage: input } })),
+    setnewemail: (input) => set((state) => ({ updates: { ...state.updates, newemail: input } })),
     getmyinfo: () => {
         
     },
     updatemyinfo: (newinfo) => {
 
     },
-    getmyfavorites: () => {
-
-    },
+    setmyfavorites: (input) => set(() => ({ myfavorites: input })),
     setfoldermode: (button) => {
         
     },
@@ -166,12 +167,16 @@ export const popupstate = create((set) => ({
     signuppopup: false,
     mypagecheckpopup: false,
     mypagechangepopup: false,
+    paymentPopup: false,
+    loadingpopup: true,
 
     sethomepopup: (result) => set(() => ({ homepopup: result })),
     sethomenoticepopup: (result) => set(() => ({ homenoticepopup: result })),
     setsignuppopup: (result) => set(() => ({ signuppopup: result })),
     setmypagecheckpopup: (result) => set(() => ({ mypagecheckpopup: result })),
     setmypagechangepopup: (result) => set(() => ({ mypagechangepopup: result })),
+    setPaymentPopup: (result) => set(() => ({ paymentPopup: result })),
+    setloadingpopup: (result) => set(() => ({ loadingpopup: result })),
 
 }));
 
@@ -189,3 +194,10 @@ export const registstate = create((set) => ({
 export const searchstate = create((set) => ({
 
 }));
+
+
+// export const today = 0;
+
+export function getToday() {
+    
+}

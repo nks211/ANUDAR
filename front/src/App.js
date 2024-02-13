@@ -10,12 +10,12 @@ import WorkDetailPage from './work/WorkDetailPage'
 import ArtistPage from './artist/ArtistPage'
 import ArtistDetailPage from './artist/ArtistDetailPage'
 import Auction from './auction/auction'
+import AuctionPage from './auction/auctionpage';
 import Signup from './signup/signup'
 import Mypage from './mypage/mypage';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
-import { mainstate } from "./StateManagement.jsx";
 
 export const AppContext = createContext();
 export default function App() {
@@ -46,7 +46,7 @@ export default function App() {
     <>
       <AppContext.Provider value={{ modalsetting, pathName, setPathName }}>
         <NavBar />
-        <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent')?"DocentPage":"App"}>
+        <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent') || pathName.includes('now') ? "DocentPage" : "App"}>
         {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
@@ -61,6 +61,7 @@ export default function App() {
             <Route exact path="/artist" element={<ArtistPage />}></Route>
             <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
+            <Route exact path="/auction/now" element={<AuctionPage/>}></Route>
             <Route exact path="/user/info" element={<Mypage/>}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
           </Routes>

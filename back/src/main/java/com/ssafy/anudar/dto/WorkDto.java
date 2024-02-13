@@ -17,6 +17,7 @@ public class WorkDto {
     private Integer price;
     private int bid;
     private String author;
+    private String author_name;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
@@ -26,7 +27,8 @@ public class WorkDto {
                 work.getDetail(),
                 work.getPrice(),
                 work.getBid(),
-                work.getUser().getUsername()
+                work.getUser().getUsername(),
+                work.getUser().getName()
         );
     }
 }

@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import "./checkpassword.css";
 import { popupstate } from "../StateManagement";
+import { changepassword } from "../API";
 
 export default function CheckPassword() {
 
@@ -8,12 +9,15 @@ export default function CheckPassword() {
         mypagecheckpopup: state.mypagecheckpopup,
         setmypagecheckpopup: state.setmypagecheckpopup,
     }));
+    const setloadingpopup = popupstate((state) => state.setloadingpopup);
 
     const [checkinput, setCheckInput] = useState("");
-    const passwordcheck = () => {
-        const userpassword = JSON.parse(localStorage.getItem("userdata")).password;
-        if (checkinput === userpassword) {
+    const passwordcheck = async () => {
+        const token = localStorage.getItem("token");
+        const result = await changepassword(checkinput, checkinput, token);
+        if (result != null) {
             setmypagecheckpopup(!mypagecheckpopup);
+            setloadingpopup(true);
         }
         else {
             alert("비밀번호가 맞지 않습니다");

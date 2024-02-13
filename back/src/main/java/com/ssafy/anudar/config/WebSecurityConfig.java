@@ -52,7 +52,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/username")
                 .requestMatchers("/user/nickname")
                 .requestMatchers("/exhibit/docent/**")
-                .requestMatchers("/exhibit/docent/**")
+                .requestMatchers("/exhibit/*/author")
                 ;
     }
 

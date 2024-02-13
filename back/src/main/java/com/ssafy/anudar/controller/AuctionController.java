@@ -1,3 +1,37 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:91b5cdf80d7c91957a712e1b2553614766e819fb4ce4650bec18629c4f03e4b0
-size 1121
+package com.ssafy.anudar.controller;
+
+import com.ssafy.anudar.dto.SuccessWorkDto;
+import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.dto.request.SuccessWorkRequset;
+
+import com.ssafy.anudar.service.AuctionService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+
+@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
+@RestController
+@RequestMapping("/auction")
+@RequiredArgsConstructor
+public class AuctionController {
+
+    private final AuctionService auctionService;
+    @PostMapping("/bidok")
+    public ResponseEntity<SuccessWorkDto> bidok(@RequestBody SuccessWorkRequset req) {
+        SuccessWorkDto successWorkDto = auctionService
+                .saveSuccessWork(req.getWorkId(), req.getUserId(),
+                req.getAuctionId(), req.getFinalPrice());
+        return new ResponseEntity<>(successWorkDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/works")
+    public ResponseEntity<List<WorkDto>> getWorks() {
+        return new ResponseEntity<>(auctionService.getWorks(), HttpStatus.OK);
+    }
+
+}

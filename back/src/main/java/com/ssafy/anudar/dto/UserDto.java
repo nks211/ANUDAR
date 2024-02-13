@@ -22,7 +22,9 @@ public class UserDto {
     private String email;
     private String image;
     private String phone;
-    private List<NotifyDto> notifies = new ArrayList<>(); // 알림 리스트 추가
+    private Long userPoints;
+    private List<NotifyDto> notifies; // 알림 리스트 추가
+
 
     public static UserDto fromEntity(User user) {
         List<NotifyDto> notifyDtos = user.getNotifies()
@@ -38,6 +40,7 @@ public class UserDto {
                 user.getEmail(),
                 user.getImage(),
                 user.getPhone(),
+                user.getUserPoints(),
                 notifyDtos
         );
     }

@@ -1,10 +1,11 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import "./myprofile.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { mypagestate, popupstate } from "../../../StateManagement.jsx";
 import Payment from "../../payment/Payment";
 import { uploadimage, myfollowers, myfollowings } from "../../../API";
+import PaymentApproval from "../../payment/PaymentApproval";
 
 
 export default function MyProfile() {
@@ -33,9 +34,13 @@ export default function MyProfile() {
   const myeditmode = mypagestate((state) => state.myeditmode);
   const paymentPopup = popupstate((state) => state.paymentPopup);
   const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
-  const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;;
-  const following = async () => { return await myfollowings(localStorage.getItem("token")) };
-  const follower = async () => { return await myfollowers(localStorage.getItem("token")) };
+  const paymentmodal = () => {
+    return <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false) }} style={setting}>
+            {/* {(localStorage.getItem("tid")?<PaymentApproval/>:<Payment/>)} */}
+            <Payment/>
+            {/* <ModalPopup title="회원 탈퇴" detail="정말로 탈퇴하시겠습니까?" okbutton={true} cancelbutton={true} okbuttonlabel="확인" cancelbuttonlabel="취소" /> */}
+          </Modal>;
+  };
 
   const upload = async (e) => {
     const file = e.target.files[0];

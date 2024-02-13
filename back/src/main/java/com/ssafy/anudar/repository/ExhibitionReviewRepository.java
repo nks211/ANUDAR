@@ -1,15 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Exhibition;
-import com.ssafy.anudar.model.ExhibitionReview;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface ExhibitionReviewRepository extends JpaRepository<ExhibitionReview, Long> {
-
-    List<ExhibitionReview> findAllByExhibition(Exhibition exhibition);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b3398539dfbc4fe5c91c79e8acc1c79bc98e916371b6f6adf8533d8af75ee824
+size 470

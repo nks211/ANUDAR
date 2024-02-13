@@ -1,18 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.model.Notify;
-import io.lettuce.core.dynamic.annotation.Param;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-@Repository
-public interface NotifyRepository extends JpaRepository<Notify, Long> {
-    // 사용자 ID에 따른 알림 조회
-    List<Notify> findByReceiverId(Long userId);
-}
-
-
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ac7348eb03b46cfdc7ce64981be9a112681aaa8b79c7445d00e423bd9793aa59
+size 444

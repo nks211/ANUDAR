@@ -1,17 +1,3 @@
-package com.ssafy.anudar.repository;
-
-import com.ssafy.anudar.dto.AuctionDto;
-import com.ssafy.anudar.model.SuccessWork;
-import com.ssafy.anudar.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-@Repository
-public interface AuctionWorkRepository extends JpaRepository<SuccessWork, Long> {
-    List<SuccessWork> findByUser(User user);
-
-    List<SuccessWork> findAllByUser(User user);
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:d38891b2bf97d9d822cfb41b5d98d6c707f137a43930ffbb4fa316c0254ca781
+size 411

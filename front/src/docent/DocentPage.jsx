@@ -4,7 +4,7 @@ import { AppContext } from '../App';
 import { useParams } from "react-router-dom";
 import * as StomJs from "@stomp/stompjs";
 import { jwtDecode } from "jwt-decode";
-// import WebCam from '../components/docent/WebCam';
+import WebCam from '../components/docent/WebCam';
 import DocentContents from '../components/docent/DocentContents';
 import DocentTab from '../components/docent/DocentTab';
 import DocentButton from '../components/docent/DocentButton';
@@ -124,11 +124,11 @@ export default function DocentPage(){
 
           {/* 8:1 -> 8 (WebCam, DocentContent) */}
           <div style={{flex:"8", display:"flex", padding:"1vw"}}>
-            {/* <div style={{ flex: "2" }}>
+            <div style={{ flex: "2" }}>
               {docentVideoAvailable ?
                 (<video src={videoUrl} width="840" height="560" controls autoPlay muted></video>) 
               : (<WebCam MysessionId={docentId} myUserName={username} />)}
-            </div> */}
+            </div>
             <div style={{flex:menu==="close"?"0":"1"}}><DocentContents/></div>
           </div>
           <div style={{flex:"1"}}><DocentButton/></div>

@@ -34,6 +34,7 @@
   font-size: 12px;
   text-align: right;
   color: rgb(205, 13, 13);
+  cursor: pointer;
 }
 
 .reviewContent {

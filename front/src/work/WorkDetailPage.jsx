@@ -18,6 +18,7 @@ export default function WorkDetailPage() {
   async function getData() {
     try {
       const res = await getWork(workId)
+      console.log(res)
       setWork(res)
       getWorks(res)
     } catch (err) {
@@ -100,7 +101,7 @@ export default function WorkDetailPage() {
             <Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
           </div>
           <div style={{paddingLeft:"10px"}}>
-          <div className="workArtist boldFont">{work.author}</div> {/* 작가명 */}
+          <div className="workArtist boldFont">{work.author_name}</div> {/* 작가명 */}
           <div className="workDescriptionArea"> {/* 작품 소개 */}
             <div className="workDescription">{work.detail}</div>
           </div>

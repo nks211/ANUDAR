@@ -5,28 +5,34 @@ import WebCam from '../components/docent/WebCam';
 import DocentContents from '../components/docent/DocentContents';
 import DocentTab from '../components/docent/DocentTab';
 import DocentButton from '../components/docent/DocentButton';
+import axios from 'axios';
 
 export const DocentContext = createContext();
 export default function DocentPage(){
   const docentId = useLocation().pathname.split('/').pop();
+  const username = "host";
 
   const navigate = useNavigate();
   const {pathName, setPathName} = useContext(AppContext);
+  const [docentVideoAvailable, setDocentVideoAvailable] = useState(true);
+  const [videoUrl, setVideoUrl] = useState(null);
+  useEffect(() => {
+    axios.get('https://i10d105.p.ssafy.io/api/exhibit/docent/'+docentId)
+      .then(response => { // 도슨트 영상이 있음!
+        if(response.status === 200) {
+          setDocentVideoAvailable(true)
+          setVideoUrl(response.data);
+        }
+      })
+      .catch(error => { // 도슨트 영상이 없음!
+        console.log(error)
+        setDocentVideoAvailable(false)
+      })
 
-  useEffect(()=>{
-    return()=> {
-      // if (window.performance && window.performance.navigation.type == 2) {
-      //   alert('뒤로가기')
-      // }
-      // if (!window.location.pathname.includes('/docent/')) {
-      //   if (!window.confirm('도슨트를 종료하시겠습니까?')) {
-      //     navigate({pathName})
-      //   }
-      // }
-      setPathName(window.location.pathname)
-    }
-  }, [navigate])
-
+      return () => {
+        setPathName(window.location.pathname);
+      };
+  },[])
 
   // 클릭된 메뉴
   const [menu, setMenu] = useState();
@@ -41,7 +47,11 @@ export default function DocentPage(){
 
           {/* 8:1 -> 8 (WebCam, DocentContent) */}
           <div style={{flex:"8", display:"flex", padding:"1vw"}}>
-            <div style={{flex:"2"}}><WebCam /></div>
+            <div style={{ flex: "2" }}>
+              {docentVideoAvailable ?
+                (<video src={videoUrl} width="840" height="560" controls autoPlay muted></video>) 
+              : (<WebCam MysessionId={docentId} myUserName={username} />)}
+            </div>
             <div style={{flex:menu==="close"?"0":"1"}}><DocentContents/></div>
           </div>
           <div style={{flex:"1"}}><DocentButton/></div>

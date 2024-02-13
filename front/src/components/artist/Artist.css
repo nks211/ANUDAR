@@ -27,10 +27,18 @@
 }
 
 .artistExhibit {
-  margin: 0;
+  margin: 1px 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #5F5F5F;
+  
+  img {
+    margin-right: 5px;
+  }
 }
 
 .artistWork {

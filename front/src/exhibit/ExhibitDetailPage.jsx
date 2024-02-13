@@ -6,17 +6,24 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ExhibitDetail from "../components/exhibit/ExhibitDetail";
 import Exhibit from "../components/exhibit/Exhibit";
-import Review from "../components/exhibit/Review";
+import Reviews from '../components/exhibit/Reviews';
 import dummy from "../db/data.json"
 import './ExhibitPage.css'
 import '../index.css'
+<<<<<<< HEAD
 import { getExhibitDetail } from '../API';
 import { mainstate } from '../StateManagement';
+=======
+import { getExhibitDetail, getLikeExhibit } from '../API';
+import { mainstate } from '../StateManagement';
+import Like from '../components/like/Like';
+>>>>>>> 2acb543b3c566420704cd2956737a869d1617245
 
 export default function ExhibitDetailPage() {
   const exhibitId = useLocation().pathname.split('/').pop();
   const [exhibit, setExhibit] = useState({})
   const [works, setWorks] = useState([])
+<<<<<<< HEAD
   const loginuser = mainstate(state => state.loginuser);
 
   async function getData() {
@@ -45,6 +52,47 @@ export default function ExhibitDetailPage() {
 
   let reviews = null;
 
+=======
+  const logintoken = mainstate((state) => (state.logintoken))
+
+  const [isLike, setIsLike] = useState(false)
+
+  const changeLike = (value) => {
+    setIsLike(value)
+  }
+
+  // 전시 상세 정보 조회
+  async function getData() {
+    try {
+      const res = await getExhibitDetail(exhibitId)
+      setExhibit(res)
+      setWorks(res.workList)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // 전시 찜 목록 조회
+  async function getLike() {
+    try {
+      const res = await getLikeExhibit(logintoken)
+      const findExhibit = res.filter(exhibit => exhibit.id === Number(exhibitId))
+      if (findExhibit.length) { setIsLike(true); return }
+      setIsLike(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(()=>{
+    getData()
+    getLike()
+  }, [])
+
+  const navigate = useNavigate();
+  const {setPathName} = useContext(AppContext);
+
+>>>>>>> 2acb543b3c566420704cd2956737a869d1617245
   // const works = exhibit.workList
 
   // 캐러셀
@@ -58,6 +106,7 @@ export default function ExhibitDetailPage() {
     slidesToShow: 1,
     slidesToScroll: 1,
   }
+<<<<<<< HEAD
 
   function createReview() {
     const today = new Date();
@@ -65,6 +114,8 @@ export default function ExhibitDetailPage() {
     const newReview = <Review userName={userName} todayDate={newToday} content={comment} />
     setComments([...comments, newReview])
   }
+=======
+>>>>>>> 2acb543b3c566420704cd2956737a869d1617245
   
   return (
     <div>
@@ -87,6 +138,7 @@ export default function ExhibitDetailPage() {
           <ExhibitDetail exhibitType={2} exhibit={exhibit}/>
         </div>
 
+<<<<<<< HEAD
         {/* 전시회 입장, 도슨트 입장 버튼 */}
         <div className="exhibitButtons">
           {/* *수정* : 전시회 입장 주소 .. */}
@@ -94,54 +146,16 @@ export default function ExhibitDetailPage() {
           <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
         </div>
 
+=======
+>>>>>>> 2acb543b3c566420704cd2956737a869d1617245
         {/* 방명록 */}
-        <div style={{width:"750px"}}>
-          <div style={{fontSize:"20px", textAlign:"Left", width:"100%"}}>방명록 남기기</div>
-          <div className="reviewArea">
-            {/* <form onSubmit={(event)=>{
-                event.preventDefault()
-                createReview(comment)
-                setComment("")
-              }}> */}
-  
-              {/* *수정* 댓글 등록 후 기존 내용 지우기 */}
-              <textarea 
-                // value={comment} 
-                placeholder="여기에 전시회에 대한 후기나 소감을 남길 수 있습니다. 최대 1000자 이내로 작성 가능합니다."
-                onChange={(event)=> {
-                  setComment(event.target.value)
-                }}>
-              </textarea>
-              <button onClick={(event)=>{
-                event.preventDefault()
-                createReview(comment)
-                setComment("")
-              }}>등록하기</button>
-            {/* </form> */}
-          </div>
-          {/* *수정* 정렬 기능 구현 */}
-          <div className="selectReviews">
-            <select 
-              // value={selectValue} 
-              // onChange={(event)=>{
-              //   if (selectValue !== event.target.value) {
-              //     setComment(comments.reverse())
-              //   }
-              //   setSelectValue(event.target.value)}} 
-              style={{width:"80px", padding:"2px 4px"}}>
-              <option value="earliest">오래된 순</option>
-              <option value="latest">최신 순</option>
-            </select>
-          </div>
-          {comments}
-          <Review userName="작성자명" todayDate="2024-01-01" content="작성자가 적은 방명록 댓글"/>
-        </div>
+        <Reviews exhibitId={exhibitId} />
 
         {/* 전시회 입장, 도슨트 입장 버튼 */}
         <div className="detailPageBtns">
           <div onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_exhibit.png"></img>전시회 입장</div>
           <div onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_docent.png"></img>도슨트 입장</div>
-          <div><img src={"../../asset/btn_like"+(("찜한상태이면")?"_cancel":"")+".png"}></img>{"찜한상태이면"?"찜취소":"찜하기"}</div>
+          <Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
         </div>
       </div>
 

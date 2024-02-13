@@ -96,13 +96,25 @@ export default function WorkRegist() {
             <div className="workInput" style={{marginBottom:"18px"}}>
               <div className="item1"><span>*</span> 최소 경매가</div>
               {/* *수정* 단위 만원 */}
+<<<<<<< HEAD
               <input value={price} min={10} max={100} type="number" placeholder="최소 10만원, 최대 100만원까지 입력 가능합니다" onChange={(event)=>{setPrice(event.target.value)}} required/>
+=======
+              <input value={price} min={10} max={100} type="number" placeholder="최소 10만원, 최대 100만원까지 입력 가능합니다" 
+                style={{flex:"2.2", padding: "0 5px", boxSizing:"border-box"}}
+                onChange={(event)=>{setPrice(event.target.value)}} required/>
+              <div style={{flex:"0.3", textAlign:"right"}}>만원</div>
+>>>>>>> 2acb543b3c566420704cd2956737a869d1617245
             </div>
             <div style={{display:"flex", justifyContent: "center"}}>
               <button id="workRegistBtn" type="submit" onClick={(event)=>{
                 event.preventDefault()
                 if (!title || !detail || !fileName || !price) {
                   alert('모든 정보를 입력해주세요.')
+                  return
+                }
+
+                if (price < 10 || price > 100) {
+                  alert('경매가는 최소 10만원, 최대 100만원까지 입력 가능합니다.')
                   return
                 }
 

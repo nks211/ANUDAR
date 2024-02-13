@@ -37,8 +37,8 @@ public class WorkService {
     }
 
     // 작가 작품 조회
-    public List<WorkDto> getWorkByUser(Long user_id) {
-        User user = repository.findById(user_id)
+    public List<WorkDto> getWorkByUser(String username) {
+        User user = repository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         return workRepository.findAllByUser(user)
                 .stream().map(WorkDto::fromEntity).toList();

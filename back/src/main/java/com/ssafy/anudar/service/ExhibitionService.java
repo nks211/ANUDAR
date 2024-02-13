@@ -77,6 +77,13 @@ public class ExhibitionService {
         return ExhibitionDetailDto.fromEntity(exhibition);
     }
 
+    // 전시회 author username 조회
+    public String getExhibitionAuthorById(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
+        return exhibition.getUser().getUsername();
+    }
+
     // 전시회 찜하기
     @Transactional
     public void likeExhibition(String username, Long exhibition_id){

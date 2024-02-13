@@ -419,10 +419,30 @@ export async function getAuthorWorks(name, token) {
 
 
 /* 경매 페이지*/
-
+// 경매에 오를 작품
 export const auctionlist = async () => {
     const url = "/api/auction/works";
     return await axios.get(url)
     .then(response => { return response.data; })
     .catch((e) => { console.log(e); })
+};
+
+// 낙찰
+export const successbid = async (finalPrice, workId, nickname, auctionId) => {
+  const url = "/api/auction/bidok";
+  const data = {
+      finalPrice : finalPrice,
+      workId : workId, 
+      nickname : nickname,
+      auctionId : auctionId
+  }
+  return await axios.post(url, data,{
+      headers: {
+          'Authorization': "Bearer " + window.localStorage.getItem('token')
+      }
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch((e) => { console.log(e); return {}; });
 };

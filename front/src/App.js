@@ -116,9 +116,11 @@ export default function App() {
             <Route exact path="/artist" element={<ArtistPage />}></Route>
             <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
-            <Route exact path="/auction/now" element={<AuctionPage/>}></Route>
+            
             <Route exact path="/user/info" element={<Mypage/>}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
+            {/* 실시간 경매 */}
+            <Route exact path="/auction/now/:auction_id" element={<AuctionPage/>}></Route>
           </Routes>
         </div>
       </AppContext.Provider>

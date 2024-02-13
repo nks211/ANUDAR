@@ -29,10 +29,10 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final SuccessWorkRepository successWorkRepository;
     @Transactional
-    public SuccessWorkDto saveSuccessWork (Long workId, Long userId, Long auctionId, int finalPrice){
+    public SuccessWorkDto saveSuccessWork (Long workId, String nickname, Long auctionId, int finalPrice){
         Work work = workRepository.findById(workId)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.WORK_NOT_FOUND));
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         Auction auction = auctionRepository.findById(auctionId)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.AUCTION_NOT_FOUND));

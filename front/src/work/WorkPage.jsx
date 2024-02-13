@@ -4,6 +4,8 @@ import Work from "../components/work/Work";
 import Search from "../components/search/Search";
 import '../index.css'
 import { getWorks } from "../API";
+import Loading from "../components/loading/Loading";
+
 
 export default function WorkPage() {
   const [works, setWorks] = useState([]);
@@ -38,7 +40,12 @@ export default function WorkPage() {
         // setWorks(newWorks)
       }}/>
       <div className="workList">
-        {works.map(work=>( <Work className="Work" workType={1} work={work}/> ))}
+        {works.length?
+          works.map(work=>( <Work className="Work" workType={1} work={work}/> ))
+          :<Loading loadingType={"workList"}/>
+        }
+        {/* <Loading loadingType={"workList"}/>
+        {works.map(work=>( <Work className="Work" workType={1} work={work}/> ))} */}
       </div>
     </div>
   );

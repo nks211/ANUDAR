@@ -23,7 +23,6 @@ export default function Like(props) {
   async function follow() {
     try {
       const res = await followAuthor(props.id, logintoken)  // props.id : 작가 아이디(username)
-      console.log(res)
     } catch(err) {
       console.log(err)
     }
@@ -33,7 +32,6 @@ export default function Like(props) {
   async function unfollow() {
     try {
       const res = await unfollowAuthor(props.id, logintoken)  // props.id : 작가 아이디(username)
-      console.log(res)
     } catch(err) {
       console.log(err)
     }

@@ -7,14 +7,14 @@ import Search from "../components/search/Search";
 import '../index.css'
 import './ExhibitPage.css'
 import { mainstate } from "../StateManagement";
-
 import { getAllExhibitList, getCurExhibitList } from "../API";
+import Loading from "../components/loading/Loading";
 
 export default function ExhibitPage() {
   const {pathname, setPathName} = useContext(AppContext);
   const [allExhibits, setAllExhibits] = useState([]);  // 전체 전시 저장
   const [curExhibits, setCurExhibits] = useState([]);  // 진행 중 전시 저장
-  const [exhibitList, setExhibitList] = useState(curExhibits);  // 선택한 전시
+  const [exhibitList, setExhibitList] = useState([]);  // 선택한 전시
 
   const isLogin = mainstate((state)=>state.isLogin)
 
@@ -71,7 +71,12 @@ export default function ExhibitPage() {
         </div>
       </div>
       <div className="exhibitList">
-        {exhibitList.map(exhibit=>( <Exhibit exhibitType={1} exhibit={exhibit}/> ))}
+      {/* <Loading loadingType={"exhibitList"} />
+      {exhibitList.map(exhibit=>( <Exhibit exhibitType={1} exhibit={exhibit}/> ))} */}
+        {exhibitList.length?
+          exhibitList.map(exhibit=>( <Exhibit exhibitType={1} exhibit={exhibit}/> ))
+          :<Loading loadingType={"exhibitList"} />
+        }
       </div>
     </div> 
   );

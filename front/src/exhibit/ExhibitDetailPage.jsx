@@ -32,7 +32,6 @@ export default function ExhibitDetailPage() {
       const res = await getExhibitDetail(exhibitId)
       setExhibit(res)
       setWorks(res.workList)
-      // console.log(res)
     } catch (err) {
       console.log(err)
     }
@@ -93,12 +92,6 @@ export default function ExhibitDetailPage() {
           <ExhibitDetail exhibitType={2} exhibit={exhibit}/>
         </div>
 
-        {/* 전시회 입장, 도슨트 입장 버튼
-        <div className="exhibitButtons">
-          <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 입장</button>
-          <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
-        </div> */}
-
         {/* 방명록 */}
         <Reviews exhibitId={exhibitId} />
 
@@ -106,9 +99,7 @@ export default function ExhibitDetailPage() {
         <div className="detailPageBtns">
           <div onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_exhibit.png"></img>전시회 입장</div>
           <div onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_docent.png"></img>도슨트 입장</div>
-          {/* <div><img src={"../../asset/btn_like"+(("찜한상태이면")?"_cancel":"")+".png"}></img>{"찜한상태이면"?"찜취소":"찜하기"}</div> */}
           <Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
-          {/* <Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} /> */}
         </div>
       </div>
 

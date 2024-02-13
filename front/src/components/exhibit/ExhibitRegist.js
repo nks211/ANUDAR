@@ -134,10 +134,7 @@ export default function ExhibitRegist() {
     }
 
     const res = await registExhibit(data, logintoken)
-    console.log(res)
-    const exhibitId = res.id
-    console.log(exhibitId)
-    navigate(`/exhibit/${exhibitId}`)
+    navigate(`/exhibit/${res.id}`)
   }
 
   return (

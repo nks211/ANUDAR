@@ -54,24 +54,6 @@ export const myinfo = async (token) => {
   else { alert("유효하지 않은 토큰입니다."); }
 };
 
-export const myfollowings = async (token) => {
-    if (token && token != "") {
-        const url = "/api/user/following";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => { return response.data; })
-        .catch((e) => { console.log(e); return 0; });
-    }
-};
-
-export const myfollowers = async (token) => {
-    if (token && token != "") {
-        const url = "/api/user/follower";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => { return response.data; })
-        .catch((e) => { console.log(e); return 0; });
-    }
-};
-
 export const updateinfo = async (newdata, token) => {
     if (token && token != "") {
         const url = "/api/user/update";
@@ -81,8 +63,6 @@ export const updateinfo = async (newdata, token) => {
     }
 };
 
-
-
 // 팔로잉 조회
 export async function getFollowing(token) {
   const url = "/api/user/following"
@@ -90,6 +70,15 @@ export async function getFollowing(token) {
   return await axios.get(url, config)
   .then(res => {return res.data})
   .catch(err => {console.log(err)})
+}
+
+//팔로워 조회
+export async function getFollowers(token) {
+    const url = "/api/user/follower"
+    const config = { headers: { Authorization: `Bearer ${token}` } }
+    return await axios.get(url, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
 }
 
 export const changepassword = async (oldpassword, newpassword, token) => {
@@ -121,11 +110,91 @@ export const signout = async (token) => {
   }
 };
 
+/* 알림 조회 */
+export const getnotices = async (id, token) => {
+    if (token && token != "") {
+        const url = `/api/user/${id}/notifies`;
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e); });
+    }
+};
 
+export const readnotice = async (noticeid, token) => {
+    if (token && token != "") {
+        const url = `/api/user/notifies/${noticeid}/read`;
+        return await axios.put(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+};
 
+export const deletenotice = async (noticeid, token) => {
+    if (token && token != "") {
+        const url = `/api/user/notifies/${noticeid}`;
+        return await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+};
 
+export const favoriteexhibitions = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/like/exhibit";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
 
-/* ------------------------------- 전시회 페이지 ------------------------------- */
+export const favoriteworks = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/like/work";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
+
+export const mybidworks = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/bid/work";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
+
+/* 전시회 페이지 */
+
+// 전체 전시회 리스트
+// export const getAllExhibitList = async () => {
+//   const url = "/api/exhibit/list"
+//   return await axios.get(url)
+//   .then((res) => { return (res.data); })
+//   .catch((err) => { console.log(err); /* return {}; */ });
+// }
+
+// // 진행 중인 전시회 리스트
+// export const getCurExhibitList = async () => {
+//   const url = "/api/exhibit/list/current"
+//   return await axios.get(url)
+//   .then(res => { return (res.data); })
+//   .catch((err) => { console.log(err); });
+// }
+
 
 // 전체 전시회 리스트
 export async function getAllExhibitList() {
@@ -342,8 +411,18 @@ export async function likeWork(id, token) {
 export async function getAuthorWorks(name, token) {
   const url = `/api/work/user/${name}`
   const config = { headers : { Authorization: `Bearer ${token}` } }
-  console.log(url)
+
   return await axios.get(url, config)
   .then(res => {return res.data})
   .catch(err => {console.log(err)})
 }
+
+
+/* 경매 페이지*/
+
+export const auctionlist = async () => {
+    const url = "/api/auction/works";
+    return await axios.get(url)
+    .then(response => { return response.data; })
+    .catch((e) => { console.log(e); })
+};

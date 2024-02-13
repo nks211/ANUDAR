@@ -115,9 +115,7 @@ public class ExhibitionService {
     public void saveDocentVideo(Long docentId, String video) {
         Docent docent = docentRepository.findById(docentId)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
-        if(docent.getVideo() == null) {
-            docent.setVideo(video);
-        }
+        docent.setVideo(video);
     }
 
     // 도슨트 비디오 정보 가져오기
@@ -128,5 +126,6 @@ public class ExhibitionService {
             throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);
         return docent.getVideo();
     }
+
 
 }

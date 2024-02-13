@@ -15,14 +15,19 @@ export default function ArtistDetailPage() {
   const [works, setWorks] = useState([]);  // 작가의 작품
   const [exhibits, setExhibits] = useState([]);  // 작가의 전시회
   const logintoken = mainstate((state) => (state.logintoken))
+  const loginuser = mainstate((state) => (state.loginuser))
 
   const [isFollow, setIsFollow] = useState(false);
+  const [likeButton, setLikeButton] = useState(<></>);
 
   // 작가 정보 조회
   async function getData() {
     try {
       const res = await getAuthor(artistName)
       setArtistInfo(res)
+      if (res.username !== loginuser.username) {
+        setLikeButton(<Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} />)
+      }
       console.log(res)
     } catch (err) {
       console.log(err)
@@ -87,7 +92,9 @@ export default function ArtistDetailPage() {
         <div className="artistInfoArea">
           <div className="artistHeader">  {/* 작가명, 팔로우 버튼 */}
             <div className="artistTitle boldFont">{artistInfo.name}</div>
-            <Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} />
+            {likeButton}
+            {/* {artistInfo.username === loginuser.username ? <></>:<Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} />} */}
+            {/* <Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} /> */}
           </div>
           <div style={{paddingLeft:"10px"}}>
             <div className="artistDescription boldFont">소개</div>  {/* 소개: 제목 */}

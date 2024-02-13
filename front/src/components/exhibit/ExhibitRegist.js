@@ -66,12 +66,8 @@ export default function ExhibitRegist() {
   useEffect(()=>{
     getLastSat()
   })
-  
+
   const logintoken = mainstate((state) => (state.logintoken))
-  useEffect(()=>{
-    console.log(logintoken)
-  }, [])
-  
 
   const upload = async (event) => {
     const file = event.target.files[0];
@@ -134,10 +130,10 @@ export default function ExhibitRegist() {
     }
 
     const res = await registExhibit(data, logintoken)
-    console.log(res)
-    const exhibitId = res.id
-    console.log(exhibitId)
-    navigate(`/exhibit/${exhibitId}`)
+    // console.log(res)
+    // const exhibitId = res.id
+    // console.log(exhibitId)
+    navigate(`/exhibit/${res.id}`)
   }
 
   return (

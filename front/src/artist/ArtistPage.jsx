@@ -4,6 +4,7 @@ import Artist from "../components/artist/Artist";
 import dummy from "../db/data.json"
 import '../index.css'
 import { getAuthors } from "../API";
+import Loading from "../components/loading/Loading";
 
 export default function ArtistPage() {
   const [artists, setArtists] = useState([]);
@@ -38,7 +39,13 @@ export default function ArtistPage() {
         // }
         // setArtists(newArtists)
       }}/>
-      {content}
+
+      <div className="artistList">        
+        {artists.length?
+          artists.map(artist=>( <Artist artist={artist} /> ))
+          :<Loading loadingType={"artistList"} />
+        }
+      </div>
     </div>
   );
 }

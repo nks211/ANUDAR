@@ -29,7 +29,7 @@ public class ExhibitionDto {
                 exhibition.getImage(),
                 exhibition.getStart_time(),
                 exhibition.getEnd_time(),
-                exhibition.getUser().getName()
+                exhibition.getUser().getUsername()
         );
     }
 

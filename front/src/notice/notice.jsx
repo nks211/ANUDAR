@@ -49,7 +49,7 @@ function Notice(props) {
                 <div style={title}>{ props.title }</div>
             </div>
             <div style={{ position: "relative", left: "100px", top: "-20px"}}>
-                <div style={detail}>{ props.date }</div>
+                <div style={detail}>{ props.type }</div>
             </div>
             <div style={{ position: "relative", left: "-115px", top: "20px" }}>
                 <div style={detail}>{ props.details }</div>

@@ -129,4 +129,6 @@ public class ExhibitionController {
         String filename = exhibitionService.getDocentVideo(docentId);
         return new ResponseEntity<>(s3Service.uploadVideo(String.valueOf(docentId), filename),HttpStatus.OK);
     }
+
+
 }

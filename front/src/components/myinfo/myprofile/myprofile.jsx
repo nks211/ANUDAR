@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import { React, useEffect, useState } from "react";
 import "./myprofile.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { mypagestate, popupstate } from "../../../StateManagement.jsx";
+import { mainstate, mypagestate, popupstate } from "../../../StateManagement.jsx";
 import Payment from "../../payment/Payment";
-
-import PaymentApproval from "../../payment/PaymentApproval";
-import { uploadimage, myfollowers, myfollowings } from "../../../API";
+import { uploadimage, getFollowing, getFollowers } from "../../../API";
 
 
 
 export default function MyProfile() {
 
   const localdata = JSON.parse(localStorage.getItem("userdata"));
+  const logintoken = localStorage.getItem("token");
   const [url, setUrl] = useState(localdata.image);
   const setnewprofileimage = mypagestate((state) => state.setnewprofileimage);
   const navigate = useNavigate();
@@ -36,9 +35,11 @@ export default function MyProfile() {
   const myeditmode = mypagestate((state) => state.myeditmode);
   const paymentPopup = popupstate((state) => state.paymentPopup);
   const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
-  const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;
-  const following = async () => { return await myfollowings(localStorage.getItem("token")) };
-  const follower = async () => { return await myfollowers(localStorage.getItem("token")) };
+  const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;;
+  const following = async () => { return await getFollowing(logintoken); };
+  const follower = async () => { return await getFollowers(logintoken); };
+  const [followings, setFollowings] = useState(0);
+  const [followers, setFollowers] = useState(0);
 
   const upload = async (e) => {
     const file = e.target.files[0];
@@ -53,6 +54,11 @@ export default function MyProfile() {
     }
   }
 
+  useEffect(() => {
+    following().then((value) => setFollowings(value.length));
+    follower().then((value) => setFollowers(value.length));
+  }, []);
+
   return (
     <div className="myprofilearea">
       <div className="left">
@@ -63,8 +69,8 @@ export default function MyProfile() {
       <div className="right">
         <div className="nickname"><b>{localdata.nickname}</b> 님</div>
         <div style={{ display: "flex", flexDirection: "row", }}>
-          <div className="follower">팔로워 {}</div>
-          <div className="following">팔로잉 {}</div>
+          <div className="follower">팔로워 {followers}</div>
+          <div className="following">팔로잉 {followings}</div>
         </div>
         <div id="myPoint">
           <div>

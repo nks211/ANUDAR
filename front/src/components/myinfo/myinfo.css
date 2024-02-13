@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:99ab156d50926ef20c6bcb555cf8af72f74fb230a78a81f43506777e30bce9a9
-size 672
+.myinfoarea {
+    width: 1000px;
+    height: 1500px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.myinfoarea .title {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    left: 20px;
+    top: 20px;
+}
+
+.myinfoarea .checkbutton {
+    position: relative;
+    width: 150px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #967E76;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.myinfoarea .checkbutton:hover {
+    background-color: #ffffff;
+    color: #967E76;
+    border: 3px solid #967E76;
+}

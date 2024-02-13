@@ -1,5 +1,3 @@
-# ssafy06 연결 테스트 : 유나 브랜치 테스트
-# ssafy02 연결 테스트!!!!! !!!!!!~!!
-# ssafy05 연결 테스트 : 규리 pull 7
-# ssafy04 연결 테스트입니다요~
-# ssafy03 연결 테스트트 : 민우 브랜치 테스트트트 6
+version https://git-lfs.github.com/spec/v1
+oid sha256:e85e9555e7f125589a97097905a6f6c4f878e8a7c8346a2fe4890eeb2c6fd542
+size 249

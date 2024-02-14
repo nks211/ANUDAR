@@ -32,7 +32,7 @@ export default function Payment() {
 
     
     axios.post('http://localhost:8080/api/payment/kakaoPayReady', {
-    // await axios.post('/api/payment/kakaoPayReady', {
+
     item_name: `포인트 ${selectPoint}개 충전`,
     total_amount: selectKRW,
     partner_user_id: 'partner_user_id',
@@ -42,12 +42,12 @@ export default function Payment() {
     cid: "TC0ONETIME",
     quantity: 1,
     tax_free_amount: 0,
-    approval_url: 'https://i10d105.p.ssafy.io/pay',
-    cancel_url: 'https://i10d105.p.ssafy.io/',
-    fail_url: 'https://i10d105.p.ssafy.io/'
-    // approval_url: '/PaymentApproval',
-    // cancel_url: '/',
-    // fail_url: '/'
+    // approval_url: 'https://i10d105.p.ssafy.io/pay',
+    // cancel_url: 'https://i10d105.p.ssafy.io/',
+    // fail_url: 'https://i10d105.p.ssafy.io/'
+    approval_url: 'http://localhost:3000/pay',
+    cancel_url: 'http://localhost:3000/',
+    fail_url: 'http://localhost:3000'
   }, {
     headers: {
       "Content-Type": `application/json;charset=utf-8`,

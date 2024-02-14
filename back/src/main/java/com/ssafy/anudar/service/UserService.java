@@ -262,7 +262,8 @@ public class UserService {
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND)); // 사용자가 없는 경우 예외 처리
 
         // 기존 포인트에 추가할 포인트를 더함
-        Long updatedPoints = user.getUserPoints() + newPoints;
+        Long currentPoints = user.getUserPoints() != null ? user.getUserPoints() : 0L;
+        Long updatedPoints = currentPoints + newPoints;
 
         // 포인트 업데이트
         user.setUserPoints(updatedPoints);

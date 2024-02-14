@@ -45,19 +45,18 @@ function AuctionCam({ sessionId, username }) {
             const token = await getToken();
             await mySession.connect(token, { clientData: username });
 
-            const publisher = OV.initPublisher(undefined, {
-                publishAudio: true,
-                publishVideo: true,
-            });
-
-            await mySession.publish(publisher);
-
-            setSession(mySession);
-            setPublisher(publisher);
-
             if (username === 'admin') {
+                const publisher = OV.initPublisher(undefined, {
+                    publishAudio: true,
+                    publishVideo: true,
+                });
+                await mySession.publish(publisher);
+                setPublisher(publisher);
                 handleMainVideoStream(publisher);
             }
+
+            setSession(mySession);
+
         } catch (error) {
             console.log('There was an error connecting to the session:', error.code, error.message);
         }
@@ -105,13 +104,13 @@ function AuctionCam({ sessionId, username }) {
 
     return (
         <>
-            {session !== undefined} ? (
-            {mainStreamManager !== undefined ? (
+            {session !== undefined ? (
                 <div>
-                    <UserVideoComponent streamManager={mainStreamManager} />
-                </div>
-            ) : (<div>경매사가 없어요</div>)} )
-            : (<div>세션이 없어요</div>)
+                    {mainStreamManager !== undefined ? (
+                        <UserVideoComponent streamManager={mainStreamManager} />
+                    ) : (<div>경매사가 없어요</div>)}
+                </div>)
+                : (<div>세션이 없어요</div>)}
         </>
     )
 

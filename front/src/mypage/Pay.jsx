@@ -37,7 +37,7 @@ export default function Pay() {
       };
       console.log(updatePointsData)
 
-      await axios.put('http://localhost:8080/api/user/updatePoints', updatePointsData, {
+      await axios.put('/api/user/updatePoints', updatePointsData, {
         headers: {
           "Content-type": "application/json;charset=utf-8",
           "Authorization": `Bearer ${token}`

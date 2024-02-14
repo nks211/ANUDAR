@@ -15,9 +15,10 @@ public class WorkDto {
     private String image;
     private String detail;
     private Integer price;
-    private int bid;
+    private Integer bid;
     private String author;
     private String author_name;
+    private Boolean is_carousel;
 
     public static WorkDto fromEntity (Work work) {
         return new WorkDto(
@@ -28,7 +29,8 @@ public class WorkDto {
                 work.getPrice(),
                 work.getBid(),
                 work.getUser().getUsername(),
-                work.getUser().getName()
+                work.getUser().getName(),
+                work.getIs_carousel()
         );
     }
 }

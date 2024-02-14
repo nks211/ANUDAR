@@ -26,7 +26,7 @@ export default function PaymentApproval () {
             return;
         }
 
-        axios.post('http://localhost:8080/api/payment/PaymentApproval', {
+        axios.post('/api/payment/PaymentApproval', {
             cid: 'TC0ONETIME',
             partner_order_id: 'partner_order_id',
             partner_user_id: 'partner_user_id',

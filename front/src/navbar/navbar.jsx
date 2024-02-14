@@ -72,6 +72,11 @@ export default function NavBar() {
     }
   }, []);
 
+  useEffect(() => {
+    if (localtab) setnavtab(localtab);
+    else setnavtab("");
+  })
+
   if (window.location.pathname.includes('/docent')) { 
     return (<div></div>);
   }
@@ -85,11 +90,6 @@ export default function NavBar() {
   //   return (<div>{LoginPanel(imagedata, noticelist)}</div>);
   // }
 
-
-
-
-
-
   return (
     <div id="nav">
       <div className="area">
@@ -97,7 +97,7 @@ export default function NavBar() {
         <div className="sector">
           {LoginPanel()}
           <div className={isLogin ? "login" : "logout"}>
-            <button onClick={isLogin ? () => { navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{isLogin ? loginUser.nickname + " 님" : "로그인"}</button>
+            <button onClick={isLogin ? () => { setnavtab(""); localStorage.setItem("currenttab", ""); navigate("/user/info"); window.scrollTo(0, 0); } : () => { setloginpopup(true); }} style={{ border: 0, backgroundColor: "transparent" }} className="loginbutton">{isLogin ? loginUser.nickname + " 님" : "로그인"}</button>
             <div className="line"> |  </div>
             <button onClick={
               isLogin ? 

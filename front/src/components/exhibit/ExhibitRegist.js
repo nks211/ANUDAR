@@ -130,10 +130,9 @@ export default function ExhibitRegist() {
     }
 
     const res = await registExhibit(data, logintoken)
-    // console.log(res)
-    // const exhibitId = res.id
-    // console.log(exhibitId)
-    navigate(`/exhibit/${res.id}`)
+    // navigate(`/exhibit/${res.id}`)
+    // navigate(`/exhibit/${res?.id}`)
+    navigate(`/exhibit`)
   }
 
   return (
@@ -204,9 +203,6 @@ export default function ExhibitRegist() {
                 </select>
                 <input type="number" value={docentHour} onChange={event => checkInput(event, "docentHour")} /><span>:</span>
                 <input type="number" value={docentMinute} onChange={event => checkInput(event, "docentMinute")} />
-                {/* <div>{ampm==="am"?docentHour:docentHour+12}</div>
-                    <div>{docentHour}</div> */}
-                {/* </div> */}
               </div>
               <div className="docentSetting">
                 <span className="registGuide">경매일({(exhibitY && exhibitM) ? lastSat : ""}일) 이전으로 설정해주세요.</span>
@@ -214,21 +210,18 @@ export default function ExhibitRegist() {
               </div>
             </div>
           </div>
-
-
+          
           <div className="registInput" style={{ marginBottom: "2px" }}>
             <div className="item1"><span>*</span> 대표 이미지</div>
-            <div className="item3" style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex" }}>
-                <span>{fileName}{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName(""); setPoster("") }}></img> : ""}</span>
+            <div className="item3">
+              <div style={{display:"flex"}}>
+                <span><div>{fileName&&fileName.length>22?fileName.slice(0, 25)+"...":fileName}</div>{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName(""); setPoster("") }}></img> : ""}</span>
                 <label className="uploadBtn" for="poster">선택</label>
                 <input type="file" id="poster" accept="image/*" onChange={event => { upload(event); event.target.value = ''; }} style={{ display: "none" }} />
               </div>
               <div className="registGuide">권장이미지 375px * 500px 이상</div>
             </div>
           </div>
-
-          {/* 캐러셀 작품 선택 최소 5개 - 최대 10개 */}
         </div>
       </div>
       <hr style={{ width: "100%", border: "1px solid #EEE3CB", margin: "20px 0" }} />

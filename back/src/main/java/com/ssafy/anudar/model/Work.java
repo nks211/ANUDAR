@@ -31,12 +31,11 @@ public class Work {
     @Column(name="bid")
     private Integer bid = 0;
 
+    @Column(name="is_carousel")
+    private Boolean is_carousel;
+
     @OneToOne(mappedBy = "work", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private SuccessWork successWork;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auction_id")
-    private Auction auction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -50,13 +49,14 @@ public class Work {
     private List<LikeWork> likeWorks;
 
     @Builder
-    public Work(String title, String detail, Integer price, String image, User user, Exhibition exhibition) {
+    public Work(String title, String detail, Integer price, String image, User user, Exhibition exhibition, Boolean is_carousel) {
         this.title = title;
         this.detail = detail;
         this.price = price;
         this.image = image;
         this.user = user;
         this.exhibition = exhibition;
+        this.is_carousel = is_carousel;
     }
 
 }

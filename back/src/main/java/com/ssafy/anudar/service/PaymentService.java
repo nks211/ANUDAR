@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Optional;
 
 
 @Service
@@ -98,24 +98,5 @@ public class PaymentService {
         System.out.println(response);
         return response.getBody();
 
-//        if (response.getStatusCode().is2xxSuccessful()) {
-//            Optional<Payment> paymentInfoOpt = paymentRepository.findFirstByPartnerOrderId(requestDto.getPartner_order_id());
-//            if (paymentInfoOpt.isPresent()) {
-//                Payment paymentInfo = paymentInfoOpt.get();
-//                Long totalAmount = Long.valueOf(paymentInfo.getTotal_amount());
-//
-//
-//                // 사용자 포인트 업데이트 메소드 호출
-//                user.addPoints(totalAmount);
-//
-//                // 사용자 정보 저장
-//                userRepository.save(user);
-//
-//                return response.getBody();
-//            } else {
-//                throw new BadRequestException(ExceptionStatus.PAYMENT_NOT_FOUND);
-//            }
-//        }
-//        return null; // 결제 승인에 실패했거나, 결제 정보를 찾을 수 없는 경우
     }
 }

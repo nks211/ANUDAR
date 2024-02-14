@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { mainstate, mypagestate, popupstate } from "../../../StateManagement.jsx";
 import Payment from "../../payment/Payment";
-import { uploadimage, getFollowing, getFollowers } from "../../../API";
+import { uploadimage, getFollowing, getFollowers, getUserPoints } from "../../../API";
 
 
 
@@ -38,8 +38,10 @@ export default function MyProfile() {
   const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;;
   const following = async () => { return await getFollowing(logintoken); };
   const follower = async () => { return await getFollowers(logintoken); };
+  const point = async () => {return await getUserPoints(logintoken);};
   const [followings, setFollowings] = useState(0);
   const [followers, setFollowers] = useState(0);
+  const [points, setPoints] = useState(0);
 
   const upload = async (e) => {
     const file = e.target.files[0];
@@ -57,6 +59,7 @@ export default function MyProfile() {
   useEffect(() => {
     following().then((value) => setFollowings(value.length));
     follower().then((value) => setFollowers(value.length));
+    point().then((value) => setPoints(value))
   }, []);
 
   return (
@@ -75,7 +78,7 @@ export default function MyProfile() {
         <div id="myPoint">
           <div>
             <img width={30} src="../../asset/point.png"></img>
-            <span>{"0"/* *수정* 포인트 잔액 API 연결 */} POINT</span>
+            <span>{points} POINT</span>
           </div>
           <button onClick={() => { setPaymentPopup(true) }}>충전</button>
           {paymentmodal}

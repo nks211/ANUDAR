@@ -62,15 +62,17 @@ export default function Payment() {
     
     // tid 값을 저장
     console.log(`tid : ${response.data.tid}`)
-    window.localStorage.setItem('tid', response.data.tid);
+    localStorage.setItem('tid', response.data.tid);
+
+    // 결제한 가격을 포인트에 저장
+    localStorage.setItem('point', selectPoint * 10);
+
     // 결제 승인 페이지 URL을 상태에 저장
     setPaymentUrl(response.data.next_redirect_pc_url);
-    // window.location.href = response.data.next_redirect_pc_url;
 
-    // console.log(response)
   })
   .catch(error => {
-    console.error('결제 준비 중 에러 발생:', error);
+    console.error('결제 준비ㅋ 중 에러 발생:', error);
     alert('결제 준비 중 오류가 발생했습니다.111');
   });
 };

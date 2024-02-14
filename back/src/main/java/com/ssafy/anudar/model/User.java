@@ -46,7 +46,6 @@ public class User extends BaseTimeEntity{
     @Column(name="userpoints")
     private Long userPoints = 0L;
 
-
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies = new ArrayList<>();
 

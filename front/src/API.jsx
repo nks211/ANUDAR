@@ -81,6 +81,27 @@ export async function getFollowers(token) {
     .catch(err => {console.log(err)})
 }
 
+// 포인트 조회
+export async function getUserPoints(token){
+  const url = "/api/user/points"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
+// 포인트 업데이트
+export async function updateUserPoints(token, newPoints){
+  const url = "/api/user/updatePoints"
+  const data = {
+    "points": newPoints
+  };
+  const config = {headers : {Authorization: `Bearer ${token}`}}
+  return await axios.put(url, data, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
+}
+
 export const changepassword = async (oldpassword, newpassword, token) => {
   if (token && token != "") {
       const url = "/api/user/update/password";

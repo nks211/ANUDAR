@@ -38,7 +38,6 @@ export default function Exhibit(props) {
   
   switch (props.exhibitType) {
     case 1:  // 전시회 목록
-    // console.log(props.exhibit)  // ***수정*** : author에 작가 아이디값이 들어감..
       return (
         <div>
           <div className="exhibitCard1">
@@ -46,7 +45,7 @@ export default function Exhibit(props) {
               onMouseOver={()=>{setEnterOpacity(1)}}
               onMouseOut={()=>{setEnterOpacity(0)}}
             >
-              <img className="exhibitImage1" style={{width:240, height:320, objectFit:"cover"}} src={props.exhibit.image}></img>
+              <img className="exhibitImage1" src={props.exhibit.image}></img>
               <div className="exhibitEnter1" style={{opacity : enterOpacity}} onClick={()=>{
                 navigate(`/exhibit/${props.exhibit.id}`)
                 setPathName(window.location.pathname)

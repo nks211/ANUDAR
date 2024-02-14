@@ -30,11 +30,17 @@
       margin: 10px 0;
     }
 
-    button {
+    .paymentBtn {
       position: absolute;
+      bottom: 20px;
+    }
+
+    button {
+      /* position: absolute; */
       width: 130px;
       height: 40px;
-      bottom: 20px;
+      margin: 0 10px;
+      /* bottom: 20px; */
       background-color: #967E76;
       border: None;
       border-radius: 0.5rem;

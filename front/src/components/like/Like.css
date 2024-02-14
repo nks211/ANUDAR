@@ -1,32 +1,3 @@
-.likeButton {
-  width: 130px;
-  height: 45px;
-  background-color: #967E76;
-  box-sizing: border-box;
-  border-radius: 10px;
-  color: white;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* .likeButton:hover {
-  font-weight: 900;
-  background-color: white;
-  border: 1px solid #967E76;
-  color: #967E76;
-} */
-
-.cancelButton {
-  width: 130px;
-  height: 45px;
-  background-color: #c9c9c9;
-  border-radius: 10px;
-  color: white;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b8f79f69e3c1b3c8548c33cdcdf70d94ce709bf10afc39cc145b4e12e6d3d2e0
+size 574

@@ -1,16 +1,3 @@
-export class KeyController {
-    constructor() {
-        // 생성자
-        this.keys = [];
-
-        window.addEventListener('keydown', e => {
-            // console.log(e.code + ' 누름');
-            this.keys[e.code] = true;
-        });
-
-        window.addEventListener('keyup', e => {
-            // console.log(e.code + ' 뺌');
-            delete this.keys[e.code];
-        });
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:523e60e197e41c6bcbfb680541caf62f95846656c6f1a723ceda397d87735e81
+size 394

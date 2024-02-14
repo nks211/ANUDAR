@@ -16,6 +16,7 @@ function DocentContent() {
       setWorks(data.workList);
       console.log(data)
       console.log(data.workList)
+      setSelectWork(works[0])
     })
     .catch(error => console.log(error));
   }, [])
@@ -35,7 +36,7 @@ function DocentContent() {
           <div id="docentWork">
             {selectWork && ( // selectWork가 존재할 때만 작품 정보를 렌더링합니다.
               <div style={{ marginBottom: "8vh" }}>
-                <img src={selectWork.image}></img>
+                <img style={{ width: "300px", height: "auto" }} src={selectWork.image}></img>
                 <h3>{selectWork.title}</h3>
                 <div>{selectWork.detail}</div>
               </div>

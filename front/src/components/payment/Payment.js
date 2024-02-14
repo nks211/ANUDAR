@@ -49,7 +49,7 @@ export default function Payment() {
   //   approval_url: 'http://localhost:3000/pay',
   //   cancel_url: 'http://localhost:3000/',
   //   fail_url: 'http://localhost:3000'
-  // }, {
+  }, {
     headers: {
       "Content-Type": `application/json;charset=utf-8`,
       Authorization: `Bearer ${token}`

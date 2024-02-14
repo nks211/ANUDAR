@@ -174,7 +174,7 @@ function MyHistory() {
             setmyfavorites(value);
             setloadingpopup(false);
         })
-    }, []);
+    },);
 
     return (
         <>

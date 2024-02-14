@@ -15,7 +15,7 @@
     /* background-color: rgb(159, 159, 159); */
     height: calc(100vh/9);
     display: flex;
-    opacity: 0;
+    /* opacity: 0; */
     align-items: center;
     justify-content: center;
   
@@ -31,7 +31,7 @@
     }
 }
 
-#auctionButton:hover {
+/* #auctionButton:hover {
     transition: all 0.3s ease-in-out;
     opacity: 1;
-}
+} */

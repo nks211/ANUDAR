@@ -62,6 +62,7 @@ function Auction() {
     const navigate = useNavigate();
     const [popupopen, setPopupOpen] = useState(false);
     const { modalsetting } = useContext(AppContext);
+    
 
     const okfunction = () => {
         var now = new Date();

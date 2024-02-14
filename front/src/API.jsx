@@ -426,3 +426,23 @@ export const auctionlist = async () => {
     .then(response => { return response.data; })
     .catch((e) => { console.log(e); })
 };
+
+export const successbid = async (finalPrice, workId, nickname, auctionId) => {
+  const url = "/api/auction/bidok";
+  const data = {
+      finalPrice : finalPrice,
+      workId : workId, 
+      nickname : nickname,
+      auctionId : auctionId
+  }
+  return await axios.post(url, data,{
+      headers: {
+          'Authorization': "Bearer " + window.localStorage.getItem('token')
+      }
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch((e) => { console.log(e); return {}; });
+};
+

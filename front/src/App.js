@@ -1,5 +1,4 @@
 import './App.css';
-import axios from 'axios';
 import Home from './home/home'
 import ExhibitPage from './exhibit/ExhibitPage'
 import ExhibitDetailPage from './exhibit/ExhibitDetailPage'
@@ -12,8 +11,10 @@ import ArtistPage from './artist/ArtistPage'
 import ArtistDetailPage from './artist/ArtistDetailPage'
 import Auction from './auction/auction'
 import AuctionPage from './auction/auctionpage';
+import AuctionLivePage from './auctionlive/AuctionLivePage';
 import Signup from './signup/signup'
 import Mypage from './mypage/mypage';
+import { mainstate } from './StateManagement';
 import { createContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NavBar from './navbar/navbar';
@@ -116,6 +117,8 @@ export default function App() {
             <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
             <Route exact path="/auction/now" element={<AuctionPage/>}></Route>
+            {/* 테스트용 주소 */}
+            <Route exact path="/auction/live" element={<AuctionLivePage />}></Route>
             <Route exact path="/user/info" element={<Mypage/>}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
           </Routes>

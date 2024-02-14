@@ -136,11 +136,6 @@ export default function AuctionPage() {
         }
       };
 
-      const handleBidAction = (timerValue) => {
-        setTimer(timerValue);
-        handleSubmit();
-      };
-
     return (
         <div style={{ display: "flex", width: "100%", height: "100vh", backgroundColor: "#5f5f5f" }}>
             <div style={{ zIndex: "10", backgroundColor: "#ffffff", borderRadius: "20px", width: "100%", margin: "20px" }}>

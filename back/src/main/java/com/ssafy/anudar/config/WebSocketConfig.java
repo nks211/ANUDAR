@@ -24,6 +24,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setAllowedOrigins("https://i10d105.p.ssafy.io");
 
 
+
     }
 
     @Override

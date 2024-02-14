@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import { DocentContext } from '../../docent/DocentPage'
 import Chatting from './Chatting'
 import './DocentContents.css'
@@ -13,11 +14,12 @@ function DocentContent() {
   useEffect(()=>{
     if(menu === "work") {
       getExhibitDetail(exhibitId).then( data => {
-        setWorks(data.works);
+        setWorks(data.workList);
       })
       .catch(error => console.log(error));
     }
   }, [])
+
 
   switch (menu) {
     case "work":
@@ -33,7 +35,7 @@ function DocentContent() {
           <div id="docentWork">
             <div style={{marginBottom:"8vh"}}>
               <img src={selectWork.image}></img>
-              <h3>{selectWork.name}</h3>
+              <h3>{selectWork.title}</h3>
               <div>{selectWork.detail}</div>
             </div>
             <div id="docentWorks">

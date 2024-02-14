@@ -1,3 +1,46 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8436973c7f62ebfc58265f295cbd05a5a12748e418a6b07b933dfe8c7e9db217
-size 690
+/* 방명록 */
+.reviewContainer {
+  width: 700px;
+  min-height: 80px;
+  /* height: 80px; */
+  background-color: #EEE3CB;
+  border-radius: 0.5rem;
+  padding: 25px;
+  margin-bottom: 15px;
+}
+
+.reviewBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.reviewCreate {
+  display: flex;
+  align-items: flex-end;
+}
+
+.reviewWriter {
+  font-size: 17px;
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.reviewDate {
+  font-size: 13px;
+}
+
+.reviewDelete {
+  font-size: 12px;
+  text-align: right;
+  color: rgb(205, 13, 13);
+  cursor: pointer;
+}
+
+.reviewContent {
+  font-size: 15px;
+  margin-top: 12px;
+  text-align: left;
+  /* width: 100%; */
+  word-break: break-all;
+}

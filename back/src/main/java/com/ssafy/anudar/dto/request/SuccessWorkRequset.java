@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:244ddbcc34c70c23266e3bf97426b6218fd2be75105c20acc90ddbe39cdbff45
-size 397
+package com.ssafy.anudar.dto.request;
+
+import com.ssafy.anudar.model.Auction;
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.Work;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class SuccessWorkRequset {
+    int finalPrice;
+    Long workId;
+    Long userId;
+    Long auctionId;
+}

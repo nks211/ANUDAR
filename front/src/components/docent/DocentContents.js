@@ -11,15 +11,13 @@ function DocentContent() {
   const [works, setWorks] = useState([]);
   const exhibitId = useLocation().pathname.split('/').pop();
 
-  useEffect(()=>{
-    if(menu === "work") {
-      getExhibitDetail(exhibitId).then( data => {
-        setWorks(data.workList);
-        console.log(data)
-        console.log(data.workList)
-      })
-      .catch(error => console.log(error));
-    }
+  useEffect(() => {
+    getExhibitDetail(exhibitId).then(data => {
+      setWorks(data.workList);
+      console.log(data)
+      console.log(data.workList)
+    })
+    .catch(error => console.log(error));
   }, [])
 
 

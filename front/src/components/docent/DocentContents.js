@@ -15,6 +15,8 @@ function DocentContent() {
     if(menu === "work") {
       getExhibitDetail(exhibitId).then( data => {
         setWorks(data.workList);
+        console.log(data)
+        console.log(data.workList)
       })
       .catch(error => console.log(error));
     }
@@ -42,6 +44,7 @@ function DocentContent() {
               {works.map(work=>(
                 <img className="dcntWorkImg" src={work.image} onClick={()=>{
                   setSelectWork(work);
+                  console.log(work)
                   dcntWorkTop.scrollTo({top:0, left:0, behavior: 'smooth'})
                 }}></img>
               ))}

@@ -1,25 +1,3 @@
-body {
-  margin: 0;
-  font-family: 'SUIT-Regular';
-
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif; */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-.boldFont {
-  font-weight: 900;
-}
-
-.bodyCenter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1a18d8e76a0de46ba249c2a88706a26feae2d695c00368b184ecff5cd9914dc4
+size 521

@@ -22,6 +22,7 @@ function DocentContent() {
       }
     })
     .catch(error => console.log(error));
+    setMenu("work")
   }, [])
 
 

@@ -10,13 +10,16 @@ function DocentContent() {
   const [selectWork, setSelectWork] = useState(null);
   const [works, setWorks] = useState([]);
   const exhibitId = useLocation().pathname.split('/').pop();
+  const dcntWorkTopRef = useRef(null);
 
   useEffect(() => {
     getExhibitDetail(exhibitId).then(data => {
       setWorks(data.workList);
       console.log(data)
       console.log(data.workList)
-      setSelectWork(works[0])
+      if (data.workList && data.workList.length > 0) {
+        setSelectWork(data.workList[0]);
+      }
     })
     .catch(error => console.log(error));
   }, [])
@@ -25,7 +28,7 @@ function DocentContent() {
   switch (menu) {
     case "work":
 
-      const dcntWorkTop = document.getElementById('docentWork')
+      // const dcntWorkTop = document.getElementById('docentWork')
     
       return (
         <>
@@ -33,7 +36,7 @@ function DocentContent() {
             <h2>작품</h2>
             <hr/>
           </div>
-          <div id="docentWork">
+          <div id="docentWork" ref={dcntWorkTopRef}>
             {selectWork && ( // selectWork가 존재할 때만 작품 정보를 렌더링합니다.
               <div style={{ marginBottom: "8vh" }}>
                 <img style={{ width: "300px", height: "auto" }} src={selectWork.image}></img>
@@ -45,7 +48,7 @@ function DocentContent() {
               {works.map(work => (
                 <img key={work.id} className="dcntWorkImg" src={work.image} onClick={() => {
                   setSelectWork(work);
-                  dcntWorkTop.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                  dcntWorkTopRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }}></img>
               ))}
             </div>

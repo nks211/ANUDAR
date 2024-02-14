@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
             "WHERE w.bid >= 1 " +
             "AND YEAR(e.start_time) = YEAR(:currentAuction) " +
             "AND MONTH(e.start_time) = MONTH(:currentAuction) " +
-            "ORDER BY w.bid DESC")
+            "ORDER BY w.bid DESC LIMIT 20")
     List<Work> findTop20AuctionWorks(LocalDateTime currentAuction);
 
     @Query("SELECT w FROM Work w JOIN w.exhibition e " +

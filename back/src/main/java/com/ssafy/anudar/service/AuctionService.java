@@ -13,9 +13,11 @@ import com.ssafy.anudar.repository.SuccessWorkRepository;
 import com.ssafy.anudar.repository.UserRepository;
 import com.ssafy.anudar.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;

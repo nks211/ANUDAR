@@ -14,7 +14,7 @@ export default function Artist(props) {
         setPathName(window.location.pathname)
         window.scrollTo(0, 0)
         }}>
-        <img style={{width:300, height:300, "object-fit": "cover"}} src={props.artist.image}></img>
+        <img src={props.artist.image}></img>
       </div>
       <div className="artistInfo">
         <div className="artistName boldFont cursorPointer" onClick={()=> {

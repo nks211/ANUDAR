@@ -35,7 +35,6 @@ export default function MyProfile() {
   const myeditmode = mypagestate((state) => state.myeditmode);
   const paymentPopup = popupstate((state) => state.paymentPopup);
   const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
-  const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;;
   const following = async () => { return await getFollowing(logintoken); };
   const follower = async () => { return await getFollowers(logintoken); };
   const point = async () => {return await getUserPoints(logintoken);};
@@ -81,7 +80,7 @@ export default function MyProfile() {
             <span>{points} POINT</span>
           </div>
           <button onClick={() => { setPaymentPopup(true) }}>충전</button>
-          {paymentmodal}
+          <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>
         </div>
       </div>
     </div>

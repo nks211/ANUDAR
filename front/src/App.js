@@ -25,129 +25,16 @@ export const AppContext = createContext();
 export default function App() {
   const isLogin = mainstate((state) => state.isLogin)
   const logintoken = mainstate((state) => state.logintoken)
-  // console.log(localStorage)
+  const [pathName, setPathName] = useState(window.location.pathname);
+
   useEffect(()=> {
     console.log(logintoken)
   }, [logintoken])
-  // }, [isLogin])
 
   // useEffect(()=>{
 
-  // }, [])
-  // const { isLogin }  = mainstate((state) => ({ isLogin: state.isLogin }));
-  // const isLogin = mainstate((state) => state.isLogin);
-
-  // let token;
-  // const { 
-  //   isLogin,
-  //   // setIsLogin,
-  //   // loginidinput, 
-  //   // loginpasswordinput, 
-  //   // setloginidinput, 
-  //   // setloginpasswordinput,
-  //   loginuser,
-  //   // setloginuser,
-  //   logintoken,
-  //   // setlogintoken,
-  // } 
-  // = mainstate((state) => ({
-  //   isLogin: state.isLogin,
-  //   // setIsLogin: state.setIsLogin,
-  //   // loginidinput: state.idinput,
-  //   // loginpasswordinput: state.passwordinput,
-  //   // setloginidinput: state.setloginidinput,
-  //   // setloginpasswordinput: state.setloginpasswordinput,
-  //   loginuser: state.loginuser,
-  //   // setloginuser: state.setloginuser,
-  //   logintoken: state.logintoken,
-  //   // setlogintoken: state.setlogintoken,
-  // }));
-
-  // useEffect(()=>{
-
-  //   if (isLogin === true) {
-  //     console.log('로그인')
-  //   } else {
-  //     // console.log(localStorage)
-  //     console.log('로그아웃')
-  //   }
-
-  //   console.log(loginuser)
-  //   console.log(logintoken)
-  // },[isLogin])
-
-
-  console.log(localStorage)
-  const handleApprove  = async (pgToken, tid) => {
-    const token = localStorage.getItem("token")
-
-    // const tid = localStorage.getItem("tid");
-    if (!pgToken || !tid) {
-        alert('결제 승인 정보가 누락되었습니다.');
-        return;
-    }
-
-    console.log(token)
-
-    const form = {
-      "cid": 'TC0ONETIME',
-      "partner_user_id": '테스트1',
-      "partner_order_id": '주문1',
-      "tid": tid,
-      "pg_token" : pgToken
-    }
-
-    console.log(form)
-
-    await axios.post(
-      // 'http://localhost:8080/api/payment/kakaoPayApprove',
-      '/api/payment/kakaoPayApprove',
-      form, 
-      {
-        headers: {
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-          console.log(response);
-          localStorage.setItem("tid", "")
-          alert('결제가 완료되었습니다.');
-      })
-      .catch(error => {
-          console.log(error)
-          console.error('결제 승인 중 에러 발생:', error);
-          alert('결제 승인 중 오류가 발생했습니다.');
-      })
-
-}
+  // },[pathName])
   
-
-  const [pathName, setPathName] = useState(window.location.pathname);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // useEffect(()=>{
-
-  //   console.log(location)
-  //   if (location.pathname === "/PaymentApproval") {
-  //     const pgToken = location.search.split("?pg_token=")[1]
-  //     localStorage.setItem("pgToken", pgToken)
-  //     // const tid = localStorage.getItem("tid")
-  //     // navigate("/user/info", { state: { myVariable: 'value' } })
-  //     // if (window.confirm("결제하시겠습니까?")) {
-  //       // PaymentApproval()
-  //       // <PaymentApproval/>
-  //       // handleApprove(pgToken, tid)
-  //     // } else {
-  //     //   alert("취소되었스비다. ")
-  //     // }
-  //   }
-  // }, [location])
-//   useEffect(()=>{
-// // PaymentApproval?
-//   }, [])
-
   const modalsetting = {
     overlay: {
         position: "fixed",

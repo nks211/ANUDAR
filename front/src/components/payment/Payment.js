@@ -1,3 +1,4 @@
+import { popupstate } from '../../StateManagement';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -8,6 +9,7 @@ export default function Payment() {
   
   const [selectPoint, setSelectPoint] = useState(0);
   const [selectKRW, setSelectKRW] = useState(0);
+  const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
   const [paymentUrl, setPaymentUrl] = useState(''); // 결제 승인 페이지 URL 상태
 
   const location = useLocation();
@@ -45,9 +47,6 @@ export default function Payment() {
     approval_url: 'https://i10d105.p.ssafy.io/pay',
     cancel_url: 'https://i10d105.p.ssafy.io/',
     fail_url: 'https://i10d105.p.ssafy.io/',
-    // approval_url: 'http://localhost:3000/pay',
-    // cancel_url: 'http://localhost:3000/',
-    // fail_url: 'http://localhost:3000'
   }, {
     headers: {
       "Content-Type": `application/json;charset=utf-8`,
@@ -55,7 +54,6 @@ export default function Payment() {
     }
   })
   .then(response => {
-    
     // tid 값을 저장
     console.log(`tid : ${response.data.tid}`)
     localStorage.setItem('tid', response.data.tid);
@@ -103,9 +101,15 @@ export default function Payment() {
           <PointBtn point={5} krw={50000}/>
           <PointBtn point={1} krw={10000}/>
         </div>
-        <button onClick={handlePayment}>{paymentUrl && (
-          <a href={paymentUrl}>결제하기</a>
-        )}</button>
+        <div className="paymentBtn">
+          <button onClick={handlePayment}>
+            {paymentUrl && (<a href={paymentUrl}>결제하기</a>)}
+          </button>
+          <button style={{backgroundColor:"white", color:"black"}} 
+            onClick={()=>{
+              setPaymentPopup(false)
+          }}>취소</button>
+        </div>
       </div>
     </div>
   )

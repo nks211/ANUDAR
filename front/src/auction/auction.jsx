@@ -69,7 +69,7 @@ function Auction() {
         var month = now.getMonth() + 1;
         var lastdayofmonth = new Date(year, month, 0, 15, 0);
         if (true) {
-            navigate("/auction/now");
+            navigate("/auction/now/bid");
         }
         else {
             alert("이번 달 경매는 모두 마감되었습니다. 다음 달에 다시 이용해 주세요!");

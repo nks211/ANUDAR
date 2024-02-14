@@ -30,6 +30,7 @@ export default function Payment() {
       return;
     }
 
+    // 결제 준비 요청
     axios.post('/api/payment/kakaoPayReady', {
 
     item_name: `포인트 ${selectPoint}개 충전`,
@@ -72,11 +73,8 @@ export default function Payment() {
   });
 };
 
-
   
   function PointBtn(props) {
-    // const point = props.point
-    // const krw = props.krw
     const [point, krw] = [props.point, props.krw]
     
     return (

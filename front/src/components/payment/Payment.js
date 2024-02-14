@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { popupstate } from '../../StateManagement';
 import './Payment.css'
 
 export default function Payment() {
   const [selectPoint, setSelectPoint] = useState(0);
   const [selectKRW, setSelectKRW] = useState(0);
+  const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
   const styleSetting = [
     { backgroundColor: "white", color: "black" }, 
     { backgroundColor: "#967E76", color: "white" }
@@ -40,17 +42,18 @@ export default function Payment() {
           <PointBtn point={5000} krw={50000}/>
           <PointBtn point={1000} krw={10000}/>
         </div>
-        <button onClick={()=>{
-          // 결제하기 누른 후 코드는 여기 작성하세요 ..
-          // selectKRW : 결제금액 입니다 ...
-          if (selectKRW) {
-            alert(selectKRW+"원 결제!")
-          }
-          else {
-            alert('결제 금액을 선택해주세요')
-          }
-
-        }}>결제하기</button>
+        <div className="paymentBtn">
+          <button onClick={()=>{
+            // 결제하기 누른 후 코드는 여기 작성하세요 ..
+            // selectKRW : 결제금액 입니다 ...
+            if (selectKRW) { alert(selectKRW+"원 결제!") }
+            else { alert('결제 금액을 선택해주세요') }
+          }}>결제하기</button>
+          <button style={{backgroundColor:"white", color:"black"}} 
+            onClick={()=>{
+              setPaymentPopup(false)
+          }}>취소</button>
+        </div>
       </div>
     </div>
   )

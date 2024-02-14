@@ -21,7 +21,7 @@ export default function Work(props) {
               setPathName(window.location.pathname)
               window.scrollTo(0, 0)
             }}>
-              <img src={props.work.image} style={{width:300, height:300, objectFit:"cover"}}></img>
+              <img src={props.work.image}></img>
             </div>
             <div className="workInfo1 cursorPointer" style={{opacity : infoOpacity}} onClick={()=> {
               navigate(`/work/${props.work.id}`)
@@ -50,7 +50,7 @@ export default function Work(props) {
               onMouseOut={()=>{setInfoOpacity(0)}}
             >
               <div className="workImage2">
-                <img /*className="workImageSize"*/ src={props.image}></img>
+                <img src={props.image}></img>
               </div>
               <div className="workInfo2" style={{opacity : infoOpacity}}>
                 <div style={{padding: 30}}>

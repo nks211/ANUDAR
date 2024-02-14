@@ -33,7 +33,6 @@ export default function MyProfile() {
   const myeditmode = mypagestate((state) => state.myeditmode);
   const paymentPopup = popupstate((state) => state.paymentPopup);
   const setPaymentPopup = popupstate((state) => state.setPaymentPopup);
-  const paymentmodal = <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false); }} style={setting}><Payment /></Modal>;;
   const following = async () => { return await myfollowings(localStorage.getItem("token")) };
   const follower = async () => { return await myfollowers(localStorage.getItem("token")) };
 
@@ -69,7 +68,8 @@ export default function MyProfile() {
             <span>{"0"/* *수정* 포인트 잔액 API 연결 */} POINT</span>
           </div>
           <button onClick={() => { setPaymentPopup(true) }}>충전</button>
-          {paymentmodal}
+          {/* {paymentmodal} */}
+          <Modal isOpen={paymentPopup} onRequestClose={() => { setPaymentPopup(false) }} style={setting}><Payment /></Modal>
         </div>
       </div>
     </div>

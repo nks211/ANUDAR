@@ -75,7 +75,7 @@ export default function App() {
 
 
   const [pathName, setPathName] = useState(window.location.pathname);
-
+  
   const modalsetting = {
     overlay: {
         position: "fixed",

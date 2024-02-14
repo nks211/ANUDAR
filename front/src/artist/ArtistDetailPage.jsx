@@ -72,29 +72,17 @@ export default function ArtistDetailPage() {
   }
 
   let exhibitsContent = <div></div>
-
-  // if (exhibits.length > 0) {
-  //   const exhibitList = JSON.parse(`[${exhibits}]`);
-  //   exhibitsContent = <div className="exhibitList">
-  //                         {exhibitList.map(exhibit=>(
-  //                           <Exhibit exhibitType={1} exhibit={exhibit}/>
-  //                           ))}
-  //                       </div>
-  // }
   
   return(
-    <div>
+    <div style={{paddingTop:"40px"}}>
       <div className="artistArea">
         <div style={{width:450}}>
-        {/* <div> */}
-          <img src={artistInfo.image} style={{"object-fit": "cover"}} width={350} height={450}/>
+          <img src={artistInfo.image} style={{"object-fit": "cover", borderRadius:"0.3rem"}} width={350} height={450}/>
         </div>
         <div className="artistInfoArea">
           <div className="artistHeader">  {/* 작가명, 팔로우 버튼 */}
             <div className="artistTitle boldFont">{artistInfo.name}</div>
             {likeButton}
-            {/* {artistInfo.username === loginuser.username ? <></>:<Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} />} */}
-            {/* <Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} /> */}
           </div>
           <div style={{paddingLeft:"10px"}}>
             <div className="artistDescription boldFont">소개</div>  {/* 소개: 제목 */}

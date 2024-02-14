@@ -37,7 +37,7 @@ export default function Work(props) {
             setPathName(window.location.pathname)
             window.scrollTo(0, 0)
           }}>{props.work.title}</div>
-          <div className="workArtist1">{props.work.author}</div>
+          <div className="workArtist1">{props.work.author_name}</div>
         </div>
       )
 

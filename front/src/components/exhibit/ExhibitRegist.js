@@ -110,7 +110,9 @@ export default function ExhibitRegist() {
     if (!title || !description || !exhibitY || !exhibitM || !docentDate || !docentHour || !docentMinute || !poster ) {
       alert('모든 정보를 입력해주세요')
       return
-    } else if (works.length < 5) {
+      //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 5개로 수정 !!
+    // } else if (works.length < 5) {
+    } else if (works.length < 2) {
       alert('작품 최소 등록 개수는 5개입니다.')
       return
     }
@@ -134,7 +136,15 @@ export default function ExhibitRegist() {
     }
 
     const res = await registExhibit(data, logintoken)
-    navigate(`/exhibit/${res.id}`)
+    console.log(res)
+    console.log(data)
+    console.log(works)
+    // console.log(res)
+    // console.log(res.id)
+    // navigate(`/exhibit/${res.id}`)
+
+    // navigate(`/exhibit/${res?.id}`)
+    navigate(`/exhibit`)
   }
 
   return (
@@ -215,13 +225,12 @@ export default function ExhibitRegist() {
               </div>
             </div>
           </div>
-
-
+          
           <div className="registInput" style={{ marginBottom: "2px" }}>
             <div className="item1"><span>*</span> 대표 이미지</div>
-            <div className="item3" style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex" }}>
-                <span>{fileName}{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName(""); setPoster("") }}></img> : ""}</span>
+            <div className="item3">
+              <div style={{display:"flex"}}>
+                <span><div>{fileName&&fileName.length>22?fileName.slice(0, 25)+"...":fileName}</div>{fileName ? <img src='../asset/delete_button.png' onClick={() => { setPreview(<div className="previewImg"></div>); setFileName(""); setPoster("") }}></img> : ""}</span>
                 <label className="uploadBtn" for="poster">선택</label>
                 <input type="file" id="poster" accept="image/*" onChange={event => { upload(event); event.target.value = ''; }} style={{ display: "none" }} />
               </div>

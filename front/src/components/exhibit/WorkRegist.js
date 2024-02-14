@@ -11,7 +11,7 @@ export default function WorkRegist() {
   const { works, setWorks } = useContext(ExhibitRegistContext);
   const [carouselWorks, setCarouselWorks] = useState([]);
   
-  const [workId, setWorkId] = useState(0);
+  // const [workId, setWorkId] = useState(0);
   const [title, setTitle] = useState();
   const [detail, setDetail] = useState("");
   const [price, setPrice] = useState();
@@ -87,17 +87,16 @@ export default function WorkRegist() {
             <div style={{textAlign:'right', fontSize:"12px", marginBottom:"8px"}}>{detail.length}/500</div>
             <div className="workInput">
               <div className="item1"><span>*</span> 이미지 등록</div>
-              <div className="item2" style={{display:"flex"}}>
-                <span><div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{fileName}</div>{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(defaultPreview); setFileName(); setWorkImg()}}></img>:""}</span>
+              <div className="item2">
+                <span><div>{fileName&&fileName.length>17?fileName.slice(0, 20)+"...":fileName}</div>{fileName?<img src='../asset/delete_button.png' onClick={()=>{setPreview(defaultPreview); setFileName(); setWorkImg()}}></img>:""}</span>
                 <label className="uploadBtn" for="workImg">선택</label>
                 <input type="file" id="workImg" accept="image/*" onChange={event => {upload(event); event.target.value = '';}} style={{ display: "none" }} required/>
               </div>
             </div>
             <div className="workInput" style={{marginBottom:"18px"}}>
               <div className="item1"><span>*</span> 최소 경매가</div>
-              {/* *수정* 단위 만원 */}
               <input value={price} min={10} max={100} type="number" placeholder="최소 10만원, 최대 100만원까지 입력 가능합니다" 
-                style={{flex:"2.2", padding: "0 5px", boxSizing:"border-box"}}
+                style={{flex:"2.2"}}
                 onChange={(event)=>{setPrice(event.target.value)}} required/>
               <div style={{flex:"0.3", textAlign:"right"}}>만원</div>
             </div>
@@ -120,11 +119,14 @@ export default function WorkRegist() {
                 }
                 // const newWork = {"id":workId, "title":title, "description":description, "img":workImg, "price":price, "preview":preview}
                 // const newWork = {"id":workId, "title":title, "image":workImg, "detail":detail, "price":price, "bid":0, "author":{loginUser}}
-                const newWork = {"id":workId, "title":title, "image":workImg, "detail":detail, "price":price*10000}
+                // const newWork = {"id":workId, "title":title, "image":workImg, "detail":detail, "price":price*10000}
+                
+                const newWork = {"title":title, "image":workImg, "detail":detail, "price":price*10000}
                 const newWorks = [...works, newWork]
 
                 setWorks(newWorks)
-                setWorkId(workId+1); setTitle(""); setDetail(""); setWorkImg(); setPrice(""); setPreview(defaultPreview); setFileName("");
+                // setWorkId(workId+1); setTitle(""); setDetail(""); setWorkImg(); setPrice(""); setPreview(defaultPreview); setFileName("");
+                setTitle(""); setDetail(""); setWorkImg(); setPrice(""); setPreview(defaultPreview); setFileName("");
                 }}>작품 등록
               </button>
             </div>

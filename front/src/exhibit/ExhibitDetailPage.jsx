@@ -19,6 +19,7 @@ export default function ExhibitDetailPage() {
   const [exhibit, setExhibit] = useState({})
   const [works, setWorks] = useState([])
   const logintoken = mainstate((state) => (state.logintoken))
+  const loginuser = mainstate((state) => (state.loginuser))
 
   const [isLike, setIsLike] = useState(false)
 
@@ -32,6 +33,7 @@ export default function ExhibitDetailPage() {
       const res = await getExhibitDetail(exhibitId)
       setExhibit(res)
       setWorks(res.workList)
+      console.log(res.workList)
     } catch (err) {
       console.log(err)
     }
@@ -93,13 +95,21 @@ export default function ExhibitDetailPage() {
         </div>
 
         {/* 방명록 */}
+        {logintoken?
         <Reviews exhibitId={exhibitId} />
+        :<div style={{ width: "750px", height:"200px"}}>
+          <div style={{ fontSize: "20px", textAlign: "Left", width: "100%" }}>방명록 남기기</div>
+          <div style={{width:"100%", height:"100%", display:"flex", "align-items": "center", "justify-content": "center"}}>로그인 후 이용해주세요</div>
+        </div>
+        }
 
         {/* 전시회 입장, 도슨트 입장 버튼 */}
         <div className="detailPageBtns">
           <div onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_exhibit.png"></img>전시회 입장</div>
           <div onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}><img src="../../asset/btn_enter_docent.png"></img>도슨트 입장</div>
-          <Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
+          {loginuser.username === exhibit.author?.username?<></>
+          :<Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
+          }
         </div>
       </div>
 

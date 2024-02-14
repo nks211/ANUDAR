@@ -2,6 +2,16 @@ import './Loading.css'
 
 export default function Loading(props) {
   switch (props.loadingType) {
+    case "dot":
+      return(
+        <div className="loadingDot">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      )
+
+
     case "exhibitList":
       function LoadingExhibit() {
         return (
@@ -25,6 +35,7 @@ export default function Loading(props) {
         </>
       )
   
+
     case "artistList":
       function LoadingArtist() {
         return (
@@ -47,6 +58,7 @@ export default function Loading(props) {
           <LoadingArtist/>
         </>
       )
+
 
     case "workList":
       function LoadingWork() {

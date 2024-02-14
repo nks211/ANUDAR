@@ -270,7 +270,7 @@ export async function deleteReview(id, token) {
 export async function getAuthors() {
   const url = "/api/user/authors"
   return await axios.get(url)
-  .then(res => {console.log(res);return res.data; })
+  .then(res => {return res.data; })
   .catch(err => {console.log(err)})
 }
 

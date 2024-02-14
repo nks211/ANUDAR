@@ -9,10 +9,12 @@ import { mainstate } from '../StateManagement';
 export default function WorkDetailPage() {
   const workId = useLocation().pathname.split('/').pop();
 
-  const [work, setWork] = useState({})
-  const [isLike, setIsLike] = useState(false)
   const logintoken = mainstate((state) => (state.logintoken))
+  const loginuser = mainstate((state) => (state.loginuser))
+
+  const [work, setWork] = useState({})
   const [works, setWorks] = useState([]);  // 작가의 작품
+  const [isLike, setIsLike] = useState(false)
 
   // 작품 정보 조회
   async function getData() {
@@ -47,7 +49,9 @@ export default function WorkDetailPage() {
   async function getWorks(work) {
     try {
       const res = await getAuthorWorks(work.author, logintoken)
-      setWorks(res)
+      // res.filter(w => w.id !== work.id)
+      // setWorks(res)  // !!!!!! 수정 !!!! workid 작품 제외 !!!
+      setWorks(res.filter(w => w.id !== work.id))  // !!!!!! 수정 !!!! workid 작품 제외 !!!
       console.log(res)
     } catch (err) {
       console.log(err)
@@ -57,7 +61,7 @@ export default function WorkDetailPage() {
   useEffect(()=>{
     getData()
     getLike()
-  }, [])
+  }, [workId])
   
   // useEffect(()=>{
   //   if (Object.keys(work).length) { getWorks() }
@@ -90,6 +94,8 @@ export default function WorkDetailPage() {
   //               ))}
   //             </div>
   // }
+  console.log(work)
+  console.log(loginuser)
 
   return (
     <div>
@@ -98,7 +104,9 @@ export default function WorkDetailPage() {
         <div className="workInfo">
           <div className="workHeader"> {/* 제목, 찜하기 버튼 */}
             <div className="workTitle boldFont">{work.title}</div>
-            <Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
+              {loginuser.username === work.author?<></>:
+              <Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
+              }
           </div>
           <div style={{paddingLeft:"10px"}}>
           <div className="workArtist boldFont">{work.author_name}</div> {/* 작가명 */}
@@ -106,7 +114,7 @@ export default function WorkDetailPage() {
             <div className="workDescription">{work.detail}</div>
           </div>
           <hr className="workLine"/> {/* 선 */}
-          <div className="workPrice"><span className="boldFont">시작가</span><span>KRW {work.price}</span></div>
+          <div className="workPrice"><span className="boldFont">시작가</span><span>KRW {work.price?.toLocaleString()}</span></div>
           {/* <div className="workDate"><span className="boldFont">경매일</span><span>{startDate}</span></div> */}
           </div>
         </div>

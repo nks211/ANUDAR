@@ -21,7 +21,7 @@ public class ReviewDto {
         return new ReviewDto(
                 review.getId(),
                 review.getContent(),
-                review.getUser().getName(),
+                review.getUser().getNickname(),
                 review.getCreatedAt(),
                 review.getUpdatedAt()
         );

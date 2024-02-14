@@ -19,6 +19,8 @@
 .exhibitImage1 {
   width: 240px;
   height: 320px;
+  object-fit: cover;
+  border-radius: 0.3rem;
 }
 
 .exhibitName1 {
@@ -58,6 +60,7 @@
   left: 50%;
   transform: translate( -50%, -50% );
   cursor: pointer;
+  border-radius: 0.3rem;
 }
 
 .exhibitEnter1 div{

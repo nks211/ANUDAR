@@ -2,6 +2,7 @@ import { React, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import "./auctionpage.css";
+import AuctionCam from '../components/auction/AuctionCam';
 
 const test = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
@@ -16,6 +17,7 @@ export default function AuctionPage() {
     const [timer, setTimer] = useState(60);
     const [auctionvalue, setAuctionValue] = useState(100000);
     const [inputvalue, setInputValue] = useState("");
+    const [username, setUsername] = useState(null);
 
     const timeset = () => {
         if (timer < 10) return `00:0${timer}`
@@ -34,6 +36,13 @@ export default function AuctionPage() {
         }
     }, [navigate, timer]);
 
+    useEffect(() => {
+        setUsername(JSON.parse(localStorage.getItem('userdata')).nickname);
+        return () => {
+            setPathName(window.location.pathname);
+        }
+    }, [username])
+
     return (
         <div style={{ display: "flex", width: "100%", height: "100vh", backgroundColor: "#5f5f5f" }}>
             <div style={{ zIndex: "10", backgroundColor: "#ffffff", borderRadius: "20px", width: "100%", margin: "20px" }}>
@@ -51,7 +60,8 @@ export default function AuctionPage() {
                         </div>
                         <div style={{ display: "flex", flex: "12", flexDirection: "column", margin: "-15px 10px", padding: "20px", backgroundColor: "white", borderRadius: "20px" }}>
                             <div style={{ display: "flex", flex: "11", borderRadius: "20px", backgroundColor: "#5f5f5f", color: "#ffffff", padding: "20px", }}>
-                                경매 진행자 화면...
+                                {/* 경매 진행자 화면... */}
+                                {username && (<AuctionCam sessionId={'auction'} username={username}></AuctionCam>)}
                             </div>
                             <div style={{ display: "flex", flex: "1", justifyContent: "space-between", margin: "20px 0px" }}>
                                 <div style={{ width: "50%", height: "120%", backgroundColor: "#B7C4CF", borderRadius: "20px", display: "flex", flexDirection: "row", overflow: "hidden" }}>

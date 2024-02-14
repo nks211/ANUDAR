@@ -96,6 +96,13 @@ export default function ExhibitDetailPage() {
           <ExhibitDetail exhibitType={2} exhibit={exhibit}/>
         </div>
 
+        {/* 전시회 입장, 도슨트 입장 버튼 */}
+        <div className="exhibitButtons">
+          {/* *수정* : 전시회 입장 주소 .. */}
+          <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 입장</button>
+          <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
+        </div>
+
         {/* 방명록 */}
         {logintoken?
         <Reviews exhibitId={exhibitId} />

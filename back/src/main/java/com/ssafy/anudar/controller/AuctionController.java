@@ -24,8 +24,8 @@ public class AuctionController {
     @PostMapping("/bidok")
     public ResponseEntity<SuccessWorkDto> bidok(@RequestBody SuccessWorkRequset req) {
         SuccessWorkDto successWorkDto = auctionService
-                .saveSuccessWork(req.getWorkId(), req.getUserId(),
-                req.getAuctionId(), req.getFinalPrice());
+                .saveSuccessWork(req.getWorkId(), req.getNickname(),
+                        req.getAuctionId(), req.getFinalPrice());
         return new ResponseEntity<>(successWorkDto, HttpStatus.OK);
     }
 

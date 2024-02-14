@@ -77,6 +77,13 @@ public class ExhibitionService {
         return ExhibitionDetailDto.fromEntity(exhibition);
     }
 
+    // 전시회 author username 조회
+    public String getExhibitionAuthorById(Long exhibition_id) {
+        Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
+        return exhibition.getUser().getUsername();
+    }
+
     // 전시회 찜하기
     @Transactional
     public void likeExhibition(String username, Long exhibition_id){
@@ -108,9 +115,7 @@ public class ExhibitionService {
     public void saveDocentVideo(Long docentId, String video) {
         Docent docent = docentRepository.findById(docentId)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
-        if(docent.getVideo() == null) {
-            docent.setVideo(video);
-        }
+        docent.setVideo(video);
     }
 
     // 도슨트 비디오 정보 가져오기
@@ -121,5 +126,6 @@ public class ExhibitionService {
             throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);
         return docent.getVideo();
     }
+
 
 }

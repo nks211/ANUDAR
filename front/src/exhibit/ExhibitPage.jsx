@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { React, useEffect, useState, useContext } from "react";
 import { AppContext } from "../App";
-import dummy from "../db/data.json"
 import Exhibit from "../components/exhibit/Exhibit";
 import Search from "../components/search/Search";
 import '../index.css'

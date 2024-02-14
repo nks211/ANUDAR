@@ -66,12 +66,8 @@ export default function ExhibitRegist() {
   useEffect(()=>{
     getLastSat()
   })
-  
+
   const logintoken = mainstate((state) => (state.logintoken))
-  useEffect(()=>{
-    console.log(logintoken)
-  }, [])
-  
 
   const upload = async (event) => {
     const file = event.target.files[0];
@@ -110,9 +106,7 @@ export default function ExhibitRegist() {
     if (!title || !description || !exhibitY || !exhibitM || !docentDate || !docentHour || !docentMinute || !poster ) {
       alert('모든 정보를 입력해주세요')
       return
-      //  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 5개로 수정 !!
-    // } else if (works.length < 5) {
-    } else if (works.length < 2) {
+    } else if (works.length < 5) {
       alert('작품 최소 등록 개수는 5개입니다.')
       return
     }
@@ -136,13 +130,7 @@ export default function ExhibitRegist() {
     }
 
     const res = await registExhibit(data, logintoken)
-    console.log(res)
-    console.log(data)
-    console.log(works)
-    // console.log(res)
-    // console.log(res.id)
     // navigate(`/exhibit/${res.id}`)
-
     // navigate(`/exhibit/${res?.id}`)
     navigate(`/exhibit`)
   }
@@ -215,9 +203,6 @@ export default function ExhibitRegist() {
                 </select>
                 <input type="number" value={docentHour} onChange={event => checkInput(event, "docentHour")} /><span>:</span>
                 <input type="number" value={docentMinute} onChange={event => checkInput(event, "docentMinute")} />
-                {/* <div>{ampm==="am"?docentHour:docentHour+12}</div>
-                    <div>{docentHour}</div> */}
-                {/* </div> */}
               </div>
               <div className="docentSetting">
                 <span className="registGuide">경매일({(exhibitY && exhibitM) ? lastSat : ""}일) 이전으로 설정해주세요.</span>
@@ -237,8 +222,6 @@ export default function ExhibitRegist() {
               <div className="registGuide">권장이미지 375px * 500px 이상</div>
             </div>
           </div>
-
-          {/* 캐러셀 작품 선택 최소 5개 - 최대 10개 */}
         </div>
       </div>
       <hr style={{ width: "100%", border: "1px solid #EEE3CB", margin: "20px 0" }} />

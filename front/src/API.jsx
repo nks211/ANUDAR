@@ -54,24 +54,6 @@ export const myinfo = async (token) => {
   else { alert("유효하지 않은 토큰입니다."); }
 };
 
-export const myfollowings = async (token) => {
-    if (token && token != "") {
-        const url = "/api/user/following";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => { return response.data; })
-        .catch((e) => { console.log(e); return 0; });
-    }
-};
-
-export const myfollowers = async (token) => {
-    if (token && token != "") {
-        const url = "/api/user/follower";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => { return response.data; })
-        .catch((e) => { console.log(e); return 0; });
-    }
-};
-
 export const updateinfo = async (newdata, token) => {
     if (token && token != "") {
         const url = "/api/user/update";
@@ -81,8 +63,6 @@ export const updateinfo = async (newdata, token) => {
     }
 };
 
-
-
 // 팔로잉 조회
 export async function getFollowing(token) {
   const url = "/api/user/following"
@@ -90,6 +70,36 @@ export async function getFollowing(token) {
   return await axios.get(url, config)
   .then(res => {return res.data})
   .catch(err => {console.log(err)})
+}
+
+//팔로워 조회
+export async function getFollowers(token) {
+    const url = "/api/user/follower"
+    const config = { headers: { Authorization: `Bearer ${token}` } }
+    return await axios.get(url, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
+}
+
+// 포인트 조회
+export async function getUserPoints(token){
+  const url = "/api/user/points"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
+// 포인트 업데이트
+export async function updateUserPoints(token, newPoints){
+  const url = "/api/user/updatePoints"
+  const data = {
+    "points": newPoints
+  };
+  const config = {headers : {Authorization: `Bearer ${token}`}}
+  return await axios.put(url, data, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
 }
 
 export const changepassword = async (oldpassword, newpassword, token) => {
@@ -121,12 +131,74 @@ export const signout = async (token) => {
   }
 };
 
+/* 알림 조회 */
+export const getnotices = async (id, token) => {
+    if (token && token != "") {
+        const url = `/api/user/${id}/notifies`;
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e); });
+    }
+};
 
+export const readnotice = async (noticeid, token) => {
+    if (token && token != "") {
+        const url = `/api/user/notifies/${noticeid}/read`;
+        return await axios.put(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+};
 
+export const deletenotice = async (noticeid, token) => {
+    if (token && token != "") {
+        const url = `/api/user/notifies/${noticeid}`;
+        return await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+};
 
+export const favoriteexhibitions = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/like/exhibit";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
 
-/* ------------------------------- 전시회 페이지 ------------------------------- */
+export const favoriteworks = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/like/work";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
 
+export const mybidworks = async (token) => {
+    if (token && token != "") {
+        const url = "/api/user/bid/work";
+        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+        .then(response => {
+            return response.data;
+        })
+        .catch((e) => { console.log(e) });
+    }
+}
+
+/* 전시회 페이지 */
 // 전체 전시회 리스트
 export async function getAllExhibitList() {
   const url = "/api/exhibit/list"
@@ -212,18 +284,6 @@ export async function likeExhibit(id, token) {
   .catch(err => {console.log(err)})
 }
 
-
-
-// // 전시회 등록
-// export async function registExhibit(data, token) {
-//   const url = "/api/exhibit/regist"
-//   const config = { headers : { Authorization: `Bearer ${token}` } }
-//   return await axios.post(url, data, config)
-//   .then(res => {return res.data})
-//   .catch(err => console.log(err))
-// }
-
-
 /* --- 방명록 --- */
 // 방명록 작성
 export async function createReview(id, data, token) {
@@ -254,16 +314,6 @@ export async function deleteReview(id, token) {
   .catch(err => {console.log(err)})
 
 }
-
-// // 작가 언팔로우
-// export async function unfollowAuthor(name, token) {
-//   const url = `/api/user/unfollow/${name}`
-//   const config = { headers : { Authorization: `Bearer ${token}` } }
-//   return await axios.delete(url, config)
-//   .then(res => {return res.data})
-//   .catch(err => {console.log(err)})
-// }
-
 
 /* ------------------------------- 작가 페이지 ------------------------------- */
 // 전체 작가 조회
@@ -342,8 +392,38 @@ export async function likeWork(id, token) {
 export async function getAuthorWorks(name, token) {
   const url = `/api/work/user/${name}`
   const config = { headers : { Authorization: `Bearer ${token}` } }
-  console.log(url)
+
   return await axios.get(url, config)
   .then(res => {return res.data})
   .catch(err => {console.log(err)})
 }
+
+
+/* 경매 페이지*/
+// 경매에 오를 작품
+export const auctionlist = async () => {
+    const url = "/api/auction/works";
+    return await axios.get(url)
+    .then(response => { return response.data; })
+    .catch((e) => { console.log(e); })
+};
+
+// 낙찰
+export const successbid = async (finalPrice, workId, nickname, auctionId) => {
+  const url = "/api/auction/bidok";
+  const data = {
+      finalPrice : finalPrice,
+      workId : workId, 
+      nickname : nickname,
+      auctionId : auctionId
+  }
+  return await axios.post(url, data,{
+      headers: {
+          'Authorization': "Bearer " + window.localStorage.getItem('token')
+      }
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch((e) => { console.log(e); return {}; });
+};

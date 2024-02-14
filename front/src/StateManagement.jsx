@@ -64,7 +64,7 @@ export const mainstate = create((set) => ({
     setemailinput: (input) => set((state) => ({ signup: { ...state.signup, email: input } })),
     setnumberinput: (input) => set((state) => ({ signup: { ...state.signup, number: input } })),
 
-    setnotice: (result) => set(() => ({ notice: result })),
+    setnoticelist: (result) => set(() => ({ noticelist: result })),
     noticecheck: (notice) => set((state) => ({
         noticelist: state.noticelist.filter((item) => { return JSON.stringify(item) != JSON.stringify(notice); })
     })),
@@ -149,9 +149,7 @@ export const mypagestate = create((set) => ({
     updatemyinfo: (newinfo) => {
 
     },
-    getmyfavorites: () => {
-
-    },
+    setmyfavorites: (input) => set(() => ({ myfavorites: input })),
     setfoldermode: (button) => {
         
     },
@@ -170,6 +168,7 @@ export const popupstate = create((set) => ({
     mypagecheckpopup: false,
     mypagechangepopup: false,
     paymentPopup: false,
+    loadingpopup: true,
 
     sethomepopup: (result) => set(() => ({ homepopup: result })),
     sethomenoticepopup: (result) => set(() => ({ homenoticepopup: result })),
@@ -177,6 +176,7 @@ export const popupstate = create((set) => ({
     setmypagecheckpopup: (result) => set(() => ({ mypagecheckpopup: result })),
     setmypagechangepopup: (result) => set(() => ({ mypagechangepopup: result })),
     setPaymentPopup: (result) => set(() => ({ paymentPopup: result })),
+    setloadingpopup: (result) => set(() => ({ loadingpopup: result })),
 
 }));
 

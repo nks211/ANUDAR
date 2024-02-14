@@ -7,11 +7,13 @@ import ChangePassword from "../components/changepassword/changepassword";
 import Modal from "react-modal";
 import { AppContext } from "../App";
 import { popupstate } from "../StateManagement";
+import { useNavigate } from "react-router-dom";
 
 export const MypageContext = createContext();
 
 function Mypage() {
 
+    const navigate = useNavigate();
     const { modalsetting } = useContext(AppContext);
     const mytab = ["내 정보", "찜한 전시회", "찜한 작품", "팔로잉 목록", "경매 내역", "내 전시", "내 작품"];
     const [myindex, setMyIndex] = useState(mytab[0]);
@@ -45,7 +47,7 @@ function Mypage() {
                 <div style={{ float: "right", width: "70%", margin: "30px 0px", }} >
                     { mypagecheckpopup? (myindex === mytab[0]? <MyInfo /> : <MyHistory />) : null }</div>
             </div>
-            <Modal isOpen={!mypagecheckpopup} style={modalsetting}><CheckPassword/></Modal>
+            <Modal isOpen={!mypagecheckpopup} style={modalsetting} onRequestClose={() => { navigate("/"); }}><CheckPassword/></Modal>
             <Modal isOpen={mypagechangepopup} style={modalsetting} onRequestClose={() => { setmypagechangepopup(false); }}><ChangePassword/></Modal>
         </MypageContext.Provider>
     );

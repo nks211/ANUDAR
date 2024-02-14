@@ -71,6 +71,12 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 
+    // 전시회 author username 조회
+    @GetMapping("/{exhibition_id}/author")
+    public ResponseEntity<String> exhibition(@PathVariable Long exhibition_id) {
+        return new ResponseEntity<>(exhibitionService.getExhibitionAuthorById(exhibition_id), HttpStatus.OK);
+    }
+
     // 전시회 좋아요/취소
     @PostMapping("/like/{exhibition_id}")
     public ResponseEntity<String> like(Authentication authentication, @PathVariable("exhibition_id") Long exhibition_id){
@@ -123,4 +129,6 @@ public class ExhibitionController {
         String filename = exhibitionService.getDocentVideo(docentId);
         return new ResponseEntity<>(s3Service.uploadVideo(String.valueOf(docentId), filename),HttpStatus.OK);
     }
+
+
 }

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import UserVideoComponent from './UserVideoComponent';
@@ -30,7 +30,9 @@ function WebCam({ MysessionId, myUserName }) {
         const subscriber = mySession.subscribe(event.stream, undefined);
         setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
         // 스트림의 username이 'host'일 때 메인 스트림으로 해주기
-        if(event.stream.connection.data.split('%')[0] === 'host'){
+        const name = JSON.parse(event.stream.connection.data).clientData
+        if(name === 'host'){
+          console.log("호스트 입장!!")
           handleMainVideoStream(subscriber);
         }
       }

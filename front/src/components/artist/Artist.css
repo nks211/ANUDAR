@@ -1,3 +1,57 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cab800f8a45aa5e47f11e6e8bb91124628a99ee4c9243010395c1e65e6ac0630
-size 826
+/* 작가 */
+.artistCard {
+  /* border: 1px solid rgb(204, 204, 204); */
+
+  width: 300px;
+  height: 390px;
+  margin: 10px;
+  font-size: 12px;
+}
+
+.artistImage {
+  /* border: 1px solid rgb(204, 204, 204); */
+
+  width: 300px;
+  height: 300px;
+
+  img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 0.3rem;
+  }
+}
+
+.artistInfo {
+  text-align: left;
+  padding-left: 5px;
+}
+
+.artistName {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+.artistExhibit {
+  margin: 1px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #5F5F5F;
+  
+  img {
+    margin-right: 5px;
+  }
+}
+
+.artistWork {
+  margin-top: 2px;
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

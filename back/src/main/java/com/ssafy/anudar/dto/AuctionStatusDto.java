@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8e3727455b93ad99b8d624bee964180300a8ca703d408647390d16872c7eb72c
-size 340
+package com.ssafy.anudar.dto;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Data
+public class AuctionStatusDto {
+    private String sessionId;
+    private String nickname;
+    //    private Work work;
+    private Integer askingprice;
+    private Integer currentBid;
+    private String currentBidUser;
+}

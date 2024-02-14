@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9b794b6521946b3aba39bddf39c79dd950f9a4e5c93834bf01190ab5bdc534a5
-size 696
+package com.ssafy.anudar.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class Payment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "payment_id")
+    private Long id;
+
+    @Column(name = "cid")
+    private String cid;
+
+    @Column(name = "partner_order_id")
+    private String partner_order_id;
+
+    @Column(name = "partner_user_id")
+    private String partner_user_id;
+
+    @Column(name = "total_amount")
+    private Integer total_amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User user;
+}

@@ -35,17 +35,18 @@ function DocentContent() {
             <hr/>
           </div>
           <div id="docentWork">
-            <div style={{marginBottom:"8vh"}}>
-              <img src={selectWork.image}></img>
-              <h3>{selectWork.title}</h3>
-              <div>{selectWork.detail}</div>
-            </div>
+            {selectWork && ( // selectWork가 존재할 때만 작품 정보를 렌더링합니다.
+              <div style={{ marginBottom: "8vh" }}>
+                <img src={selectWork.image}></img>
+                <h3>{selectWork.title}</h3>
+                <div>{selectWork.detail}</div>
+              </div>
+            )}
             <div id="docentWorks">
-              {works.map(work=>(
-                <img className="dcntWorkImg" src={work.image} onClick={()=>{
+              {works.map(work => (
+                <img key={work.id} className="dcntWorkImg" src={work.image} onClick={() => {
                   setSelectWork(work);
-                  console.log(work)
-                  dcntWorkTop.scrollTo({top:0, left:0, behavior: 'smooth'})
+                  dcntWorkTop.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }}></img>
               ))}
             </div>

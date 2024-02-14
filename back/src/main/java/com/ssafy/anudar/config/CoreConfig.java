@@ -1,17 +1,3 @@
-package com.ssafy.anudar.config;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-@Configuration
-class CoreConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // 프론트엔드 주소
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowCredentials(true);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:efad44c9096b015551edf891d02f3d291605e0e2064bb98fb7aa1a935da624ba
+size 606

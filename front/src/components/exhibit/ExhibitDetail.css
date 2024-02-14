@@ -1,3 +1,133 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d74b40a46eee38f40562c763592f8306d952b2beb261bf311a2a7cff1eb8bcdd
-size 1908
+
+
+/* ---------------------------- */
+
+#scrollExhibit {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+
+.scrExhibitItem {
+  display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: 0.5s;
+	will-change: opacity;
+
+  img {
+    max-height: 100vh;
+  }
+}
+
+#scrollInfo {
+  position: relative;
+	padding-bottom: 1px;
+
+  max-width: 620px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.visible {
+  opacity: 1;
+}
+
+
+
+/* -------------------------------- */
+
+#exhibitDetailBanner{
+  width: 35vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-repeat: no-repeat;
+  /* background-image: {}; */
+  background-size: cover;
+  backdrop-filter: blur(5px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: white;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.4;
+  }
+}
+
+/* #exhibitDetailBanner{
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    background-color: red;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: white;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.4;
+  }
+} */
+
+.exhibitCard2 {
+  width: 375px;
+  /* height: 800px; */
+  /* margin: 10px; */
+  margin-bottom: 30px;
+}
+
+.exhibitImageCard2 {
+  width: 375px;
+  height: 500px;
+}
+
+.exhibitImage2 {
+  width: 375px;
+  height: 500px;
+
+
+  /* box-shadow: 10px 10px 5px #343434;
+  transition-duration: 2s; */
+
+  &:hover {
+    /* transform: translate3d(100px, 50px, -150px) */
+
+    
+    /* transform: translateY( -50px ), translateX(-50px) */
+    /* transform: translate(-50px, -50px) */
+  }
+}
+
+.exhibitName2 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  font-weight: 900;
+  font-size: 28px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exhibitArtist2 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.exhibitPeriod2 {
+  margin: 0;
+  font-size: 18px;
+  color: #848484;
+}

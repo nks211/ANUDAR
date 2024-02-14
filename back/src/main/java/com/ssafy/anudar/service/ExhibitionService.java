@@ -56,7 +56,7 @@ public class ExhibitionService {
         // 작품들 저장
 
         for (WorkRegistRequest work : works) {
-            workRepository.save(new Work(work.getTitle(), work.getDetail(), work.getPrice(), work.getImage(), user, exhibition));
+            workRepository.save(new Work(work.getTitle(), work.getDetail(), work.getPrice(), work.getImage(), user, exhibition, work.getIs_carousel()));
         }
 
         return ExhibitionDto.fromEntity(exhibition);
@@ -74,7 +74,8 @@ public class ExhibitionService {
     public ExhibitionDetailDto getExhibitionById(Long exhibition_id) {
         Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
-        return ExhibitionDetailDto.fromEntity(exhibition);
+        List<Work> carousel = workRepository.findCarousel(exhibition_id);
+        return ExhibitionDetailDto.fromEntity(exhibition, carousel);
     }
 
     // 전시회 author username 조회

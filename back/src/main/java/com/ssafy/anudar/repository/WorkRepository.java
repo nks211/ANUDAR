@@ -31,4 +31,8 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
             "ORDER BY w.bid")
     List<Work> findAuctionWorks(LocalDateTime prevAuction, LocalDateTime nextAuction);
 
+    @Query("SELECT w FROM Work w JOIN w.exhibition e " +
+            "WHERE w.is_carousel = true " +
+            "AND e.id = :exhibitionId")
+    List<Work> findCarousel(Long exhibitionId);
 }

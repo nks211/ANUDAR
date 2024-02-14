@@ -20,12 +20,16 @@ export default function AuctionPage() {
   const [screen, setScreen] = useState(false);
   const [timer, setTimer] = useState(60);
   const [username, setUsername] = useState("");
-  const [inputvalue, setInputValue] = useState(0);
-  const [auctionvalue, setAuctionValue] = useState(inputvalue);
-  const [chatList, setChatList] = useState(["아직 응찰자가 없습니다."]);
+
+  const [inputvalue, setInputValue] = useState(0); // 응찰받은 값 ?
+  const [auctionvalue, setAuctionValue] = useState(inputvalue); // 현재가 ?
+
+  const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
   const [participant, setParticipant] = useState([]); // 최대 3명까지만 표시
+  const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
   const [currentBidUser, setCurrentBidUser] = useState("");
+
 
   const timeset = () => {
     if (timer < 10) return `00:0${timer}`
@@ -80,23 +84,23 @@ export default function AuctionPage() {
 
   useEffect(() => {
     connect();
-    // 경매 정보 불러오기
-    auctionlist()
-      .then(auctionData => {
-        auctionList.push(...auctionData);
-        console.log(auctionList)
-      })
-      .catch(e => {
-        console.log("경매 정보를 찾을 수 없습니다.", e);
-      })
+    // // 경매 정보 불러오기
+    // auctionlist()
+    //   .then(auctionData => {
+    //     auctionList.push(...auctionData);
+    //     console.log(auctionList)
+    //   })
+    //   .catch(e => {
+    //     console.log("경매 정보를 찾을 수 없습니다.", e);
+    //   })
     return () => disconnect();
   }, [pathName]);
 
   const client = useRef({});
   const connect = () => {
     client.current = new StomJs.Client({
-      // brokerURL: "ws://localhost:8080/api/ws",
-      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      brokerURL: "ws://localhost:8080/api/ws",
+      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(auctionId);
@@ -113,6 +117,7 @@ export default function AuctionPage() {
   const subscribe = () => {
     client.current.subscribe("/sub/auctionbid/" + auctionId, (body) => {
       const json_body = JSON.parse(body.body);
+      // 경매 중 입장 시 현재 응찰자와 현재가 보여주는 경우 추가하지 않기 위함
       if (json_body.askingprice !== 0) {
         setChatList((_chat_list) => [json_body, ..._chat_list]);
       }
@@ -120,7 +125,7 @@ export default function AuctionPage() {
       // 현재가 갱신 로직
       const currentPrice = json_body.currentBid;
       const currentBidUser = json_body.currentBidUser;
-      setInputValue(inputvalue);
+      setCurrentPrice(currentPrice);
       setCurrentBidUser(currentBidUser);
       console.log(currentPrice);
     });
@@ -145,41 +150,36 @@ export default function AuctionPage() {
 
   const handleChange = (event) => {
     // 채팅 입력 시 state에 값 설정
-    setInputValue(event.target.value);
+    setChat(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, chat) => {
     // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
-    if (inputvalue > auctionvalue) {
-      setChat(`${username}님이 ${inputvalue}원을 응찰하였습니다.`);
+    // 현재가 보다 높은 값을 응찰한 경우에만
+    if (!isNaN(chat) && chat > currentPrice) {
       setTimer(60); 
-      setAuctionValue(inputvalue);
       publish(chat);
-      setParticipant([username, ...participant]);
-      if (participant.length >= 3) setParticipant(participant.slice(undefined, 3));
-      setInputValue("");
+      setChat("");
     }
     else {
-      console.log('현재가보다 높은 가격으로 응찰해주십시오.');
       alert('현재가보다 높은 가격으로 응찰해주십시오.');
-      setInputValue("");
+      setChat("");
     }
   };
   useEffect(() => {
-    setInputValue(inputvalue);
-    setUsername(userdata.nickname);
-    setChatList([chat, ...chatList]);
+    // setInputValue(inputvalue);
+    setUsername(JSON.parse(localStorage.getItem('userdata')).nickname);
     return () => {
-      setPathName(window.location.pathname);
+        setPathName(window.location.pathname);
     }
-  }, [username, chat])
+  }, [username])
 
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh", backgroundColor: "#5f5f5f" }}>
       <div style={{ zIndex: "10", backgroundColor: "#ffffff", borderRadius: "20px", width: "100%", margin: "20px", padding: "20px", display: "flex", flex: "24" }}>
         <div style={{ display: "flex", flex: "7", backgroundColor: "rgb(200, 200, 192)", flexDirection: "column", padding: "30px", margin: "20px", borderRadius: "30px" }}>
-          <form onSubmit={(event) => handleSubmit(event)}>
+          <form onSubmit={(event) => handleSubmit(event, chat)}>
             <div style={{ zIndex: "20", position: "absolute", display: "flex", justifyContent: "space-between", alignItems: "flex-start", width: "45%", height: "150px", backgroundColor: "#ffffff80", borderRadius: "20px", padding: "10px", margin: "10px" }}>
               <div style={{ width: "40%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
                 <div className="auctiontitle" style={{ display: "flex", justifyContent: "space-between", padding: "0px 20px", }}>
@@ -188,15 +188,15 @@ export default function AuctionPage() {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", margin: "0px 20px" }}>
                   <div>현재 입찰 가격</div>
-                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{auctionvalue}원</div>
+                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}만원</div>
                 </div>
               </div>
               <div style={{ width: "30%", height: "80%", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "end", textAlign: "start", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
-                {Object.values(chatList).map((chat) => { return <div>{chat}</div>; })}
+                {currentBidUser}님이 {currentPrice}만원을 응찰하였습니다.
               </div>
               <div style={{ width: "20%", height: "80%", padding: "10px", backgroundColor: "#EEE3CB", borderRadius: "20px" }}>
-                <div style={{ fontSize: "24px", marginBottom: "10px" }}>응찰자 명단</div>
-                {Object.values(participant).map((person) => { return <div style={{ fontSize: "20px" }}>{person}</div> })}
+                <div style={{ fontSize: "24px", marginBottom: "10px" }}>현재 응찰자</div>
+                  <p>{currentBidUser}</p>
               </div>
             </div>
 
@@ -207,7 +207,7 @@ export default function AuctionPage() {
 
             {/* 금액 입력 및 보내기 부분 */}
             <div style={{ zIndex: "20", display: inputopen ? "flex" : "none", justifyContent: "space-between", alignItems: "flex-end", width: "100%", height: "100px", padding: "10px 20px" }}>
-              <input type="number" style={{ width: "40%", height: "40px", border: "5px #976E76 solid", borderRadius: "20px", padding: "10px", fontSize: "20px" }} value={inputvalue? inputvalue : ""} onChange={(e) => { handleChange(e); }} placeholder="금액을 입력하세요" />
+              <input type="number" style={{ width: "40%", height: "40px", border: "5px #976E76 solid", borderRadius: "20px", padding: "10px", fontSize: "20px" }} value={chat? chat : ""} onChange={handleChange} placeholder="금액을 입력하세요" />
               <button style={{ width: "200px", height: "60px", backgroundColor: "#976E76", display: "flex", justifyContent: "center", alignItems: "center", color: "#ffffff", fontSize: "20px", borderRadius: "20px", margin: "0px 40px", border: 0,  cursor: "pointer" }}>응찰하기</button>
             </div>
           </form>
@@ -239,19 +239,6 @@ export default function AuctionPage() {
             </div>
           </div>
         </div>
-        {/* <form onSubmit={(event) => handleSubmit(event, chat)}>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
-            <div style={{ textAlign: "start", margin: "10px 0px" }}>남은 시간 <span style={{ fontSize: "30px" }}><b>{timeset()}</b></span></div>
-            <div style={{ margin: "10px 0px" }}>경매가 <span style={{ color: "#ff0000", fontSize: "25px", fontWeight: "800" }}>{inputvalue}</span> KRW</div>
-            <input type={"text"}
-              name={"chatInput"}
-              onChange={handleChange}
-              value={chat} style={{ width: "100%", height: "30px", border: "1px #976E76 solid", borderRadius: "10px", padding: "5px" }} placeholder="금액을 입력하세요" />
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-around", alignItems: "end" }}>
-            <input type={"submit"} value={"응찰하기"} onClick={() => { setTimer(60); }} style={{ backgroundColor: "#976E76", color: "#ffffff", fontSize: "20px", width: "160px", height: "50px", borderRadius: "10px", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer" }} />
-          </div>
-        </form> */}
       </div>
     </div>
   );

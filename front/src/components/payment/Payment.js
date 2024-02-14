@@ -30,8 +30,6 @@ export default function Payment() {
       return;
     }
 
-    
-    // axios.post('http://localhost:8080/api/payment/kakaoPayReady', {
     axios.post('/api/payment/kakaoPayReady', {
 
     item_name: `포인트 ${selectPoint}개 충전`,
@@ -46,9 +44,9 @@ export default function Payment() {
     approval_url: 'https://i10d105.p.ssafy.io/pay',
     cancel_url: 'https://i10d105.p.ssafy.io/',
     fail_url: 'https://i10d105.p.ssafy.io/',
-  //   approval_url: 'http://localhost:3000/pay',
-  //   cancel_url: 'http://localhost:3000/',
-  //   fail_url: 'http://localhost:3000'
+    // approval_url: 'http://localhost:3000/pay',
+    // cancel_url: 'http://localhost:3000/',
+    // fail_url: 'http://localhost:3000'
   }, {
     headers: {
       "Content-Type": `application/json;charset=utf-8`,
@@ -62,7 +60,7 @@ export default function Payment() {
     localStorage.setItem('tid', response.data.tid);
 
     // 결제한 가격을 포인트에 저장
-    localStorage.setItem('point', selectPoint * 10000);
+    localStorage.setItem('point', selectPoint);
 
     // 결제 승인 페이지 URL을 상태에 저장
     setPaymentUrl(response.data.next_redirect_pc_url);

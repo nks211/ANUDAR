@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -21,15 +22,10 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
 
     @Query("SELECT w FROM Work w JOIN w.exhibition e " +
             "WHERE w.bid >= 1 " +
-            "AND e.start_time <= :auctionTime " +
-            "ORDER BY w.bid")
-    List<Work> findAllPrevAuctionWorks(LocalDateTime auctionTime);
-
-    @Query("SELECT w FROM Work w JOIN w.exhibition e " +
-            "WHERE w.bid >= 1 " +
-            "AND e.start_time <= :nextAuction AND e.start_time > :prevAuction " +
-            "ORDER BY w.bid")
-    List<Work> findAuctionWorks(LocalDateTime prevAuction, LocalDateTime nextAuction);
+            "AND YEAR(e.start_time) = YEAR(:currentAuction) " +
+            "AND MONTH(e.start_time) = MONTH(:currentAuction) " +
+            "ORDER BY w.bid DESC LIMIT 20")
+    List<Work> findTop20AuctionWorks(LocalDateTime currentAuction);
 
     @Query("SELECT w FROM Work w JOIN w.exhibition e " +
             "WHERE w.is_carousel = true " +

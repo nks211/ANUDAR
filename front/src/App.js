@@ -22,59 +22,16 @@ export const AppContext = createContext();
 export default function App() {
   const isLogin = mainstate((state) => state.isLogin)
   const logintoken = mainstate((state) => state.logintoken)
-  // console.log(localStorage)
+  const [pathName, setPathName] = useState(window.location.pathname);
+
   useEffect(()=> {
     console.log(logintoken)
   }, [logintoken])
-  // }, [isLogin])
 
   // useEffect(()=>{
 
-  // }, [])
-  // const { isLogin }  = mainstate((state) => ({ isLogin: state.isLogin }));
-  // const isLogin = mainstate((state) => state.isLogin);
+  // },[pathName])
 
-  // let token;
-  // const { 
-  //   isLogin,
-  //   // setIsLogin,
-  //   // loginidinput, 
-  //   // loginpasswordinput, 
-  //   // setloginidinput, 
-  //   // setloginpasswordinput,
-  //   loginuser,
-  //   // setloginuser,
-  //   logintoken,
-  //   // setlogintoken,
-  // } 
-  // = mainstate((state) => ({
-  //   isLogin: state.isLogin,
-  //   // setIsLogin: state.setIsLogin,
-  //   // loginidinput: state.idinput,
-  //   // loginpasswordinput: state.passwordinput,
-  //   // setloginidinput: state.setloginidinput,
-  //   // setloginpasswordinput: state.setloginpasswordinput,
-  //   loginuser: state.loginuser,
-  //   // setloginuser: state.setloginuser,
-  //   logintoken: state.logintoken,
-  //   // setlogintoken: state.setlogintoken,
-  // }));
-
-  // useEffect(()=>{
-
-  //   if (isLogin === true) {
-  //     console.log('로그인')
-  //   } else {
-  //     // console.log(localStorage)
-  //     console.log('로그아웃')
-  //   }
-
-  //   console.log(loginuser)
-  //   console.log(logintoken)
-  // },[isLogin])
-
-
-  const [pathName, setPathName] = useState(window.location.pathname);
   
   const modalsetting = {
     overlay: {

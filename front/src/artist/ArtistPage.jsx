@@ -53,16 +53,6 @@ export default function ArtistPage() {
           )
           :<Loading loadingType={"artistList"} />
         }
-        {/* {isConnect?
-          (artists.length?
-            artists.map(artist=>( <Artist artist={artist} /> ))
-            :<div style={{width:"100%"}}>
-              <div>등록된 작가가 없습니다. 전시회를 등록해보세요!</div>
-              <button onClick={()=>navigate("/exhibit/regist")}>전시회 등록하러 가기</button>
-            </div>
-          )
-          :<Loading loadingType={"artistList"} />
-        } */}
       </div>
     </div>
   );

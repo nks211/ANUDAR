@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import Like from "../components/like/Like";
 import Work from "../components/work/Work";
 import Exhibit from "../components/exhibit/Exhibit";
-import dummy from "../db/data.json"
 import './ArtistPage.css'
 import { getAuthor, getAuthorWorks, getFollowing } from "../API";
 import { mainstate } from '../StateManagement';
@@ -114,7 +113,6 @@ export default function ArtistDetailPage() {
       <div className="artistExhibitList">
         {exhibitsContent}
       </div>
-
     </div>
   )
 }

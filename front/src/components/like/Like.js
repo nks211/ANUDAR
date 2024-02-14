@@ -86,7 +86,6 @@ export default function Like(props) {
           onMouseOver={()=>{setIsOn(true)}}
           onMouseOut={()=>{setIsOn(false)}}>
           {props.likeType==="work"?<img src={isOn||props.isLike? "../../../"+props.icon+"_reverse.png" : "../../../"+props.icon+".png"} width={25} height={25}/>:<></>}
-          {/* <img src={props.isLike? "../../../"+props.icon+".png" : "../../../"+props.icon+"_reverse.png"} width={25} height={25}></img> */}
           <div style={{width:"10px"}}></div>
           <div>{props.name}</div>
         </div>

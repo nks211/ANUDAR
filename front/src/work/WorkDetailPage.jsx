@@ -80,9 +80,6 @@ export default function WorkDetailPage() {
           <div className="workHeader"> {/* 제목, 찜하기 버튼 */}
             <div className="workTitle boldFont">{work.title}</div>
               {likeButton}
-              {/* {loginuser.username === work.author?<></>:
-              <Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
-              } */}
           </div>
           <div style={{paddingLeft:"10px"}}>
           <div className="workArtist boldFont">{work.author_name}</div> {/* 작가명 */}
@@ -101,12 +98,6 @@ export default function WorkDetailPage() {
         <div className="workList">
           {works.map(work=>( <Work className="Work" workType={3} work={work} /> ))}
         </div>
-        {/* {content} */}
-        {/* <div className="workList">
-          {workList.map(work=>(
-            <Work className="Work" workType={3} workId={work.id} workName={work.title} workArtist={work.artist} image={"../../"+work.image} workAuctionDate={work.startDate} workAuctionPrice={work.price}/>
-          ))}
-        </div> */}
       </div>
     </div>
   )

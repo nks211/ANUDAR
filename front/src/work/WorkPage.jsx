@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import dummy from "../db/data.json"
 import Work from "../components/work/Work";
 import Search from "../components/search/Search";
 import '../index.css'
@@ -49,16 +48,6 @@ export default function WorkPage() {
           )
           :<Loading loadingType={"workList"} />
         }
-        {/* {isConnect?
-          (works.length?
-            works.map(work=>( <Work className="Work" workType={1} work={work}/> ))
-            :<div style={{width:"100%"}}>
-              <div>등록된 작품이 없습니다. 작품을 등록해보세요!</div>
-              <button onClick={()=>navigate("/exhibit/regist")}>작품 등록하러 가기</button>
-            </div>
-          )
-          :<Loading loadingType={"workList"} />
-        } */}
       </div>
     </div>
   );

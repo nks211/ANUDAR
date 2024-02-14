@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 import ExhibitDetail from "../components/exhibit/ExhibitDetail";
 import Exhibit from "../components/exhibit/Exhibit";
 import Reviews from '../components/exhibit/Reviews';
-import dummy from "../db/data.json"
 import './ExhibitPage.css'
 import '../index.css'
 import { getExhibitDetail, getLikeExhibit } from '../API';
@@ -116,9 +115,6 @@ export default function ExhibitDetailPage() {
             도슨트 입장
           </div>
           {likeButton}
-          {/* {loginuser.username === exhibit.author?.username?<></>
-          :<Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />
-          } */}
         </div>
       </div>
 

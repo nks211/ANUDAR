@@ -78,6 +78,14 @@ public class ExhibitionService {
         return ExhibitionDetailDto.fromEntity(exhibition, carousel);
     }
 
+    // 작가 전시 조회
+    public List<ExhibitionDto> getByUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return exhibitionRepository.findAllByUser(user)
+                .stream().map(ExhibitionDto::fromEntity).toList();
+    }
+
     // 전시회 author username 조회
     public String getExhibitionAuthorById(Long exhibition_id) {
         Exhibition exhibition = exhibitionRepository.findById(exhibition_id)

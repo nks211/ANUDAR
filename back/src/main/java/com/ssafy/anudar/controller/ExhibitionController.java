@@ -71,6 +71,12 @@ public class ExhibitionController {
         return new ResponseEntity<>(exhibitionService.getExhibitionById(exhibition_id), HttpStatus.OK);
     }
 
+    // 작가 전시회 조회
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<ExhibitionDto>> exhibitionByUser(@PathVariable String username) {
+        return new ResponseEntity<>(exhibitionService.getByUser(username), HttpStatus.OK);
+    }
+
     // 전시회 author username 조회
     @GetMapping("/{exhibition_id}/author")
     public ResponseEntity<String> exhibition(@PathVariable Long exhibition_id) {

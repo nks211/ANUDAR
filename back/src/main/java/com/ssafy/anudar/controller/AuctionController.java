@@ -39,7 +39,7 @@ public class AuctionController {
     }
 
 
-    // 포인트 차감(작품 낙찰 시 포인트 차감)
+    // 경매 낙찰시 포인트 차감
     @PutMapping("/deductPoints")
     public ResponseEntity<Long> deductPoints(Authentication authentication, @RequestBody SuccessWorkRequset successWorkRequset){
         String username = authentication.getName();

@@ -171,7 +171,11 @@ public class UserService {
     }
 
     // 알림 조회
-    public List<NotifyDto> getNotifiesByUserId(Long userId) {
+    public List<NotifyDto> getNotifiesByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        Long userId = user.getId();
         List<Notify> notifies = notifyRepository.findByReceiverId(userId);
         return notifies.stream()
                 .map(NotifyDto::fromEntity)

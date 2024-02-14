@@ -118,9 +118,9 @@ public class UserController {
     }
 
     // 알림 조회
-    @GetMapping("/{userId}/notifies")
-    public ResponseEntity<List<NotifyDto>> getNotifiesByUserId(@PathVariable Long userId) {
-        List<NotifyDto> notifies = userService.getNotifiesByUserId(userId);
+    @GetMapping("/{username}/notifies")
+    public ResponseEntity<List<NotifyDto>> getNotifies(Authentication authentication) {
+        List<NotifyDto> notifies = userService.getNotifiesByUsername(authentication.getName());
         return ResponseEntity.ok(notifies);
     }
 

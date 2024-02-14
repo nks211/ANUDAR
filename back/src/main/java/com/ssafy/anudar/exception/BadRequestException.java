@@ -1,3 +1,15 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:aaffe07d75b1ee67457d4c21e98e6b5ef0f72f74ca2556fba3c885d4ed5b15e7
-size 392
+package com.ssafy.anudar.exception;
+
+import com.ssafy.anudar.exception.response.ExceptionInfo;
+import lombok.Getter;
+
+@Getter
+public class BadRequestException extends RuntimeException {
+
+    private final ExceptionInfo exceptionInfo;
+
+    public BadRequestException(ExceptionInfo exceptionInfo) {
+        super(exceptionInfo.getMessage());
+        this.exceptionInfo = exceptionInfo;
+    }
+}

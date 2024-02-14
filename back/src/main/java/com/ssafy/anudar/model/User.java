@@ -43,6 +43,9 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
+    @Column(name="userpoints")
+    private Long userPoints = 0L;
+
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Notify> notifies = new ArrayList<>();
 
@@ -70,6 +73,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user")
     private List<ExhibitionReview> exhibitionReviews;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
+
     @Builder
     public User(String username, String password, String name, String nickname,
                 String email, String image, String phone) {
@@ -82,4 +88,10 @@ public class User extends BaseTimeEntity{
         this.phone=phone;
     }
 
+    public void addPoints(Long totalAmount) {
+        if (this.userPoints == null) {
+            this.userPoints = 0L;
+        }
+        this.userPoints += totalAmount;
+    }
 }

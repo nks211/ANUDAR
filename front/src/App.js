@@ -16,8 +16,10 @@ import Signup from './signup/signup'
 import Mypage from './mypage/mypage';
 import { mainstate } from './StateManagement';
 import { createContext, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import NavBar from './navbar/navbar';
+import Pay from './mypage/Pay.jsx';
+
 
 export const AppContext = createContext();
 export default function App() {
@@ -75,7 +77,76 @@ export default function App() {
   // },[isLogin])
 
 
+  console.log(localStorage)
+  const handleApprove  = async (pgToken, tid) => {
+    const token = localStorage.getItem("token")
+
+    // const tid = localStorage.getItem("tid");
+    if (!pgToken || !tid) {
+        alert('결제 승인 정보가 누락되었습니다.');
+        return;
+    }
+
+    console.log(token)
+
+    const form = {
+      "cid": 'TC0ONETIME',
+      "partner_user_id": '테스트1',
+      "partner_order_id": '주문1',
+      "tid": tid,
+      "pg_token" : pgToken
+    }
+
+    console.log(form)
+
+    await axios.post(
+      // 'http://localhost:8080/api/payment/kakaoPayApprove',
+      '/api/payment/kakaoPayApprove',
+      form, 
+      {
+        headers: {
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+          console.log(response);
+          localStorage.setItem("tid", "")
+          alert('결제가 완료되었습니다.');
+      })
+      .catch(error => {
+          console.log(error)
+          console.error('결제 승인 중 에러 발생:', error);
+          alert('결제 승인 중 오류가 발생했습니다.');
+      })
+
+}
+  
+
   const [pathName, setPathName] = useState(window.location.pathname);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // useEffect(()=>{
+
+  //   console.log(location)
+  //   if (location.pathname === "/PaymentApproval") {
+  //     const pgToken = location.search.split("?pg_token=")[1]
+  //     localStorage.setItem("pgToken", pgToken)
+  //     // const tid = localStorage.getItem("tid")
+  //     // navigate("/user/info", { state: { myVariable: 'value' } })
+  //     // if (window.confirm("결제하시겠습니까?")) {
+  //       // PaymentApproval()
+  //       // <PaymentApproval/>
+  //       // handleApprove(pgToken, tid)
+  //     // } else {
+  //     //   alert("취소되었스비다. ")
+  //     // }
+  //   }
+  // }, [location])
+//   useEffect(()=>{
+// // PaymentApproval?
+//   }, [])
 
   const modalsetting = {
     overlay: {
@@ -121,6 +192,8 @@ export default function App() {
             <Route exact path="/user/join" element={<Signup />}></Route>
             {/* 실시간 경매 */}
             <Route exact path="/auction/now/:auction_id" element={<AuctionPage/>}></Route>
+
+            <Route exact path="/pay" element={<Pay />}></Route>
           </Routes>
         </div>
       </AppContext.Provider>

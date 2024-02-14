@@ -3,7 +3,11 @@ package com.ssafy.anudar.controller;
 import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
 import com.ssafy.anudar.dto.request.LoginRequest;
+import com.ssafy.anudar.dto.request.PointsUpdateDto;
 import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
+import com.ssafy.anudar.exception.BadRequestException;
+import com.ssafy.anudar.exception.response.ExceptionStatus;
+import com.ssafy.anudar.model.User;
 import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +19,7 @@ import com.ssafy.anudar.S3.S3Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 @RestController
@@ -147,6 +152,24 @@ public class UserController {
         List<UserDto> followers = userService.follower(authentication.getName());
         return new ResponseEntity<>(followers, HttpStatus.OK);
     }
+
+    // 포인트 조회
+    @GetMapping("/points")
+    public ResponseEntity<Long> getUserPoints (Authentication authentication) {
+        Long userPoints = userService.getUserPoints(authentication.getName());
+        return new ResponseEntity<>(userPoints, HttpStatus.OK);
+    }
+
+    // 포인트 업데이트
+    @PutMapping("/updatePoints")
+    public ResponseEntity<Long> updateUserPoints(Authentication authentication, @RequestBody PointsUpdateDto pointsUpdateDto) {
+        // 현재 인증된 유저의 이름(또는 아이디)을 사용하여 포인트 업데이트
+        Long updatedPoints = userService.updateUserPoints(authentication.getName(), pointsUpdateDto.getNewPoints());
+
+        // 업데이트된 포인트를 ResponseEntity 객체에 담아 반환
+        return new ResponseEntity<>(updatedPoints, HttpStatus.OK);
+    }
+
 
     // 찜한 전시 목록
     @GetMapping("/like/exhibit")

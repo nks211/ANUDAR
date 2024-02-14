@@ -62,17 +62,14 @@ function Auction() {
     const navigate = useNavigate();
     const [popupopen, setPopupOpen] = useState(false);
     const { modalsetting } = useContext(AppContext);
+    
 
     const okfunction = () => {
-        var now = new Date();
-        var year = now.getFullYear();
-        var month = now.getMonth() + 1;
-        var lastdayofmonth = new Date(year, month, 0, 15, 0);
-        if (true) {
-            navigate("/auction/now/bid");
+        if (localStorage.getItem("token")) {
+            navigate("/auction/now");
         }
         else {
-            alert("이번 달 경매는 모두 마감되었습니다. 다음 달에 다시 이용해 주세요!");
+            alert("로그인 후 이용해주세요");
         }
     };
 
@@ -82,8 +79,8 @@ function Auction() {
                 <ModalPopup 
                 title="이달의 경매 입장하기" 
                 detail="진행 중인 경매로 이동하시겠습니까?"
-                height={250}
-                content={<div style={{ height: "100px" }}>{  }</div>} 
+                height={200}
+                content={<div style={{ height: "50px" }}>{  }</div>} 
                 okfunction={() => { okfunction(); }} 
                 okbutton={true} okbuttonlabel="확인" 
                 cancelbutton={false} cancelbuttonlabel="취소"/>

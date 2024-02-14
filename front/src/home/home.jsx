@@ -82,11 +82,11 @@ export default function Home() {
     const worksresult = async () => { return await getWorks() };
     useEffect(() => {
         exhibitresult().then((value) => {
-            const homeresult = value.length > 3 ? value.slice(undefined, 3) : value;
+            const homeresult = value && value.length > 3 ? value.slice(undefined, 3) : value;
             setExhibitNow(homeresult);
         });
         worksresult().then((value) => {
-            const homeresult = value.length > 6 ? value.slice(undefined, 6) : value;
+            const homeresult = value && value.length > 6 ? value.slice(undefined, 6) : value;
             setWorksNow(homeresult);
         })
     }, []);

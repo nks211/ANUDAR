@@ -1,20 +1,26 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { DocentContext } from '../../docent/DocentPage'
 import Chatting from './Chatting'
 import './DocentContents.css'
-import dummy from '../../db/data.json'
+import { getExhibitDetail } from '../../API'
 
 function DocentContent() {
   const { menu, setMenu } = useContext(DocentContext);
-  const [selectWork, setSelectWork] = useState(0);
+  const [selectWork, setSelectWork] = useState(null);
+  const [works, setWorks] = useState([]);
+  const exhibitId = useLocation().pathname.split('/').pop();
+
+  useEffect(()=>{
+    if(menu === "work") {
+      getExhibitDetail(exhibitId).then( data => {
+        setWorks(data.works);
+      })
+      .catch(error => console.log(error));
+    }
+  }, [])
 
   switch (menu) {
     case "work":
-      const works = [];
-
-      for (let i=0; i<dummy.works.length; i++) {
-        works.push(dummy.works[i])
-      }
 
       const dcntWorkTop = document.getElementById('docentWork')
     
@@ -26,14 +32,14 @@ function DocentContent() {
           </div>
           <div id="docentWork">
             <div style={{marginBottom:"8vh"}}>
-              <img src={'../../'+dummy.works[selectWork].image}></img>
-              <h3>{dummy.works[selectWork].title}</h3>
-              <div>{dummy.works[selectWork].description}</div>
+              <img src={selectWork.image}></img>
+              <h3>{selectWork.name}</h3>
+              <div>{selectWork.detail}</div>
             </div>
             <div id="docentWorks">
               {works.map(work=>(
-                <img className="dcntWorkImg" src={"../../"+work.image} onClick={()=>{
-                  setSelectWork(work.id);
+                <img className="dcntWorkImg" src={work.image} onClick={()=>{
+                  setSelectWork(work);
                   dcntWorkTop.scrollTo({top:0, left:0, behavior: 'smooth'})
                 }}></img>
               ))}

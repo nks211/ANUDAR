@@ -75,19 +75,11 @@ function WebCam({ MysessionId, myUserName }) {
   }
 
   const leaveSession = () => {
-
-    // 구독자 스트림 중지
     subscribers.forEach((subscriber) => {
-      const subscriberStream = subscriber.stream.getMediaStream();
-      subscriberStream.getTracks().forEach(track => track.stop()); // 각 트랙을 중지합니다.
-      session.unsubscribe(subscriber); // 세션에서 구독자를 제거합니다.
+      session.unsubscribe(subscriber);
     });
-
-    // 발행자 스트림 중지
     if (publisher) {
-      const publisherStream = publisher.stream.getMediaStream();
-      publisherStream.getTracks().forEach(track => track.stop()); // 발행자의 모든 미디어 트랙을 중지합니다.
-      session.unpublish(publisher); // 세션에서 발행자를 제거합니다.
+      session.unpublish(publisher);
     }
 
     if (session) {
@@ -98,6 +90,8 @@ function WebCam({ MysessionId, myUserName }) {
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
+
+    window.location.reload();
   };
 
   const startRecording = async (sessionId) => {

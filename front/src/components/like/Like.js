@@ -46,17 +46,13 @@ export default function Like(props) {
     } catch(err) {
       console.log(err)
     }
-  } 
-
-  function checkLogin() {
-    if (!isLogin) {alert('로그인 후 이용해주세요'); return}
   }
-  
+    
   if (props.likeType === "exhibit") {
     return (
       <>
         <div onClick={()=>{
-          checkLogin()
+          if (!isLogin) {alert('로그인 후 이용해주세요'); return}
           changeExhibitLike()
           props.onChangeLike(!props.isLike)
         }}>
@@ -70,7 +66,7 @@ export default function Like(props) {
       <>
         <div className={props.isLike?"cancelButton":"likeButton cursorPointer"} 
           onClick={()=>{
-            checkLogin()
+            if (!isLogin) {alert('로그인 후 이용해주세요'); return}
             switch (props.likeType) {
               case "artist":  // 작가 팔로우
                 if (props.isLike) { unfollow() } 
@@ -90,7 +86,6 @@ export default function Like(props) {
           onMouseOver={()=>{setIsOn(true)}}
           onMouseOut={()=>{setIsOn(false)}}>
           {props.likeType==="work"?<img src={isOn||props.isLike? "../../../"+props.icon+"_reverse.png" : "../../../"+props.icon+".png"} width={25} height={25}/>:<></>}
-          {/* <img src={props.isLike? "../../../"+props.icon+".png" : "../../../"+props.icon+"_reverse.png"} width={25} height={25}></img> */}
           <div style={{width:"10px"}}></div>
           <div>{props.name}</div>
         </div>

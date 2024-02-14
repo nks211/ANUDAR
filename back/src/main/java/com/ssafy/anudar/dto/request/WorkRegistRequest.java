@@ -12,4 +12,5 @@ public class WorkRegistRequest {
     private String detail;
     private int price;
     private String image;
+    private Boolean is_carousel;
 }

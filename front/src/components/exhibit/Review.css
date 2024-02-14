@@ -21,13 +21,13 @@
 }
 
 .reviewWriter {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
   margin-right: 10px;
 }
 
 .reviewDate {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .reviewDelete {
@@ -38,7 +38,9 @@
 }
 
 .reviewContent {
-  font-size: 14px;
+  font-size: 15px;
   margin-top: 12px;
   text-align: left;
+  /* width: 100%; */
+  word-break: break-all;
 }

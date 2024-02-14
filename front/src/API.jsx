@@ -81,6 +81,27 @@ export async function getFollowers(token) {
     .catch(err => {console.log(err)})
 }
 
+// 포인트 조회
+export async function getUserPoints(token){
+  const url = "/api/user/points"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
+// 포인트 업데이트
+export async function updateUserPoints(token, newPoints){
+  const url = "/api/user/updatePoints"
+  const data = {
+    "points": newPoints
+  };
+  const config = {headers : {Authorization: `Bearer ${token}`}}
+  return await axios.put(url, data, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
+}
+
 export const changepassword = async (oldpassword, newpassword, token) => {
   if (token && token != "") {
       const url = "/api/user/update/password";
@@ -178,24 +199,6 @@ export const mybidworks = async (token) => {
 }
 
 /* 전시회 페이지 */
-
-// 전체 전시회 리스트
-// export const getAllExhibitList = async () => {
-//   const url = "/api/exhibit/list"
-//   return await axios.get(url)
-//   .then((res) => { return (res.data); })
-//   .catch((err) => { console.log(err); /* return {}; */ });
-// }
-
-// // 진행 중인 전시회 리스트
-// export const getCurExhibitList = async () => {
-//   const url = "/api/exhibit/list/current"
-//   return await axios.get(url)
-//   .then(res => { return (res.data); })
-//   .catch((err) => { console.log(err); });
-// }
-
-
 // 전체 전시회 리스트
 export async function getAllExhibitList() {
   const url = "/api/exhibit/list"
@@ -281,18 +284,6 @@ export async function likeExhibit(id, token) {
   .catch(err => {console.log(err)})
 }
 
-
-
-// // 전시회 등록
-// export async function registExhibit(data, token) {
-//   const url = "/api/exhibit/regist"
-//   const config = { headers : { Authorization: `Bearer ${token}` } }
-//   return await axios.post(url, data, config)
-//   .then(res => {return res.data})
-//   .catch(err => console.log(err))
-// }
-
-
 /* --- 방명록 --- */
 // 방명록 작성
 export async function createReview(id, data, token) {
@@ -324,22 +315,12 @@ export async function deleteReview(id, token) {
 
 }
 
-// // 작가 언팔로우
-// export async function unfollowAuthor(name, token) {
-//   const url = `/api/user/unfollow/${name}`
-//   const config = { headers : { Authorization: `Bearer ${token}` } }
-//   return await axios.delete(url, config)
-//   .then(res => {return res.data})
-//   .catch(err => {console.log(err)})
-// }
-
-
 /* ------------------------------- 작가 페이지 ------------------------------- */
 // 전체 작가 조회
 export async function getAuthors() {
   const url = "/api/user/authors"
   return await axios.get(url)
-  .then(res => {console.log(res);return res.data; })
+  .then(res => {return res.data; })
   .catch(err => {console.log(err)})
 }
 

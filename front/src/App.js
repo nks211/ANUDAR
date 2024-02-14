@@ -1,5 +1,4 @@
 import './App.css';
-import axios from 'axios';
 import Home from './home/home'
 import ExhibitPage from './exhibit/ExhibitPage'
 import ExhibitDetailPage from './exhibit/ExhibitDetailPage'
@@ -12,71 +11,31 @@ import ArtistPage from './artist/ArtistPage'
 import ArtistDetailPage from './artist/ArtistDetailPage'
 import Auction from './auction/auction'
 import AuctionPage from './auction/auctionpage';
+import AuctionLivePage from './auctionlive/AuctionLivePage';
 import Signup from './signup/signup'
 import Mypage from './mypage/mypage';
 import { mainstate } from './StateManagement';
+import axios from 'axios';
 import { createContext, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import NavBar from './navbar/navbar';
+import Pay from './mypage/Pay.jsx';
+
 
 export const AppContext = createContext();
 export default function App() {
   const isLogin = mainstate((state) => state.isLogin)
   const logintoken = mainstate((state) => state.logintoken)
-  // console.log(localStorage)
+  const [pathName, setPathName] = useState(window.location.pathname);
+
   useEffect(()=> {
     console.log(logintoken)
   }, [logintoken])
-  // }, [isLogin])
 
   // useEffect(()=>{
 
-  // }, [])
-  // const { isLogin }  = mainstate((state) => ({ isLogin: state.isLogin }));
-  // const isLogin = mainstate((state) => state.isLogin);
-
-  // let token;
-  // const { 
-  //   isLogin,
-  //   // setIsLogin,
-  //   // loginidinput, 
-  //   // loginpasswordinput, 
-  //   // setloginidinput, 
-  //   // setloginpasswordinput,
-  //   loginuser,
-  //   // setloginuser,
-  //   logintoken,
-  //   // setlogintoken,
-  // } 
-  // = mainstate((state) => ({
-  //   isLogin: state.isLogin,
-  //   // setIsLogin: state.setIsLogin,
-  //   // loginidinput: state.idinput,
-  //   // loginpasswordinput: state.passwordinput,
-  //   // setloginidinput: state.setloginidinput,
-  //   // setloginpasswordinput: state.setloginpasswordinput,
-  //   loginuser: state.loginuser,
-  //   // setloginuser: state.setloginuser,
-  //   logintoken: state.logintoken,
-  //   // setlogintoken: state.setlogintoken,
-  // }));
-
-  // useEffect(()=>{
-
-  //   if (isLogin === true) {
-  //     console.log('로그인')
-  //   } else {
-  //     // console.log(localStorage)
-  //     console.log('로그아웃')
-  //   }
-
-  //   console.log(loginuser)
-  //   console.log(logintoken)
-  // },[isLogin])
-
-
-  const [pathName, setPathName] = useState(window.location.pathname);
-
+  // },[pathName])
+  
   const modalsetting = {
     overlay: {
         position: "fixed",
@@ -116,11 +75,15 @@ export default function App() {
             <Route exact path="/artist" element={<ArtistPage />}></Route>
             <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
-            
+            <Route exact path="/auction/now" element={<AuctionPage/>}></Route>
+            {/* 테스트용 주소 */}
+            <Route exact path="/auction/live" element={<AuctionLivePage />}></Route>
             <Route exact path="/user/info" element={<Mypage/>}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
             {/* 실시간 경매 */}
             <Route exact path="/auction/now/:auction_id" element={<AuctionPage/>}></Route>
+
+            <Route exact path="/pay" element={<Pay />}></Route>
           </Routes>
         </div>
       </AppContext.Provider>

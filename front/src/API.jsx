@@ -81,6 +81,27 @@ export async function getFollowers(token) {
     .catch(err => {console.log(err)})
 }
 
+// 포인트 조회
+export async function getUserPoints(token){
+  const url = "/api/user/points"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
+// 포인트 업데이트
+export async function updateUserPoints(token, newPoints){
+  const url = "/api/user/updatePoints"
+  const data = {
+    "points": newPoints
+  };
+  const config = {headers : {Authorization: `Bearer ${token}`}}
+  return await axios.put(url, data, config)
+    .then(res => {return res.data})
+    .catch(err => {console.log(err)})
+}
+
 export const changepassword = async (oldpassword, newpassword, token) => {
   if (token && token != "") {
       const url = "/api/user/update/password";
@@ -419,10 +440,30 @@ export async function getAuthorWorks(name, token) {
 
 
 /* 경매 페이지*/
-
+// 경매에 오를 작품
 export const auctionlist = async () => {
     const url = "/api/auction/works";
     return await axios.get(url)
     .then(response => { return response.data; })
     .catch((e) => { console.log(e); })
+};
+
+// 낙찰
+export const successbid = async (finalPrice, workId, nickname, auctionId) => {
+  const url = "/api/auction/bidok";
+  const data = {
+      finalPrice : finalPrice,
+      workId : workId, 
+      nickname : nickname,
+      auctionId : auctionId
+  }
+  return await axios.post(url, data,{
+      headers: {
+          'Authorization': "Bearer " + window.localStorage.getItem('token')
+      }
+  })
+  .then(response => {
+      console.log(response.data);
+  })
+  .catch((e) => { console.log(e); return {}; });
 };

@@ -10,6 +10,7 @@ class CoreConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .allowedOrigins("https://i10d105.p.ssafy.io'")
                 .allowedOrigins("http://localhost:3000") // 프론트엔드 주소
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true);

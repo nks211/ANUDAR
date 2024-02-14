@@ -1,22 +1,35 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
+import { useLocation } from 'react-router-dom';
 import { DocentContext } from '../../docent/DocentPage'
 import Chatting from './Chatting'
 import './DocentContents.css'
-import dummy from '../../db/data.json'
+import { getExhibitDetail } from '../../API'
 
 function DocentContent() {
   const { menu, setMenu } = useContext(DocentContext);
-  const [selectWork, setSelectWork] = useState(0);
+  const [selectWork, setSelectWork] = useState(null);
+  const [works, setWorks] = useState([]);
+  const exhibitId = useLocation().pathname.split('/').pop();
+  const dcntWorkTopRef = useRef(null);
+
+  useEffect(() => {
+    getExhibitDetail(exhibitId).then(data => {
+      setWorks(data.workList);
+      console.log(data)
+      console.log(data.workList)
+      if (data.workList && data.workList.length > 0) {
+        setSelectWork(data.workList[0]);
+      }
+    })
+    .catch(error => console.log(error));
+    setMenu("work")
+  }, [])
+
 
   switch (menu) {
     case "work":
-      const works = [];
 
-      for (let i=0; i<dummy.works.length; i++) {
-        works.push(dummy.works[i])
-      }
-
-      const dcntWorkTop = document.getElementById('docentWork')
+      // const dcntWorkTop = document.getElementById('docentWork')
     
       return (
         <>
@@ -24,17 +37,19 @@ function DocentContent() {
             <h2>작품</h2>
             <hr/>
           </div>
-          <div id="docentWork">
-            <div style={{marginBottom:"8vh"}}>
-              <img src={'../../'+dummy.works[selectWork].image}></img>
-              <h3>{dummy.works[selectWork].title}</h3>
-              <div>{dummy.works[selectWork].description}</div>
-            </div>
+          <div id="docentWork" ref={dcntWorkTopRef}>
+            {selectWork && ( // selectWork가 존재할 때만 작품 정보를 렌더링합니다.
+              <div style={{ marginBottom: "8vh" }}>
+                <img style={{ width: "300px", height: "auto" }} src={selectWork.image}></img>
+                <h3>{selectWork.title}</h3>
+                <div>{selectWork.detail}</div>
+              </div>
+            )}
             <div id="docentWorks">
-              {works.map(work=>(
-                <img className="dcntWorkImg" src={"../../"+work.image} onClick={()=>{
-                  setSelectWork(work.id);
-                  dcntWorkTop.scrollTo({top:0, left:0, behavior: 'smooth'})
+              {works.map(work => (
+                <img key={work.id} className="dcntWorkImg" src={work.image} onClick={() => {
+                  setSelectWork(work);
+                  dcntWorkTopRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }}></img>
               ))}
             </div>

@@ -1,17 +1,80 @@
-import { useState } from 'react'
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './Payment.css'
 
+
 export default function Payment() {
+  
   const [selectPoint, setSelectPoint] = useState(0);
   const [selectKRW, setSelectKRW] = useState(0);
+  const [paymentUrl, setPaymentUrl] = useState(''); // 결제 승인 페이지 URL 상태
+
+  const location = useLocation();
+
+  useEffect(()=>{
+    console.log(location)
+  }, [location])
+
   const styleSetting = [
     { backgroundColor: "white", color: "black" }, 
     { backgroundColor: "#967E76", color: "white" }
   ];
+
+  const token = localStorage.getItem('token');
+
+  // 결제 요청 함수
+  const handlePayment = async () => {
+    if (selectPoint === 0 || selectKRW === 0) {
+      alert('포인트를 선택해주세요.');
+      return;
+    }
+
+    // 결제 준비 요청
+    axios.post('/api/payment/kakaoPayReady', {
+
+    item_name: `포인트 ${selectPoint}개 충전`,
+    total_amount: selectKRW,
+    partner_user_id: 'partner_user_id',
+    partner_order_id: 'partner_order_id',
+    vat_amount: 0,
+    tax_free_amount: 0,
+    cid: "TC0ONETIME",
+    quantity: 1,
+    tax_free_amount: 0,
+    approval_url: 'https://i10d105.p.ssafy.io/pay',
+    cancel_url: 'https://i10d105.p.ssafy.io/',
+    fail_url: 'https://i10d105.p.ssafy.io/',
+    // approval_url: 'http://localhost:3000/pay',
+    // cancel_url: 'http://localhost:3000/',
+    // fail_url: 'http://localhost:3000'
+  }, {
+    headers: {
+      "Content-Type": `application/json;charset=utf-8`,
+      Authorization: `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    
+    // tid 값을 저장
+    console.log(`tid : ${response.data.tid}`)
+    localStorage.setItem('tid', response.data.tid);
+
+    // 결제한 가격을 포인트에 저장
+    localStorage.setItem('point', selectPoint);
+
+    // 결제 승인 페이지 URL을 상태에 저장
+    setPaymentUrl(response.data.next_redirect_pc_url);
+
+  })
+  .catch(error => {
+    console.error('결제 준비 중 에러 발생:', error);
+    alert('결제 준비 중 오류가 발생했습니다.111');
+  });
+};
+
   
   function PointBtn(props) {
-    // const point = props.point
-    // const krw = props.krw
     const [point, krw] = [props.point, props.krw]
     
     return (
@@ -33,24 +96,16 @@ export default function Payment() {
         <h2>충전하기</h2>
         <hr/>
         <div className="chargePoint">
-          <PointBtn point={100000} krw={1000000}/>
-          <PointBtn point={50000} krw={500000}/>
-          <PointBtn point={30000} krw={300000}/>
-          <PointBtn point={10000} krw={100000}/>
-          <PointBtn point={5000} krw={50000}/>
-          <PointBtn point={1000} krw={10000}/>
+          <PointBtn point={100} krw={1000000}/>
+          <PointBtn point={50} krw={500000}/>
+          <PointBtn point={30} krw={300000}/>
+          <PointBtn point={10} krw={100000}/>
+          <PointBtn point={5} krw={50000}/>
+          <PointBtn point={1} krw={10000}/>
         </div>
-        <button onClick={()=>{
-          // 결제하기 누른 후 코드는 여기 작성하세요 ..
-          // selectKRW : 결제금액 입니다 ...
-          if (selectKRW) {
-            alert(selectKRW+"원 결제!")
-          }
-          else {
-            alert('결제 금액을 선택해주세요')
-          }
-
-        }}>결제하기</button>
+        <button onClick={handlePayment}>{paymentUrl && (
+          <a href={paymentUrl}>결제하기</a>
+        )}</button>
       </div>
     </div>
   )

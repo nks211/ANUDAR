@@ -3,6 +3,7 @@ package com.ssafy.anudar.service;
 import com.ssafy.anudar.config.JwtUtil;
 import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
+import com.ssafy.anudar.dto.request.SuccessWorkRequset;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
@@ -255,6 +256,7 @@ public class UserService {
         return user.getUserPoints(); // userPoints 필드 값을 반환
     }
 
+
     // 포인트 업데이트
     public Long updateUserPoints(String username, Long newPoints) {
         // 사용자 엔티티를 데이터베이스에서 조회
@@ -326,7 +328,6 @@ public class UserService {
                 .map(User::getId) // User 엔터티에서 ID를 추출
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
-
 
 }
 

@@ -87,11 +87,4 @@ public class User extends BaseTimeEntity{
         this.image=image;
         this.phone=phone;
     }
-
-    public void addPoints(Long totalAmount) {
-        if (this.userPoints == null) {
-            this.userPoints = 0L;
-        }
-        this.userPoints += totalAmount;
-    }
 }

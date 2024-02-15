@@ -45,8 +45,13 @@ export default function AuctionPage() {
 
   // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
-    alert(`${currentBidUser}님께 ${currentPrice}원에 낙찰되었습니다.`);
-    successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
+    if (currentBidUser == "") {
+      alert("작품이 유찰되었습니다.");
+    }
+    else {
+      alert(`${currentBidUser}님께 ${currentPrice}원에 낙찰되었습니다.`);
+      successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
+    }
     // setCurrentPrice(auctionList[nowAuction]?.price) // 다음 작품의 초기 값
     // setCurrentBidUser("");
     // publish(0);
@@ -239,17 +244,14 @@ export default function AuctionPage() {
                 <img style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "500px", height: "500px" }} src={auctionList[nowAuction-1]?.image} alt="" /> 
               </div>
             </div>
-            <div>작가:{auctionList[nowAuction-1]?.author}</div>
-            <div>제목:{auctionList[nowAuction-1]?.title}</div>
+            <div>
+              <div style={{  fontSize: "30px", margin: "30px" }}>{auctionList[nowAuction-1]?.author} 작가의 {auctionList[nowAuction-1]?.title}</div>
+            </div>
             <div></div>
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: "1", }}>
-              <div id="auctionButton" style={{ width: "400px", height: "100px", margin: "10px", backgroundColor: "#967E76", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                {/* <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { !isadmin() ? bidcomplete() : setInputOpen(!inputopen); }}>{!isadmin() ? <img src="../../asset/bidok.png"></img> : <img src="../../asset/tab_chat.png"></img>}</div> */}
-                <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setCam(!cam) }}>{cam ? <img src="../../asset/cam_off.png"></img> : <img src="../../asset/cam_on.png"></img>}</div>
-                <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setMic(!mic) }}>{mic ? <img src="../../asset/mic_off.png"></img> : <img src="../../asset/mic_on.png"></img>}</div>
-                <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setScreen(!screen) }}>{screen ? <img src="../../asset/screen_off.png"></img> : <img src="../../asset/screen_on.png"></img>}</div>
+            <div style={{ display: "flex", justifyContent: "right", alignItems: "center", flex: "1", }}>
+              <div id="auctionButton" style={{ width: "130px", height: "100px", margin: "10px", backgroundColor: "#967E76", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <img onClick={() => { if (window.confirm('경매 페이지를 종료하시겠습니까?') === true) { navigate(-1) } }} src="../../asset/leave.png"></img>
               </div>
             </div>

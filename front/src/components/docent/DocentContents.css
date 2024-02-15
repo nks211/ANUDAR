@@ -175,7 +175,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   height: auto;
-  width: calc(100% - 90px); /* 버튼 너비와 마진을 고려하여 조정 */
+  width: calc(100% - 85px); /* 버튼 너비와 마진을 고려하여 조정 */
 }
 
 .chat-submit {

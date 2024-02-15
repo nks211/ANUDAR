@@ -65,9 +65,9 @@ function DocentContent() {
             <hr/>
           </div>
           <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:"100%"}}>
-            <div id="chatting">
+            {/* <div id="chatting"> */}
               <Chatting/>
-            </div>
+            {/* </div> */}
             {/* <div id="chatInput">
               <input placeholder="채팅을 입력하세요"></input>
               <button onClick={()=>{

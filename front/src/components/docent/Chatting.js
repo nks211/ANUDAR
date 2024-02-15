@@ -17,28 +17,33 @@ export default function Chatting() {
       publish(chat);
     };
 
-    return (
-      <><div id="chatting">
-        <div className={"chat-list"}>
-          {chatList.map((chatItem, index) => (
-            <div key={index}>
-              <ChatMessage
+  return (
+    <><div id="chatting">
+      <div className={"chat-list"}>
+        {chatList.map((chatItem, index) => (
+          <div key={index}>
+            <ChatMessage
               profileImg={chatItem.image}
               nickname={chatItem.nickname}
               message={chatItem.message}
-              />
-            </div>
-          ))}
-        </div>
+            />
+          </div>
+        ))}
       </div>
-        <form onSubmit={(event) => handleSubmit(event, chat)}>
-          <input placeholder="채팅을 입력하세요."
-            type={"text"}
-            name={"chatInput"}
-            onChange={handleChange}
-            value={chat} />
-          <input type={"submit"} value={"입력"} />
-        </form>
-      </>
-      );
+    </div>
+      <div className="chat-input-container">
+        <input
+          className="chat-input"
+          placeholder="채팅을 입력하세요."
+          type="text"
+          name="chatInput"
+          onChange={handleChange}
+          value={chat}
+        />
+        <button type="submit" className="chat-submit" onClick={(event) => handleSubmit(event, chat)}>
+          입력
+        </button>
+      </div>
+    </>
+  );
 }

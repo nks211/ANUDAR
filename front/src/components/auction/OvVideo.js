@@ -1,26 +1,3 @@
-import React, { Component } from 'react';
-
-export default class OpenViduVideoComponent extends Component {
-
-    constructor(props) {
-        super(props);
-        this.videoRef = React.createRef();
-    }
-
-    componentDidUpdate(props) {
-        if (props && !!this.videoRef) {
-            this.props.streamManager.addVideoElement(this.videoRef.current);
-        }
-    }
-
-    componentDidMount() {
-        if (this.props && !!this.videoRef) {
-            this.props.streamManager.addVideoElement(this.videoRef.current);
-        }
-    }
-
-    render() {
-        return <video style={{ width: '250px', height: 'auto' }} autoPlay={true} ref={this.videoRef} />;
-    }
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c49c7b294008a43abfa0bdac86e1402ff67ce1e69e92a43286d214e6f7a7c2f1
+size 665

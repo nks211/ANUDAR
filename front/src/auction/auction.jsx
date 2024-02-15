@@ -66,7 +66,7 @@ function Auction() {
 
     const okfunction = () => {
         if (localStorage.getItem("token")) {
-            navigate("/auction/now");
+            navigate("/auction/now/bid");
         }
         else {
             alert("로그인 후 이용해주세요");

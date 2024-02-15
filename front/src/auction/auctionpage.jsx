@@ -6,7 +6,6 @@ import { auctionlist, successbid } from '../API';
 import { mainstate } from '../StateManagement';
 import AuctionCam from '../components/auction/AuctionCam';
 import "./auctionpage.css";
-import Slider from "react-slick";
 
 export const AuctionLiveContext = createContext();
 export default function AuctionPage() {
@@ -18,17 +17,17 @@ export default function AuctionPage() {
   const [cam, setCam] = useState(false);
   const [mic, setMic] = useState(false);
   const [screen, setScreen] = useState(false);
-  const [timer, setTimer] = useState(60);
+  const [timer, setTimer] = useState(10);
   const [username, setUsername] = useState("");
 
-  const [inputvalue, setInputValue] = useState(0); // 응찰받은 값 ?
-  const [auctionvalue, setAuctionValue] = useState(inputvalue); // 현재가 ?
 
   const [chatList, setChatList] = useState([]);
   const [chat, setChat] = useState("");
-  const [participant, setParticipant] = useState([]); // 최대 3명까지만 표시
-  const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
-  const [currentBidUser, setCurrentBidUser] = useState("");
+
+  const [countAuctions, setCountAuctions] = useState(0);
+  const [nowAuction, setNowAuction] = useState(1);
+  const [isBidding, setIsBidding] = useState(false);
+
 
 
   const timeset = () => {
@@ -44,22 +43,27 @@ export default function AuctionPage() {
     return localStorage.userdata && localStorage.userdata.username === "admin1234" ? true : false;
   };
 
+  // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
-    setChat(`${auctionvalue}원에 최종 낙찰되었습니다`);
-    setAuctionValue(0);
-    setParticipant([]);
+    alert(`${currentBidUser}님께 ${currentPrice}원에 낙찰되었습니다.`);
+    successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
+    // setCurrentPrice(auctionList[nowAuction]?.price) // 다음 작품의 초기 값
+    // setCurrentBidUser("");
+    // publish(0);
+    client.current.publish({
+      destination: "/pub/auctionbid/" + auctionId,
+      body: JSON.stringify({
+        sessionId: auctionId,
+        nickname: "",
+        askingprice: auctionList[nowAuction]?.price,
+        workId: auctionList[nowAuction - 1]?.id,
+        nowNumber : nowAuction + 1
+      }),
+    });
+    setChat("");
+    subscribe();
+    setIsBidding(false);
   }
-
-  const setting = {
-    dots: false,
-    dotsClass: "slidedots",
-    infinite: false,
-    pauseOnHover: false,
-    arrows: isadmin(),
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
 
   useEffect(() => {
     const Timer = setInterval(() => {
@@ -80,27 +84,35 @@ export default function AuctionPage() {
   if (userdata == null) navigate("/");
 
   // 경매에 올릴 작품
-  let auctionList = [];
+  // let auctionList = [];
+  const [auctionList, setAuctionList] = useState([]);
+ 
 
-  useEffect(() => {
-    connect();
-    // // 경매 정보 불러오기
-    // auctionlist()
-    //   .then(auctionData => {
-    //     auctionList.push(...auctionData);
-    //     console.log(auctionList)
-    //   })
-    //   .catch(e => {
-    //     console.log("경매 정보를 찾을 수 없습니다.", e);
-    //   })
-    return () => disconnect();
-  }, [pathName]);
+  async function getAuction() {
+    try {
+      const res = await auctionlist()
+      setAuctionList(res)
+      setCountAuctions(res.length)
+    } catch (err) {
+      console.log('경매 정보를 찾을 수 없습니다.')
+    }
+  }
+  
+  useEffect(()=>{
+    connect()
+    getAuction()
+    return () => disconnect()
+  }, [pathName])
+
+
+  const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
+  const [currentBidUser, setCurrentBidUser] = useState("");
 
   const client = useRef({});
   const connect = () => {
     client.current = new StomJs.Client({
-      brokerURL: "ws://localhost:8080/api/ws",
-      // brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
+      // brokerURL: "ws://localhost:8080/api/ws",
+      brokerURL: "wss://i10d105.p.ssafy.io/api/ws",
       onConnect: () => {
         console.log("success");
         console.log(auctionId);
@@ -117,6 +129,7 @@ export default function AuctionPage() {
   const subscribe = () => {
     client.current.subscribe("/sub/auctionbid/" + auctionId, (body) => {
       const json_body = JSON.parse(body.body);
+      console.log(body.body)
       // 경매 중 입장 시 현재 응찰자와 현재가 보여주는 경우 추가하지 않기 위함
       if (json_body.askingprice !== 0) {
         setChatList((_chat_list) => [json_body, ..._chat_list]);
@@ -127,6 +140,8 @@ export default function AuctionPage() {
       const currentBidUser = json_body.currentBidUser;
       setCurrentPrice(currentPrice);
       setCurrentBidUser(currentBidUser);
+      setNowAuction(json_body.nowNumber)
+      console.log(json_body.nowNumber);
       console.log(currentPrice);
     });
   };
@@ -139,6 +154,8 @@ export default function AuctionPage() {
         sessionId: auctionId,
         nickname: userdata.nickname,
         askingprice: chat,
+        workId: auctionList[nowAuction - 1]?.id,
+        nowNumber : nowAuction
       }),
     });
     setChat("");
@@ -158,8 +175,9 @@ export default function AuctionPage() {
     event.preventDefault();
     // 현재가 보다 높은 값을 응찰한 경우에만
     if (!isNaN(chat) && chat > currentPrice) {
-      setTimer(60); 
+      setTimer(10); 
       publish(chat);
+      setIsBidding(true);
       setChat("");
     }
     else {
@@ -180,23 +198,24 @@ export default function AuctionPage() {
       <div style={{ zIndex: "10", backgroundColor: "#ffffff", borderRadius: "20px", width: "100%", margin: "20px", padding: "20px", display: "flex", flex: "24" }}>
         <div style={{ display: "flex", flex: "7", backgroundColor: "rgb(200, 200, 192)", flexDirection: "column", padding: "30px", margin: "20px", borderRadius: "30px" }}>
           <form onSubmit={(event) => handleSubmit(event, chat)}>
-            <div style={{ zIndex: "20", position: "absolute", display: "flex", justifyContent: "space-between", alignItems: "flex-start", width: "45%", height: "150px", backgroundColor: "#ffffff80", borderRadius: "20px", padding: "10px", margin: "10px" }}>
-              <div style={{ width: "40%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
+            <div style={{ zIndex: "20", position: "absolute", display: "flex", justifyContent: "space-between", alignItems: "flex-start", width: "28%", height: "150px", backgroundColor: "#ffffff80", borderRadius: "20px", padding: "10px", margin: "10px" }}>
+              <div style={{ width: "50%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
                 <div className="auctiontitle" style={{ display: "flex", justifyContent: "space-between", padding: "0px 20px", }}>
-                  <div>경매 <span style={{ fontSize: "28px", color: "976E76", fontWeight: "700", textAlign: "start", }}>{10}</span>/{30} 진행중</div>
+                  <div>경매 <span style={{ fontSize: "28px", color: "976E76", fontWeight: "700", textAlign: "start", }}>{nowAuction}</span>/{countAuctions} 진행중</div>
                   <div style={{ textAlign: "end", fontSize: "16px", margin: "10px" }}>남은 시간 :   {timeset()}</div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", margin: "0px 20px" }}>
                   <div>현재 입찰 가격</div>
-                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}만원</div>
+                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}원</div>
                 </div>
               </div>
-              <div style={{ width: "30%", height: "80%", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "end", textAlign: "start", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
-                {currentBidUser}님이 {currentPrice}만원을 응찰하였습니다.
-              </div>
-              <div style={{ width: "20%", height: "80%", padding: "10px", backgroundColor: "#EEE3CB", borderRadius: "20px" }}>
-                <div style={{ fontSize: "24px", marginBottom: "10px" }}>현재 응찰자</div>
-                  <p>{currentBidUser}</p>
+              <div style={{ width: "50%", height: "80%", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "end", textAlign: "start", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
+                {isBidding ? (
+                  <p>{currentBidUser}님이 {currentPrice}원을 응찰하였습니다.</p>
+                ) : (
+                  <p>아직 응찰이 없습니다.</p>
+                )}
+                
               </div>
             </div>
 
@@ -211,26 +230,23 @@ export default function AuctionPage() {
               <button style={{ width: "200px", height: "60px", backgroundColor: "#976E76", display: "flex", justifyContent: "center", alignItems: "center", color: "#ffffff", fontSize: "20px", borderRadius: "20px", margin: "0px 40px", border: 0,  cursor: "pointer" }}>응찰하기</button>
             </div>
           </form>
+          <button onClick={()=>{bidcomplete()}}>낙찰</button>
         </div>
         <div style={{ display: "flex", flex: "5", flexDirection: "column", backgroundColor: "#B7C4CF", padding: "30px", margin: "20px", borderRadius: "30px" }}>
           <div style={{ width: "800px", height: "800px", margin: "20px 0px", pointerEvents: isadmin() ? "auto" : "none" }}>
-            <Slider {...setting}>
-              {Object.values(test).map((item, i) => {
-                return <div>
-                  <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "500px", height: "500px", border: "1px solid" }}>
-                      {item}
-                    </div>
-                  </div>
-                </div>
-              })}
-            </Slider>
-            <div>작품 목록...</div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div >
+                <img style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "500px", height: "500px" }} src={auctionList[nowAuction-1]?.image} alt="" /> 
+              </div>
+            </div>
+            <div>작가:{auctionList[nowAuction-1]?.author}</div>
+            <div>제목:{auctionList[nowAuction-1]?.title}</div>
+            <div></div>
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: "1", }}>
               <div id="auctionButton" style={{ width: "400px", height: "100px", margin: "10px", backgroundColor: "#967E76", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { !isadmin() ? bidcomplete() : setInputOpen(!inputopen); }}>{!isadmin() ? <img src="../../asset/bidok.png"></img> : <img src="../../asset/tab_chat.png"></img>}</div>
+                {/* <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { !isadmin() ? bidcomplete() : setInputOpen(!inputopen); }}>{!isadmin() ? <img src="../../asset/bidok.png"></img> : <img src="../../asset/tab_chat.png"></img>}</div> */}
                 <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setCam(!cam) }}>{cam ? <img src="../../asset/cam_off.png"></img> : <img src="../../asset/cam_on.png"></img>}</div>
                 <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setMic(!mic) }}>{mic ? <img src="../../asset/mic_off.png"></img> : <img src="../../asset/mic_on.png"></img>}</div>
                 <div style={{ display: !isadmin() ? "block" : "none", }} onClick={() => { setScreen(!screen) }}>{screen ? <img src="../../asset/screen_off.png"></img> : <img src="../../asset/screen_on.png"></img>}</div>

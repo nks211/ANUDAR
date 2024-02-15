@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,15 +46,11 @@ public class AuctionService {
 
     // 경매 할 작품을 가져오기
     public List<WorkDto> getWorks() {
-        Optional<Auction> preAuction = auctionRepository.findPreviusAuction(LocalDateTime.now());
-        Auction nextAuction = auctionRepository.findNextAuction(LocalDateTime.now())
-                .orElseThrow(() -> new BadRequestException(ExceptionStatus.AUCTION_NOT_FOUND));
-        // 이전 경매가 존재 / orElse
-        return preAuction.map(auction -> workRepository.findAuctionWorks(auction.getStart_time().minusDays(10), nextAuction.getStart_time().minusDays(10))
+        Optional<Auction> currentAuction = auctionRepository.findAuction(LocalDateTime.now());
+        return currentAuction.map(auction -> workRepository.findTop20AuctionWorks(auction.getStart_time())
                 .stream().map(WorkDto::fromEntity)
-                .toList()).orElseGet(() -> workRepository.findAllPrevAuctionWorks(nextAuction.getStart_time().minusDays(10))
-                .stream().map(WorkDto::fromEntity)
-                .toList());
+                .toList()).orElse(Collections.emptyList());
     }
+
 
 }

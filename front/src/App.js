@@ -75,7 +75,7 @@ export default function App() {
             <Route exact path="/artist" element={<ArtistPage />}></Route>
             <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
-            <Route exact path="/auction/now" element={<AuctionPage/>}></Route>
+            {/* <Route exact path="/auction/now" element={<AuctionPage/>}></Route> */}
             {/* 테스트용 주소 */}
             <Route exact path="/auction/live" element={<AuctionLivePage />}></Route>
             <Route exact path="/user/info" element={<Mypage/>}></Route>

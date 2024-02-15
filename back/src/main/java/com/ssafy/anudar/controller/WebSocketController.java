@@ -18,6 +18,7 @@ public class WebSocketController {
 
     private Integer currentBid = 0 ; // 현재가를 저장하는 변수 : 나중엔 startprice로 설정 => 로컬에 값을 저장해두어야 하지 않을갑..
     private String currentBidUser = "응찰한 사용자가 없습니다.";
+    private Integer nownumber = 1;
 
     @MessageMapping("/chat/{sessionId}")
     public void sendMessage(ChatDto chatDto, SimpMessageHeaderAccessor accessor) {
@@ -30,6 +31,14 @@ public class WebSocketController {
         Integer askingprice = auctionBidDto.getAskingprice();
         String askingBidUser = auctionBidDto.getNickname();
 
+        // 여기 저장되어 있는 번호보다 크면 저장해주기
+        if (nownumber < auctionBidDto.getNowNumber()){
+            nownumber = auctionBidDto.getNowNumber();
+            currentBid = 0;
+            currentBidUser = "응찰한 사용자가 없습니다.";
+        }
+
+
         if (askingprice > currentBid) {
             currentBid = askingprice;
             currentBidUser = askingBidUser;
@@ -41,14 +50,13 @@ public class WebSocketController {
         auctionStatusDto.setSessionId(auctionBidDto.getSessionId());
         auctionStatusDto.setNickname(auctionBidDto.getNickname());
         auctionStatusDto.setAskingprice(auctionBidDto.getAskingprice());
+        auctionStatusDto.setWorkId(auctionBidDto.getWorkId());
         auctionStatusDto.setCurrentBid(currentBid);
         auctionStatusDto.setCurrentBidUser(currentBidUser);
-
+        auctionStatusDto.setNowNumber(nownumber);
 
         // 갱신된 현재가를 프론트로 전달
         simpMessagingTemplate.convertAndSend("/sub/auctionbid/" + auctionBidDto.getSessionId(), auctionStatusDto);
     }
-
-
 
 }

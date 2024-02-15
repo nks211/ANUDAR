@@ -8,6 +8,7 @@ import lombok.Getter;
 public class AuctionBidDto {
     private String sessionId;
     private String nickname;
-    //    private Work work;
+    private Integer workId;
     private Integer askingprice;
+    private Integer nowNumber;
 }

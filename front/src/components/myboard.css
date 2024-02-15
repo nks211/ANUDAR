@@ -1,3 +1,70 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8c247c4f227127c06e38011cad611bae9a7c76ea9e1362982a64518f02504840
-size 1223
+.myboardarea {
+    width: 900px;
+    height: 500px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.mytable {
+    color: #000000;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: start;
+    margin: 30px 20px;
+}
+
+.myboardarea table {
+    width: 100%;
+    border-top: 2px solid #eee3cb;
+    border-collapse: collapse;
+}
+
+td {
+    border-bottom: 2px solid #eee3cb;
+    padding: 10px 20px;
+    height: 60px;
+}
+
+.identifier {
+    width: 20%;
+    text-align: start;
+    font-weight: 700;
+}
+
+.data {
+    width: 80%;
+    text-align: start;
+}
+
+.changepassword {
+    background-color: #ffffff;
+    border: 1px solid #967E76;
+    border-radius: 5px;
+    width: 40px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #967E76;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.changepassword:hover {
+    background-color: #967E76;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.exit {
+    color: #949494;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: end;
+    padding: 10px;
+    cursor: pointer;
+}

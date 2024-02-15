@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:06d216bb9027806699a3126e6eadeb5f2e1e3018d7d137125610960512065fdf
-size 629
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import Chat from './Chat/ChatList';
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+
+    <BrowserRouter>
+     <App />
+     
+    </BrowserRouter>
+
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.auctiontitle {
+    font-family: 'SUIT-Regular';
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#auctionButton {
+    /* background-color: rgb(159, 159, 159); */
+    height: calc(100vh/9);
+    display: flex;
+    /* opacity: 0; */
+    align-items: center;
+    justify-content: center;
+  
+    img {
+      width: calc(100vh/9*0.6);
+      height: calc(100vh/9*0.6);
+      margin: 0 10px;
+      cursor: pointer;
+    }
+  
+    div {
+      cursor: pointer;
+    }
+}
+
+/* #auctionButton:hover {
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+} */

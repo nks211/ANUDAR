@@ -1,0 +1,17 @@
+.auctionworkarea {
+    width: 1200px;
+    height: 400px;
+    top: 60px;
+    transform: translateX(2.5%);
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.slickwork {
+    width: 100%;
+    height: 100%;
+}
+
+.slickwork .slick-current {
+    transform: scale(1.5);
+}

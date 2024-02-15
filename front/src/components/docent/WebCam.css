@@ -1,0 +1,16 @@
+#webCam {
+  background-color: rgb(200, 200, 192);
+  width: 98%;
+  height: 100%;
+  border-radius: 0.7rem;
+}
+.stream-container {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; 
+}
+
+.stream-item {
+  flex: 0 0 auto; 
+  margin-right: 10px; 
+}

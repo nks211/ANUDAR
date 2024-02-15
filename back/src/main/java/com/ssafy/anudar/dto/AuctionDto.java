@@ -1,8 +1,6 @@
 package com.ssafy.anudar.dto;
 
 import com.ssafy.anudar.model.Auction;
-import com.ssafy.anudar.model.Docent;
-import com.ssafy.anudar.repository.AuctionRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

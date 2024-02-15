@@ -1,0 +1,95 @@
+.myprofilearea {
+  width: 434px;
+  height: 230px;
+  position: relative;
+  top: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.myprofilearea .left {
+  flex: 1;
+  margin-right: 30px;
+}
+
+.myprofileimage {
+  background-color: #eee3cb;
+  color: #000000;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 15%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.myprofilearea .right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right .nickname {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.right .follower {
+  margin: 0px 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #9DBC98;
+  width: 86px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right .following {
+  margin: 0px 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #638889;
+  color: #ffffff;
+  width: 86px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#myPoint {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+
+  div {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  button {
+    width: 25%;
+    background-color: #967E76;
+    border: None;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+  }
+}

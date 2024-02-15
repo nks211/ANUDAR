@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#nav {
+    font-family: 'SUIT-Regular' !important;
+}
+
+#nav button {
+    font-family: 'SUIT-Regular';
+}
+
 .area {
     background-color: #ffffff;
     height: 90px;
@@ -17,7 +32,6 @@
 
 .nav .menu {
     color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
     font-weight: 400;
     height: 100%;
@@ -25,6 +39,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .nav .selected {
@@ -38,6 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .area .logo {
@@ -48,12 +64,13 @@
     left: 120px;
     top: 38px;
     position: absolute;
+    cursor: pointer;
 }
 
 .area .sector {
     width: 400px;
     height: 50px;
-    left: 1150px;
+    left: 75%;
     top: 35px;
     position: absolute;
 }
@@ -62,12 +79,17 @@
     left: -30px;
     top: 0px;
     position: absolute;
+    cursor: pointer;
 }
 
 .mypage {
     left: 20px;
     top: 2px;
     position: absolute;
+    cursor: pointer;
+    border-radius: 70%;
+    overflow: hidden;
+    object-fit: cover;
 }
 
 .sector .login {
@@ -92,29 +114,25 @@
 .loginbutton {
     flex: 15;
     color: #967e76;
-    font-family: "Inter-Medium", Helvetica;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    
+    cursor: pointer;
 }
 
 .line {
     flex: 1;
     color: #967e76;
-    font-family: "Inter-Light", Helvetica;
     font-size: 16px;
     font-weight: 300;
     text-align: center;
-
 }
 
 .signbutton {
     flex: 15;
     color: #967e76;
-    font-family: "Inter-Medium", Helvertica;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
-    
+    cursor: pointer;
 }

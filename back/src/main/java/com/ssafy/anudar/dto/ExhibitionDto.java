@@ -1,14 +1,11 @@
 package com.ssafy.anudar.dto;
 
-import com.ssafy.anudar.model.Docent;
 import com.ssafy.anudar.model.Exhibition;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Getter
@@ -18,10 +15,10 @@ public class ExhibitionDto {
     private Long id;
     private String name;
     private String detail;
+    private String image;
     private LocalDateTime start_time;
     private LocalDateTime end_time;
-    private Long user_id;
-    private UserDto user;
+    private String author;
 
 
     public static ExhibitionDto fromEntity (Exhibition exhibition) {
@@ -29,10 +26,10 @@ public class ExhibitionDto {
                 exhibition.getId(),
                 exhibition.getName(),
                 exhibition.getDetail(),
+                exhibition.getImage(),
                 exhibition.getStart_time(),
                 exhibition.getEnd_time(),
-                exhibition.getUser().getId(),
-                UserDto.fromEntity(exhibition.getUser())
+                exhibition.getUser().getName()
         );
     }
 

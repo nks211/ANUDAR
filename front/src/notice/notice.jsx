@@ -1,27 +1,35 @@
-import { React, useState } from "react";
+import { React } from "react";
+
+const style = {
+    backgroundColor:"#ffffff",
+    width: 300,
+    height: 90,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxShadow: "0px 0px 20px #777777",
+};
+
+export function UptoDate() {
+
+    return (
+        <div style={style}>
+            최근 알림이 없습니다.
+        </div>
+    );
+
+}
 
 function Notice(props) {
 
-    const style = {
-        backgroundColor:"#ffffff",
-        width: 300,
-        height: 90,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        boxShadow: "0px 0px 20px #777777",
-    };
-
     const title = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 16,
         fontWeight: 400,
     };
 
     const detail = {
         color: "#000000",
-        fontFamily: "Inter-Regular",
         fontSize: 12,
         fontWeight: 400,
     }
@@ -33,17 +41,17 @@ function Notice(props) {
                 borderRadius: "5px",
                 height: "10px",
                 width: "10px",
-                position: "absolute",
-                left: "30px",
-                top: "40px",
+                position: "relative",
+                left: "20px",
+                top: "0px",
             }}/>
-            <div style={{ position: "absolute", left: "76px", top: "16px" }}>
+            <div style={{ position: "relative", left: "40px", top: "-20px" }}>
                 <div style={title}>{ props.title }</div>
             </div>
-            <div style={{ position: "absolute", left: "150px", top: "19px"}}>
-                <div style={detail}>{ props.date }</div>
+            <div style={{ position: "relative", left: "100px", top: "-20px"}}>
+                <div style={detail}>{ props.type }</div>
             </div>
-            <div style={{ position: "absolute", left: "76px", top: "53px" }}>
+            <div style={{ position: "relative", left: "-115px", top: "20px" }}>
                 <div style={detail}>{ props.details }</div>
             </div>
         </div>

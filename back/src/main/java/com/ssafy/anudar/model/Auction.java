@@ -24,7 +24,7 @@ public class Auction {
     private LocalDateTime start_time;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL)
-    private List<AuctionWork> auctionWorks;
+    private List<SuccessWork> successWorks;
 
     @OneToOne
     @JoinColumn(name = "auction_id")

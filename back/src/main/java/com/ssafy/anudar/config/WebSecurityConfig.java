@@ -30,17 +30,6 @@ public class WebSecurityConfig {
     @Value("${jwt.secret}")
     private String key;
 
-    // CORS 설정
-    CorsConfigurationSource corsConfigurationSource() {
-        return request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedHeaders(Collections.singletonList("*"));
-            config.setAllowedMethods(Collections.singletonList("*"));
-            config.setAllowedOriginPatterns(Collections.singletonList("*"));
-            return config;
-        };
-    }
-
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring()
@@ -48,10 +37,24 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/join")
                 .requestMatchers("/user/img")
                 .requestMatchers("/sessions/**")
+                .requestMatchers("/ws/**")
                 .requestMatchers("/user/authors")
                 .requestMatchers("/user/info/author/**")
-                .requestMatchers("/work/infos")
+                .requestMatchers("/work/infos/**")
                 .requestMatchers("/exhibit/list/**")
+                .requestMatchers("exhibit/user/**")
+                .requestMatchers("/exhibit/{exhibition_id}/comments-list")
+                .requestMatchers("/work/infos/**")
+                .requestMatchers("/work/exhibit/**")
+                .requestMatchers("/work/user/**")
+                .requestMatchers("/work")
+                .requestMatchers("/work/like/count/**")
+                .requestMatchers("/auction/works")
+                .requestMatchers("/user/username")
+                .requestMatchers("/user/nickname")
+                .requestMatchers("/exhibit/docent/**")
+                .requestMatchers("/exhibit/*/author")
+                .requestMatchers("/auction/works")
                 ;
     }
 
@@ -59,7 +62,6 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )

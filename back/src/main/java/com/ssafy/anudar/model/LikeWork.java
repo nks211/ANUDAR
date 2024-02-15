@@ -1,10 +1,7 @@
 package com.ssafy.anudar.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -24,4 +21,10 @@ public class LikeWork {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="work_id")
     private Work work;
+
+    @Builder
+    public LikeWork(User user, Work work) {
+        this.user = user;
+        this.work = work;
+    }
 }

@@ -1,12 +1,11 @@
 package com.ssafy.anudar.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -32,7 +31,7 @@ public class User extends BaseTimeEntity{
     @Column(name="name")
     private String name;
 
-    @Column(name="nickname")
+    @Column(name="nickname", unique = true)
     private String nickname;
     
     @Column(name = "email")
@@ -44,27 +43,38 @@ public class User extends BaseTimeEntity{
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Notify> notifies;
+    @Column(name="userpoints")
+    private Long userPoints = 0L;
 
-    @OneToMany(mappedBy = "toUser")
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Notify> notifies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
     private List<Follow> followerList;
 
-    @OneToMany(mappedBy = "fromUser")
+    @OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
     private List<Follow> followingList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeWork> likeWorks;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Work> works;
 
-    @OneToMany(mappedBy = "user")
-    private List<AuctionWork> acutionWorks;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Exhibition> exhibitions;
 
-    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SuccessWork> successWorks;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LikeExhibition> likeExhibitions;
+
+    @OneToMany(mappedBy = "user")
+    private List<ExhibitionReview> exhibitionReviews;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
 
     @Builder
     public User(String username, String password, String name, String nickname,
@@ -78,4 +88,10 @@ public class User extends BaseTimeEntity{
         this.phone=phone;
     }
 
+    public void addPoints(Long totalAmount) {
+        if (this.userPoints == null) {
+            this.userPoints = 0L;
+        }
+        this.userPoints += totalAmount;
+    }
 }

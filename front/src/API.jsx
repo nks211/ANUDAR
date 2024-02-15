@@ -102,6 +102,15 @@ export async function updateUserPoints(token, newPoints){
     .catch(err => {console.log(err)})
 }
 
+// 내 알림 조회
+export async function getNotifices(token){
+  const url = "/api/{userId}/notifies"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
 export const changepassword = async (oldpassword, newpassword, token) => {
   if (token && token != "") {
       const url = "/api/user/update/password";
@@ -166,14 +175,14 @@ export const deletenotice = async (noticeid, token) => {
 };
 
 export const favoriteexhibitions = async (token) => {
-    if (token && token != "") {
-        const url = "/api/user/like/exhibit";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => {
-            return response.data;
-        })
-        .catch((e) => { console.log(e) });
-    }
+  if (token && token != "") {
+      const url = "/api/user/like/exhibit";
+      return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+      .then(response => {
+          return response.data;
+      })
+      .catch((e) => { console.log(e) });
+  }
 }
 
 export const favoriteworks = async (token) => {
@@ -251,7 +260,12 @@ export async function uploadExhibitImg(data, token) {
 // 전시회 등록
 export async function registExhibit(data, token) {
   const url = "/api/exhibit/regist"
-  const config = { headers : { Authorization: `Bearer ${token}` } }
+  const config = { headers : { 
+    Authorization: `Bearer ${token}`,
+    // 'Content-Type': 'application/json' 
+  } }
+  // application/json
+  console.log(data)
   return await axios.post(url, data, config)
   .then(res => {return res.data})
   .catch(err => console.log(err))

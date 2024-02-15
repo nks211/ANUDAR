@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import Search from "../components/search/Search";
 import Artist from "../components/artist/Artist";
-import dummy from "../db/data.json"
 import '../index.css'
 import { getAuthors } from "../API";
 import Loading from "../components/loading/Loading";

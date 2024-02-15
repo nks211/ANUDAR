@@ -45,7 +45,7 @@ export default function AuctionPage() {
 
   // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
-    if (currentBidUser == "") {
+    if (currentBidUser === "") {
       alert("작품이 유찰되었습니다.");
     }
     else {

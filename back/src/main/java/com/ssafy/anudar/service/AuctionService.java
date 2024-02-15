@@ -2,6 +2,7 @@ package com.ssafy.anudar.service;
 
 import com.ssafy.anudar.dto.SuccessWorkDto;
 import com.ssafy.anudar.dto.WorkDto;
+import com.ssafy.anudar.dto.request.SuccessWorkRequset;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.Auction;
@@ -50,6 +51,23 @@ public class AuctionService {
         return currentAuction.map(auction -> workRepository.findTop20AuctionWorks(auction.getStart_time())
                 .stream().map(WorkDto::fromEntity)
                 .toList()).orElse(Collections.emptyList());
+    }
+
+    // 포인트 차감(닉칠 직픔 구매)
+    public Long deductUserPoints(String username, SuccessWorkRequset successWorkRequset) {
+        // 사용자 정보 조회
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        // 기존 포인트에 결제해야할 포인트 빼주기
+        Long currentPoints = user.getUserPoints() != null ? user.getUserPoints() : 0L;
+        Long updatedPoints = currentPoints - (successWorkRequset.getFinalPrice() / 10000);
+
+        // 포인트 업데이트
+        user.setUserPoints(updatedPoints);
+        userRepository.save(user);
+
+        return updatedPoints;
     }
 
 

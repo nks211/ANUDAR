@@ -1,10 +1,7 @@
 package com.ssafy.anudar.controller;
 
 import com.ssafy.anudar.dto.*;
-import com.ssafy.anudar.dto.request.JoinRequest;
-import com.ssafy.anudar.dto.request.LoginRequest;
-import com.ssafy.anudar.dto.request.PointsUpdateDto;
-import com.ssafy.anudar.dto.request.UpdatePasswordRequest;
+import com.ssafy.anudar.dto.request.*;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
 import com.ssafy.anudar.model.User;
@@ -160,7 +157,7 @@ public class UserController {
         return new ResponseEntity<>(userPoints, HttpStatus.OK);
     }
 
-    // 포인트 업데이트
+    // 포인트 업데이트(포인트 결제 시 포인트 추가)
     @PutMapping("/updatePoints")
     public ResponseEntity<Long> updateUserPoints(Authentication authentication, @RequestBody PointsUpdateDto pointsUpdateDto) {
         // 현재 인증된 유저의 이름(또는 아이디)을 사용하여 포인트 업데이트
@@ -169,7 +166,6 @@ public class UserController {
         // 업데이트된 포인트를 ResponseEntity 객체에 담아 반환
         return new ResponseEntity<>(updatedPoints, HttpStatus.OK);
     }
-
 
     // 찜한 전시 목록
     @GetMapping("/like/exhibit")

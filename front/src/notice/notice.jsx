@@ -17,7 +17,6 @@ export function UptoDate() {
             최근 알림이 없습니다.
         </div>
     );
-
 }
 
 function Notice(props) {

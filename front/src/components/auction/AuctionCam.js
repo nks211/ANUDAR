@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const APPLICATION_SERVER_URL = 'https://i10d105.p.ssafy.io/';
 
-function AuctionCam({ sessionId, username }) {
+export default function AuctionCam({ sessionId, username }) {
     const [session, setSession] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
     const [publisher, setPublisher] = useState(undefined);
@@ -115,4 +115,3 @@ function AuctionCam({ sessionId, username }) {
     )
 
 }
-export default AuctionCam;

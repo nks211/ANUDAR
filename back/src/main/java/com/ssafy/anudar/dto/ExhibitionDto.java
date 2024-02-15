@@ -1,3 +1,36 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5d069fbfd548e6d47bf3f0b78692dea0b0c4b64cf63695d362a1a4051edb7556
-size 988
+package com.ssafy.anudar.dto;
+
+import com.ssafy.anudar.model.Exhibition;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExhibitionDto {
+    private Long id;
+    private String name;
+    private String detail;
+    private String image;
+    private LocalDateTime start_time;
+    private LocalDateTime end_time;
+    private String author;
+
+
+    public static ExhibitionDto fromEntity (Exhibition exhibition) {
+        return new ExhibitionDto(
+                exhibition.getId(),
+                exhibition.getName(),
+                exhibition.getDetail(),
+                exhibition.getImage(),
+                exhibition.getStart_time(),
+                exhibition.getEnd_time(),
+                exhibition.getUser().getName()
+        );
+    }
+
+}

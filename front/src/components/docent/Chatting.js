@@ -39,6 +39,12 @@ export default function Chatting() {
           name="chatInput"
           onChange={handleChange}
           value={chat}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              handleSubmit(event, chat);
+            }
+          }}
         />
         <button type="submit" className="chat-submit" onClick={(event) => handleSubmit(event, chat)}>
           입력

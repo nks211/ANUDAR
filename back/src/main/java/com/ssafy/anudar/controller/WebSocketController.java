@@ -30,12 +30,17 @@ public class WebSocketController {
         // 여기서 현재가 갱신 로직 수행
         Integer askingprice = auctionBidDto.getAskingprice();
         String askingBidUser = auctionBidDto.getNickname();
+        Integer countNumber = auctionBidDto.getCountNumber();
 
         // 여기 저장되어 있는 번호보다 크면 저장해주기
         if (nownumber < auctionBidDto.getNowNumber()){
             nownumber = auctionBidDto.getNowNumber();
             currentBid = 0;
             currentBidUser = "응찰한 사용자가 없습니다.";
+        }
+
+        if (nownumber > countNumber) {
+            nownumber = 1;
         }
 
 

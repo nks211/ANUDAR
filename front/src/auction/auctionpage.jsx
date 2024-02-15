@@ -27,6 +27,8 @@ export default function AuctionPage() {
   const [isBidding, setIsBidding] = useState(false);
   const [nowPoint, setNowPoint] = useState(0);
 
+  const [isChecking, setIsChecking] = useState(false); // 상품 설명을 했는지 체크
+
 
 
   const timeset = () => {
@@ -45,10 +47,11 @@ export default function AuctionPage() {
   // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
     // 경매 끝나면 쫓아내기
-    if (nowAuction > countAuctions) {
+    if (nowAuction >= countAuctions) {
       alert("경매가 종료되었습니다.");
       setNowAuction(1); // 지금은 이렇게 바꿔두기
-      navigate(-1)
+      console.log(nowAuction);
+      navigate(-1);
       return
     }
     if (currentBidUser === "") {
@@ -57,6 +60,7 @@ export default function AuctionPage() {
     // 낙찰된 경우 => 내가 낙찰 받았다면 던지기
     else {
       alert(`${currentBidUser}님께 ${currentPrice}만원에 낙찰되었습니다.`);
+
       // 내가 낙찰자라면 낙찰에 쏘기
       if (userdata.nickname === currentBidUser){
         successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
@@ -76,19 +80,37 @@ export default function AuctionPage() {
         nickname: "",
         askingprice: auctionList[nowAuction]?.price / 10000,
         workId: auctionList[nowAuction - 1]?.id,
-        nowNumber : nowAuction + 1
+        nowNumber : nowAuction + 1,
+        countNumber : countAuctions
       }),
     });
     setChat("");
     subscribe();
     setIsBidding(false);
+    setTimer(10);
   }
 
   useEffect(() => {
     const Timer = setInterval(() => {
       setTimer((count) => count - 1);
     }, 1000);
-    if (timer === 0) clearInterval(Timer)
+
+    // 조건을 걸기  => 상품 설명을 안했다면 30초
+    // if (timer === 0 && !isChecking) {
+    //   clearInterval(Timer);
+    //   setTimer(30); // 상품 체크 30초
+    //   setIsChecking(true);
+    //   // bidcomplete();
+    // } else if (timer === 0 && isChecking) {
+    //   clearInterval(Timer);
+    //   setIsChecking(false);
+    //   bidcomplete();
+    // }
+    if (timer === 0){
+      clearInterval(Timer);
+      bidcomplete();
+    }
+
     return () => {
       setPathName(window.location.pathname);
       clearInterval(Timer);
@@ -103,9 +125,8 @@ export default function AuctionPage() {
   if (userdata == null) navigate("/");
 
   // 경매에 올릴 작품
-  // let auctionList = [];
   const [auctionList, setAuctionList] = useState([]);
- 
+  const [initialdata, setInitialData] = useState(0);
 
   async function getAuction() {
     try {
@@ -113,6 +134,8 @@ export default function AuctionPage() {
       setAuctionList(res)
       setCountAuctions(res.length)
       setCurrentPrice(res[nowAuction-1].price / 10000);
+      setInitialData(res[nowAuction-1].price / 10000);
+      
     } catch (err) {
       console.log('경매 정보를 찾을 수 없습니다.')
     }
@@ -182,7 +205,9 @@ export default function AuctionPage() {
       // 현재가 갱신 로직
       const currentPrice = json_body.currentBid;
       const currentBidUser = json_body.currentBidUser;
-      if (currentPrice > auctionList[nowAuction-1]?.price) {
+      console.log(auctionList );
+      // ===여기가 굉장히 문제================================================================
+      if (currentPrice > initialdata) {
         setIsBidding(true);
       };
       setCurrentPrice(currentPrice);
@@ -190,7 +215,6 @@ export default function AuctionPage() {
       setNowAuction(json_body.nowNumber)
       console.log(json_body.nowNumber);
       console.log(currentPrice);
-
 
       setTimer(10);
     });
@@ -205,7 +229,8 @@ export default function AuctionPage() {
         nickname: userdata.nickname,
         askingprice: chat,
         workId: auctionList[nowAuction - 1]?.id,
-        nowNumber : nowAuction
+        nowNumber : nowAuction,
+        countNumber : countAuctions
       }),
     });
     setChat("");
@@ -278,7 +303,7 @@ export default function AuctionPage() {
             </div>
 
             {/* 경매 진행자 웹캠 컴포넌트 부분 */}
-            <div style={{ marginTop: "200px", width: "100%", height: "450px", backgroundColor: "#638889", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ marginTop: "200px", width: "100%", height: "450px", display: "flex", justifyContent: "center", alignItems: "center" }}>
               {username && (<AuctionCam sessionId={'auction'} username={username}></AuctionCam>)}
             </div>
 

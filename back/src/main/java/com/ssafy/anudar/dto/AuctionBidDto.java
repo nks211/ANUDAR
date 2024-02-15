@@ -11,4 +11,5 @@ public class AuctionBidDto {
     private Integer workId;
     private Integer askingprice;
     private Integer nowNumber;
+    private Integer countNumber;
 }

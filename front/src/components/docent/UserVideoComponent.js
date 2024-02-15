@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import OpenViduVideoComponent from './OvVideo';
+import './Font.css'
 
 export default class UserVideoComponent extends Component {
 
@@ -14,7 +15,10 @@ export default class UserVideoComponent extends Component {
                 {this.props.streamManager !== undefined ? (
                     <div className="streamcomponent">
                         <OpenViduVideoComponent user={this.props.user} streamManager={this.props.streamManager} />
-                        <div><p>{this.getNicknameTag()}</p></div>
+                        {this.props.user === 'user' ? <div><p style={{
+                            fontFamily: '"Indie Flower", cursive', // 폰트 교체
+                            fontWeight: 'bold' // 글자 굵게
+                        }}>{this.getNicknameTag()}</p></div> : null}
                     </div>
                 ) : null}
             </div>

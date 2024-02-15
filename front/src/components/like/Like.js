@@ -62,6 +62,7 @@ export default function Like(props) {
       </>
     )
   } else {
+    console.log(props.isLike)
     return (
       <>
         <div className={props.isLike?"cancelButton":"likeButton cursorPointer"} 
@@ -75,6 +76,7 @@ export default function Like(props) {
                 break;
               
               case "work":  // 작품 찜하기
+                console.log(props)
                 changeWorkLike()
                 props.onChangeLike(!props.isLike)
                 break;

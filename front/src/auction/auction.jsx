@@ -30,7 +30,8 @@ const auctionworksetting = {
     nextArrow: <img src="../asset/next_arrow.png" />,
 }
 
-function Auction() {
+export default function Auction() {
+    const isLogin = mainstate((state) => state.isLogin)
 
     const navigate = useNavigate();
     const [list, setList] = useState([]);
@@ -69,7 +70,7 @@ function Auction() {
                     okbutton={true} okbuttonlabel="확인"
                     cancelbutton={true} cancelbuttonlabel="취소" />
             </Modal>
-            <img onClick={() => { setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
+            <img onClick={() => { if(!isLogin){alert('로그인 후 이용해주세요.'); return}; setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
             <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>
             <div className="auctionworkarea">
                 {list ?
@@ -95,5 +96,3 @@ function Auction() {
         </div>
     );
 }
-
-export default Auction;

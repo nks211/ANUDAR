@@ -45,7 +45,7 @@ export const login = async (id, password) => {
 };
 
 export const myinfo = async (token) => {
-  if (token && token != "") {
+  if (token && token !== "") {
     const url = "/api/user/info";
     return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
       .then(response => { return response.data; })
@@ -100,6 +100,15 @@ export async function updateUserPoints(token, newPoints) {
   return await axios.put(url, data, config)
     .then(res => { return res.data })
     .catch(err => { console.log(err) })
+}
+
+// 내 알림 조회
+export async function getNotifices(token){
+  const url = "/api/{userId}/notifies"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
 }
 
 export const changepassword = async (oldpassword, newpassword, token) => {

@@ -6,7 +6,7 @@ import Login from "../signup/login.jsx";
 import { AppContext } from "../App.js";
 import Modal from "react-modal";
 import { mainstate, popupstate } from "../StateManagement.jsx";
-import { getnotices, deletenotice, getAllExhibitList, myinfo } from "../API.jsx";
+import { getnotices, deletenotice, myinfo, getAllExhibitList } from "../API.jsx";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -27,13 +27,29 @@ export default function NavBar() {
   const setlogintoken = mainstate((state) => state.setlogintoken)
   const tabbar = mainstate((state) => state.tabbar)
 
+  // console.log(JSON.parse(localStorage.getItem("userdata")).notifies)
+
 
   // 로그인패널
+  const userdata = mainstate((state)=>state.loginuser)
   const noticepopup = popupstate((state) => state.homenoticepopup);
-  const noticelist = mainstate((state) => state.noticelist);
+  const noticelist = mainstate((state) => state.noticelist);  // userdata.notifies
   const setnoticelist = mainstate((state) => state.setnoticelist);
   const checknotice = mainstate((state) => state.noticecheck);
+
+  console.log(userdata.notifies)
+  console.log(typeof noticelist)
+  // console.log(typeof JSON.parse(localStorage.getItem("userdata")).notifies)
   
+  async function getMyInfo() {
+    try {
+      const res = await myinfo(logintoken)
+      localStorage.setItem("userdata", JSON.stringify(res))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   function LoginPanel() {
     return (
       <div>

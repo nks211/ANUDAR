@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./exhibitionitem.css";
 
-function ExhibitionItem(props) {
+export default function ExhibitionItem(props) {
     return (
         <div className="likeexhibitionarea">
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -13,5 +13,3 @@ function ExhibitionItem(props) {
         </div>
     );
 }
-
-export default ExhibitionItem;

@@ -66,6 +66,12 @@ export default function ArtistDetailPage() {
     getWorks()
   }, [])
 
+  useEffect(()=>{
+    if (artistInfo.username !== loginuser.username) {
+      setLikeButton(<Like id={artistName} icon="asset/follow" likeType="artist" isLike={isFollow} name={isFollow?"Unfollow":"Follow"} onChangeLike={changeFollow} />)
+    }
+  }, [isFollow])
+
   const changeFollow = (value) => {
     setIsFollow(value)
   }

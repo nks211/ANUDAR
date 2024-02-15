@@ -24,7 +24,7 @@ export function UptoDate() {
         <>
         {/* <div>테스트</div> */}
         {/* <div style={style}> */}
-            {notifies.length === 0 ? <div>최근 알림이 없습니다.</div> 
+            {notifies.length === 0 ? <div style={style}>최근 알림이 없습니다.</div> 
             : notifies.map((notify) => (
                 // Notice 컴포넌트에 알림 객체의 실제 필드명을 사용
                 <Notice content={notify.content} />

@@ -40,6 +40,7 @@ export default function ArtistDetailPage() {
       const res = await getFollowing(logintoken)
       followList = res
 
+      // *수정* : filter ?
       for (let i=0; i<followList.length; i++) {
         if (followList[i].username === artistName) { setIsFollow(true); return }
         setIsFollow(false)

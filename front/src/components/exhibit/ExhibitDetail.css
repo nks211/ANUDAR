@@ -1,3 +1,210 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:963785137892f672d6e8a46f03e8682c4caef2765763a04e62fc9f0f873c681e
-size 3010
+html {
+	font-family: 'Noto Sans KR', sans-serif; /* v */
+}
+body {
+	margin: 0; /* v */
+}
+div, section, header, footer, p, h1, h2 {
+	box-sizing: border-box; /* v */
+}
+a {
+	color: royalblue; /* v */
+}
+img {
+	max-width: 100%; /* v */
+	height: auto; /* v */
+}
+
+
+.global-width {
+	max-width: 620px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+.scroll-graphic {
+	overflow-x: hidden;
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+.graphic-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	
+	opacity: 0;
+	transition: 0.5s;
+	will-change: opacity;
+
+	div {
+		width: 100%;
+		height: 70%;
+		max-height: 100vh;
+
+	}
+}
+.visible {
+	/* opacity: 1; */
+	opacity: 0.5;
+}
+.scene-img {
+	max-height: 100vh;
+}
+.scroll-text {
+	position: relative;
+	padding-bottom: 1px;
+}
+.step {
+	margin-bottom: 60vh;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
+}
+.global-footer {
+	padding: 2rem 0;
+	text-align: center;
+}
+.strikethrough {
+	text-decoration: line-through;
+} 
+
+
+
+
+/* ---------------------------- */
+/* 
+#scrollExhibit {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+}
+
+.scrExhibitItem {
+  display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: 0.5s;
+	will-change: opacity;
+
+  img {
+    max-height: 100vh;
+  }
+}
+
+#scrollInfo {
+  position: relative;
+	padding-bottom: 1px;
+
+  max-width: 620px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.visible {
+  opacity: 1;
+} */
+
+
+
+/* -------------------------------- */
+
+#exhibitDetailBanner{
+  width: 35vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-repeat: no-repeat;
+  /* background-image: {}; */
+  background-size: cover;
+  backdrop-filter: blur(5px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: white;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.4;
+  }
+}
+
+/* #exhibitDetailBanner{
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    background-color: red;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: white;
+    z-index: -1;
+    inset: 0;
+    opacity: 0.4;
+  }
+} */
+
+.exhibitCard2 {
+  width: 375px;
+  /* height: 800px; */
+  /* margin: 10px; */
+  margin-bottom: 30px;
+}
+
+.exhibitImageCard2 {
+  width: 375px;
+  height: 500px;
+}
+
+.exhibitImage2 {
+  width: 375px;
+  height: 500px;
+
+
+  /* box-shadow: 10px 10px 5px #343434;
+  transition-duration: 2s; */
+
+  &:hover {
+    /* transform: translate3d(100px, 50px, -150px) */
+
+    
+    /* transform: translateY( -50px ), translateX(-50px) */
+    /* transform: translate(-50px, -50px) */
+  }
+}
+
+.exhibitName2 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  font-weight: 900;
+  font-size: 28px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exhibitArtist2 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.exhibitPeriod2 {
+  margin: 0;
+  font-size: 18px;
+  color: #848484;
+}

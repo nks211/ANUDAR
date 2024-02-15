@@ -1,3 +1,270 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:71ef420473a9f7c8fa5f9f9ddc52d4d8baffac1383fa0b4cd747d55cd1c558bf
-size 4403
+/* 전시회 등록 > 작품 등록 */
+.workRegist {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  text-align: left;
+  justify-content: left;
+  
+  .slick-arrow, .slick-disabled, .slick-prev, .slick-next {
+    display: None !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: None !important;
+  }
+
+  .slidedots {
+    bottom: 1px;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    text-align: center;
+
+    li {
+      list-style: none;
+      cursor: pointer;
+      display: inline-block;
+      margin: 0px 5px;
+
+      button {
+        border: none;
+        background-color: #b6b6b6;
+        color: transparent;
+        cursor: pointer;
+        display: block;
+        width: 20px;
+        height: 5px;
+        border-radius: 0.2rem;
+        /* border-radius: 100%; */
+      }
+
+      }
+    .slick-active button {
+      background-color: #967e76;
+      transform: scale(1.2);
+    }
+  }
+}
+
+.workRegistHeader {
+  display: flex;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0 0 20px;
+  }
+  
+  button {
+    background-color: #B7C4CF;
+    border: None;
+    border-radius: 0.3rem;
+    width: 95px;
+    height: 30px;
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+#workRegistArea {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .previewImg {
+    width: 300px;
+    height: 300px;
+    background-color: #D9D9D9;
+  }
+}
+
+#registArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.workInput {
+  width: 400px;
+  display: flex;
+  margin-bottom: 8px;
+
+  .item1 {
+    flex: 1;
+    font-size: 18px;
+
+    span {
+      color: rgb(237, 70, 70);
+    }
+  }
+
+  .item2 {
+    flex: 2.5;
+    display: flex;
+
+    img {
+      width: 10px;
+      height: 10px;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+  
+    span {
+      width: 100%;
+      height: 25px;
+      border: 1px solid #aeaeae;
+      border-radius: 0.3rem;
+      margin-right: 5px;
+      padding-left: 8px;
+      font-size: 14px;
+      color: #5F5F5F;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+
+  label {
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
+  input {
+    flex: 2.5;
+    height: 25px;
+    border: solid #aeaeae 1px;
+    border-radius: 0.3rem;
+
+    &:focus { outline: none; border: 1px solid #D7C0AE; }
+  }
+
+  textarea {
+    flex: 2.5;
+    height: 100px;
+    border: solid #aeaeae 1px;
+    border-radius: 0.3rem;
+    resize: None;
+
+    &:focus { outline: none; border: 1px solid #D7C0AE; }
+  }
+}
+
+#workRegistBtn {
+  background-color: #8eb089;
+  border: None;
+  border-radius: 0.5rem;
+  width: 80px;
+  height: 40px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#workCarouselPreview {
+  width: 750px;
+  height: 500px;
+  /* margin: 0px 30px; */
+}
+
+.exhibitContainer {
+  width: 750px;
+  /* width: 100%; */
+  height: 500px;
+  /* margin: 0px 30px; */
+}
+
+
+#imgArea {
+  position: relative;
+  width: 200px;
+  height: 196px;
+  cursor: pointer;
+}
+
+#workPreview {
+  width: 190px;
+  height: 190px;
+  object-fit: cover;
+  margin: 1px 5px 5px 5px;
+  /* position: relative; */
+  cursor: pointer;
+}
+
+.selectWork {
+  box-shadow: 0 0 0 2.5px #638889 inset;
+  width: 190px;
+  height: 190px;
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+}
+
+.unselectWork {
+  /* box-shadow: 0 0 0 2.5px #638889 inset; */
+  width: 190px;
+  height: 190px;
+  position: absolute;
+  top: 49%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+}
+
+#xBtn {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 5px;
+  right: 5px;
+  background-color: rgb(0, 0, 0, 0.3);
+  font-size: 12px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+#carouselGuide {
+  position:absolute;
+  object-fit: cover;
+  width:240px;
+  height:240px;
+  top: 78px;
+  left: 280px;
+  background-color:#D9D9D9;
+  color: rgb(0, 0, 0);
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.carouselImg {
+  /* position:absolute; */
+  object-fit: cover;
+  width:240px;
+  height:240px;
+  /* top: 78px; */
+  /* left: 280px; */
+  /* left: 300px; */
+}
+
+.carousels {
+  position:absolute;
+  width: 750px;
+  top: 78px;
+  display: flex;
+  justify-content: center;
+}
+
+#topBtn {
+  display: flex;
+  /* justify-content: center; */
+  justify-content: flex-end;
+  cursor: pointer;
+  
+}

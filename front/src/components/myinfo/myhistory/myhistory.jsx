@@ -228,7 +228,7 @@ function MyHistory() {
                                     <td className="auctionartist">작가</td>
                                     <td className="auctionmoney">입찰가</td>
                                 </div>
-                                {myfavorites.myauctions && myfavorites.myauctions.length > 0? Object.values(myfavorites.myauctionsresult).map((auction, i) => {
+                                {myfavorites.myauctions && myfavorites.myauctions.length > 0? Object.values(myfavorites.myauctions).map((auction, i) => {
                                     return <tr style={{ textAlign: "center", display: filterswitch(auctionswitch, i), justifyContent: "center", alignItems: "center", height: "80px" }}>
                                         <td className="auctionimage">{<img width="50px" height="50px" src={auction.image} />}</td>
                                         <td className="auctionname">{auction.title}</td>

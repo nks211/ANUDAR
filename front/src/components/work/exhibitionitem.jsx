@@ -1,15 +1,3 @@
-import { React } from "react";
-import "./exhibitionitem.css";
-
-function ExhibitionItem(props) {
-    return (
-        <div className="likeexhibitionarea">
-            <img width={props.width} height={props.height} src={props.exhibition.image} />
-            <div className="likeexhibitiontitle">{ props.exhibition.name }</div>
-            <div className="likeexhibitionartist">{ props.exhibition.author }</div>
-            <div className="likeexhibitionperiod">`{props.exhibition.start_time} ~ {props.exhibition.end_time}`</div>
-        </div>
-    );
-}
-
-export default ExhibitionItem;
+version https://git-lfs.github.com/spec/v1
+oid sha256:65aa8f5e8e72d1a6b490d8b77cd7778bf924bc106a382b76c56a8d0ca4d9b723
+size 583

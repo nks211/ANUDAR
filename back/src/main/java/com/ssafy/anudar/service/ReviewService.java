@@ -48,13 +48,16 @@ public class ReviewService {
         ExhibitionReview review = new ExhibitionReview(content, exhibitionid, user);
         reviewRepository.save(review);
 
+        // 전시회 작가 정보 가져오기
+        User exhibitionOwner = exhibitionid.getUser();
+
         // 알림 생성 및 보내기
         String notifyContent = user.getName() + "님이 방명록을 남기셨습니다.";
-        Notify notify = new Notify(user, REVIEW, notifyContent, false);
+        Notify notify = new Notify(exhibitionOwner, REVIEW, notifyContent, false);
         notifyRepository.save(notify);
 
-        // 알림을 유저 엔티티의 알림 리스트에 추가
-        user.getNotifies().add(notify);
+        // 알림을 전시회 작가 유저 엔티티의 알림 리스트에 추가
+        exhibitionOwner.getNotifies().add(notify);
 
         return ReviewDto.fromEntity(review);
 

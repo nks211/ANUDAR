@@ -20,6 +20,7 @@ import { createContext, useEffect, useState } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import NavBar from './navbar/navbar';
 import Pay from './mypage/Pay.jsx';
+import { myinfo } from './API.jsx';
 
 
 export const AppContext = createContext();
@@ -27,14 +28,29 @@ export default function App() {
   const isLogin = mainstate((state) => state.isLogin)
   const logintoken = mainstate((state) => state.logintoken)
   const [pathName, setPathName] = useState(window.location.pathname);
+  const [myData, setMyData] = useState({});
 
   useEffect(()=> {
     console.log(logintoken)
   }, [logintoken])
 
-  // useEffect(()=>{
+  async function getMyInfo() {
+    try {
+      const res = await myinfo(logintoken)
+      if (res !== myData) {localStorage.setItem("userdata", JSON.stringify(res))}
+      setMyData(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
-  // },[pathName])
+  useEffect(()=>{
+    if (isLogin) {
+      getMyInfo()
+    }
+  },[pathName])
+
+
   
   const modalsetting = {
     overlay: {

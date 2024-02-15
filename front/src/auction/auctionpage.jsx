@@ -60,7 +60,6 @@ export default function AuctionPage() {
     // 낙찰된 경우 => 내가 낙찰 받았다면 던지기
     else {
       alert(`${currentBidUser}님께 ${currentPrice}만원에 낙찰되었습니다.`);
-
       // 내가 낙찰자라면 낙찰에 쏘기
       if (userdata.nickname === currentBidUser){
         successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
@@ -106,7 +105,7 @@ export default function AuctionPage() {
     //   setIsChecking(false);
     //   bidcomplete();
     // }
-    if (timer === 0){
+    if (timer === 0) {
       clearInterval(Timer);
       bidcomplete();
     }

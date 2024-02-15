@@ -8,7 +8,7 @@ import { uploadExhibitImg, registExhibit } from '../../API';
 import { ExhibitRegistContext } from '../../exhibit/ExhibitRegistPage';
 
 export default function ExhibitRegist() {
-  const { works, setWorks } = useContext(ExhibitRegistContext);
+  const { works, setWorks, carouselWorks, setCarouselWorks } = useContext(ExhibitRegistContext);
   const loginUser = mainstate((state) => (state.loginuser));
 
   const [title, setTitle] = useState("");
@@ -100,48 +100,58 @@ export default function ExhibitRegist() {
     }
   }
 
-  const exhibitForm = async (event) => {
-    event.preventDefault()
-
-    if (!title || !description || !exhibitY || !exhibitM || !docentDate || !docentHour || !docentMinute || !poster ) {
-      alert('모든 정보를 입력해주세요')
-      return
-    } else if (works.length < 5) {
-      alert('작품 최소 등록 개수는 5개입니다.')
-      return
+  // 전시 등록
+  async function regist(data){
+    try {
+      const res = await registExhibit(data, logintoken)
+      console.log(res)
+      if (res) { navigate(`/exhibit/${res.id}`) }
+      else {  navigate(`/exhibit`) }
+      // navigate(`/exhibit/${res?.id}`)
+    } catch (err) {
+      console.log(err)
     }
-
-    const m = String(exhibitM).padStart(2, '0')  // 전시회 달
-    const d = String(exhibitEndD).padStart(2, '0')  // 전시회 종료일
-    const dd = String(docentDate).padStart(2, '0')  // 도슨트 일
-    const h = String((ampm==="am")?docentHour:docentHour+12).padStart(2, '0')  // 도슨트 시작시간
-    const eh = String(Number(h)+2).padStart(2, '0')  // 도슨트 종료시간
-    const dm = String(docentMinute).padStart(2, '0')
-
-    const data = {
-      "name": title, 
-      "detail": description, 
-      "start_time": `${exhibitY}-${m}-01 00:00:00`,
-      "end_time": `${exhibitY}-${m}-${d} 23:59:59`,
-      "docent_start": `${exhibitY}-${m}-${dd} ${h}:${dm}:00`,
-      "docent_end": `${exhibitY}-${m}-${(eh>24?dd+1:dd)} ${eh>24?eh-24:eh}:${dm}:00`,
-      "image": poster,
-      "works": works
-    }
-
-    const res = await registExhibit(data, logintoken)
-    // navigate(`/exhibit/${res.id}`)
-    // navigate(`/exhibit/${res?.id}`)
-    navigate(`/exhibit`)
   }
 
   return (
     <div className="exhibitRegist">
       <div id="exhibitRegistHeader">
         <div>전시회 등록하기</div>
-        <button onClick={exhibitForm
-          // 모달창 .. -> 정보 맞는지 확인
-        }>최종 등록</button>
+        <button onClick={() => {
+          if (!title || !description || !exhibitY || !exhibitM || !docentDate || !docentHour || !docentMinute || !poster ) {
+            alert('모든 정보를 입력해주세요')
+            return
+          } else if (docentDate >= lastSat ) {
+            alert(`도슨트 일정을 ${exhibitM}월 마지막 주 토요일(${lastSat}일) 이전으로 설정해주세요.`)
+            return
+          } else if (works.length < 5) {
+            alert('작품 최소 등록 개수는 5개입니다.')
+            return
+          } else if (carouselWorks.length < 5) {
+            alert('전시회 상단에 보여질 대표 작품을 5개 이상 선택해주세요.')
+            return
+          }
+
+          const m = String(exhibitM-2).padStart(2, '0')  // 전시회 달
+          const d = String(exhibitEndD).padStart(2, '0')  // 전시회 종료일
+          const dd = String(docentDate).padStart(2, '0')  // 도슨트 일
+          const h = String((ampm==="am")?docentHour:docentHour+12).padStart(2, '0')  // 도슨트 시작시간 (시)
+          const eh = String(Number(h)+2).padStart(2, '0')  // 도슨트 종료시간
+          const dm = String(docentMinute).padStart(2, '0')  // 도슨트 시작시간 (분)
+
+          const data = {
+            "name": title, 
+            "detail": description, 
+            "start_time": `${exhibitY}-${m}-01 00:00:00`,
+            "end_time": `${exhibitY}-${m}-${d} 23:59:59`,
+            "docent_start": `${exhibitY}-${m}-${dd} ${h}:${dm}:00`,
+            "docent_end": `${exhibitY}-${m}-${(eh>24?dd+1:dd)} ${eh>24?eh-24:eh}:${dm}:00`,
+            "image": poster,
+            "works": works
+          }
+
+          regist(data)
+        }}>최종 등록</button>
       </div>
       <hr style={{ width: "100%", border: "1px solid #EEE3CB", margin: "20px 0" }} />
       <div className="registColumn">

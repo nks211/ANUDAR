@@ -176,14 +176,14 @@ export const deletenotice = async (notifyId, token) => {
 };
 
 export const favoriteexhibitions = async (token) => {
-    if (token && token !== "") {
-        const url = "/api/user/like/exhibit";
-        return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
-        .then(response => {
-            return response.data;
-        })
-        .catch((e) => { console.log(e) });
-    }
+  if (token && token != "") {
+      const url = "/api/user/like/exhibit";
+      return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+      .then(response => {
+          return response.data;
+      })
+      .catch((e) => { console.log(e) });
+  }
 }
 
 export const favoriteworks = async (token) => {
@@ -261,7 +261,12 @@ export async function uploadExhibitImg(data, token) {
 // 전시회 등록
 export async function registExhibit(data, token) {
   const url = "/api/exhibit/regist"
-  const config = { headers : { Authorization: `Bearer ${token}` } }
+  const config = { headers : { 
+    Authorization: `Bearer ${token}`,
+    // 'Content-Type': 'application/json' 
+  } }
+  // application/json
+  console.log(data)
   return await axios.post(url, data, config)
   .then(res => {return res.data})
   .catch(err => console.log(err))

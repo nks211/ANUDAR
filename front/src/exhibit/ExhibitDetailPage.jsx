@@ -7,11 +7,11 @@ import "slick-carousel/slick/slick-theme.css";
 import ExhibitDetail from "../components/exhibit/ExhibitDetail";
 import Exhibit from "../components/exhibit/Exhibit";
 import Reviews from '../components/exhibit/Reviews';
-import './ExhibitPage.css'
-import '../index.css'
+import Like from '../components/like/Like';
 import { getExhibitDetail, getLikeExhibit } from '../API';
 import { mainstate } from '../StateManagement';
-import Like from '../components/like/Like';
+import './ExhibitPage.css'
+import '../index.css'
 
 export default function ExhibitDetailPage() {
   const exhibitId = useLocation().pathname.split('/').pop();
@@ -32,12 +32,16 @@ export default function ExhibitDetailPage() {
   async function getData() {
     try {
       const res = await getExhibitDetail(exhibitId)
+      // console.log(res)
       setExhibit(res)
-      setWorks(res.workList)
+      // console.log(res.workList)
+      setWorks(res.workList.filter(work=>(work.is_carousel===true)))
+      // works.filter(w => (w.is_carousel === true))
+
       if (res.author?.username !== loginuser.username) {
         setLikeButton(<Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />)
       }
-      console.log(res.workList)
+      // console.log(res.workList)
     } catch (err) {
       console.log(err)
     }
@@ -60,12 +64,18 @@ export default function ExhibitDetailPage() {
     getLike()
   }, [])
 
+  useEffect(()=>{
+    if (exhibit.author?.username !== loginuser.username) {
+      setLikeButton(<Like id={exhibitId} icon="asset/btn_like" likeType="exhibit" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />)
+    }
+  }, [isLike])
+
   const navigate = useNavigate();
   const {setPathName} = useContext(AppContext);
 
   // 캐러셀
   const setting = {
-    dots: false,
+    dots: true,
     dotsClass: "slidedots",
     infinite: true,
     autoplay: true,
@@ -93,14 +103,8 @@ export default function ExhibitDetailPage() {
         {/* 전시회 포스터, 설명 */}
         <div>
           {/* <Exhibit exhibitType={2} exhibit={exhibit}/> */}
-          <ExhibitDetail exhibitType={2} exhibit={exhibit}/>
-        </div>
-
-        {/* 전시회 입장, 도슨트 입장 버튼 */}
-        <div className="exhibitButtons">
-          {/* *수정* : 전시회 입장 주소 .. */}
-          <button onClick={()=>{navigate(`/exhibit/${exhibitId}/2`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>전시회 입장</button>
-          <button onClick={()=>{navigate(`/docent/${exhibitId}`); setPathName(window.location.pathname); window.scrollTo(0, 0)}}>도슨트 입장</button>
+          {/* <ExhibitDetail exhibitType={2} exhibit={exhibit}/> */}
+          이 부분은 수정해야함 ..
         </div>
 
         {/* 방명록 */}

@@ -1,7 +1,7 @@
 import { React } from "react";
 import "./exhibitionitem.css";
 
-function ExhibitionItem(props) {
+export default function ExhibitionItem(props) {
     return (
         <div className="likeexhibitionarea">
             <img width={props.width} height={props.height} src={props.exhibition.image} />
@@ -11,5 +11,3 @@ function ExhibitionItem(props) {
         </div>
     );
 }
-
-export default ExhibitionItem;

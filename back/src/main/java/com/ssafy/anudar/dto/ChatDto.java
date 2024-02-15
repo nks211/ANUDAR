@@ -7,4 +7,5 @@ public class ChatDto {
     private String sessionId;
     private String nickname;
     private String message;
+    private String image;
 }

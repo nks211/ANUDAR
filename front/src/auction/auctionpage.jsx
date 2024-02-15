@@ -313,7 +313,7 @@ export default function AuctionPage() {
               </div>
 
           </form>
-          <button onClick={()=>{bidcomplete()}}>낙찰</button>
+          {/* <button onClick={()=>{bidcomplete()}}>낙찰</button> */}
         </div>
         <div style={{ display: "flex", flex: "5", flexDirection: "column", backgroundColor: "#B7C4CF", padding: "30px", margin: "20px", borderRadius: "30px" }}>
           <div style={{ width: "800px", height: "800px", margin: "20px 0px", pointerEvents: isadmin() ? "auto" : "none" }}>

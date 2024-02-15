@@ -165,6 +165,7 @@
   padding: 10px;
   background-color: #f5f5f5;
   border-top: 1px solid #ddd;
+  width: 100%; /* 컨테이너의 너비를 부모에 맞춤 */
 }
 
 .chat-input {
@@ -173,11 +174,12 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: calc(100% - 90px); /* 버튼 너비와 마진을 고려하여 조정 */
 }
 
 .chat-submit {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #967E76; /* 버튼 색상 변경 */
   color: white;
   border: none;
   border-radius: 5px;
@@ -185,5 +187,5 @@
 }
 
 .chat-submit:hover {
-  background-color: #0056b3;
+  background-color: darken(#967E76, 10%); /* 호버 시 색상을 어둡게 조정 */
 }

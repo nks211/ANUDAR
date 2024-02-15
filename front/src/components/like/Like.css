@@ -11,13 +11,6 @@
   align-items: center;
 }
 
-/* .likeButton:hover {
-  font-weight: 900;
-  background-color: white;
-  border: 1px solid #967E76;
-  color: #967E76;
-} */
-
 .cancelButton {
   width: 130px;
   height: 45px;

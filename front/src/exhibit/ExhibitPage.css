@@ -54,42 +54,51 @@
 
 
 /* 전시회 상세 페이지 */
-
 .exhibitContainer {
   width: 750px;
   /* width: 100%; */
   height: 500px;
   /* margin: 0px 30px; */
   cursor: pointer;
-}
 
-.slidedots {
-  bottom: -25px;
-  display: inline-block;
-  padding: 0;
-  margin: 0;
-  font-size: 30px;
-  text-align: center;
+  
+  .slick-arrow, .slick-disabled, .slick-prev, .slick-next {
+    display: None !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: None !important;
+  }
 
-  li {
-    list-style: none;
-    cursor: pointer;
+  .slidedots {
+    bottom: 1px;
     display: inline-block;
-    margin: 0px 10px;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+    text-align: center;
 
-    button {
-      border: none;
-      background-color: #848484;
-      color: transparent;
+    li {
+      list-style: none;
       cursor: pointer;
-      display: block;
-      width: 15px;
-      height: 15px;
-      border-radius: 100%;
-    }
+      display: inline-block;
+      margin: 0px 5px;
 
+      button {
+        border: none;
+        background-color: #b6b6b6;
+        color: transparent;
+        cursor: pointer;
+        display: block;
+        width: 20px;
+        height: 5px;
+        border-radius: 0.2rem;
+        /* border-radius: 100%; */
+      }
+
+      }
     .slick-active button {
       background-color: #967e76;
+      transform: scale(1.2);
     }
   }
 }
@@ -137,39 +146,46 @@
   font-family: 'SUIT-Regular';
   font-size: 16px;
   color: #333333; */
-}
 
-.reviewArea textarea {
-  width: 710px;
-	height: 140px;
-  margin: 20px 20px 0 20px;
-  padding: 0;
+  textarea {
+    width: 710px;
+    height: 140px;
+    margin: 20px 20px 0 20px;
+    padding: 0;
+  
+    border: None;
+    resize: none;
+    outline: None;
+  
+    font-family: 'SUIT-Regular';
+    font-size: 16px;
+    color: #333333;
+  }
+  
+  &:focus {
+    border: 2px solid #EEE3CB;
+    outline-color: #EEE3CB;
+  }
 
-  border: None;
-  resize: none;
-  outline: None;
+  button {
+    /* font-family: "SUIT-Regular"; */
+    width: 70px;
+    height: 30px;
+    background-color: #967E76;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    margin: 0 20px 20px 0;
+    /* margin: 0 20px 2px 0; */
+  }
 
-  font-family: 'SUIT-Regular';
-  font-size: 16px;
-  color: #333333;
-}
-
-.reviewArea:focus {
-  border: 2px solid #EEE3CB;
-  outline-color: #EEE3CB;
-}
-
-.reviewArea button {
-  /* font-family: "SUIT-Regular"; */
-  width: 70px;
-  height: 30px;
-  background-color: #967E76;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  color: white;
-  cursor: pointer;
-  margin: 0 20px 20px 0;
+  span {
+    font-size: 12px;
+    margin: 0 10px 20px 0;
+  }
+  
 }
 
 .selectReviews {

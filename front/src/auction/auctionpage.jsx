@@ -107,7 +107,7 @@ export default function AuctionPage() {
     // }
     if (timer === 0) {
       clearInterval(Timer);
-      // bidcomplete();
+      bidcomplete();
     }
 
     return () => {

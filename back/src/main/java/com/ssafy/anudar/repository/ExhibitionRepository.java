@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cc9660d1fa32e32232c2ca77d9f3914ff9adfb5f2ef5a9bcde49c8368b68ba4c
-size 561
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.Exhibition;
+import com.ssafy.anudar.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+
+@Repository
+public interface ExhibitionRepository extends JpaRepository<Exhibition, Long> {
+
+    @Query("SELECT e FROM Exhibition e WHERE e.start_time <= :now AND e.end_time >= :now")
+    List<Exhibition> findExhibitionsByCurrentTime(LocalDateTime now);
+
+    List<Exhibition> findAllByUser(User user);
+}

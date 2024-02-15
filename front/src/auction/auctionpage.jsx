@@ -2,7 +2,7 @@ import { React, createContext, useRef, useState, useContext, useEffect } from "r
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import * as StomJs from "@stomp/stompjs";
-import { auctionlist, successbid } from '../API';
+import { auctionlist, successbid, getUserPoints, reducePoint } from '../API';
 import { mainstate } from '../StateManagement';
 import AuctionCam from '../components/auction/AuctionCam';
 import "./auctionpage.css";
@@ -14,9 +14,7 @@ export default function AuctionPage() {
 
   const { pathName, setPathName } = useContext(AppContext);
   const [inputopen, setInputOpen] = useState(true);
-  const [cam, setCam] = useState(false);
-  const [mic, setMic] = useState(false);
-  const [screen, setScreen] = useState(false);
+
   const [timer, setTimer] = useState(10);
   const [username, setUsername] = useState("");
 
@@ -27,6 +25,7 @@ export default function AuctionPage() {
   const [countAuctions, setCountAuctions] = useState(0);
   const [nowAuction, setNowAuction] = useState(1);
   const [isBidding, setIsBidding] = useState(false);
+  const [nowPoint, setNowPoint] = useState(0);
 
 
 
@@ -45,12 +44,26 @@ export default function AuctionPage() {
 
   // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
+    // 경매 끝나면 쫓아내기
+    if (nowAuction >= countAuctions) {
+      alert("경매가 종료되었습니다.");
+      navigate(-1)
+      return
+    }
     if (currentBidUser === "") {
       alert("작품이 유찰되었습니다.");
     }
+    // 낙찰된 경우 => 내가 낙찰 받았다면 던지기
     else {
-      alert(`${currentBidUser}님께 ${currentPrice}원에 낙찰되었습니다.`);
-      successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
+      alert(`${currentBidUser}님께 ${currentPrice}만원에 낙찰되었습니다.`);
+      // 내가 낙찰자라면 낙찰에 쏘기
+      if (userdata.nickname === currentBidUser){
+        successbid(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1); // 임의로 설정
+        // 포인트도 차감
+        reduceMyPoint(token, currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1);
+        console.log(currentPrice, auctionList[nowAuction-1]?.id, currentBidUser, 1);
+      }
+
     }
     // setCurrentPrice(auctionList[nowAuction]?.price) // 다음 작품의 초기 값
     // setCurrentBidUser("");
@@ -60,7 +73,7 @@ export default function AuctionPage() {
       body: JSON.stringify({
         sessionId: auctionId,
         nickname: "",
-        askingprice: auctionList[nowAuction]?.price,
+        askingprice: auctionList[nowAuction]?.price / 10000,
         workId: auctionList[nowAuction - 1]?.id,
         nowNumber : nowAuction + 1
       }),
@@ -102,10 +115,34 @@ export default function AuctionPage() {
       console.log('경매 정보를 찾을 수 없습니다.')
     }
   }
+
+  // 포인트 조회
+  const token = window.localStorage.getItem('token');
+  async function userPoint() {
+    try {
+      const res = await getUserPoints(token);
+      setNowPoint(res)
+      console.log(res)
+    } catch (err) {
+      console.log("포인트를 찾을 수 없습니다.")
+    }
+  }
+
+  // 포인트 차감
+  async function reduceMyPoint(token, finalPrice, workId, nickname, auctionId){
+    try {
+      const res = await reducePoint(token, finalPrice, workId, nickname, auctionId);
+      console.log(res);
+      setNowPoint(res);
+    } catch (err) {
+      console.log("포인트 차감 오류 발생")
+    }
+  }
   
   useEffect(()=>{
     connect()
     getAuction()
+    userPoint()
     return () => disconnect()
   }, [pathName])
 
@@ -178,17 +215,23 @@ export default function AuctionPage() {
   const handleSubmit = (event, chat) => {
     // 보내기 버튼 눌렀을 때 publish
     event.preventDefault();
-    // 현재가 보다 높은 값을 응찰한 경우에만
-    if (!isNaN(chat) && chat > currentPrice) {
-      setTimer(10); 
-      publish(chat);
-      setIsBidding(true);
-      setChat("");
+    // 응찰한 값이 내가 가진 포인트보다 작거나 같은 경우에만 통과
+    if (chat <= nowPoint) { 
+      // 현재가 보다 높은 값을 응찰한 경우에만
+      if (!isNaN(chat) && chat > currentPrice) {
+        setTimer(10); 
+        publish(chat);
+        setIsBidding(true);
+        setChat("");
+      }
+      else {
+        alert('현재가보다 높은 가격으로 응찰해주십시오.');
+        setChat("");
+      }
+    } else {
+      alert("포인트가 부족합니다.");
     }
-    else {
-      alert('현재가보다 높은 가격으로 응찰해주십시오.');
-      setChat("");
-    }
+
   };
   useEffect(() => {
     // setInputValue(inputvalue);
@@ -211,12 +254,12 @@ export default function AuctionPage() {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", margin: "0px 20px" }}>
                   <div>현재 입찰 가격</div>
-                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}원</div>
+                  <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}만원</div>
                 </div>
               </div>
               <div style={{ width: "50%", height: "80%", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "end", textAlign: "start", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
                 {isBidding ? (
-                  <p>{currentBidUser}님이 {currentPrice}원을 응찰하였습니다.</p>
+                  <p>{currentBidUser}님이 {currentPrice}만원을 응찰하였습니다.</p>
                 ) : (
                   <p>아직 응찰이 없습니다.</p>
                 )}
@@ -232,6 +275,7 @@ export default function AuctionPage() {
             {/* 금액 입력 및 보내기 부분 */}
             <div style={{ zIndex: "20", display: inputopen ? "flex" : "none", justifyContent: "space-between", alignItems: "flex-end", width: "100%", height: "100px", padding: "10px 20px" }}>
               <input type="number" style={{ width: "40%", height: "40px", border: "5px #976E76 solid", borderRadius: "20px", padding: "10px", fontSize: "20px" }} value={chat? chat : ""} onChange={handleChange} placeholder="금액을 입력하세요" />
+              <div>잔여 포인트 : {nowPoint} 포인트</div>
               <button style={{ width: "200px", height: "60px", backgroundColor: "#976E76", display: "flex", justifyContent: "center", alignItems: "center", color: "#ffffff", fontSize: "20px", borderRadius: "20px", margin: "0px 40px", border: 0,  cursor: "pointer" }}>응찰하기</button>
             </div>
           </form>
@@ -251,7 +295,7 @@ export default function AuctionPage() {
           </div>
           <div style={{ display: "flex", alignItems: "flex-end" }}>
             <div style={{ display: "flex", justifyContent: "right", alignItems: "center", flex: "1", }}>
-              <div id="auctionButton" style={{ width: "130px", height: "100px", margin: "10px", backgroundColor: "#967E76", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <div id="auctionButton" style={{ width: "130px", height: "100px", margin: "10px", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <img onClick={() => { if (window.confirm('경매 페이지를 종료하시겠습니까?') === true) { navigate(-1) } }} src="../../asset/leave.png"></img>
               </div>
             </div>

@@ -61,7 +61,7 @@ public class AuctionService {
 
         // 기존 포인트에 결제해야할 포인트 빼주기
         Long currentPoints = user.getUserPoints() != null ? user.getUserPoints() : 0L;
-        Long updatedPoints = currentPoints - (successWorkRequset.getFinalPrice() / 10000);
+        Long updatedPoints = currentPoints - (successWorkRequset.getFinalPrice());
 
         // 포인트 업데이트
         user.setUserPoints(updatedPoints);

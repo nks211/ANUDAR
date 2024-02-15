@@ -422,6 +422,21 @@ export const auctionlist = async () => {
     .catch((e) => { console.log(e); })
 };
 
+// 포인트 차감
+export async function reducePoint(token, finalPrice, workId, nickname, auctionId) {
+  const url = "/api/auction/deductPoints";
+  const data = {
+    finalPrice : finalPrice,
+    workId : workId, 
+    nickname : nickname,
+    auctionId : auctionId
+}
+  const config = { headers : { Authorization: `Bearer ${token}` } }
+  return await axios.put(url, data, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
 // 낙찰
 export const successbid = async (finalPrice, workId, nickname, auctionId) => {
   const url = "/api/auction/bidok";
@@ -441,3 +456,5 @@ export const successbid = async (finalPrice, workId, nickname, auctionId) => {
   })
   .catch((e) => { console.log(e); return {}; });
 };
+
+

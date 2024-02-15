@@ -63,6 +63,12 @@ export default function WorkDetailPage() {
     getData()
     getLike()
   }, [workId])
+
+  useEffect(()=>{
+    if (work.author !== loginuser.username) {
+      setLikeButton(<Like id={workId} icon="asset/heart" likeType="work" isLike={isLike} name={isLike?"찜취소":"찜하기"} onChangeLike={changeLike} />)
+    }
+  }, [isLike])
   
   // useEffect(()=>{
   //   if (Object.keys(work).length) { getWorks() }

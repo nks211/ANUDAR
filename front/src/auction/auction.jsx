@@ -11,6 +11,7 @@ import WorkItem from "../components/work/workitem";
 import ModalPopup from "../components/modal/modalpopup";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import { mainstate } from "../StateManagement";
 
 const test = [
     {
@@ -57,7 +58,8 @@ const auctionworksetting = {
     nextArrow: <img src="../asset/next_arrow.png" />,
 }
 
-function Auction() {
+export default function Auction() {
+    const isLogin = mainstate((state) => state.isLogin)
 
     const navigate = useNavigate();
     const [popupopen, setPopupOpen] = useState(false);
@@ -85,7 +87,7 @@ function Auction() {
                 okbutton={true} okbuttonlabel="확인" 
                 cancelbutton={false} cancelbuttonlabel="취소"/>
             </Modal>
-            <img onClick={() => { setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
+            <img onClick={() => { if(!isLogin){alert('로그인 후 이용해주세요.'); return}; setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
             <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>
             <div className="auctionworkarea">
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -102,5 +104,3 @@ function Auction() {
         </div>
     );
 }
-
-export default Auction;

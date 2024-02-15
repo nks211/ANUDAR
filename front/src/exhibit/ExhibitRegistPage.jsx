@@ -6,11 +6,11 @@ import './ExhibitPage.css'
 export const ExhibitRegistContext = createContext();
 export default function ExhibitRegistPage() {
   const [works, setWorks] = useState([]);
+  const [carouselWorks, setCarouselWorks] = useState([]);
 
-  console.log(works)
   return (
     <div>
-      <ExhibitRegistContext.Provider value={{ works, setWorks }}>
+      <ExhibitRegistContext.Provider value={{ works, setWorks, carouselWorks, setCarouselWorks }}>
         <ExhibitRegist/>
         <WorkRegist />
       </ExhibitRegistContext.Provider>

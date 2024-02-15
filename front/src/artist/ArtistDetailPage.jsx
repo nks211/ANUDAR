@@ -4,7 +4,7 @@ import Like from "../components/like/Like";
 import Work from "../components/work/Work";
 import Exhibit from "../components/exhibit/Exhibit";
 import './ArtistPage.css'
-import { getAuthor, getAuthorWorks, getFollowing } from "../API";
+import { getAuthor, getAuthorWorks, getAuthorExhibits, getFollowing } from "../API";
 import { mainstate } from '../StateManagement';
 
 export default function ArtistDetailPage() {
@@ -53,9 +53,19 @@ export default function ArtistDetailPage() {
   // 작가 작품 조회
   async function getWorks() {
     try {
-      const res = await getAuthorWorks(artistName, logintoken)
+      const res = await getAuthorWorks(artistName)
       setWorks(res)
       console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // 작가 전시 조회
+  async function getExhibits() {
+    try {
+      const res = await getAuthorExhibits(artistName)
+      setExhibits(res.length>6?res.slice(0,6):res)
     } catch (err) {
       console.log(err)
     }
@@ -65,6 +75,7 @@ export default function ArtistDetailPage() {
     getData()
     getFollow()
     getWorks()
+    getExhibits()
   }, [])
 
   useEffect(()=>{
@@ -77,7 +88,8 @@ export default function ArtistDetailPage() {
     setIsFollow(value)
   }
 
-  let exhibitsContent = <div></div>
+  console.log(exhibits)
+  console.log(works)
   
   return(
     <div style={{paddingTop:"40px"}}>
@@ -91,35 +103,46 @@ export default function ArtistDetailPage() {
             {likeButton}
           </div>
           <div style={{paddingLeft:"10px"}}>
-            <div className="artistDescription boldFont">소개</div>  {/* 소개: 제목 */}
+            <div className="artistDescription boldFont">CONTACT</div>  {/* 소개: 제목 */}
             <div className="artistIntroArea"> {/* 작가 소개 */}
-              {/* <div className="artistIntro">{description}</div> */}
-              <div className="artistIntro">{artistInfo.email}</div>
-              <div className="artistIntro">{artistInfo.phone}</div>
+              <div className="artistIntro"><img src="../../asset/icon_mail.png" width={20} height={20} />{artistInfo.email}</div>
+              <div className="artistIntro"><img src="../../asset/icon_phone.png" width={20} height={20} />{artistInfo.phone}</div>
             </div>
             <div className="artistDescription boldFont">HISTORY</div>{/* HISTORY: 제목 */}
             <div className="artistHistoryArea"> {/* 작가 HISTORY */}
               <div className="artistHistory">
-                {/* *수정* API 받은 후 수정! 글자 길이 제한 방법 고민 .. */}
-                {/* <div>전시 : {artistExhibits.join(", ")}</div>
-                <div>작품 : {artistWorks.join(", ")}</div> */}
+                <div style={{fontWeight:900, marginLeft:"10px"}}>전시</div>
+                <ul style={{textAlign:"left", color:"#787878"}}>
+                  <li>{exhibits[0]?.name}</li>
+                  <li>{exhibits[1]?.name}</li>
+                </ul>
+                <div style={{fontWeight:900, marginLeft:"10px"}}>작품</div>
+                <ul style={{textAlign:"left", color:"#787878"}}>
+                  <li>{works[0]?.title}</li>
+                  <li>{works[1]?.title}</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="artistWorks boldFont">작품</div>
+      <div className="artistExhibits">전시회</div>
+      <div className="artistExhibitList">
+        <div className="exhibitList">
+          {exhibits.map(exhibit=>(
+            <Exhibit exhibitType={1} exhibit={exhibit}/>
+            ))}
+        </div>
+      </div>
+
+      <div className="artistWorks">작품</div>
       <div className="artistWorkList">
         <div className="workList">
           {works.map(work=>( <Work className="Work" workType={3} work={work} /> ))}
         </div>
       </div>
       
-      <div className="artistExhibits boldFont">전시회</div>
-      <div className="artistExhibitList">
-        {exhibitsContent}
-      </div>
     </div>
   )
 }

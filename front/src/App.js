@@ -28,6 +28,9 @@ export default function App() {
   const logintoken = mainstate((state) => state.logintoken)
   const [pathName, setPathName] = useState(window.location.pathname);
 
+  const location = useLocation();
+  const { pathname } = location;
+
   useEffect(()=> {
     console.log(logintoken)
   }, [logintoken])
@@ -56,12 +59,16 @@ export default function App() {
     }
   };
 
+  // console.log(/^\d+$/.test('2'))
+  // console.log(/^\/exhibit\/\d+$/.test(pathname))
+
   return (
     <>
       <AppContext.Provider value={{ modalsetting, pathName, setPathName }}>
         <NavBar />
-        <div style={{ display: "flex", justifyContent: "center", }} className={pathName.includes('docent') || pathName.includes('now') ? "DocentPage" : "App"}>
-        {/* <div style={{ display: "flex", justifyContent: "center", }} className="App"> */}
+        <div className={
+          pathName.includes('docent') || pathName.includes('now') ? "DocentPage" 
+          : /^\/exhibit\/\d+$/.test(pathname)?"ExhibitDetailStyle":"App"}>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>
@@ -86,6 +93,18 @@ export default function App() {
             <Route exact path="/pay" element={<Pay />}></Route>
           </Routes>
         </div>
+
+        {/* <div style={{padding:0}}>
+          <Routes>
+            <Route exact path="/exhibit/:id" element={<ExhibitDetailPage />}></Route>
+          </Routes>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "center" }} className="DocentPage">
+          <Routes>
+            <Route exact path="/docent/:id" element={<DocentPage />}></Route>
+          </Routes>
+        </div> */}
       </AppContext.Provider>
     </>
 

@@ -37,8 +37,6 @@ export default function WorkDetailPage() {
       let likes;
       const res = await getLikeWorks(logintoken)
       likes = res
-      // console.log(likes)
-
       for (let i=0; i<likes.length; i++) {
         if (likes[i].id === Number(workId)) { setIsLike(true); return }
         setIsLike(false)
@@ -51,7 +49,7 @@ export default function WorkDetailPage() {
   // 작가 작품 조회
   async function getWorks(work) {
     try {
-      const res = await getAuthorWorks(work.author, logintoken)
+      const res = await getAuthorWorks(work.author)
       setWorks(res.filter(w => w.id !== work.id))
       console.log(res)
     } catch (err) {

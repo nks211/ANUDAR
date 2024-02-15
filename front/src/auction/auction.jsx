@@ -1,47 +1,20 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./auction.css";
 import "../components/myinfo/myhistory/myhistory.css";
-import { works } from "../components/myinfo/myhistory/myhistory";
-import ExhibitionItem from "../components/work/exhibitionitem";
 import WorkItem from "../components/work/workitem";
 import ModalPopup from "../components/modal/modalpopup";
+import { auctionlist, getLikeWorks } from "../API";
 import { AppContext } from "../App";
 import { useNavigate } from "react-router-dom";
-
-const test = [
-    {
-        url: "../../asset/work3.jpg",
-    },
-    {
-        url: "../../asset/work2.jpg",
-    },
-    {
-        url: "../../asset/work4.jpg",
-    },
-    {
-        url: "../../asset/work5.jpg",
-    },
-    {
-        url: "../../asset/work7.jpg",
-    },
-    {
-        url: "../../asset/work8.jpg",
-    },
-    {
-        url: "../../asset/work9.jpg",
-    },
-    {
-        url: "../../asset/work1.jpg",
-    },
-];
+import { mainstate } from "../StateManagement";
 
 const sample = <div style={{ height: "150px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
     <input type="text" placeholder="아이디" />
-    <input type="password" placeholder="비밀번호"/>
+    <input type="password" placeholder="비밀번호" />
 </div>;
 
 const auctionworksetting = {
@@ -60,9 +33,12 @@ const auctionworksetting = {
 function Auction() {
 
     const navigate = useNavigate();
+    const [list, setList] = useState([]);
+    const [auctionitem, setAuctionItem] = useState([]);
     const [popupopen, setPopupOpen] = useState(false);
-    const { modalsetting } = useContext(AppContext);
-    
+    const { modalsetting, pathName } = useContext(AppContext);
+
+    const logintoken = mainstate((state) => state.logintoken);
 
     const okfunction = () => {
         if (localStorage.getItem("token")) {
@@ -73,30 +49,47 @@ function Auction() {
         }
     };
 
+    const likeitems = async () => { return await getLikeWorks(logintoken); };
+    const auctionitems = async () => { return await auctionlist(); }
+    useEffect(() => {
+        likeitems().then(value => { setList(value); console.log(value); }).catch(() => {  });
+        auctionitems().then(value => { setAuctionItem(value); console.log(value); });
+    }, [pathName])
+
     return (
         <div>
             <Modal isOpen={popupopen} style={modalsetting} onRequestClose={() => { setPopupOpen(false); }}>
-                <ModalPopup 
-                title="이달의 경매 입장하기" 
-                detail="진행 중인 경매로 이동하시겠습니까?"
-                height={200}
-                content={<div style={{ height: "50px" }}>{  }</div>} 
-                okfunction={() => { okfunction(); }} 
-                okbutton={true} okbuttonlabel="확인" 
-                cancelbutton={false} cancelbuttonlabel="취소"/>
+                <ModalPopup
+                    title="이달의 경매 입장하기"
+                    detail="진행 중인 경매로 이동하시겠습니까?"
+                    height={200}
+                    content={<div style={{ height: "50px" }}>{ }</div>}
+                    okfunction={() => { okfunction(); }}
+                    cancelfunction={() => { setPopupOpen(false); }}
+                    okbutton={true} okbuttonlabel="확인"
+                    cancelbutton={true} cancelbuttonlabel="취소" />
             </Modal>
             <img onClick={() => { setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
             <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>
             <div className="auctionworkarea">
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <Slider {...auctionworksetting}>
-                        {Object.values(test).map((value) => { return <div><div style={{ width: "400px", height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}><WorkItem width="300px" height="300px" work={value} /></div></div>; })}
-                    </Slider>
-                </div>
+                {list ?
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <Slider {...auctionworksetting}>
+                            {Object.values(list).map((value) => {
+                                return <div>
+                                    <div style={{ width: "400px", height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                        <WorkItem width="300px" height="300px" work={value} />
+                                    </div>
+                                </div>;
+                            }
+                            )}
+                        </Slider>
+                    </div>
+                    : <div style={{ width: "400px", height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{logintoken != "" ? "찜한 작품이 없습니다" : "로그인 후 조회 가능합니다"}</div>}
             </div>
             <div style={{ display: "flex", justifyContent: "center", position: "relative", top: "60px" }}>
                 <div className="dataarea">
-                    {Object.values(works).map((value) => { return <ExhibitionItem width="250px" height="250px" exhibition={value} /> })}
+                    {Object.values(auctionitem).map((value) => { return <WorkItem width="250px" height="250px" work={value} /> })}
                 </div>
             </div>
         </div>

@@ -6,11 +6,11 @@ import Login from "../signup/login.jsx";
 import { AppContext } from "../App.js";
 import Modal from "react-modal";
 import { mainstate, popupstate } from "../StateManagement.jsx";
-import { getnotices, deletenotice, getAllExhibitList } from "../API.jsx";
+import { getnotices, deletenotice, getAllExhibitList, myinfo } from "../API.jsx";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const { modalsetting } = useContext(AppContext);
+  const { modalsetting, pathName } = useContext(AppContext);
   
   const localtab = localStorage.getItem("currenttab");
   const [navtab, setnavtab] = useState(localtab != null ? localtab : "");
@@ -38,7 +38,7 @@ export default function NavBar() {
     return (
       <div>
       <div onClick={() => { setnoticepopup(!noticepopup) }}>{isLogin ?
-        (noticelist.length > 0 ?
+        (loginUser.notifies && loginUser.notifies.length > 0 ?
           <img className="noti" src="../../asset/noti_on.png" />
           : <img className="noti" src="../../asset/noti_off.png" />) : ""}
       </div>
@@ -46,7 +46,18 @@ export default function NavBar() {
         <img width="45px" height="45px" className="mypage" src={loginUser.image?loginUser.image:"../../asset/avatar.png"} onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} /> : ""}
       </div>
       <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
-        {noticelist.length > 0 ? Object.values(noticelist).map((notice, i) => <div onClick={async () => { const result = await deletenotice(notice.id, logintoken); if (result != "") checknotice(notice) }}><Notice key={i} title={notice.name} type={notice.notifyType} details={notice.content}/></div>) : UptoDate()}
+        {loginUser.notifies && loginUser.notifies.length ? 
+          Object.values(loginUser.notifies).map((notice, i) => 
+            <div onClick={
+              async () => { 
+                const result = await deletenotice(notice.id, logintoken);
+                if (result !== "") {
+                  const userinfo = await myinfo(logintoken);
+                  localStorage.setItem("userdata", JSON.stringify(userinfo));    
+                }
+              }}>
+              <Notice key={i} title={notice.notifyType} details={notice.content}/>
+            </div>) : UptoDate()}
       </div>
     </div>
     )
@@ -61,16 +72,17 @@ export default function NavBar() {
     if (localStorage.getItem("tokentime")) {
       const logtime = Date.now() - localStorage.getItem("tokentime");
       if (logtime >= 60 * 60 * 1000) {
-        setIsLogin(false); setnoticepopup(false); 
-        localStorage.setItem("login", false); 
+        setIsLogin(false); setnoticepopup(false);
+        setlogintoken(""); setloginUser({});
+        localStorage.setItem("login", false);
         localStorage.setItem("currenttab", ""); 
-        localStorage.removeItem("token");
+        localStorage.removeItem("token"); 
         localStorage.removeItem("tokentime"); 
-        localStorage.removeItem("userdata"); 
+        localStorage.removeItem("userdata");
         navigate("/"); window.scrollTo(0, 0);
       }
     }
-  }, []);
+  }, [localStorage.getItem("userdata"), pathName]);
 
   useEffect(() => {
     if (localtab) setnavtab(localtab);

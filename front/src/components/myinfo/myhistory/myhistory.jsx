@@ -107,14 +107,16 @@ function MyHistory() {
                                     <td className="auctionimage">작품</td>
                                     <td className="auctionname">이름</td>
                                     <td className="auctionartist">작가</td>
-                                    <td className="auctionmoney">입찰가</td>
+                                    <td className="auctionmoney">낙찰가</td>
                                 </div>
-                                {myfavorites.myauctions && myfavorites.myauctions.length > 0? Object.values(myfavorites.myauctions).map((auction, i) => {
+                               
+                                {myfavorites.myauctions && myfavorites.myauctions.length > 0? Object.values(myfavorites.myauctions).map((myauction, i) => {
+                                     console.log(myauction.auction.finalPrice)
                                     return <tr style={{ textAlign: "center", display: filterswitch(auctionswitch, i), justifyContent: "center", alignItems: "center", height: "80px" }}>
-                                        <td className="auctionimage">{<img width="50px" height="50px" src={auction.image} />}</td>
-                                        <td className="auctionname">{auction.title}</td>
-                                        <td className="auctionartist">{auction.author}</td>
-                                        <td className="auctionmoney">{auction.price}</td>
+                                        <td className="auctionimage">{<img width="50px" height="50px" src={myauction.work.image} />}</td>
+                                        <td className="auctionname">{myauction.work.title}</td>
+                                        <td className="auctionartist">{myauction.work.author}</td>
+                                        <td className="auctionmoney">{myauction.finalPrice}</td>
                                     </tr>
                                 }) : <div style={{ width: "100%", height: "200px", margin: "20px 0px", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: "400" }}>경매에서 낙찰된 작품이 없습니다.</div> }
                             </tbody>

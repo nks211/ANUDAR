@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b61c24658592ba286ea633d428932767ba7ddbe77e4a99d1206fba8d90d9b0d1
-size 1344
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.Exhibition;
+import com.ssafy.anudar.model.User;
+import com.ssafy.anudar.model.Work;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface WorkRepository extends JpaRepository<Work, Long> {
+    Optional<Work> findById(Long id);
+
+    List<Work> findAllByUser(User user);
+
+    List<Work> findAllByExhibition(Exhibition exhibition);
+
+    @Query("SELECT w FROM Work w JOIN w.exhibition e " +
+            "WHERE w.bid >= 1 " +
+            "AND e.start_time <= :auctionTime " +
+            "ORDER BY w.bid")
+    List<Work> findAllPrevAuctionWorks(LocalDateTime auctionTime);
+
+    @Query("SELECT w FROM Work w JOIN w.exhibition e " +
+            "WHERE w.bid >= 1 " +
+            "AND e.start_time <= :nextAuction AND e.start_time > :prevAuction " +
+            "ORDER BY w.bid")
+    List<Work> findAuctionWorks(LocalDateTime prevAuction, LocalDateTime nextAuction);
+
+    @Query("SELECT w FROM Work w JOIN w.exhibition e " +
+            "WHERE w.is_carousel = true " +
+            "AND e.id = :exhibitionId")
+    List<Work> findCarousel(Long exhibitionId);
+}

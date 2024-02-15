@@ -132,7 +132,7 @@ export default function ExhibitRegist() {
             return
           }
 
-          const m = String(exhibitM-2).padStart(2, '0')  // 전시회 달
+          const m = String(exhibitM).padStart(2, '0')  // 전시회 달
           const d = String(exhibitEndD).padStart(2, '0')  // 전시회 종료일
           const dd = String(docentDate).padStart(2, '0')  // 도슨트 일
           const h = String((ampm==="am")?docentHour:docentHour+12).padStart(2, '0')  // 도슨트 시작시간 (시)

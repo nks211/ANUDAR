@@ -1,16 +1,3 @@
-import React from 'react';
-import './ChatMessage.css'; // 스타일 시트 임포트
-
-const ChatMessage = ({ profileImg, nickname, message }) => {
-  return (
-    <div className="chat-message">
-      <img src={profileImg} alt="profile" className="profile-img" />
-      <div className="message-content">
-        <div className="nickname">{nickname}</div>
-        <div className="message">{message}</div>
-      </div>
-    </div>
-  );
-};
-
-export default ChatMessage;
+version https://git-lfs.github.com/spec/v1
+oid sha256:07ed998cf97cf2913a83895d75d8095ad3ba9f16482350b1a46631bd4eb4e15f
+size 463

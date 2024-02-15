@@ -45,7 +45,7 @@ export const login = async (id, password) => {
 };
 
 export const myinfo = async (token) => {
-  if (token && token != "") {
+  if (token && token !== "") {
     const url = "/api/user/info";
     return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
       .then(response => { return response.data; })
@@ -55,7 +55,7 @@ export const myinfo = async (token) => {
 };
 
 export const updateinfo = async (newdata, token) => {
-    if (token && token != "") {
+    if (token && token !== "") {
         const url = "/api/user/update";
         return await axios.put(url, newdata, { headers: { Authorization: `Bearer ${token}`, } })
         .then(response => { return response.data; })
@@ -141,9 +141,9 @@ export const signout = async (token) => {
 };
 
 /* 알림 조회 */
-export const getnotices = async (id, token) => {
-    if (token && token != "") {
-        const url = `/api/user/${id}/notifies`;
+export const getnotices = async (username, token) => {
+    if (token && token !== "") {
+        const url = `/api/user/${username}/notifies`;
         return await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
         .then(response => {
             return response.data;
@@ -153,7 +153,7 @@ export const getnotices = async (id, token) => {
 };
 
 export const readnotice = async (noticeid, token) => {
-    if (token && token != "") {
+    if (token && token !== "") {
         const url = `/api/user/notifies/${noticeid}/read`;
         return await axios.put(url, { headers: { Authorization: `Bearer ${token}` } })
         .then(response => {
@@ -163,19 +163,20 @@ export const readnotice = async (noticeid, token) => {
     }
 };
 
-export const deletenotice = async (noticeid, token) => {
-    if (token && token != "") {
-        const url = `/api/user/notifies/${noticeid}`;
+export const deletenotice = async (notifyId, token) => {
+    // if (token && token !== "") {
+        const url = `/api/user/notifies/${notifyId}`;
         return await axios.delete(url, { headers: { Authorization: `Bearer ${token}` } })
         .then(response => {
+            console.log(response)
             return response.data;
         })
         .catch((e) => { console.log(e) });
-    }
+    // }
 };
 
 export const favoriteexhibitions = async (token) => {
-    if (token && token != "") {
+    if (token && token !== "") {
         const url = "/api/user/like/exhibit";
         return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
         .then(response => {

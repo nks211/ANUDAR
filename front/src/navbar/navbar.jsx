@@ -6,7 +6,7 @@ import Login from "../signup/login.jsx";
 import { AppContext } from "../App.js";
 import Modal from "react-modal";
 import { mainstate, popupstate } from "../StateManagement.jsx";
-import { getnotices, deletenotice, getAllExhibitList } from "../API.jsx";
+import { getnotices, deletenotice, myinfo, getAllExhibitList } from "../API.jsx";
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -27,18 +27,35 @@ export default function NavBar() {
   const setlogintoken = mainstate((state) => state.setlogintoken)
   const tabbar = mainstate((state) => state.tabbar)
 
+  // console.log(JSON.parse(localStorage.getItem("userdata")).notifies)
+
 
   // 로그인패널
+  const userdata = mainstate((state)=>state.loginuser)
   const noticepopup = popupstate((state) => state.homenoticepopup);
-  const noticelist = mainstate((state) => state.noticelist);
+  const noticelist = mainstate((state) => state.noticelist);  // userdata.notifies
   const setnoticelist = mainstate((state) => state.setnoticelist);
   const checknotice = mainstate((state) => state.noticecheck);
+
+  console.log(userdata.notifies)
+  console.log(typeof noticelist)
+  // console.log(typeof JSON.parse(localStorage.getItem("userdata")).notifies)
   
+  async function getMyInfo() {
+    try {
+      const res = await myinfo(logintoken)
+      localStorage.setItem("userdata", JSON.stringify(res))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   function LoginPanel() {
     return (
       <div>
-      <div onClick={() => { setnoticepopup(!noticepopup) }}>{isLogin ?
-        (noticelist.length > 0 ?
+      <div onClick={() => { setnoticepopup(!noticepopup) }}>
+        {isLogin ?
+        (userdata.notifies?.length ?
           <img className="noti" src="../../asset/noti_on.png" />
           : <img className="noti" src="../../asset/noti_off.png" />) : ""}
       </div>
@@ -46,7 +63,28 @@ export default function NavBar() {
         <img width="45px" height="45px" className="mypage" src={loginUser.image?loginUser.image:"../../asset/avatar.png"} onClick={() => { navigate("/user/info"); localStorage.setItem("currenttab", ""); window.scrollTo(0, 0) }} /> : ""}
       </div>
       <div style={{ zIndex: 5, position: "absolute", left: "10px", top: "50px", display: noticepopup ? "block" : "none" }}>
-        {noticelist.length > 0 ? Object.values(noticelist).map((notice, i) => <div onClick={async () => { const result = await deletenotice(notice.id, logintoken); if (result != "") checknotice(notice) }}><Notice key={i} title={notice.name} type={notice.notifyType} details={notice.content}/></div>) : UptoDate()}
+        {userdata.notifies?.length ? 
+          Object.values(userdata.notifies).map((notice, i) => 
+            <div onClick={
+              async () => { 
+                const result = await deletenotice(notice.id, logintoken);
+                getMyInfo() 
+
+                // // 유저 정보에 result로 받은 알림 삭제 결과를 반영
+                // const newnotices = userdata.notifies.filter((item) => item.id !== notice.id);
+                // setloginUser({ ...loginUser, notifies: newnotices });
+
+                // // 알림 목록에서도 삭제
+                // const newlist = noticelist.filter((item) => item.id !== notice.id);
+                // setnoticelist(newlist);
+
+                // // 알림 목록이 비어있으면 알림 팝업을 닫음
+                // window.scrollTo(0, 0);
+
+                if (result !== "") checknotice(notice)
+                }}>
+              <Notice key={i} details={notice.content}/>
+            </div>) : UptoDate()}
       </div>
     </div>
     )

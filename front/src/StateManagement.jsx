@@ -4,8 +4,8 @@ import { immer } from "zustand/middleware";
 // 로그인, 회원가입, 메뉴바, 로그인 모달 입력값 관련 상태 관리 함수
 export const mainstate = create((set) => ({
     isLogin: localStorage.login === "true",
-    loginuser: localStorage.login === "true"?JSON.parse(localStorage.userdata):{},
-    logintoken: localStorage.login === "true"?localStorage.token:"",
+    loginuser: localStorage.login === "true"?JSON.parse(localStorage.getItem("userdata")):{},
+    logintoken: localStorage.login === "true"?localStorage.getItem("token"):"",
     signup: {
         profileimage: "../../asset/profile_image.png",
         id: "",
@@ -18,33 +18,34 @@ export const mainstate = create((set) => ({
         number: "",
     },
     notice: 0,
-    noticelist: [
-        {
-            title: "알림 제목",
-            date: "2024/02/05 16:00",
-            details: "알림에 대한 자세한 설명 1",
-        },
-        {
-            title: "알림 제목",
-            date: "2024/02/05 16:00",
-            details: "알림에 대한 자세한 설명 2",
-        },
-        {
-            title: "알림 제목",
-            date: "2024/02/05 16:00",
-            details: "알림에 대한 자세한 설명 3",
-        },
-        {
-            title: "알림 제목",
-            date: "2024/02/05 16:00",
-            details: "알림에 대한 자세한 설명 4",
-        },
-        {
-            title: "알림 제목",
-            date: "2024/02/05 16:00",
-            details: "알림에 대한 자세한 설명 5",
-        },
-    ],
+    noticelist:localStorage.login === "true"?(JSON.parse(localStorage.getItem("userdata")).notifies):[],
+    // noticelist: [
+    //     {
+    //         title: "알림 제목",
+    //         date: "2024/02/05 16:00",
+    //         details: "알림에 대한 자세한 설명 1",
+    //     },
+    //     {
+    //         title: "알림 제목",
+    //         date: "2024/02/05 16:00",
+    //         details: "알림에 대한 자세한 설명 2",
+    //     },
+    //     {
+    //         title: "알림 제목",
+    //         date: "2024/02/05 16:00",
+    //         details: "알림에 대한 자세한 설명 3",
+    //     },
+    //     {
+    //         title: "알림 제목",
+    //         date: "2024/02/05 16:00",
+    //         details: "알림에 대한 자세한 설명 4",
+    //     },
+    //     {
+    //         title: "알림 제목",
+    //         date: "2024/02/05 16:00",
+    //         details: "알림에 대한 자세한 설명 5",
+    //     },
+    // ],
     tabbar: ["전시회", "작가", "작품", "경매"],
     menutab: "",
     idinput: "",
@@ -66,7 +67,12 @@ export const mainstate = create((set) => ({
 
     setnoticelist: (result) => set(() => ({ noticelist: result })),
     noticecheck: (notice) => set((state) => ({
-        noticelist: state.noticelist.filter((item) => { return JSON.stringify(item) != JSON.stringify(notice); })
+        noticelist: state.loginuser.notifies.filter((item) => { 
+            
+            console.log(JSON.stringify(item))
+            console.log(JSON.stringify(notice))
+            return JSON.stringify(item) !== JSON.stringify(notice); 
+        })
     })),
     setmenutab: (tab) => set(() => ({ menutab: tab })),
     setloginidinput: (input) => set(() => ({ idinput: input })),

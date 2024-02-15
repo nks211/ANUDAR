@@ -5,10 +5,12 @@ import com.ssafy.anudar.dto.WorkDto;
 import com.ssafy.anudar.dto.request.SuccessWorkRequset;
 
 import com.ssafy.anudar.service.AuctionService;
+import com.ssafy.anudar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -21,6 +23,8 @@ import java.util.List;
 public class AuctionController {
 
     private final AuctionService auctionService;
+    private final UserService userService;
+
     @PostMapping("/bidok")
     public ResponseEntity<SuccessWorkDto> bidok(@RequestBody SuccessWorkRequset req) {
         SuccessWorkDto successWorkDto = auctionService
@@ -34,4 +38,12 @@ public class AuctionController {
         return new ResponseEntity<>(auctionService.getWorks(), HttpStatus.OK);
     }
 
+
+    // 경매 낙찰시 포인트 차감
+    @PutMapping("/deductPoints")
+    public ResponseEntity<Long> deductPoints(Authentication authentication, @RequestBody SuccessWorkRequset successWorkRequset){
+        String username = authentication.getName();
+        Long updatedPoints = auctionService.deductUserPoints(username, successWorkRequset);
+        return new ResponseEntity<>(updatedPoints, HttpStatus.OK);
+    }
 }

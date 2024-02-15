@@ -3,6 +3,7 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import UserVideoComponent from './UserVideoComponent';
 import './WebCam.css'
+import { DocentContext } from '../../docent/DocentPage'
 
 const APPLICATION_SERVER_URL = 'https://i10d105.p.ssafy.io/';
 
@@ -11,6 +12,7 @@ function WebCam({ MysessionId, myUserName }) {
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
+  const { mic, cam } = useContext(DocentContext);
 
   useEffect(() => {
     joinSession();
@@ -19,6 +21,18 @@ function WebCam({ MysessionId, myUserName }) {
       leaveSession();
     };
   }, []);
+
+  useEffect(() => {
+    if (publisher) {
+      publisher.publishAudio(mic);
+    }
+  }, [mic, publisher]);
+
+  useEffect(() => {
+    if (publisher) {
+      publisher.publishVideo(cam);
+    }
+  }, [cam, publisher]);
 
   const joinSession = async () => {
     console.log("joinSession  호출! sessionId는 " + MysessionId)

@@ -30,6 +30,11 @@ export default function AuctionPage() {
   const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
   const [currentBidUser, setCurrentBidUser] = useState("");
 
+  // 수현 추가
+  // const [auctionlist, setAuctionList] = useState([]); // 경매 정보
+  const [successbid, setSuccessBid] = useState([]); // 낙찰 정보
+
+
 
   const timeset = () => {
     if (timer < 10) return `00:0${timer}`
@@ -65,12 +70,30 @@ export default function AuctionPage() {
     const Timer = setInterval(() => {
       setTimer((count) => count - 1);
     }, 1000);
-    if (timer === 0) clearInterval(Timer)
-    return () => {
-      setPathName(window.location.pathname);
-      clearInterval(Timer);
+    // if (timer === 0) clearInterval(Timer)
+    // return () => {
+    //   setPathName(window.location.pathname);
+    //   clearInterval(Timer);
+    // }
+    if(timer === 0) {
+      handleAuctionEnd();
     }
-  }, [navigate, timer]);
+  }, [timer]);
+
+  // 수현
+  const handleAuctionEnd = () => {
+    // 여기서 currentBidUser가 사용자 자신인지 확인
+    const isWinner = username === currentBidUser;
+    if (isWinner) {
+      // 사용자가 최고 입찰자인 경우
+      // 결제 페이지로 이동하거나 결제 모달을 표시
+      // navigate('/payment', { state: { finalPrice: currentPrice, workId, auctionId } });
+    } else {
+      // 사용자가 최고 입찰자가 아닌 경우
+      // 메시지 표시 또는 다른 로직 처리
+      console.log('경매에 이기지 못했습니다.');
+    }
+  }
 
   // 경매
   // auctionId로 열어주기 : 지금은 일단 임의로 설정 => 추후엔 auction_id?
@@ -84,15 +107,15 @@ export default function AuctionPage() {
 
   useEffect(() => {
     connect();
-    // // 경매 정보 불러오기
-    // auctionlist()
-    //   .then(auctionData => {
-    //     auctionList.push(...auctionData);
-    //     console.log(auctionList)
-    //   })
-    //   .catch(e => {
-    //     console.log("경매 정보를 찾을 수 없습니다.", e);
-    //   })
+    // 경매 정보 불러오기
+    auctionlist()
+      .then(auctionData => {
+        auctionList.push(...auctionData);
+        console.log(auctionList)
+      })
+      .catch(e => {
+        console.log("경매 정보를 찾을 수 없습니다.", e);
+      })
     return () => disconnect();
   }, [pathName]);
 

@@ -102,6 +102,15 @@ export async function updateUserPoints(token, newPoints){
     .catch(err => {console.log(err)})
 }
 
+// 내 알림 조회
+export async function getNotifices(token){
+  const url = "/api/{userId}/notifies"
+  const config = { headers : { Authorization: `Bearer ${token}`}}
+  return await axios.get(url, config)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
 export const changepassword = async (oldpassword, newpassword, token) => {
   if (token && token != "") {
       const url = "/api/user/update/password";

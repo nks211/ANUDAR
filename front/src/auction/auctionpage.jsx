@@ -45,8 +45,9 @@ export default function AuctionPage() {
   // 응찰이 없었다면 유찰되었습니다. 띄우기
   const bidcomplete = () => {
     // 경매 끝나면 쫓아내기
-    if (nowAuction >= countAuctions) {
+    if (nowAuction > countAuctions) {
       alert("경매가 종료되었습니다.");
+      setNowAuction(1); // 지금은 이렇게 바꿔두기
       navigate(-1)
       return
     }
@@ -111,6 +112,7 @@ export default function AuctionPage() {
       const res = await auctionlist()
       setAuctionList(res)
       setCountAuctions(res.length)
+      setCurrentPrice(res[nowAuction-1].price / 10000);
     } catch (err) {
       console.log('경매 정보를 찾을 수 없습니다.')
     }
@@ -140,15 +142,15 @@ export default function AuctionPage() {
   }
   
   useEffect(()=>{
-    connect()
     getAuction()
+    connect()
     userPoint()
     return () => disconnect()
   }, [pathName])
 
-
   const [currentPrice, setCurrentPrice] = useState(0); // 현재가를 저장할 상태 추가
   const [currentBidUser, setCurrentBidUser] = useState("");
+
 
   const client = useRef({});
   const connect = () => {
@@ -180,11 +182,17 @@ export default function AuctionPage() {
       // 현재가 갱신 로직
       const currentPrice = json_body.currentBid;
       const currentBidUser = json_body.currentBidUser;
+      if (currentPrice > auctionList[nowAuction-1]?.price) {
+        setIsBidding(true);
+      };
       setCurrentPrice(currentPrice);
       setCurrentBidUser(currentBidUser);
       setNowAuction(json_body.nowNumber)
       console.log(json_body.nowNumber);
       console.log(currentPrice);
+
+
+      setTimer(10);
     });
   };
 
@@ -233,6 +241,8 @@ export default function AuctionPage() {
     }
 
   };
+
+
   useEffect(() => {
     // setInputValue(inputvalue);
     setUsername(JSON.parse(localStorage.getItem('userdata')).nickname);

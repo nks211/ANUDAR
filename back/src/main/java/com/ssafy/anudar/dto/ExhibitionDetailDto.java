@@ -1,6 +1,7 @@
 package com.ssafy.anudar.dto;
 
 import com.ssafy.anudar.model.Exhibition;
+import com.ssafy.anudar.model.Work;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,9 @@ public class ExhibitionDetailDto {
     private UserDto author;
     private DocentDto docent;
     private List<WorkDto> workList;
+    private List<WorkDto> carousel;
 
-    public static ExhibitionDetailDto fromEntity (Exhibition exhibition) {
+    public static ExhibitionDetailDto fromEntity (Exhibition exhibition, List<Work> carousel) {
         return new ExhibitionDetailDto(
                 exhibition.getId(),
                 exhibition.getName(),
@@ -34,7 +36,8 @@ public class ExhibitionDetailDto {
                 exhibition.getImage(),
                 UserDto.fromEntity(exhibition.getUser()),
                 DocentDto.fromEntity(exhibition.getDocent()),
-                exhibition.getWorks().stream().map(WorkDto::fromEntity).collect(Collectors.toList())
+                exhibition.getWorks().stream().map(WorkDto::fromEntity).collect(Collectors.toList()),
+                carousel.stream().map(WorkDto::fromEntity).collect(Collectors.toList())
         );
     }
 

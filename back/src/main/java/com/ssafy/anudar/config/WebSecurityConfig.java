@@ -14,6 +14,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +29,6 @@ public class WebSecurityConfig {
 
     @Value("${jwt.secret}")
     private String key;
-
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
@@ -39,6 +42,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/info/author/**")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/exhibit/list/**")
+                .requestMatchers("exhibit/user/**")
                 .requestMatchers("/exhibit/{exhibition_id}/comments-list")
                 .requestMatchers("/work/infos/**")
                 .requestMatchers("/work/exhibit/**")
@@ -50,6 +54,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/nickname")
                 .requestMatchers("/exhibit/docent/**")
                 .requestMatchers("/exhibit/*/author")
+                .requestMatchers("/auction/works")
                 ;
     }
 

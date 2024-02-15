@@ -3,6 +3,7 @@ package com.ssafy.anudar.service;
 import com.ssafy.anudar.config.JwtUtil;
 import com.ssafy.anudar.dto.*;
 import com.ssafy.anudar.dto.request.JoinRequest;
+import com.ssafy.anudar.dto.request.SuccessWorkRequset;
 import com.ssafy.anudar.exception.BadRequestException;
 import com.ssafy.anudar.exception.UnAuthorizedException;
 import com.ssafy.anudar.exception.response.ExceptionStatus;
@@ -171,7 +172,11 @@ public class UserService {
     }
 
     // 알림 조회
-    public List<NotifyDto> getNotifiesByUserId(Long userId) {
+    public List<NotifyDto> getNotifiesByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+
+        Long userId = user.getId();
         List<Notify> notifies = notifyRepository.findByReceiverId(userId);
         return notifies.stream()
                 .map(NotifyDto::fromEntity)
@@ -248,6 +253,34 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    // 포인트 조회
+    public Long getUserPoints(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return user.getUserPoints(); // userPoints 필드 값을 반환
+    }
+
+
+    // 포인트 업데이트
+    public Long updateUserPoints(String username, Long newPoints) {
+        // 사용자 엔티티를 데이터베이스에서 조회
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND)); // 사용자가 없는 경우 예외 처리
+
+        // 기존 포인트에 추가할 포인트를 더함
+        Long currentPoints = user.getUserPoints() != null ? user.getUserPoints() : 0L;
+        Long updatedPoints = currentPoints + newPoints;
+
+        // 포인트 업데이트
+        user.setUserPoints(updatedPoints);
+
+        // 변경된 엔티티 데이터 베이스에 저장
+        userRepository.save(user);
+
+        return updatedPoints;
+    }
+
+
     // 찜한 전시 목록
     public List<ExhibitionDto> likeExhibit(String username) {
         // 본인 확인
@@ -291,6 +324,13 @@ public class UserService {
     public void nicknameCheck(String nickname) {
         Optional<User> user = userRepository.findByNickname(nickname);
         if(user.isPresent()) throw new BadRequestException(ExceptionStatus.DUPLICATE_NICKNAME);
+    }
+
+    // 사용자 id 찾기
+    public Long findUserIdByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(User::getId) // User 엔터티에서 ID를 추출
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
     }
 
 }

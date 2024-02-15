@@ -56,7 +56,7 @@ public class ExhibitionService {
         // 작품들 저장
 
         for (WorkRegistRequest work : works) {
-            workRepository.save(new Work(work.getTitle(), work.getDetail(), work.getPrice(), work.getImage(), user, exhibition));
+            workRepository.save(new Work(work.getTitle(), work.getDetail(), work.getPrice(), work.getImage(), user, exhibition, work.getIs_carousel()));
         }
 
         return ExhibitionDto.fromEntity(exhibition);
@@ -74,7 +74,16 @@ public class ExhibitionService {
     public ExhibitionDetailDto getExhibitionById(Long exhibition_id) {
         Exhibition exhibition = exhibitionRepository.findById(exhibition_id)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.EXHIBIT_NOT_FOUND));
-        return ExhibitionDetailDto.fromEntity(exhibition);
+        List<Work> carousel = workRepository.findCarousel(exhibition_id);
+        return ExhibitionDetailDto.fromEntity(exhibition, carousel);
+    }
+
+    // 작가 전시 조회
+    public List<ExhibitionDto> getByUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
+        return exhibitionRepository.findAllByUser(user)
+                .stream().map(ExhibitionDto::fromEntity).toList();
     }
 
     // 전시회 author username 조회
@@ -115,9 +124,7 @@ public class ExhibitionService {
     public void saveDocentVideo(Long docentId, String video) {
         Docent docent = docentRepository.findById(docentId)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
-        if(docent.getVideo() == null) {
-            docent.setVideo(video);
-        }
+        docent.setVideo(video);
     }
 
     // 도슨트 비디오 정보 가져오기
@@ -128,5 +135,6 @@ public class ExhibitionService {
             throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);
         return docent.getVideo();
     }
+
 
 }

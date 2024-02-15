@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fb99e1592c1d819495366a6a6919e24acb320790d0500d98df207758c8246dbc
-size 485
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* 이미지를 동그랗게 만듭니다 */
+    margin-right: 10px;
+    object-fit: cover; /* 이미지 비율 유지 */
+  }
+  
+  .message-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .nickname {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .message {
+    line-height: 1.4;
+  }
+  

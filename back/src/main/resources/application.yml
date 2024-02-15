@@ -13,6 +13,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://i10d105.p.ssafy.io:3306/anudar
+
     username: ssafy
     password: ssafy
   jpa:

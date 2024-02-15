@@ -207,6 +207,31 @@ export const mybidworks = async (token) => {
   }
 }
 
+// 작가 전시회 조회(내 전시회 조회)
+export const myexhibitions = async (username, token) => {
+  if(token && token != ""){
+    const url = `/api/exhibit/user/${username}`;
+    return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+    .then(response => {
+      return response.data;
+    })
+    .catch((e) => { console.log(e); });
+  }
+}
+
+// 작가 작품 조회(내 작품 조회)
+export const myworks = async (username, token) => {
+  if(token && token != ""){
+    const url = `/api/work/user/${username}`;
+    return await axios.get(url, { headers: { Authorization: `Bearer ${token}`, } })
+    .then(response => {
+      return response.data;
+    })
+    .catch((e) => { console.log(e); });
+  }
+}
+
+
 /* 전시회 페이지 */
 // 전체 전시회 리스트
 export async function getAllExhibitList() {
@@ -360,7 +385,6 @@ export async function unfollowAuthor(name, token) {
     .then(res => { return res.data })
     .catch(err => { console.log(err) })
 }
-
 
 
 /* ------------------------------- 작품 페이지 ------------------------------- */

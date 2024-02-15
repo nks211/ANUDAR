@@ -9,9 +9,6 @@
 .artistInfoArea {
   width: 450px;
   height: 450px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .artistHeader {
@@ -34,7 +31,7 @@
 }
 
 .artistIntroArea {
-  height: 140px;
+  height: 60px;
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -76,6 +73,9 @@
   font-size: 20px;
   text-align: left;
   color: #787878;
+  img {
+    margin: 0 10px;
+  }
 }
 
 .artistHistory div{
@@ -92,9 +92,11 @@
 }
 
 .artistWorks, .artistExhibits {
+  /* display: flex; */
   margin: 85px 0 40px 0;
-  text-align: left;
+  text-align: center;
   font-size: 24px;
+  font-weight: 900;
   color: #967E76;
 }
 

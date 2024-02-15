@@ -308,6 +308,14 @@ export async function getLikeExhibit(token) {
     .catch(err => { console.log(err) })
 }
 
+// 작가 전시 조회
+export async function getAuthorExhibits(name) {
+  const url = `/api/exhibit/user/${name}`
+  return await axios.get(url)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
+}
+
 // 전시 찜하기 및 취소
 export async function likeExhibit(id, token) {
   const url = `/api/exhibit/like/${id}`
@@ -424,13 +432,11 @@ export async function likeWork(id, token) {
 }
 
 // 작가 작품 조회
-export async function getAuthorWorks(name, token) {
+export async function getAuthorWorks(name) {
   const url = `/api/work/user/${name}`
-  const config = { headers: { Authorization: `Bearer ${token}` } }
-
-  return await axios.get(url, config)
-    .then(res => { return res.data })
-    .catch(err => { console.log(err) })
+  return await axios.get(url)
+  .then(res => {return res.data})
+  .catch(err => {console.log(err)})
 }
 
 

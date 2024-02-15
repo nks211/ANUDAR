@@ -112,11 +112,6 @@ export default function NavBar() {
     return (<div></div>);
   }
 
-
-  // if (window.location.pathname.includes('/docent')) {
-  //   return (<div>{LoginPanel(imagedata, noticelist)}</div>);
-  // }
-
   return (
     <div id="nav">
       <div className="area">

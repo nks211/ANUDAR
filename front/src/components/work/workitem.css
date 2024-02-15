@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a503e3194e821bcad89add8153f474ea48214392d18f19aec2c741ef2ab37fb1
-size 337
+.likeworkarea {
+    width: 250px;
+    height: 300px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.likeworkname {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: start;
+}
+
+.likeworkartist {
+    color: #848484;
+    font-size: 24px;
+    font-weight: 400;
+    text-align: end;
+}

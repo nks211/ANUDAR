@@ -101,6 +101,7 @@ export default function DocentPage(){
         sessionId: docentId,
         nickname: loginuser.nickname,
         message: chat,
+        image: JSON.parse(localStorage.getItem('userdata')).image
       }),
     });
     setChat("");

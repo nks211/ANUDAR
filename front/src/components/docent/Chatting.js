@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { DocentContext } from '../../docent/DocentPage'
+import './DocentContents.css'
+import ChatMessage from "./ChatMessage";
 
 export default function Chatting() {
     const { setChat, publish, chatList, chat } = useContext(DocentContext);
-
 
     const handleChange = (event) => {
       // 채팅 입력 시 state에 값 설정
@@ -16,29 +17,39 @@ export default function Chatting() {
       publish(chat);
     };
 
-    return (
-        <div>
-          <div className={"chat-list"}>
-            {chatList.map((chatItem, index) => (
-              <div key={index}>
-                <p>{chatItem.nickname} : {chatItem.message}</p>
-              </div>
-            ))}
+  return (
+    <><div id="chatting">
+      <div className={"chat-list"}>
+        {chatList.map((chatItem, index) => (
+          <div key={index}>
+            <ChatMessage
+              profileImg={chatItem.image}
+              nickname={chatItem.nickname}
+              message={chatItem.message}
+            />
           </div>
-          <div id="chatInput">      
-            <form onSubmit={(event) => handleSubmit(event, chat)}>
-            <div>
-              <input placeholder="채팅을 입력하세요."
-                type={"text"}
-                name={"chatInput"}
-                onChange={handleChange}
-                value={chat}
-              />
-            </div>
-            <input type={"submit"} value={"입력"} />
-          </form>
-          </div>
-    
-        </div>
-      );
+        ))}
+      </div>
+    </div>
+      <div className="chat-input-container">
+        <input
+          className="chat-input"
+          placeholder="채팅을 입력하세요."
+          type="text"
+          name="chatInput"
+          onChange={handleChange}
+          value={chat}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              handleSubmit(event, chat);
+            }
+          }}
+        />
+        <button type="submit" className="chat-submit" onClick={(event) => handleSubmit(event, chat)}>
+          입력
+        </button>
+      </div>
+    </>
+  );
 }

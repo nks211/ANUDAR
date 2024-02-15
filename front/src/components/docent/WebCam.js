@@ -24,13 +24,13 @@ function WebCam({ MysessionId, myUserName }) {
 
   useEffect(() => {
     if (publisher) {
-      publisher.publishAudio(mic);
+      publisher.publishAudio(!mic);
     }
   }, [mic, publisher]);
 
   useEffect(() => {
     if (publisher) {
-      publisher.publishVideo(cam);
+      publisher.publishVideo(!cam);
     }
   }, [cam, publisher]);
 

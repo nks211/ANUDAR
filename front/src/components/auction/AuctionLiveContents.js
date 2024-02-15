@@ -1,30 +1,3 @@
-import { useContext, useState } from 'react'
-import { AuctionLiveContext } from '../../auctionlive/AuctionLivePage'
-import Bidding from './Bidding'
-
-function AuctionLiveContent() {
-    return (
-        <>
-        <div className="contentHeader">
-          <h2>채팅</h2>
-          <hr/>
-        </div>
-        <div style={{display:"flex", flexDirection:"column", alignItems:"center", width:"100%"}}>
-         
-          <div id="chatting"> 
-          <Bidding/>
-          </div>
-
-        </div>
-      </>   
-    )
-}
-
-export default function AuctionLiveContents() {
-
-  return (
-    <div className="docentContent">
-      <div className="contentBox"><AuctionLiveContent/></div>
-    </div>
-  )
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2fa710d3604dff25894be1503f91030eabb34010e6434e5c05dc91d2b29eaf57
+size 691

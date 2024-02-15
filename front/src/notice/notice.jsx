@@ -21,8 +21,7 @@ export function UptoDate() {
     // console.log(notifies);
 
     return (
-        <>
-        {/* <div>테스트</div> */}
+        <div>
         {/* <div style={style}> */}
             {notifies.length === 0 ? <div style={style}>최근 알림이 없습니다.</div> 
             : notifies.map((notify) => (
@@ -30,7 +29,7 @@ export function UptoDate() {
                 <Notice content={notify.content} />
             ))}
         {/* </div> */}
-        </>
+        </div>
     );
 }
 

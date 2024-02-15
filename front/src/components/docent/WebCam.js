@@ -75,6 +75,12 @@ function WebCam({ MysessionId, myUserName }) {
   }
 
   const leaveSession = () => {
+    subscribers.forEach((subscriber) => {
+      session.unsubscribe(subscriber);
+    });
+    if (publisher) {
+      session.unpublish(publisher);
+    }
 
     if (session) {
       session.disconnect();
@@ -84,6 +90,8 @@ function WebCam({ MysessionId, myUserName }) {
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
+
+    window.location.reload();
   };
 
   const startRecording = async (sessionId) => {

@@ -62,45 +62,6 @@ export default function Exhibit(props) {
           </div>
         </div>
       )
-
-    case 2:  // 전시회 상세
-      // console.log(bannerxy)
-      return (
-        <></>
-      //   <div>
-      //     <div className="exhibitCard2">
-      //       <div className="exhibitImageCard2"
-      //         onMouseOver={()=>{setEnterOpacity(1)}}
-      //         onMouseOut={()=>{setEnterOpacity(0)}}
-      //       >
-      //         <img className="exhibitImage2" style={{width:375, height:500}} src={"../../"+props.exhibit.image}></img>
-      //       </div>
-      //       <div className="exhibitName2">{props.exhibit.name}</div>
-      //       <div className="exhibitArtist2">{props.exhibit.author}</div>
-      //       <div className="exhibitPeriod2">기간 | {period}</div>
-      //       <div>
-      //       </div>
-      //     </div>
-      // </div>
-
-
-        // <div ref={bannerxy} style={{width:"100vw", height:"500px", display:"flex", margin:"40px 0"}}>
-        // <div style={{width:"100vw", height:"500px", display:"flex", margin:"40px 0"}}>
-        //   <div id="exhibitDetailBanner">
-        //     <div style={{textAlign:"right"}}>
-        //       <div style={{fontSize:"45px", fontWeight:"900"}}>{props.exhibit.name}</div>
-        //       <div style={{fontSize:"25px", fontWeight:"600"}}>{props.exhibit.author}</div>
-        //     </div>
-        //   </div>
-        //   <div style={{width:"30vw"}}>
-        //     {/* <img className="exhibitImage2" style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img> */}
-        //     <img className={scrollPosition>=50?"exhibitImage2":""} style={{width:375, height:500, margin:"0 25px 0 40px"}} src={"../../"+props.exhibit.image}></img>
-        //   </div>
-        //   <div style={{width:"35vw", backgroundColor:"gray"}}>
-        //     <div style={{width:"25vw", height:"90%", marginLeft:"20px", display:"flex", alignItems:"flex=end"}}>{props.exhibit.detail}</div>
-        //   </div>
-        // </div>
-      )
       
     case 3: // 전시회 등록
       return (

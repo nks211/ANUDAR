@@ -304,13 +304,13 @@ public class UserService {
     }
 
     // 낙찰 작품 목록
-    public List<WorkDto> bidWork(String username) {
+    public List<SuccessWorkDto> bidWork(String username) {
         // 본인 확인
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new BadRequestException(ExceptionStatus.USER_NOT_FOUND));
         List<SuccessWork> bids = successWorkRepository.findAllByUser(user);
         return bids.stream()
-                .map(successWork -> WorkDto.fromEntity(successWork.getWork()))
+                .map(successWork -> SuccessWorkDto.fromEntity(successWork.getWork().getSuccessWork()))
                 .collect(Collectors.toList());
     }
 

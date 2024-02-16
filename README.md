@@ -88,8 +88,22 @@
 <br>
 
 
+
+
 ## 💻 개발환경
 
+- Backend
+  - SpringBoot 3.2.1
+  - SpringBoot Swcurity 6.2.1
+  - JWT 0.11.2
+  - WebSocket 10.1.17
+  - Mysql 8.0
+
+- Frontend
+  - Node 14.21.3
+  - React 18.2.0
+  - Stomp 2.3.3
+<br>
 
 
 

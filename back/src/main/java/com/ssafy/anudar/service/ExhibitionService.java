@@ -122,14 +122,14 @@ public class ExhibitionService {
     // 도슨트 비디오 정보 저장
     @Transactional
     public void saveDocentVideo(Long docentId, String video) {
-        Docent docent = docentRepository.findById(docentId)
+        Docent docent = docentRepository.findByExhibitionId(docentId)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
         docent.setVideo(video);
     }
 
     // 도슨트 비디오 정보 가져오기
     public String getDocentVideo(Long docentId) {
-        Docent docent = docentRepository.findById(docentId)
+        Docent docent = docentRepository.findByExhibitionId(docentId)
                 .orElseThrow(()->new BadRequestException(ExceptionStatus.DOCENT_NOT_FOUND));
         if(docent.getVideo() == null)
             throw new BadRequestException(ExceptionStatus.RECORD_NOT_FOUND);

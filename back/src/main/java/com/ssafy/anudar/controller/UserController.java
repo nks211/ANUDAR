@@ -183,8 +183,8 @@ public class UserController {
 
     // 낙찰 작품 목록
     @GetMapping("/bid/work")
-    public ResponseEntity<List<WorkDto>> bidWork (Authentication authentication) {
-        List<WorkDto> works = userService.bidWork(authentication.getName());
+    public ResponseEntity<List<SuccessWorkDto>> bidWork (Authentication authentication) {
+        List<SuccessWorkDto> works = userService.bidWork(authentication.getName());
         return new ResponseEntity<>(works, HttpStatus.OK);
     }
 }

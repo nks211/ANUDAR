@@ -2,6 +2,7 @@
     width: 1380px;
     height: 500px;
     margin: 0px 30px;
+    transform: translateX(0%)
 }
 
 .slidedots {

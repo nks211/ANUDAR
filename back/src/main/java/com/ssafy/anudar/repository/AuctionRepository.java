@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e59e67a3dd4e4dab7cd6c5f280e38332e23b4654c9630e04da8a259d4d80385b
-size 641
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.Auction;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Repository
+public interface AuctionRepository extends JpaRepository<Auction, Long> {
+    @Query("SELECT a FROM Auction a " +
+            "WHERE YEAR(a.start_time) = YEAR(:now) " +
+            "AND MONTH(a.start_time) = MONTH(:now) " +
+            "ORDER BY a.start_time DESC")
+    Optional<Auction> findAuction(LocalDateTime now);
+
+}
+

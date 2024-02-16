@@ -1,3 +1,79 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8d5cc1b024a6ea7f01fab455706d68064e6a2f0eebfc00adefb4fbaee918c722
-size 1574
+@font-face {
+    font-family: 'SUIT-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.modalpopuparea {
+    width: 100%;
+    border-radius: 20px;
+    padding: 20px 10px;
+    background-color: #eee3cb;
+}
+
+.modalpopuptitle {
+    text-align: center;
+    color: #967e96;
+    font-family: "SUIT-Regular";
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.modalpopupdetail {
+    text-align: center;
+    color: #848484;
+    font-family: "SUIT-Regular";
+    font-size: 12px;
+    font-weight: 400;
+    top: 10px;
+    position: relative;
+}
+
+.modalpopupcontentarea {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    position: relative;
+    top: 20px;
+}
+
+.modalactionarea {
+    position: relative;
+    top: 30px;
+    margin: 10px;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.modalokbutton {
+    width: 100px;
+    height: 40px;
+    margin: 0px 10px;
+    border-radius: 20px;
+    background-color: #967e96;
+    color: #ffffff;
+    font-family: "SUIT-Regular";
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.modalcancelbutton {
+    width: 100px;
+    height: 40px;
+    margin: 0px 10px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #967e96;
+    font-family: "SUIT-Regular";
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

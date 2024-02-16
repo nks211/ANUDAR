@@ -1,3 +1,85 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b6157ea108a262dae1312d7c0f63c739d8869dbc536a404797ac78998987a42f
-size 1431
+.exhibitDetailScroll {
+  div, section, header, footer, p, h1, h2, .beforeScroll, .afterScroll {
+    box-sizing: border-box;
+  }
+  
+  .globalWidth {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .beforeScroll {
+    height: 40vh;
+    background-image: linear-gradient(to top, #967E76,white);
+  }
+  
+  .afterScroll {
+    height: 45vh;
+    background-image: linear-gradient(to bottom, #F9EFDB,white);
+  }
+
+  .scrollGraphic {
+    overflow-x: hidden;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .graphicItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0;
+    transition: 0.5s;
+    will-change: opacity;
+  
+    > div {
+      width: 100%;
+      height: 100%;
+      max-height: 100vh;
+      max-width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      object-fit: cover;
+      border-radius: 0.3rem;
+    }
+  }
+  .visible {
+    opacity: 1;
+  }
+  .scene-img {
+    max-height: 100vh;
+  }
+  .scrollText {
+    position: relative;
+    padding-bottom: 1px;
+  }
+  .step {
+    margin-bottom: 80vh;
+    padding: 1rem 1rem;
+    display: flex;
+
+    img {
+      border-radius: 0.5rem;
+    }
+  }
+  .global-footer {
+    padding: 2rem 0;
+    text-align: center;
+  }
+  .strikethrough {
+    text-decoration: line-through;
+  } 
+}

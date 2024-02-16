@@ -43,7 +43,11 @@ export default function Auction() {
 
     const okfunction = () => {
         if (localStorage.getItem("token")) {
-            navigate("/auction/now/bid");
+            if (loginuser.username==="admin" || loginuser.username.includes('loopy')) {
+                navigate("/auction/now/bid");
+            } else {
+                alert("경매 입장 시간이 지났습니다.")
+            }
         }
         else {
             alert("로그인 후 이용해주세요");

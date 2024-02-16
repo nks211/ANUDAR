@@ -60,6 +60,14 @@
             </a>
         </td>
         </tr>
+        <tr>
+            <td align="center">FrontEnd</td>
+            <td align="center">FrontEnd</td>
+            <td align="center">BackEnd</td>
+            <td align="center">BackEnd</td>
+            <td align="center">BackEnd</td>
+            <td align="center">BackEnd</td>
+        </tr>
     </table>
 </div>
 <br>
@@ -90,20 +98,37 @@
 
 
 
-## 💻 개발환경
+## 💻 기술 스택
 
 - Backend
-  - SpringBoot 3.2.1
-  - SpringBoot Swcurity 6.2.1
-  - JWT 0.11.2
-  - WebSocket 10.1.17
-  - Mysql 8.0
+  - SpringBoot
+  - SpringBoot Security
+  - Gradle
+  - JWT
+  - WebSocket
+  - Mysql
+  - Openvidu
+  - AWS S3
+  - Redis
 
 - Frontend
-  - Node 14.21.3
-  - React 18.2.0
-  - Stomp 2.3.3
+  - NodeJS
+  - React
+  - StompJS
+  - Axios
+  - zustand
+  - three
+
+- Infra
+  - Nginx
+  - Docker
+  - Jenkins
+
 <br>
+
+
+## 🐣 아키텍처
+![프로젝트 아키텍쳐 (1)](https://github.com/SSAFY-5959-STUDY/Algorithm/assets/78913658/f924b069-eca6-4373-a043-b5aa3b7ce265)
 
 
 

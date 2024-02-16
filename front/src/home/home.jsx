@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ transform: "translateX(8%)" }} className="container">
+      <div className="container">
         <Slider {...setting}>
           <div><img src={homecarousel[0]} /></div>
           <div><img src={homecarousel[1]} /></div>

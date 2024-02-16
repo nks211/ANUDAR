@@ -5,7 +5,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ExhibitDetail from "../components/exhibit/ExhibitDetail";
-import Exhibit from "../components/exhibit/Exhibit";
 import Reviews from '../components/exhibit/Reviews';
 import Like from '../components/like/Like';
 import { getExhibitDetail, getLikeExhibit } from '../API';
@@ -99,7 +98,6 @@ export default function ExhibitDetailPage() {
 
       {/* 전시회 포스터, 설명 */}
       <div style={{overflowX: "visible"}}>
-        {/* <Exhibit exhibitType={2} exhibit={exhibit}/> */}
         <ExhibitDetail exhibit={exhibit} />
         {/* 이 부분은 수정해야함 .. */}
       </div>

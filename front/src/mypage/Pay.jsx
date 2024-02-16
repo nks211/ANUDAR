@@ -58,8 +58,28 @@ export default function Pay() {
 
   return (
     <div>
-      <button onClick={handleApprove}>
-        결제 승인
+      <button onClick={handleApprove}
+        style={{
+          width:"300px",
+          height:"60px",
+          fontSize:"26px",
+          fontWeight:900,
+          border:"None",
+          borderRadius:"2rem",
+          
+          backgroundColor:"#F7E600",
+          color: "#3A1D1D",
+          cursor:"pointer",
+          boxShadow:"2px 2px 10px 0px #D9D9D9"
+        }}
+      >
+        <div style={{
+          display:"flex",
+          alignItems: "center",
+          justifyContent: "center"}}>
+          <img style={{width:"30px", marginRight:"10px"}} src={"../../asset/kakaologo.png"}/>
+          <div>결제 승인</div>
+        </div>
       </button>
     </div>
   );

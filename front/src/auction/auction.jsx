@@ -40,6 +40,7 @@ export default function Auction() {
     const { modalsetting, pathName } = useContext(AppContext);
 
     const logintoken = mainstate((state) => state.logintoken);
+    const loginuser = mainstate((state) => (state.loginuser));
 
     const okfunction = () => {
         if (localStorage.getItem("token")) {

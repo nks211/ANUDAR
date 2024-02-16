@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:051cfa737bcad8f6c0cd547df4672e2af5416195c25fc84077809dd9d01acc10
-size 303
+package com.ssafy.anudar.repository;
+
+import com.ssafy.anudar.model.Docent;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface DocentRepository extends JpaRepository <Docent, Long> {
+    Optional<Docent> findByExhibitionId(Long exhibition_id);
+}

@@ -39,9 +39,9 @@ public class WebSocketController {
             currentBidUser = "응찰한 사용자가 없습니다.";
         }
 
-        if (nownumber > countNumber) {
-            nownumber = 1;
-        }
+//        if (nownumber > countNumber) {
+//            nownumber = 1;
+//        }
 
 
         if (askingprice > currentBid) {

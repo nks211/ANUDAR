@@ -3,6 +3,7 @@ package com.ssafy.anudar.controller;
 import com.ssafy.anudar.dto.AuctionBidDto;
 import com.ssafy.anudar.dto.AuctionStatusDto;
 import com.ssafy.anudar.dto.ChatDto;
+import com.ssafy.anudar.dto.TimerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -25,6 +26,11 @@ public class WebSocketController {
         simpMessagingTemplate.convertAndSend("/sub/chat/" + chatDto.getSessionId(), chatDto);
     }
 
+    @MessageMapping("/timer/{sessionId}")
+    public void timer(TimerDto timerDto) {
+        simpMessagingTemplate.convertAndSend("/sub/timer/" + timerDto.getSessionId(), timerDto);
+    }
+
     @MessageMapping("/auctionbid/{sessionId}")
     public void handleAuctionBidMessage(AuctionBidDto auctionBidDto, SimpMessageHeaderAccessor accessor){
         // 여기서 현재가 갱신 로직 수행
@@ -38,11 +44,6 @@ public class WebSocketController {
             currentBid = 0;
             currentBidUser = "응찰한 사용자가 없습니다.";
         }
-
-//        if (nownumber > countNumber) {
-//            nownumber = 1;
-//        }
-
 
         if (askingprice > currentBid) {
             currentBid = askingprice;

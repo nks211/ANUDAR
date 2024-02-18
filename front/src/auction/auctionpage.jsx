@@ -15,7 +15,7 @@ export default function AuctionPage() {
   const { pathName, setPathName } = useContext(AppContext);
   const [inputopen, setInputOpen] = useState(true);
 
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(30);
   const [username, setUsername] = useState("");
 
 
@@ -86,7 +86,7 @@ export default function AuctionPage() {
     setChat("");
     subscribe();
     setIsBidding(false);
-    setTimer(10);
+    setTimer(30);
   }
 
   useEffect(() => {
@@ -110,6 +110,7 @@ export default function AuctionPage() {
       bidcomplete();
     }
 
+    publish_time(timer)
     return () => {
       setPathName(window.location.pathname);
       clearInterval(Timer);
@@ -184,6 +185,7 @@ export default function AuctionPage() {
         console.log(auctionId);
         publish(0);
         subscribe();
+        subscribe_time();
       },
       connectHeaders: {
         Authorization: window.localStorage.getItem('token'),
@@ -191,6 +193,13 @@ export default function AuctionPage() {
     });
     client.current.activate();
   };
+
+  const subscribe_time = () => {
+    client.current.subscribe("/sub/timer/" + auctionId, (body) => {
+      const json_body = JSON.parse(body.body);
+      setTimer(json_body.time)
+    })
+  }
 
   const subscribe = () => {
     client.current.subscribe("/sub/auctionbid/" + auctionId, (body) => {
@@ -215,9 +224,20 @@ export default function AuctionPage() {
       console.log(json_body.nowNumber);
       console.log(currentPrice);
 
-      setTimer(10);
+      setTimer(30);
     });
   };
+
+  const publish_time = (time) => {
+    if (!client.current.connected) return;
+    client.current.publish({
+      destination: "/pub/timer/" + auctionId,
+      body: JSON.stringify({
+        sessionId: auctionId,
+        time: time,
+      }),
+    })
+  }
 
   const publish = (chat) => {
     if (!client.current.connected) return;
@@ -251,7 +271,7 @@ export default function AuctionPage() {
     if (chat <= nowPoint) { 
       // 현재가 보다 높은 값을 응찰한 경우에만
       if (!isNaN(chat) && chat > currentPrice) {
-        setTimer(10); 
+        setTimer(30); 
         publish(chat);
         setIsBidding(true);
         setChat("");

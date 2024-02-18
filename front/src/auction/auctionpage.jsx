@@ -92,6 +92,7 @@ export default function AuctionPage() {
   useEffect(() => {
     const Timer = setInterval(() => {
       setTimer((count) => count - 1);
+      publish_time(timer)
     }, 1000);
 
     // 조건을 걸기  => 상품 설명을 안했다면 30초
@@ -110,7 +111,6 @@ export default function AuctionPage() {
       bidcomplete();
     }
 
-    publish_time(timer)
     return () => {
       setPathName(window.location.pathname);
       clearInterval(Timer);
@@ -224,7 +224,7 @@ export default function AuctionPage() {
       console.log(json_body.nowNumber);
       console.log(currentPrice);
 
-      setTimer(30);
+      // setTimer(30);
     });
   };
 

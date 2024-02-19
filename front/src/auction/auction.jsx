@@ -40,16 +40,21 @@ export default function Auction() {
   const [popupopen, setPopupOpen] = useState(false);
   const { modalsetting, pathName } = useContext(AppContext);
 
-  const logintoken = mainstate((state) => state.logintoken);
+    const logintoken = mainstate((state) => state.logintoken);
+    const loginuser = mainstate((state) => (state.loginuser));
 
-  const okfunction = () => {
-    if (localStorage.getItem("token")) {
-      navigate("/auction/now/bid");
-    }
-    else {
-      alert("로그인 후 이용해주세요");
-    }
-  };
+    const okfunction = () => {
+        if (localStorage.getItem("token")) {
+            if (loginuser.username==="admin" || loginuser.username.includes('loopy')) {
+                navigate("/auction/now/bid");
+            } else {
+                alert("경매 입장 시간이 지났습니다.")
+            }
+        }
+        else {
+            alert("로그인 후 이용해주세요");
+        }
+    };
 
   const likeitems = async () => { return await getLikeWorks(logintoken); };
   const auctionitems = async () => { return await auctionlist(); }

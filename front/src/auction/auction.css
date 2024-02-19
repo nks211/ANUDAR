@@ -1,19 +1,19 @@
 .auctionworkarea {
-    width: 1200px;
-    height: 480px;
-    position: relative;
+  width: 1200px;
+  height: 480px;
+  position: relative;
 
-    .slick-slide {
-        width: 300px !important;
-        margin: 70px 50px 100px 50px;
-    }
+  .slick-slide {
+    width: 300px !important;
+    margin: 70px 50px 100px 50px;
+  }
 }
 
 .slickwork {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .slickwork .slick-current {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }

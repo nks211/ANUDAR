@@ -20,19 +20,6 @@ export default function Pay() {
   };
 
   const handleApprove = async () => {
-    if (!pgToken || !tid) {
-      alert('결제 승인 정보가 누락되었습니다.');
-      return;
-    }
-
-    try {
-      await axios.post('/api/payment/kakaoPayApprove', form, {
-        headers: {
-          "Content-type": "application/json;charset=utf-8",
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
       const updatePointsData = {
         newPoints: additionalPoints 
       };
@@ -52,11 +39,7 @@ export default function Pay() {
       localStorage.setItem("pg_token", "");
       localStorage.setItem("point", "");
 
-    } catch (error) {
-      console.error('처리 중 에러 발생:', error);
-      alert('처리 중 오류가 발생했습니다.');
-    }
-  };
+    } 
 
   return (
     <div>
@@ -86,3 +69,4 @@ export default function Pay() {
     </div>
   );
 }
+

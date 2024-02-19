@@ -9,7 +9,6 @@ import { uploadimage, getFollowing, getFollowers, getUserPoints } from "../../..
 
 
 export default function MyProfile() {
-
   const localdata = JSON.parse(localStorage.getItem("userdata"));
   const logintoken = localStorage.getItem("token");
   const [url, setUrl] = useState(localdata.image);

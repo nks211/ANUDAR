@@ -206,7 +206,7 @@ export default function AuctionPage() {
       const currentBidUser = json_body.currentBidUser;
       console.log(auctionList );
       // ===여기가 굉장히 문제================================================================
-      if (currentBidUser != "") {
+      if (currentBidUser != "" && currentBidUser != "응찰한 사용자가 없습니다.") {
         setIsBidding(true);
       };
       setCurrentPrice(currentPrice);

@@ -24,6 +24,7 @@ export default function Payment() {
   ];
 
   const token = localStorage.getItem('token');
+  const userPoints = localStorage.getItem('userdata.userPoints');
 
   // 결제 요청 함수
   const handlePayment = async () => {
@@ -47,6 +48,9 @@ export default function Payment() {
     approval_url: 'https://i10d105.p.ssafy.io/pay',
     cancel_url: 'https://i10d105.p.ssafy.io/',
     fail_url: 'https://i10d105.p.ssafy.io/',
+    // approval_url: 'http://localhost:3000/pay',
+    // cancel_url: 'http://localhost:3000/',
+    // fail_url: 'http://localhost:3000/',
   }, {
     headers: {
       "Content-Type": `application/json;charset=utf-8`,
@@ -63,6 +67,7 @@ export default function Payment() {
 
     // 결제 승인 페이지 URL을 상태에 저장
     setPaymentUrl(response.data.next_redirect_pc_url);
+
 
   })
   .catch(error => {

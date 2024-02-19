@@ -7,7 +7,7 @@
     position: relative;
 
     .slick-slide {
-        width: 300px !important;
+        /* width: 300px !important; */
         /* display: flex !important;
         justify-content: center;     */
     }

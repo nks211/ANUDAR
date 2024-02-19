@@ -15,7 +15,7 @@ export default function AuctionPage() {
   const { pathName, setPathName } = useContext(AppContext);
   const [inputopen, setInputOpen] = useState(true);
 
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(15);
   const [username, setUsername] = useState("");
 
 
@@ -86,7 +86,7 @@ export default function AuctionPage() {
     setChat("");
     subscribe();
     setIsBidding(false);
-    setTimer(10);
+    setTimer(15);
   }
 
   useEffect(() => {
@@ -215,7 +215,7 @@ export default function AuctionPage() {
       console.log(json_body.nowNumber);
       console.log(currentPrice);
 
-      setTimer(10);
+      setTimer(15);
     });
   };
 
@@ -251,7 +251,7 @@ export default function AuctionPage() {
     if (chat <= nowPoint) { 
       // 현재가 보다 높은 값을 응찰한 경우에만
       if (!isNaN(chat) && chat > currentPrice) {
-        setTimer(10); 
+        setTimer(15); 
         publish(chat);
         setIsBidding(true);
         setChat("");

@@ -278,9 +278,9 @@ export default function AuctionPage() {
   return (
     <div style={{ display: "flex", width: "100%", height: "100vh", backgroundColor: "#5f5f5f" }}>
       <div style={{ zIndex: "10", backgroundColor: "#ffffff", borderRadius: "20px", width: "100%", margin: "20px", padding: "20px", display: "flex", flex: "24" }}>
-        <div style={{ display: "flex", flex: "7", backgroundColor: "rgb(200, 200, 192)", flexDirection: "column", padding: "30px", margin: "20px", borderRadius: "30px" }}>
+        <div style={{ display: "flex", flex: "7", backgroundColor: "rgb(200, 200, 192)", flexDirection: "column", padding: "20px", margin: "20px", borderRadius: "30px" }}>
           <form onSubmit={(event) => handleSubmit(event, chat)}>
-            <div style={{ zIndex: "20", position: "absolute", display: "flex", justifyContent: "space-between", alignItems: "flex-start", width: "40%", height: "150px", backgroundColor: "#ffffff80", borderRadius: "20px", padding: "10px", margin: "10px" }}>
+            <div style={{ zIndex: "20", position: "relative", display: "flex", justifyContent: "space-between", alignItems: "flex-start",  height: "100px", backgroundColor: "#ffffff80", borderRadius: "20px", padding: "10px" }}>
               <div style={{ width: "50%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
                 <div className="auctiontitle" style={{ display: "flex", justifyContent: "space-between", padding: "0px 20px", }}>
                   <div>경매 <span style={{ fontSize: "28px", color: "976E76", fontWeight: "700", textAlign: "start", }}>{nowAuction}</span>/{countAuctions} 진행중</div>
@@ -291,7 +291,7 @@ export default function AuctionPage() {
                   <div style={{ fontSize: "20px", color: "#ff0000" }}>{currentPrice}만원</div>
                 </div>
               </div>
-              <div style={{ width: "50%", height: "80%", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
+              <div style={{ width: "50%", height: "60%", marginTop: "10px", padding: "10px", border: "3px #976e76 solid", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", fontSize: "18px", flexFlow: "row wrap", overflowY: "hidden" }}>
                 {isBidding ? (
                   <p>{currentBidUser}님이 {currentPrice}만원을 응찰하였습니다.</p>
                 ) : (
@@ -301,13 +301,13 @@ export default function AuctionPage() {
             </div>
 
             {/* 경매 진행자 웹캠 컴포넌트 부분 */}
-            <div style={{ marginTop: "200px", width: "100%", height: "450px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div style={{ marginTop: "20px", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
               {username && (<AuctionCam sessionId={'auction'} username={username}></AuctionCam>)}
             </div>
 
             {/* 금액 입력 및 보내기 부분 */}
-            <div style={{ zIndex: "20", display: inputopen ? "flex" : "none", justifyContent: "space-between", alignItems: "center", width: "100%", height: "100px", padding: "10px 20px" }}>
-              <div style={{ fontSize: "22px" }}>잔여 포인트 : {nowPoint} 포인트</div>
+            <div style={{ zIndex: "20", display: inputopen ? "flex" : "none", justifyContent: "space-between", alignItems: "center", width: "100%", height: "100px", marginTop: "-20px", padding: "10px 20px" }}>
+              <div style={{ fontSize: "18px" }}>잔여 포인트 : {nowPoint} 포인트</div>
                 <input type="number" style={{ width: "40%", height: "40px", border: "5px #976E76 solid", borderRadius: "20px", padding: "10px", fontSize: "20px" }} value={chat? chat : ""} onChange={handleChange} placeholder="금액을 입력하세요" />
                 <button style={{ width: "200px", height: "60px", backgroundColor: "#976E76", display: "flex", justifyContent: "center", alignItems: "center", color: "#ffffff", fontSize: "20px", borderRadius: "20px", margin: "0px 40px", border: 0, cursor: "pointer" }}>응찰하기</button>
               </div>
@@ -327,7 +327,7 @@ export default function AuctionPage() {
             </div>
             <div></div>
           </div>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", marginTop: "-30px" }}>
             <div style={{ display: "flex", justifyContent: "right", alignItems: "center", flex: "1", }}>
               <div id="auctionButton" style={{ width: "130px", height: "100px", margin: "10px", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                 <img onClick={() => { if (window.confirm('경매 페이지를 종료하시겠습니까?') === true) { navigate(-1) } }} src="../../asset/leave.png"></img>

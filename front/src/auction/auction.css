@@ -1,15 +1,11 @@
 .auctionworkarea {
     width: 1200px;
-    height: 400px;
-    /* top: 60px; */
-    transform: translateX(2.5%);
-    /* margin-bottom: 60px; */
+    height: 480px;
     position: relative;
 
     .slick-slide {
         width: 300px !important;
-        /* display: flex !important;
-        justify-content: center;     */
+        margin: 70px 50px 100px 50px;
     }
 }
 

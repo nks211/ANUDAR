@@ -323,7 +323,7 @@ export default function AuctionPage() {
               </div>
             </div>
             <div>
-              <div style={{  fontSize: "30px", margin: "30px" }}>{auctionList[nowAuction-1]?.author} 작가의 {auctionList[nowAuction-1]?.title}</div>
+              <div style={{  fontSize: "30px", margin: "30px" }}>{auctionList[nowAuction-1]?.author_name} 작가의 {auctionList[nowAuction-1]?.title}</div>
             </div>
             <div></div>
           </div>

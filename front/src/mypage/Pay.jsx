@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Pay() {
   const token = localStorage.getItem('token');
@@ -9,6 +9,7 @@ export default function Pay() {
   const pgToken = location.search.split("?pg_token=")[1];
   // 문자열을 숫자로 변환하여 저장
   const additionalPoints = parseInt(localStorage.getItem('point'), 10);
+  const navigate = useNavigate();
 
   const form = {
     cid: "TC0ONETIME",
@@ -45,6 +46,7 @@ export default function Pay() {
       });
 
       alert('결제가 완료되었습니다. 포인트가 업데이트 되었습니다.');
+      navigate('/user/info')
 
       localStorage.setItem("tid", "");
       localStorage.setItem("pg_token", "");

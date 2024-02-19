@@ -71,25 +71,22 @@ export default function Auction() {
           okbutton={true} okbuttonlabel="확인"
           cancelbutton={true} cancelbuttonlabel="취소" />
       </Modal>
-      <img onClick={() => { if (!isLogin) { alert('로그인 후 이용해주세요.'); return }; setPopupOpen(true); }} style={{ cursor: "pointer" }} src="../asset/auction_entrance.png" />
+      <img onClick={() => { if (!isLogin) { alert('로그인 후 이용해주세요.'); return }; setPopupOpen(true); }} style={{ cursor: "pointer", borderRadius:"0.5rem" }} src="../asset/auction_main.png" />
       <div style={{ position: "relative", textAlign: "end", color: "#848484", }}>클릭하면 경매장으로 이동합니다.</div>
-      <div className="auctionworkarea">
-        {list ?
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <Slider {...auctionworksetting}>
-              {Object.values(list).map((value) => {
-                return (
-                  <div>
-                    {/* <div style={{width:"300px", height: "440px", display: "flex", justifyContent: "center", alignItems: "center" }}> */}
-                    <div style={{height: "440px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                      <Work workType={5} work={value} />
-                    </div>
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
-          : <div style={{ width: "300px", height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{logintoken != "" ? "찜한 작품이 없습니다" : "로그인 후 조회 가능합니다"}</div>}
+      <div style={{display:"flex", justifyContent:"center"}}>
+        <div className="auctionworkarea">
+          {list ?
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <Slider {...auctionworksetting}>
+                {Object.values(list).map((value) => {
+                  return (
+                    <Work workType={5} work={value} />
+                  );
+                })}
+              </Slider>
+            </div>
+            : <div style={{ width: "300px", height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>{logintoken != "" ? "찜한 작품이 없습니다" : "로그인 후 조회 가능합니다"}</div>}
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center", position: "relative" }}>
         <div className="dataarea">

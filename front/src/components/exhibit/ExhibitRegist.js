@@ -124,11 +124,15 @@ export default function ExhibitRegist() {
           } else if (docentDate >= lastSat ) {
             alert(`도슨트 일정을 ${exhibitM}월 마지막 주 토요일(${lastSat}일) 이전으로 설정해주세요.`)
             return
-          } else if (works.length < 5) {
-            alert('작품 최소 등록 개수는 5개입니다.')
+          // } else if (works.length < 5) {
+          //   alert('작품 최소 등록 개수는 5개입니다.')
+          } else if (works.length < 2) {
+            alert('작품 최소 등록 개수는 2개입니다.')
             return
-          } else if (carouselWorks.length < 5) {
-            alert('전시회 상단에 보여질 대표 작품을 5개 이상 선택해주세요.')
+          // } else if (carouselWorks.length < 5) {
+          //   alert('전시회 상단에 보여질 대표 작품을 5개 이상 선택해주세요.')
+          } else if (carouselWorks.length < 2) {
+            alert('전시회 상단에 보여질 대표 작품을 2개 이상 선택해주세요.')
             return
           }
 

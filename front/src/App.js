@@ -33,58 +33,56 @@ export default function App() {
   const location = useLocation();
   const { pathname } = location;
 
-  useEffect(()=> {
+  useEffect(() => {
     console.log(logintoken)
   }, [logintoken])
 
   async function getMyInfo() {
     try {
       const res = await myinfo(logintoken)
-      if (res !== myData) {localStorage.setItem("userdata", JSON.stringify(res))}
+      if (res !== myData) { localStorage.setItem("userdata", JSON.stringify(res)) }
       setMyData(res)
     } catch (err) {
       console.log(err)
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isLogin) {
       getMyInfo()
     }
-  },[pathName])
+  }, [pathName])
 
 
-  
+
   const modalsetting = {
     overlay: {
-        position: "fixed",
-        backgroundColor: "#00000040",
+      position: "fixed",
+      backgroundColor: "#00000040",
     },
     content: {
-        position: "absolute",
-        top: "80px",
-        left: "35%",
-        width: "30%",
-        height: "40%",
-        borderRadius: "20px",
-        padding: "20px",
-        border: "0",
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: "transparent",
+      position: "absolute",
+      top: "80px",
+      left: "35%",
+      width: "30%",
+      height: "40%",
+      borderRadius: "20px",
+      padding: "20px",
+      border: "0",
+      display: "flex",
+      justifyContent: "center",
+      backgroundColor: "transparent",
     }
   };
 
-  // console.log(/^\d+$/.test('2'))
-  // console.log(/^\/exhibit\/\d+$/.test(pathname))
 
   return (
     <>
       <AppContext.Provider value={{ modalsetting, pathName, setPathName }}>
         <NavBar />
         <div className={
-          pathName.includes('docent') || pathName.includes('now') ? "DocentPage" 
-          : /^\/exhibit\/\d+$/.test(pathname)?"ExhibitDetailStyle":"App"}>
+          pathName.includes('docent') || pathName.includes('now') || /^\/exhibit\/\d+\/2$/.test(pathname) ? "DocentPage"
+            : /^\/exhibit\/\d+$/.test(pathname) ? "ExhibitDetailStyle" : "App"}>
           <Routes>
             <Route exact path="/" element={<Home />}></Route>
             <Route exact path="/exhibit" element={<ExhibitPage />}></Route>
@@ -94,17 +92,17 @@ export default function App() {
             <Route exact path="/exhibit/regist" element={<ExhibitRegistPage />}></Route>
             <Route exact path="/docent/:id" element={<DocentPage />}></Route>
             <Route exact path="/work" element={<WorkPage />}></Route>
-            <Route exact path="/work/:id" element={<WorkDetailPage/>}></Route>
+            <Route exact path="/work/:id" element={<WorkDetailPage />}></Route>
             <Route exact path="/artist" element={<ArtistPage />}></Route>
-            <Route exact path="/artist/:id" element={<ArtistDetailPage/>}></Route>
+            <Route exact path="/artist/:id" element={<ArtistDetailPage />}></Route>
             <Route exact path="/auction" element={<Auction />}></Route>
             {/* <Route exact path="/auction/now" element={<AuctionPage/>}></Route> */}
             {/* 테스트용 주소 */}
             <Route exact path="/auction/live" element={<AuctionLivePage />}></Route>
-            <Route exact path="/user/info" element={<Mypage/>}></Route>
+            <Route exact path="/user/info" element={<Mypage />}></Route>
             <Route exact path="/user/join" element={<Signup />}></Route>
             {/* 실시간 경매 */}
-            <Route exact path="/auction/now/:auction_id" element={<AuctionPage/>}></Route>
+            <Route exact path="/auction/now/:auction_id" element={<AuctionPage />}></Route>
 
             <Route exact path="/pay" element={<Pay />}></Route>
           </Routes>

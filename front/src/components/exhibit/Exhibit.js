@@ -18,23 +18,6 @@ export default function Exhibit(props) {
   const navigate = useNavigate();
   const {setPathName} = useContext(AppContext);
 
-  // const bannerxy = useRef(null);
-
-  // const updateScroll = () => {
-  //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  // };
-  
-  // useEffect(() => {
-  //   window.addEventListener('scroll', updateScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', updateScroll);
-  //   };
-  // }, []);
-
-  // useEffect(()=>{
-  //   console.log('Exhibit')
-  // }, [])
-
   
   switch (props.exhibitType) {
     case 1:  // 전시회 목록
@@ -57,6 +40,32 @@ export default function Exhibit(props) {
             <div className="exhibitName1">{props.exhibit.name}</div>
             <div className="exhibitArtist1">{props.exhibit.author}</div>
             <div className="exhibitPeriod1">기간 | {period}</div>
+            <div>
+            </div>
+          </div>
+        </div>
+      )
+
+      case 2:  // 홈 화면
+      return (
+        <div>
+          <div className="exhibitCard2">
+            <div className="exhibitImageCard2"
+              onMouseOver={()=>{setEnterOpacity(1)}}
+              onMouseOut={()=>{setEnterOpacity(0)}}
+            >
+              <img className="exhibitImage2" src={props.exhibit.image}></img>
+              <div className="exhibitEnter2" style={{opacity : enterOpacity}} onClick={()=>{
+                navigate(`/exhibit/${props.exhibit.id}`)
+                setPathName(window.location.pathname)
+                window.scrollTo(0, 0)
+              }}>
+                <div>입장하기</div>
+              </div>
+            </div>
+            <div className="exhibitName2">{props.exhibit.name}</div>
+            <div className="exhibitArtist2">{props.exhibit.author}</div>
+            <div className="exhibitPeriod2">기간 | {period}</div>
             <div>
             </div>
           </div>

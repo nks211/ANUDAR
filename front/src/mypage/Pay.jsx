@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 export default function Pay() {
@@ -6,9 +7,6 @@ export default function Pay() {
   const tid = localStorage.getItem('tid');
   const location = useLocation();
   const pgToken = location.search.split("?pg_token=")[1];
-  // 내 포인트 조회
-  let userPoints = localStorage.getItem('userdata.userPoints') !== null ? parseInt(localStorage.getItem('userdata.userPoints'), 10) : 0;
-  console.log(userPoints);
   // 문자열을 숫자로 변환하여 저장
   const additionalPoints = parseInt(localStorage.getItem('point'), 10);
 
@@ -21,16 +19,25 @@ export default function Pay() {
   };
 
   const handleApprove = async () => {
-    userPoints = userPoints + additionalPoints;
-    localStorage.setItem('userdata.userPoints', userPoints.toString());
+      const updatePointsData = {
+        newPoints: additionalPoints 
+      };
+      console.log(updatePointsData)
 
-    alert('결제가 완료되었습니다. 포인트가 업데이트 되었습니다.');
+      await axios.put('/api/user/updatePoints', updatePointsData, {
+        headers: {
+          "Content-type": "application/json;charset=utf-8",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      alert('결제가 완료되었습니다. 포인트가 업데이트 되었습니다.');
 
       localStorage.setItem("tid", "");
       localStorage.setItem("pg_token", "");
       localStorage.setItem("point", "");
 
-  };
+    } 
 
   return (
     <div>
@@ -60,3 +67,4 @@ export default function Pay() {
     </div>
   );
 }
+

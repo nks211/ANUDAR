@@ -92,8 +92,7 @@ export default function AuctionPage() {
   useEffect(() => {
     const Timer = setInterval(() => {
       setTimer((count) => count - 1);
-      // }, 1000);
-    }, 1000000000);
+    }, 1000);
 
     // 조건을 걸기  => 상품 설명을 안했다면 30초
     // if (timer === 0 && !isChecking) {

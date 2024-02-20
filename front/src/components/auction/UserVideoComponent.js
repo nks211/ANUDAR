@@ -1,18 +1,3 @@
-import React, { Component } from 'react';
-import OpenViduVideoComponent from './OvVideo';
-
-export default class UserVideoComponent extends Component {
-
-    render() {
-        return (
-            <div>
-                {this.props.streamManager !== undefined ? (
-                    <div className="streamcomponent">
-                        <OpenViduVideoComponent streamManager={this.props.streamManager} />
-                        <div><p>경매사</p></div>
-                    </div>
-                ) : null}
-            </div>
-        );
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:366d20ea33b3ab8479c09c39c7fcff21d089c72f30a0f8155baaf2dea1c4940c
+size 543

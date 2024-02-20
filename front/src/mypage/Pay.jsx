@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -41,9 +41,13 @@ export default function Pay() {
 
     } 
 
+  useEffect(()=>{
+    handleApprove()
+  }, [])
+
   return (
     <div>
-      <button onClick={handleApprove}
+      {/* <button onClick={handleApprove}
         style={{
           width:"300px",
           height:"60px",
@@ -65,7 +69,7 @@ export default function Pay() {
           <img style={{width:"30px", marginRight:"10px"}} src={"../../asset/kakaologo.png"}/>
           <div>결제 승인</div>
         </div>
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -18,6 +18,16 @@
   height: 90px;
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logoImg {
+    width: 100px;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 40px;
+  }
 }
 
 .nav {

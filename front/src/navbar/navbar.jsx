@@ -124,7 +124,9 @@ export default function NavBar() {
   return (
     <div id="nav">
       <div className="area">
-        <div className="logo" onClick={() => { setnavtab(""); localStorage.setItem("currenttab", ""); navigate("/"); window.scrollTo(0, 0); }}>ANUDAR</div>
+        {/* <div className="logo" onClick={() => { setnavtab(""); localStorage.setItem("currenttab", ""); navigate("/"); window.scrollTo(0, 0); }}>ANUDAR</div> */}
+        <img className="logoImg" src="../../asset/anudar.png" onClick={() => { 
+          setnavtab(""); localStorage.setItem("currenttab", ""); navigate("/"); window.scrollTo(0, 0); }}/>
         <div className="sector">
           {LoginPanel()}
           <div className={isLogin ? "login" : "logout"}>

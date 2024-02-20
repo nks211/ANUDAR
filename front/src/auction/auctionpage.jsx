@@ -280,7 +280,8 @@ export default function AuctionPage() {
     <div className="auctionPage">
       <div className="whiteSpace">
         <div className="auctionLeft">
-          <form style={{ width: "100%" }} onSubmit={(event) => handleSubmit(event, chat)}>
+          <form onSubmit={(event) => handleSubmit(event, chat)}>
+            {/* 응찰 진행 상황 */}
             <div className="auctionInfo">
               <div className="auctionItem1">
                 <div className="auctionItem2">
@@ -310,7 +311,7 @@ export default function AuctionPage() {
 
             {/* 금액 입력 및 보내기 부분 */}
             <div className="priceInput" style={{ display: inputopen ? "flex" : "none" }}>
-              <div>잔여 포인트 : {nowPoint} 포인트</div>
+              <div>잔여 : <span>{nowPoint}</span> 포인트</div>
               <input type="number" value={chat ? chat : ""} onChange={handleChange} placeholder="금액을 입력하세요" />
               <button>응찰하기</button>
             </div>
@@ -318,23 +319,16 @@ export default function AuctionPage() {
           </form>
         </div>
         <div className="auctionRight">
-          <div style={{ width: "800px", height: "800px", margin: "20px 0px", pointerEvents: isadmin() ? "auto" : "none" }}>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <div >
-                <img style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "500px", height: "500px" }} src={auctionList[nowAuction - 1]?.image} alt="" />
-              </div>
-            </div>
+          <div className="auctionWork" style={{ pointerEvents: isadmin() ? "auto" : "none" }}>
             <div>
-              <div style={{ fontSize: "30px", margin: "30px" }}>{auctionList[nowAuction - 1]?.author_name} 작가의 {auctionList[nowAuction - 1]?.title}</div>
+              <img src={auctionList[nowAuction - 1]?.image} alt="" />
+              <span><span>{auctionList[nowAuction - 1]?.author_name}</span> 작가의 <span>{auctionList[nowAuction - 1]?.title}</span></span>
             </div>
-            <div></div>
           </div>
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
-            <div style={{ display: "flex", justifyContent: "right", alignItems: "center", flex: "1", }}>
-              <div id="auctionButton" style={{ width: "130px", height: "100px", margin: "10px", borderRadius: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <img onClick={() => { if (window.confirm('경매 페이지를 종료하시겠습니까?') === true) { navigate(-1) } }} src="../../asset/leave.png"></img>
-              </div>
-            </div>
+          <div className="btnArea">
+            {/* <div id="auctionButton"> */}
+              <img onClick={() => { if (window.confirm('경매 페이지를 종료하시겠습니까?') === true) { navigate(-1) } }} src="../../asset/leave.png"></img>
+            {/* </div> */}
           </div>
         </div>
       </div>

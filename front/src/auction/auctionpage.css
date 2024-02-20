@@ -7,41 +7,54 @@
 
 .auctionPage {
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   background-color: #5f5f5f;
+
+  button, input {
+    font-family: 'SUIT-Regular';
+  }
 }
 
 .whiteSpace {
-  z-index: 10;
+  /* z-index: 10; */
   background-color: white;
-  border-radius: 20px;
-  margin: 20px;
+  border-radius: 0.7rem;
+  margin: 1vw;
+  padding: 1vw;
   width: 100%;
-  padding: 20px;
   display: flex;
-  /* flex: 24; */
 }
 
 .auctionLeft {
-  display: flex;
   flex: 7;
+  width: 100%;
+  display: flex;
   flex-direction: column;
   border-radius: 0.7rem;
   background-color: #c8c8c0;
+  position: relative;
+
+  form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 
 .auctionInfo {
-  z-index: 20;
+  /* flex: 3; */
+  width: calc(94%);
+  margin: 1.5%;
+  padding: 1.5%;
+  background-color: #FFFFFF80;
   position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  height: 150px;
-  background-color: #FFFFFF80;
+  height: 20%;
   border-radius: 0.7rem;
-  padding: 10px;
-  margin: 10px;
 }
 
 .auctionItem1 {
@@ -95,37 +108,53 @@
 }
 
 .auctionWebcam {
+  /* flex: 6; */
   margin-top: 200px;
   width: 100%;
-  height: 450px;
+  /* height: 350px; */
+  height: 55%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .priceInput {
+  /* flex: 1; */
   z-index: 20;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 100px;
+  height: 10%;
+  /* height: 100px; */
   /* padding: 10px 20px; */
 
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin: 1vw 0;
+
   div {
-    font-size: 22px;
+    font-size: 20px;
+    width: 22%;
+
+    span {
+      color: #976E76;
+      font-weight: 900;
+      font-size: 22px;
+    }
   }
 
   input {
-    width: 40%;
-    height: 40px;
-    border: 5px solid #976E76;
+    width: 50%;
+    height: 60px;
+    border: 3px solid #976E76;
+    box-sizing: border-box;
     border-radius: 0.7rem;
     padding: 10px;
     font-size: 20px;
   }
 
   button {
-    width: 200px;
+    width: 18%;
     height: 60px;
     background-color: #976E76;
     display: flex;
@@ -134,35 +163,55 @@
     color: white;
     font-size: 20px;
     border-radius: 0.7rem;
-    margin: 0 40px;
+    /* margin: 0 40px; */
     cursor: pointer; 
     border: None;
   }
 }
 
 .auctionRight {
-  display: flex;
   flex: 5;
+  display: flex;
   flex-direction: column;
   background-color: #B7C4CF;
-  margin-left: 10px;
+  margin-left: 1vw;
   border-radius: 0.7rem;
 }
 
 .auctionWork {
-  
+  flex: 4;
+  margin: 20px 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: calc(100vh/9*6);
+      height: calc(100vh/9*6);
+      /* width: 500px;
+      height: 500px; */
+      border-radius: 0.7rem;
+    }
+
+    span {
+      font-size: 24px;
+      margin-top: 30px;
+
+      span {
+        font-weight: 900;
+      }
+    }
+  }
 }
 
-
-
-
-#auctionButton {
-  /* background-color: rgb(159, 159, 159); */
-  height: calc(100vh/9);
+.btnArea {
+  flex: 1;
   display: flex;
-  /* opacity: 0; */
+  justify-content: right;
   align-items: center;
-  justify-content: center;
 
   img {
     width: calc(100vh/9*0.6);
@@ -170,13 +219,16 @@
     margin: 0 10px;
     cursor: pointer;
   }
-
-  div {
-    cursor: pointer;
-  }
 }
 
-/* #auctionButton:hover {
-    transition: all 0.3s ease-in-out;
-    opacity: 1;
+/* #auctionButton {
+  width: 130px;
+  margin: 10px;
+
+  img {
+    width: calc(100vh/9*0.6);
+    height: calc(100vh/9*0.6);
+    margin: 0 10px;
+    cursor: pointer;
+  }
 } */

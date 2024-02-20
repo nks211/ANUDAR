@@ -21,9 +21,9 @@ export default function DocentTab() {
       <div className="reverseTab"><img src="../../asset/tab_chat_reverse.png"></img></div>:
       <div onClick={()=>{setMenu("chat")}}><img src={"../../asset/tab_chat.png"}></img></div>}
 
-      {menu==="visitor"?
+      {/* {menu==="visitor"?
       <div className="reverseTab"><img src="../../asset/tab_visitor_reverse.png"></img></div>:
-      <div onClick={()=>{setMenu("visitor")}}><img src={"../../asset/tab_visitor.png"}></img></div>}
+      <div onClick={()=>{setMenu("visitor")}}><img src={"../../asset/tab_visitor.png"}></img></div>} */}
 
       {/* {menu==="record"?
       <div className="reverseTab"><img src="../../asset/tab_record_reverse.png"></img></div>:

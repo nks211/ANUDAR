@@ -70,15 +70,15 @@ function DocentContent() {
         </>
       )
     
-    case "visitor":
-      return (
-        <>
-          <div className="contentHeader">
-            <h2>참여자</h2>
-            <hr/>
-          </div>
-        </>
-      )
+    // case "visitor":
+    //   return (
+    //     <>
+    //       <div className="contentHeader">
+    //         <h2>참여자</h2>
+    //         <hr/>
+    //       </div>
+    //     </>
+    //   )
     
     // case "record":
     //   return (

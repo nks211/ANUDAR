@@ -85,7 +85,7 @@ export default function Exhibit3DPage() {
         scene.add(camera);
 
         // Light
-        const ambientLight = new THREE.AmbientLight('white', 1);
+        const ambientLight = new THREE.AmbientLight('white', 2);
         scene.add(ambientLight);
 
         const directionalLight = new THREE.DirectionalLight('white', 1);

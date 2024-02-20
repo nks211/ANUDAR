@@ -43,7 +43,8 @@ export default function Payment() {
       cid: "TC0ONETIME",
       quantity: 1,
       tax_free_amount: 0,
-      approval_url: 'https://i10d105.p.ssafy.io/pay',
+      // approval_url: 'https://i10d105.p.ssafy.io/pay',
+      approval_url: 'http://localhost:3000/pay',
       cancel_url: 'https://i10d105.p.ssafy.io/',
       fail_url: 'https://i10d105.p.ssafy.io/',
     }, {

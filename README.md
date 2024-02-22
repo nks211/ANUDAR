@@ -1,4 +1,4 @@
-# ANUDAR <img src="image.png" alt="" width="40" height="32"/>
+# ANUDAR <img src="front/public/asset/images/image.png" alt="" width="40" height="32"/>
 
 ### 프로젝트 진행 기간
 <p style="font-size: 20px;">2024.01.03(수) ~ 2024.02.16(금)</p>
@@ -134,6 +134,9 @@
 
 
 ## 🚀 주요기능 및 화면
+### 전시회 상세 페이지
+- 전시회 그림, 작가 정보, 도슨트 일정을 확인하실 수 있습니다.
+<img src="front/public/asset/images/전시회.gif"/>
 
 ### 3D 전시회
 - 여러분의 전시회를 2D뿐만 아니라 three.js를 활용한 3D로도 선보일 수 있습니다. 입체적인 감상을 통해 작품의 매력을 한층 더 느낄 수 있습니다.

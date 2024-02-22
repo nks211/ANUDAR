@@ -129,7 +129,7 @@
 
 
 ## 🐣 아키텍처
-![프로젝트 아키텍쳐 (1)](https://github.com/SSAFY-5959-STUDY/Algorithm/assets/78913658/f924b069-eca6-4373-a043-b5aa3b7ce265)
+<img src="front/public/asset/images/프로젝트 아키텍쳐.jpg"/>
 
 
 

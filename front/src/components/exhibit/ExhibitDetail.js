@@ -11,7 +11,8 @@ export default function ExhibitDetail(props) {
 			<img style={{width:"375px", height:"375px", objectFit:"cover"}} src={exhibit.workList?.[0].image}/>
 		</div>,
 		<div style={{display:"flex", flexDirection:"column"}}>
-			<img style={{width:"375px", height:"375px", objectFit:"cover"}} src={exhibit.workList?.[3].image}/>
+			{/* <img style={{width:"375px", height:"375px", objectFit:"cover"}} src={exhibit.workList?.[3].image}/> */}
+			<img style={{width:"375px", height:"375px", objectFit:"cover"}} src={exhibit.workList?.[1].image}/>
 		</div>
 	]
 

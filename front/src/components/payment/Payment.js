@@ -34,42 +34,44 @@ export default function Payment() {
 
     // 결제 준비 요청
     axios.post('/api/payment/kakaoPayReady', {
+      item_name: `포인트 ${selectPoint}개 충전`,
+      total_amount: selectKRW,
+      partner_user_id: 'partner_user_id',
+      partner_order_id: 'partner_order_id',
+      vat_amount: 0,
+      tax_free_amount: 0,
+      cid: "TC0ONETIME",
+      quantity: 1,
+      tax_free_amount: 0,
+      approval_url: 'https://i10d105.p.ssafy.io/pay',
+      // approval_url: 'http://localhost:3000/pay',
+      cancel_url: 'https://i10d105.p.ssafy.io/',
+      fail_url: 'https://i10d105.p.ssafy.io/',
+    }, {
+      headers: {
+        "Content-Type": `application/json;charset=utf-8`,
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      // tid 값을 저장
+      console.log(`tid : ${response.data.tid}`)
+      localStorage.setItem('tid', response.data.tid);
 
-    item_name: `포인트 ${selectPoint}개 충전`,
-    total_amount: selectKRW,
-    partner_user_id: 'partner_user_id',
-    partner_order_id: 'partner_order_id',
-    vat_amount: 0,
-    tax_free_amount: 0,
-    cid: "TC0ONETIME",
-    quantity: 1,
-    tax_free_amount: 0,
-    approval_url: 'https://i10d105.p.ssafy.io/pay',
-    cancel_url: 'https://i10d105.p.ssafy.io/',
-    fail_url: 'https://i10d105.p.ssafy.io/',
-  }, {
-    headers: {
-      "Content-Type": `application/json;charset=utf-8`,
-      Authorization: `Bearer ${token}`
-    }
-  })
-  .then(response => {
-    // tid 값을 저장
-    console.log(`tid : ${response.data.tid}`)
-    localStorage.setItem('tid', response.data.tid);
+      // 결제한 가격을 포인트에 저장
+      localStorage.setItem('point', selectPoint);
 
-    // 결제한 가격을 포인트에 저장
-    localStorage.setItem('point', selectPoint);
+      // 결제 승인 페이지 URL을 상태에 저장
+      // setPaymentUrl(response.data.next_redirect_pc_url);
+      // window.open(response.data.next_redirect_pc_url)
+      window.location.href = response.data.next_redirect_pc_url;
 
-    // 결제 승인 페이지 URL을 상태에 저장
-    setPaymentUrl(response.data.next_redirect_pc_url);
-
-  })
-  .catch(error => {
-    console.error('결제 준비 중 에러 발생:', error);
-    alert('결제 준비 중 오류가 발생했습니다.111');
-  });
-};
+    })
+    .catch(error => {
+      console.error('결제 준비 중 에러 발생:', error);
+      alert('결제 준비 중 오류가 발생했습니다.111');
+    });
+  };
 
   
   function PointBtn(props) {
@@ -103,7 +105,8 @@ export default function Payment() {
         </div>
         <div className="paymentBtn">
           <button onClick={handlePayment}>
-            {paymentUrl && (<a href={paymentUrl}>결제하기</a>)}
+            결제하기
+            {/* {paymentUrl && (<a href={paymentUrl}>결제하기</a>)} */}
           </button>
           <button style={{backgroundColor:"white", color:"black"}} 
             onClick={()=>{

@@ -1,17 +1,3 @@
-.auctionworkarea {
-    width: 1200px;
-    height: 400px;
-    top: 60px;
-    transform: translateX(2.5%);
-    margin-bottom: 60px;
-    position: relative;
-}
-
-.slickwork {
-    width: 100%;
-    height: 100%;
-}
-
-.slickwork .slick-current {
-    transform: scale(1.5);
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1e5dc4aaadb72f3833f8a9cd1d444b68ec3f56bf374f87651775e84389302307
+size 264

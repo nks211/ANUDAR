@@ -1,13 +1,3 @@
-import { React } from "react";
-import "./workitem.css";
-
-function WorkItem(props) {
-    return (
-        <div className="likeworkarea">
-            <img style={{ width: props.width, height: props.height, backgroundSize: "cover" }} src={props.work.image} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", }}><div className="likeworkname">{props.work.title}</div><div className="likeworkartist">{props.work.author}</div></div>
-        </div>
-    );
-}
-
-export default WorkItem;
+version https://git-lfs.github.com/spec/v1
+oid sha256:bb710c620fe64fba426dbab1e6acc3b70a0706194e9f16d6c3609aa56cb874e6
+size 532

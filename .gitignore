@@ -42,5 +42,6 @@ out/
 front/node_modules/
 
 ### config file ####
-back/src/main/resources/application.yml
 front/.env
+back/src/main/resources/yaml/application-dev.yml
+back/src/main/resources/yaml/application-local.yml

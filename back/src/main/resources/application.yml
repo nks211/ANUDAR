@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8080
+  ssl:
+    enabled: false
+
+spring:
+  config:
+    import:
+      - classpath:/yaml/application-dev.yml
+      - classpath:/yaml/application-local.yml
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB
